@@ -12,8 +12,6 @@ El proyecto consiste en una plataforma web interactiva para una pastelería trad
 
 ## 📁 Paso 2.1: Estructura de Archivos del Proyecto
 
-Asegúrense de crear todas las páginas exigidas en la pauta:
-
 ```plaintext
 📁 pasteleria-mil-sabores/
 ├── index.html                  (Home principal)
@@ -71,37 +69,3 @@ El repositorio está estructurado en ramas de funcionalidades (*feature branches
 | `feature/catalogo-carrito` | Desarrollo de `productos.html`, `detalle-producto.html`, `carrito.html`, `css/tienda.css`, `js/productos.js` y `js/carrito.js`. |
 | `feature/login-admin` | Desarrollo de `login.html`, `admin-home.html`, `admin-productos.html`, `admin-usuarios.html`, `css/admin.css`, `js/login.js` y `js/admin.js`. |
 | `feature/registro-descuentos` | Desarrollo de `registro.html`, `nosotros.html`, `blogs.html`, `detalle-blog-*.html`, `contacto.html`, `css/formularios.css`, `js/registro.js`, `js/regiones-comunas.js` y `js/contacto.js`. |
-
----
-
-## 🛠️ Instrucciones de Trabajo para Integrantes del Grupo
-
-### 1. Clonar el Repositorio
-```bash
-git clone https://github.com/vguzc/Formativa_1_Fullstack_II.git
-cd Formativa_1_Fullstack_II
-```
-
-### 2. Cambiar a tu Rama Asignada
-```bash
-git checkout feature/<nombre-de-tu-rama>
-```
-*Ejemplo:* `git checkout feature/catalogo-carrito`
-
-### 3. Sincronizar Cambios de `develop` Antes de Trabajar
-```bash
-git pull origin develop
-```
-
-### 4. Guardar y Subir tus Avances
-```bash
-git add .
-git commit -m "feat: agrega avances en módulo asignado"
-git push origin feature/<nombre-de-tu-rama>
-```
-
-### 5. Integración (Pull Request)
-Al completar una funcionalidad en tu rama, crea un **Pull Request (PR)** hacia la rama `develop` para que el grupo revise e integre los cambios antes de fusionar a `main`.
-
----
-¡Mucho éxito al equipo en el desarrollo de la Evaluación Formativa 1! 🎂🧁✨
