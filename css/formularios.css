@@ -1,0 +1,82 @@
+/* ==========================================================================
+   formularios.css — Estilos específicos de login y contacto
+   (registro.html usa las mismas clases base, definidas por Integrante 1)
+   ========================================================================== */
+
+.panel-formulario {
+  max-width: 460px;
+  margin: var(--espacio-xl) auto;
+  padding: var(--espacio-lg);
+}
+
+.panel-formulario h1 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.panel-formulario .subtitulo {
+  color: var(--color-texto-secundario);
+  margin-bottom: var(--espacio-md);
+  font-size: 0.95rem;
+}
+
+.panel-formulario .pie-formulario {
+  text-align: center;
+  margin-top: var(--espacio-md);
+  font-size: 0.9rem;
+}
+
+.selector-rol {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.selector-rol label {
+  flex: 1;
+  border: 1.5px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  padding: 0.6rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color var(--transicion), background var(--transicion);
+}
+
+.selector-rol input { position: absolute; opacity: 0; pointer-events: none; }
+
+.selector-rol input:checked + span,
+.selector-rol label:has(input:checked) {
+  background: var(--color-rosa);
+  border-color: var(--color-chocolate);
+}
+
+.pagina-contacto {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--espacio-lg);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .pagina-contacto { grid-template-columns: 1fr; }
+}
+
+.info-contacto .item {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.info-contacto .item .icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-rosa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
