@@ -21,10 +21,10 @@ function renderizarPaginaCarrito() {
   if (carrito.length === 0) {
     contenedor.innerHTML = `
       <div class="estado-vacio">
-        <span style="font-size: 4rem;">🛒</span>
+        <span style="font-size: 4rem; display: block; margin-bottom: 0.5rem;">🛒</span>
         <h2>Tu carrito está vacío</h2>
-        <p class="texto-secundario">¡Descubre nuestros deliciosos productos y agrega tus favoritos!</p>
-        <a href="productos.html" class="boton boton-primario" style="margin-top:1rem; display:inline-block;">Ir al Catálogo de Productos</a>
+        <p>¡Descubre nuestros deliciosos productos y agrega tus favoritos!</p>
+        <a href="productos.html" class="boton boton-primario">Ir al Catálogo de Productos</a>
       </div>
     `;
     return;
