@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras | Pastelería Mil Sabores</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tienda.css">
+</head>
+<body>
+
+  <!-- Encabezado / Navegación Principal -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a href="index.html" class="logo">🎂 Mil Sabores</a>
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="blogs.html">Blog & Recetas</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="nav-acciones">
+        <a href="carrito.html" class="boton boton-secundario nav-carrito" aria-current="page">
+          🛒 Carrito <span class="badge-carrito" style="display:none;">0</span>
+        </a>
+        <a href="login.html" class="boton boton-primario">Iniciar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Carrito -->
+  <section class="hero-tienda" style="padding: 2rem 1.5rem; margin-bottom: 2rem;">
+    <div class="contenedor">
+      <h1>Tu Carrito de Compras</h1>
+      <p>Revisa y confirma tu selección de deliciosas preparaciones artesanas.</p>
+    </div>
+  </section>
+
+  <!-- Contenido Principal: Resumen y Tabla del Carrito -->
+  <main class="contenedor" style="padding-bottom: 4rem;">
+    <div id="contenedorCarritoPage">
+      <!-- Renderizado dinámicamente por js/carrito.js -->
+    </div>
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 3rem 0; margin-top: 4rem;">
+    <div class="contenedor" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
+      <div>
+        <h3 style="font-family: var(--fuente-titulos); font-size: 1.8rem; margin: 0 0 1rem 0;">🎂 Mil Sabores</h3>
+        <p style="font-size: 0.9rem; opacity: 0.9;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 1rem 0;">Navegación</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
+          <li><a href="productos.html" style="color: var(--color-fondo);">Catálogo de Productos</a></li>
+          <li><a href="nosotros.html" style="color: var(--color-fondo);">Nuestra Historia</a></li>
+          <li><a href="contacto.html" style="color: var(--color-fondo);">Contacto & Sedes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 1rem 0;">Horario de Atención</h4>
+        <p style="font-size: 0.9rem; margin: 0;">Lunes a Sábado: 09:00 - 20:00 hrs.<br>Domingos y Festivos: 10:00 - 18:00 hrs.</p>
+      </div>
+    </div>
+    <div class="contenedor" style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; opacity: 0.8;">
+      © 2026 Pastelería Mil Sabores — Evaluación Formativa 1 (Fullstack II - Duoc UC)
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/carrito.js"></script>
+</body>
+</html>
