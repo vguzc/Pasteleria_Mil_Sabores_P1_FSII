@@ -27,7 +27,7 @@ const PRODUCTOS_INICIALES = [
     precio: 26990,
     stock: 8,
     descripcion: 'Capas de hojarasca crujiente rellenadas con manjar artesanal, crema de lúcuma fresca y suave crema pastelera.',
-    imagen: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80',
+    imagen: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=80',
     destacado: true
   },
   {
@@ -37,7 +37,7 @@ const PRODUCTOS_INICIALES = [
     precio: 3490,
     stock: 25,
     descripcion: 'Base crocante de galleta mantequilla, crema suave de limón natural y copo de merengue dorado al soplete.',
-    imagen: 'https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=600&q=80',
+    imagen: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80',
     destacado: false
   },
   {
@@ -56,8 +56,8 @@ const PRODUCTOS_INICIALES = [
     categoria: 'Pastelería Tradicional',
     precio: 5990,
     stock: 20,
-    descripcion: 'Deliciosos alfajores de hojarasca fina rellenados generosamente con manjar casero y coco rallado.',
-    imagen: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80',
+    descripcion: 'Deliciosos alfajores tradicionales de hojarasca fina rellenados generosamente con abundante manjar casero.',
+    imagen: 'https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&fit=crop&w=600&q=80',
     destacado: false
   },
   {
@@ -86,14 +86,14 @@ const PRODUCTOS_INICIALES = [
     categoria: 'Tortas Especiales',
     precio: 34990,
     stock: 4,
-    descripcion: 'Edición conmemorativa de 50 años. Cuatro pisos de sabor tradicional con cobertura de masa elástica y detalles dorados.',
-    imagen: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80',
+    descripcion: 'Edición conmemorativa de 50 años. Espectacular torta artesanal de tres pisos decorada con cremas artesanales, flores y frutos rojos.',
+    imagen: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80',
     destacado: true
   }
 ];
 
 /**
- * Obtiene la lista de productos desde localStorage. Si no existe, inicializa con el catálogo por defecto.
+ * Obtiene la lista de productos desde localStorage. Siempre refresca los datos por defecto si han cambiado.
  * @returns {Array} Arreglo de productos.
  */
 function obtenerProductos() {
@@ -103,7 +103,23 @@ function obtenerProductos() {
     return PRODUCTOS_INICIALES;
   }
   try {
-    return JSON.parse(datosGuardados);
+    const prods = JSON.parse(datosGuardados);
+    // Actualizar imágenes y descripciones si existen en el catálogo base
+    let modificado = false;
+    prods.forEach(p => {
+      const base = PRODUCTOS_INICIALES.find(b => b.id === p.id);
+      if (base) {
+        if (p.imagen !== base.imagen || p.descripcion !== base.descripcion) {
+          p.imagen = base.imagen;
+          p.descripcion = base.descripcion;
+          modificado = true;
+        }
+      }
+    });
+    if (modificado) {
+      localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(prods));
+    }
+    return prods;
   } catch (error) {
     console.error('Error al parsear productos de localStorage:', error);
     return PRODUCTOS_INICIALES;
