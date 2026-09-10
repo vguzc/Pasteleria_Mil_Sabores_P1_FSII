@@ -108,40 +108,73 @@ main { min-height: 60vh; }
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 2px 8px rgba(93, 64, 55, 0.05);
 }
 
 .encabezado .contenedor {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: var(--espacio-sm);
+  gap: 1.5rem;
+  padding-block: 0.6rem;
 }
 
 .logo {
-  font-family: var(--fuente-titulos);
-  font-size: 1.6rem;
-  color: var(--color-chocolate);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-icono {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  transition: transform var(--transicion);
+}
+
+.logo-texto {
+  font-family: var(--fuente-titulos);
+  font-size: 1.65rem;
+  color: var(--color-chocolate);
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.logo-subtexto {
+  font-family: var(--fuente-texto);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--color-texto);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.logo:hover .logo-icono {
+  transform: scale(1.08) rotate(-3deg);
 }
 
 .nav-principal,
 .navegacion {
   display: flex;
-  gap: 2.25rem;
+  gap: 1.5rem;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-principal a,
 .navegacion a {
   color: var(--color-texto);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   padding: 0.4rem 0.75rem;
   border-radius: var(--radio-borde);
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
   transition: border-color var(--transicion), color var(--transicion), background-color var(--transicion);
 }
 
@@ -157,8 +190,9 @@ main { min-height: 60vh; }
 
 .nav-acciones {
   display: flex;
-  gap: 1rem;
+  gap: 0.85rem;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .icono-boton {

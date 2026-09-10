@@ -1,14 +1,142 @@
 /* ==========================================================================
    PASTELERÍA MIL SABORES — js/carrito.js
-   Lógica del Carrito de Compras: modificación, resumen de pago y checkout.
+   Lógica del Carrito de Compras: Vista de Página y Carrito Desplegable (Drawer).
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Inyectar estructuras del Carrito Desplegable en el DOM si no existen
+  inyectarDrawerCarrito();
+
+  // 2. Escuchar clics en botones de carrito (.nav-carrito o a[href="carrito.html"])
+  document.querySelectorAll('.nav-carrito, a[href="carrito.html"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Si la tecla Ctrl o Cmd no está presionada, abrir drawer en lugar de navegar
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        abrirDrawerCarrito();
+      }
+    });
+  });
+
+  // 3. Renderizar página del carrito si estamos en carrito.html
   const contenedorCarrito = document.getElementById('contenedorCarritoPage');
   if (contenedorCarrito) {
     renderizarPaginaCarrito();
   }
 });
+
+/**
+ * Inyecta el HTML del Backdrop y Drawer del Carrito dinámicamente en el body.
+ */
+function inyectarDrawerCarrito() {
+  if (document.getElementById('drawerCarrito')) return;
+
+  const backdrop = document.createElement('div');
+  backdrop.id = 'backdropCarrito';
+  backdrop.className = 'backdrop-carrito';
+  backdrop.onclick = cerrarDrawerCarrito;
+
+  const drawer = document.createElement('aside');
+  drawer.id = 'drawerCarrito';
+  drawer.className = 'drawer-carrito';
+  drawer.innerHTML = `
+    <div class="drawer-header">
+      <h3>🛒 Tu Carrito (<span id="drawerContadorItems">0</span>)</h3>
+      <button class="btn-cerrar-drawer" onclick="cerrarDrawerCarrito()">&times;</button>
+    </div>
+    <div id="drawerCuerpoItems" class="drawer-cuerpo"></div>
+    <div id="drawerFooterSummary" class="drawer-footer"></div>
+  `;
+
+  document.body.appendChild(backdrop);
+  document.body.appendChild(drawer);
+  renderizarDrawerCarrito();
+}
+
+/**
+ * Abre el panel desplegable del carrito con animación.
+ */
+function abrirDrawerCarrito() {
+  const backdrop = document.getElementById('backdropCarrito');
+  const drawer = document.getElementById('drawerCarrito');
+  if (backdrop && drawer) {
+    renderizarDrawerCarrito();
+    backdrop.classList.add('backdrop-abierto');
+    drawer.classList.add('drawer-abierto');
+  }
+}
+
+/**
+ * Cierra el panel desplegable del carrito.
+ */
+function cerrarDrawerCarrito() {
+  const backdrop = document.getElementById('backdropCarrito');
+  const drawer = document.getElementById('drawerCarrito');
+  if (backdrop && drawer) {
+    backdrop.classList.remove('backdrop-abierto');
+    drawer.classList.remove('drawer-abierto');
+  }
+}
+
+/**
+ * Renderiza el contenido interno del Carrito Desplegable.
+ */
+function renderizarDrawerCarrito() {
+  const cuerpo = document.getElementById('drawerCuerpoItems');
+  const footer = document.getElementById('drawerFooterSummary');
+  const contador = document.getElementById('drawerContadorItems');
+  if (!cuerpo || !footer) return;
+
+  const carrito = obtenerCarrito();
+  const totalUnidades = obtenerTotalUnidadesCarrito();
+
+  if (contador) contador.textContent = totalUnidades;
+
+  if (carrito.length === 0) {
+    cuerpo.innerHTML = `
+      <div class="estado-vacio" style="padding:2.5rem 1rem; margin:auto 0;">
+        <span style="font-size: 3rem; display:block; margin-bottom:0.5rem;">🛒</span>
+        <h3 style="font-size:1.3rem;">Tu carrito está vacío</h3>
+        <p style="font-size:0.9rem; margin-bottom:1rem;">¡Agrega tus tortas y postres favoritos!</p>
+        <button onclick="cerrarDrawerCarrito()" class="boton boton-primario" style="font-size:0.85rem; padding:0.6rem 1.2rem;">Ver Catálogo</button>
+      </div>
+    `;
+    footer.innerHTML = '';
+    return;
+  }
+
+  const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+  cuerpo.innerHTML = carrito.map(item => `
+    <div class="drawer-item">
+      <img src="${item.imagen}" alt="${item.nombre}" class="drawer-item-img">
+      <div class="drawer-item-detalles">
+        <div class="drawer-item-nombre">${item.nombre}</div>
+        <div class="drawer-item-precio">$${item.precio.toLocaleString('es-CL')} c/u</div>
+        <div style="margin-top:0.4rem;" class="control-cantidad">
+          <button type="button" onclick="modificarCantidadItem('${item.id}', -1)" style="width:30px; height:30px;">-</button>
+          <input type="number" value="${item.cantidad}" readonly style="width:36px; height:30px; font-size:0.88rem;">
+          <button type="button" onclick="modificarCantidadItem('${item.id}', 1)" style="width:30px; height:30px;">+</button>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <strong style="color:var(--color-chocolate); font-size:0.95rem;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</strong>
+        <br>
+        <button class="btn-eliminar-item" onclick="eliminarItemCarrito('${item.id}')" style="margin-top:0.3rem;" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+
+  footer.innerHTML = `
+    <div class="drawer-linea-total">
+      <span>Subtotal:</span>
+      <span>$${subtotal.toLocaleString('es-CL')}</span>
+    </div>
+    <button onclick="procesarPagoSimulado()" class="boton boton-primario btn-drawer-checkout">
+      💳 Proceder al Pago
+    </button>
+  `;
+}
 
 /**
  * Renderiza la vista completa del carrito en carrito.html.
@@ -30,7 +158,6 @@ function renderizarPaginaCarrito() {
     return;
   }
 
-  // Calcular subtotal
   const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
   const envio = subtotal > 30000 ? 0 : 2990;
   const total = subtotal + envio;
@@ -126,6 +253,7 @@ function modificarCantidadItem(id, delta) {
     }
     guardarCarrito(carrito);
     renderizarPaginaCarrito();
+    renderizarDrawerCarrito();
   }
 }
 
@@ -138,6 +266,7 @@ function eliminarItemCarrito(id) {
   carrito = carrito.filter(item => item.id !== id);
   guardarCarrito(carrito);
   renderizarPaginaCarrito();
+  renderizarDrawerCarrito();
 }
 
 /**
@@ -147,6 +276,7 @@ function vaciarCarritoCompleto() {
   if (confirm('¿Estás seguro de que deseas vaciar tu carrito?')) {
     guardarCarrito([]);
     renderizarPaginaCarrito();
+    renderizarDrawerCarrito();
   }
 }
 
@@ -159,5 +289,7 @@ function procesarPagoSimulado() {
 
   alert('🎉 ¡Gracias por tu compra en Pastelería Mil Sabores!\n\nTu pedido ha sido procesado exitosamente.');
   guardarCarrito([]);
+  cerrarDrawerCarrito();
   renderizarPaginaCarrito();
+  renderizarDrawerCarrito();
 }

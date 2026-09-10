@@ -231,7 +231,12 @@ function agregarProductoAlCarrito(producto, cantidad) {
   }
 
   guardarCarrito(carrito);
-  mostrarNotificacion(`¡${producto.nombre} añadido al carrito!`);
+
+  if (typeof abrirDrawerCarrito === 'function') {
+    abrirDrawerCarrito();
+  } else {
+    mostrarNotificacion(`¡${producto.nombre} añadido al carrito!`);
+  }
 }
 
 /**
