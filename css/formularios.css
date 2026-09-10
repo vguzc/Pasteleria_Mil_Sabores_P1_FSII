@@ -298,6 +298,34 @@
   font-size: 1.1rem;
 }
 
+/* ---------- Modales Generales ---------- */
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(93, 64, 55, 0.45);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-fondo.activo {
+  display: flex;
+}
+
+.modal-caja {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: 2rem;
+  width: min(480px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-borde);
+}
+
 /* ---------- Utilidades ---------- */
 .hidden {
   display: none !important;

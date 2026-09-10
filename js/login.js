@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   protegerRutaSiCorresponde();
   configurarToggleClave();
   cargarCorreoRecordado();
+  configurarModalCambiarClave();
 
   const formLogin = document.getElementById('formLogin');
   if (formLogin) {
@@ -414,4 +415,130 @@ function mostrarMensaje(elemento, texto, tipo) {
   elemento.textContent = texto;
   elemento.className = `mensaje-alerta ${tipo}`;
   elemento.classList.remove('oculto');
+}
+
+/**
+  * Configura la apertura, validación y actualización de contraseña en el modal de recuperación
+  */
+function configurarModalCambiarClave() {
+  const btnOlvidaste = document.getElementById('btnOlvidasteClave');
+  const modal = document.getElementById('modalCambiarClave');
+  const btnCerrar = document.getElementById('btnCerrarModalClave');
+  const btnCancelar = document.getElementById('btnCancelarCambiarClave');
+  const formCambiarClave = document.getElementById('formCambiarClave');
+  const correoInput = document.getElementById('correoLogin') || document.getElementById('correo');
+
+  if (!modal) return;
+
+  const abrirModal = (e) => {
+    if (e) e.preventDefault();
+    limpiarErrores();
+    const mensaje = document.getElementById('mensajeRecuperar');
+    if (mensaje) mensaje.classList.add('oculto');
+    if (formCambiarClave) formCambiarClave.reset();
+
+    const correoRecuperar = document.getElementById('correoRecuperar');
+    if (correoRecuperar && correoInput && correoInput.value) {
+      correoRecuperar.value = correoInput.value.trim();
+    }
+
+    modal.classList.add('activo');
+  };
+
+  const cerrarModal = () => {
+    modal.classList.remove('activo');
+  };
+
+  if (btnOlvidaste) btnOlvidaste.addEventListener('click', abrirModal);
+  if (btnCerrar) btnCerrar.addEventListener('click', cerrarModal);
+  if (btnCancelar) btnCancelar.addEventListener('click', cerrarModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) cerrarModal();
+  });
+
+  if (formCambiarClave) {
+    formCambiarClave.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const correoRec = document.getElementById('correoRecuperar');
+      const nuevaClave = document.getElementById('nuevaClave');
+      const confirmarNuevaClave = document.getElementById('confirmarNuevaClave');
+      const mensaje = document.getElementById('mensajeRecuperar');
+
+      if (!correoRec || !nuevaClave || !confirmarNuevaClave) return;
+
+      const correo = correoRec.value.trim().toLowerCase();
+      const clave = nuevaClave.value.trim();
+      const claveConf = confirmarNuevaClave.value.trim();
+
+      limpiarErrores();
+      if (mensaje) mensaje.classList.add('oculto');
+
+      let valido = true;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+        marcarError(correoRec, true, 'Ingresa un correo electrónico válido.');
+        valido = false;
+      }
+
+      if (clave.length < 4) {
+        marcarError(nuevaClave, true, 'La contraseña debe tener al menos 4 caracteres.');
+        valido = false;
+      }
+
+      if (clave !== claveConf) {
+        marcarError(confirmarNuevaClave, true, 'Las contraseñas no coinciden.');
+        valido = false;
+      }
+
+      if (!valido) return;
+
+      const usuarios = obtenerUsuarios();
+      const indice = usuarios.findIndex(u => (u.correo || '').toLowerCase() === correo);
+
+      if (indice >= 0) {
+        usuarios[indice].clave = clave;
+        guardarUsuarios(usuarios);
+
+        if (mensaje) {
+          mostrarMensaje(mensaje, '¡Contraseña actualizada con éxito! Redirigiendo...', 'exito');
+        }
+
+        if (correoInput) {
+          correoInput.value = correo;
+        }
+
+        setTimeout(() => {
+          cerrarModal();
+          const claveInput = document.getElementById('claveLogin') || document.getElementById('clave');
+          if (claveInput) claveInput.focus();
+        }, 1300);
+
+      } else {
+        const usuarioNuevo = {
+          nombre: correo.split('@')[0],
+          correo: correo,
+          clave: clave,
+          rol: 'cliente'
+        };
+        usuarios.push(usuarioNuevo);
+        guardarUsuarios(usuarios);
+
+        if (mensaje) {
+          mostrarMensaje(mensaje, '¡Cuenta actualizada con tu nueva contraseña! Ya puedes iniciar sesión.', 'exito');
+        }
+
+        if (correoInput) {
+          correoInput.value = correo;
+        }
+
+        setTimeout(() => {
+          cerrarModal();
+          const claveInput = document.getElementById('claveLogin') || document.getElementById('clave');
+          if (claveInput) claveInput.focus();
+        }, 1300);
+      }
+    });
+  }
 }
