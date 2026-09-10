@@ -70,9 +70,20 @@
   left: 0.9rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-chocolate);
-  font-size: 1.05rem;
+  color: #a08c7c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
+  transition: color var(--transicion);
+}
+
+.icono-busqueda svg {
+  display: block;
+}
+
+.grupo-busqueda:focus-within .icono-busqueda {
+  color: var(--color-chocolate);
 }
 
 .grupo-selectores {
