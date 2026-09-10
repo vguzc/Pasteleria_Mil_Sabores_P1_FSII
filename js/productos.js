@@ -164,6 +164,15 @@ function inicializarDetalleProducto(contenedor) {
           <strong>Stock disponible:</strong> ${producto.stock} unidades
         </p>
 
+        <!-- Campo de Personalización de Mensaje Especial -->
+        <div class="campo-grupo" style="margin-bottom: 1.5rem; background: var(--color-fondo); padding: 1.1rem; border-radius: 12px; border: 1px solid var(--color-borde);">
+          <label for="mensajePersonalizado" style="font-weight:700; color: var(--color-chocolate); display: block; margin-bottom: 0.4rem; font-size: 0.92rem;">
+            Mensaje especial en la torta (Opcional):
+          </label>
+          <input type="text" id="mensajePersonalizado" placeholder="Ej: ¡Feliz Cumpleaños Pedro!" maxlength="60" style="width:100%; padding: 0.65rem 0.85rem; border: 1.5px solid var(--color-borde); border-radius: 8px; font-family: var(--fuente-texto); font-size: 0.95rem; background: #ffffff;">
+          <small style="color: #777; font-size: 0.8rem; margin-top: 0.35rem; display: block;">Escribe una dedicatoria que colocaremos con glaseado artesanal o placa de chocolate.</small>
+        </div>
+
         <div class="selector-cantidad-wrapper">
           <label for="cantidadDetalle" style="font-weight:bold;">Cantidad:</label>
           <div class="control-cantidad">
@@ -175,9 +184,26 @@ function inicializarDetalleProducto(contenedor) {
 
         <div style="display:flex; gap:1rem; flex-wrap:wrap;">
           <button id="btnAgregarDetalle" class="boton boton-primario" style="flex:1; padding:0.85rem 1.5rem; font-size:1rem;">
-            🛒 Agregar al Carrito
+            Agregar al Carrito
           </button>
           <a href="productos.html" class="boton boton-secundario" style="padding:0.85rem 1.5rem;">Seguir comprando</a>
+        </div>
+
+        <!-- Botones para compartir en redes sociales con logos SVG -->
+        <div class="compartir-producto" style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px dashed var(--color-borde); display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <span style="font-size: 0.88rem; font-weight: 700; color: var(--color-chocolate); margin-right: 0.25rem;">Compartir:</span>
+          <button type="button" onclick="compartirWhatsApp('${producto.nombre}')" class="boton-social" aria-label="Compartir en WhatsApp" title="Compartir en WhatsApp" style="background: #25D366; color: #ffffff; border: none; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </button>
+          <button type="button" onclick="compartirFacebook()" class="boton-social" aria-label="Compartir en Facebook" title="Compartir en Facebook" style="background: #1877F2; color: #ffffff; border: none; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </button>
+          <button type="button" onclick="compartirInstagram()" class="boton-social" aria-label="Compartir en Instagram" title="Compartir en Instagram" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #ffffff; border: none; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </button>
+          <button type="button" onclick="copiarEnlaceProducto()" class="boton-social" aria-label="Copiar enlace" title="Copiar enlace" style="background: var(--color-fondo); color: var(--color-chocolate); border: 1px solid var(--color-borde); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -187,7 +213,9 @@ function inicializarDetalleProducto(contenedor) {
   document.getElementById('btnAgregarDetalle').addEventListener('click', () => {
     const inputCant = document.getElementById('cantidadDetalle');
     const cantidad = parseInt(inputCant.value) || 1;
-    agregarProductoAlCarrito(producto, cantidad);
+    const inputMsg = document.getElementById('mensajePersonalizado');
+    const mensaje = inputMsg ? inputMsg.value.trim() : '';
+    agregarProductoAlCarrito(producto, cantidad, mensaje);
   });
 }
 
@@ -214,29 +242,34 @@ function cambiarCantidadDetalle(delta) {
 function agregarAlCarritoRapido(id) {
   const producto = obtenerProductoPorId(id);
   if (producto) {
-    agregarProductoAlCarrito(producto, 1);
+    agregarProductoAlCarrito(producto, 1, '');
   }
 }
 
 /**
- * Función central para añadir producto al carrito en localStorage con alerta visual.
+ * Función central para añadir producto al carrito en localStorage con mensaje personalizado.
  * @param {Object} producto 
  * @param {number} cantidad 
+ * @param {string} mensaje
  */
-function agregarProductoAlCarrito(producto, cantidad) {
+function agregarProductoAlCarrito(producto, cantidad, mensaje = '') {
   let carrito = obtenerCarrito();
-  const index = carrito.findIndex(item => item.id === producto.id);
+  const mensajeLimpio = (mensaje || '').trim();
+  const cartItemId = mensajeLimpio ? `${producto.id}_${mensajeLimpio}` : producto.id;
+  const index = carrito.findIndex(item => (item.cartItemId || item.id) === cartItemId);
 
   if (index >= 0) {
     carrito[index].cantidad += cantidad;
   } else {
     carrito.push({
+      cartItemId: cartItemId,
       id: producto.id,
       nombre: producto.nombre,
       precio: producto.precio,
       imagen: producto.imagen,
       categoria: producto.categoria,
-      cantidad: cantidad
+      cantidad: cantidad,
+      mensaje: mensajeLimpio
     });
   }
 
@@ -247,6 +280,29 @@ function agregarProductoAlCarrito(producto, cantidad) {
   } else {
     mostrarNotificacion(`¡${producto.nombre} añadido al carrito!`);
   }
+}
+
+function compartirWhatsApp(nombreProducto) {
+  const url = encodeURIComponent(window.location.href);
+  const texto = encodeURIComponent(`¡Mira esta delicia en Pastelería Mil Sabores! ${nombreProducto}: `);
+  window.open(`https://api.whatsapp.com/send?text=${texto}${url}`, '_blank');
+}
+
+function compartirFacebook() {
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function compartirInstagram() {
+  window.open(`https://www.instagram.com`, '_blank');
+}
+
+function copiarEnlaceProducto() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    mostrarNotificacion('¡Enlace copiado al portapapeles!');
+  }).catch(() => {
+    mostrarNotificacion('Enlace listo para compartir.');
+  });
 }
 
 /**

@@ -127,25 +127,29 @@ function renderizarDrawerCarrito() {
 
   const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
-  cuerpo.innerHTML = carrito.map(item => `
-    <div class="drawer-item">
-      <img src="${item.imagen}" alt="${item.nombre}" class="drawer-item-img">
-      <div class="drawer-item-detalles">
-        <div class="drawer-item-nombre">${item.nombre}</div>
-        <div class="drawer-item-precio">$${item.precio.toLocaleString('es-CL')} c/u</div>
-        <div style="margin-top:0.4rem;" class="control-cantidad-lafete">
-          <button type="button" onclick="modificarCantidadItem('${item.id}', -1)">-</button>
-          <input type="number" value="${item.cantidad}" readonly>
-          <button type="button" onclick="modificarCantidadItem('${item.id}', 1)">+</button>
+  cuerpo.innerHTML = carrito.map(item => {
+    const key = item.cartItemId || item.id;
+    return `
+      <div class="drawer-item">
+        <img src="${item.imagen}" alt="${item.nombre}" class="drawer-item-img">
+        <div class="drawer-item-detalles">
+          <div class="drawer-item-nombre">${item.nombre}</div>
+          ${item.mensaje ? `<div style="font-size:0.78rem; color:var(--color-chocolate); font-style:italic; margin-top:0.2rem; background:var(--color-fondo); padding:0.2rem 0.5rem; border-radius:4px; display:inline-block;">Dedicatoria: "${item.mensaje}"</div>` : ''}
+          <div class="drawer-item-precio" style="margin-top:0.3rem;">$${item.precio.toLocaleString('es-CL')} c/u</div>
+          <div style="margin-top:0.4rem;" class="control-cantidad-lafete">
+            <button type="button" onclick="modificarCantidadItem('${key}', -1)">-</button>
+            <input type="number" value="${item.cantidad}" readonly>
+            <button type="button" onclick="modificarCantidadItem('${key}', 1)">+</button>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <strong style="color:var(--color-chocolate); font-size:0.95rem;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</strong>
+          <br>
+          <button class="btn-eliminar-link" onclick="eliminarItemCarrito('${key}')" style="margin-top:0.3rem;">Eliminar</button>
         </div>
       </div>
-      <div style="text-align:right;">
-        <strong style="color:var(--color-chocolate); font-size:0.95rem;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</strong>
-        <br>
-        <button class="btn-eliminar-link" onclick="eliminarItemCarrito('${item.id}')" style="margin-top:0.3rem;">Eliminar</button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   footer.innerHTML = `
     <div class="drawer-linea-total">
@@ -198,34 +202,38 @@ function renderizarPaginaCarrito() {
             </tr>
           </thead>
           <tbody>
-            ${carrito.map(item => `
-              <tr>
-                <td class="td-producto">
-                  <div class="item-bolsa-info">
-                    <div class="item-bolsa-thumb-wrapper">
-                      <img src="${item.imagen}" alt="${item.nombre}" class="item-bolsa-thumb">
+            ${carrito.map(item => {
+              const key = item.cartItemId || item.id;
+              return `
+                <tr>
+                  <td class="td-producto">
+                    <div class="item-bolsa-info">
+                      <div class="item-bolsa-thumb-wrapper">
+                        <img src="${item.imagen}" alt="${item.nombre}" class="item-bolsa-thumb">
+                      </div>
+                      <div class="item-bolsa-detalles">
+                        <span class="item-bolsa-nombre">${item.nombre}</span>
+                        ${item.mensaje ? `<span style="display:block; font-size:0.83rem; color:var(--color-chocolate); font-style:italic; margin-top:0.25rem; background:var(--color-fondo); padding:0.2rem 0.5rem; border-radius:4px; width:fit-content;">Dedicatoria: "${item.mensaje}"</span>` : ''}
+                        <button type="button" class="btn-eliminar-link" onclick="eliminarItemCarrito('${key}')" style="margin-top:0.35rem;">Eliminar</button>
+                      </div>
                     </div>
-                    <div class="item-bolsa-detalles">
-                      <span class="item-bolsa-nombre">${item.nombre}</span>
-                      <button type="button" class="btn-eliminar-link" onclick="eliminarItemCarrito('${item.id}')">Eliminar</button>
+                  </td>
+                  <td class="td-precio">
+                    $${item.precio.toLocaleString('es-CL')}
+                  </td>
+                  <td class="td-cantidad">
+                    <div class="control-cantidad-lafete">
+                      <button type="button" onclick="modificarCantidadItem('${key}', -1)" aria-label="Restar cantidad">-</button>
+                      <input type="number" value="${item.cantidad}" readonly>
+                      <button type="button" onclick="modificarCantidadItem('${key}', 1)" aria-label="Sumar cantidad">+</button>
                     </div>
-                  </div>
-                </td>
-                <td class="td-precio">
-                  $${item.precio.toLocaleString('es-CL')}
-                </td>
-                <td class="td-cantidad">
-                  <div class="control-cantidad-lafete">
-                    <button type="button" onclick="modificarCantidadItem('${item.id}', -1)" aria-label="Restar cantidad">-</button>
-                    <input type="number" value="${item.cantidad}" readonly>
-                    <button type="button" onclick="modificarCantidadItem('${item.id}', 1)" aria-label="Sumar cantidad">+</button>
-                  </div>
-                </td>
-                <td class="td-total">
-                  $${(item.precio * item.cantidad).toLocaleString('es-CL')}
-                </td>
-              </tr>
-            `).join('')}
+                  </td>
+                  <td class="td-total">
+                    $${(item.precio * item.cantidad).toLocaleString('es-CL')}
+                  </td>
+                </tr>
+              `;
+            }).join('')}
           </tbody>
         </table>
       </div>
@@ -255,9 +263,9 @@ function renderizarPaginaCarrito() {
 /**
  * Modifica la cantidad de un ítem en el carrito (+1 o -1).
  */
-function modificarCantidadItem(id, delta) {
+function modificarCantidadItem(idOKey, delta) {
   let carrito = obtenerCarrito();
-  const index = carrito.findIndex(item => item.id === id);
+  const index = carrito.findIndex(item => (item.cartItemId || item.id) === idOKey);
   if (index >= 0) {
     carrito[index].cantidad += delta;
     if (carrito[index].cantidad <= 0) {
@@ -270,11 +278,11 @@ function modificarCantidadItem(id, delta) {
 }
 
 /**
- * Elimina un producto por su ID del carrito.
+ * Elimina un producto por su clave/ID del carrito.
  */
-function eliminarItemCarrito(id) {
+function eliminarItemCarrito(idOKey) {
   let carrito = obtenerCarrito();
-  carrito = carrito.filter(item => item.id !== id);
+  carrito = carrito.filter(item => (item.cartItemId || item.id) !== idOKey);
   guardarCarrito(carrito);
   renderizarPaginaCarrito();
   renderizarDrawerCarrito();
