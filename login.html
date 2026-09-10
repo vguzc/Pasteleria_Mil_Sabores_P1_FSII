@@ -56,8 +56,20 @@
         <h1 class="auth-titulo">¡Bienvenido!</h1>
       </div>
 
+      <div id="mensajeLogin" class="mensaje-alerta error oculto" role="alert"></div>
+
       <form id="formLogin" class="auth-form" novalidate>
         
+        <!-- Selector de Rol (Cliente, Vendedor, Admin) -->
+        <div class="campo-grupo">
+          <label>Ingresar como</label>
+          <div class="selector-rol">
+            <label><input type="radio" name="rol" value="cliente" checked> <span>Cliente</span></label>
+            <label><input type="radio" name="rol" value="vendedor"> <span>Vendedor</span></label>
+            <label><input type="radio" name="rol" value="administrador"> <span>Admin</span></label>
+          </div>
+        </div>
+
         <div class="campo-grupo">
           <label for="correoLogin">Correo Electrónico</label>
           <div class="campo-input-wrapper">
@@ -80,7 +92,7 @@
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </span>
-            <input type="password" id="claveLogin" name="clave" placeholder="••••••••" required autocomplete="current-password">
+            <input type="password" id="claveLogin" name="clave" placeholder="••••••••" required autocomplete="current-password" minlength="4">
             <button type="button" id="btnToggleClave" class="btn-toggle-clave" aria-label="Mostrar contraseña" title="Mostrar contraseña">
               <!-- Icono Ojo (Mostrar) -->
               <svg class="icono-ojo-mostrar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
