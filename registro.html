@@ -64,7 +64,7 @@
             <form id="formRegistro" class="auth-form" novalidate>
                 
                 <div class="campo-grupo">
-                    <label for="run">RUN (sin puntos ni guion)</label>
+                    <label for="run">RUN</label>
                     <div class="campo-input-wrapper">
                         <span class="campo-icono" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -72,10 +72,10 @@
                                 <circle cx="9" cy="10" r="2"></circle>
                                 <line x1="15" y1="8" x2="17" y2="8"></line>
                                 <line x1="15" y1="12" x2="17" y2="12"></line>
-                                <line x1="7" y1="16" x2="17" y2="16"></line>
+                                <line x1="7" y1="7" x2="17" y2="16"></line>
                             </svg>
                         </span>
-                        <input type="text" id="run" name="run" placeholder="Ej: 19876543k" maxlength="9" required>
+                        <input type="text" id="run" name="run" placeholder="19.876.543-K" maxlength="12" required>
                     </div>
                     <span class="error-msg" id="errorRun" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
                 </div>
@@ -100,9 +100,8 @@
                         <div class="campo-input-wrapper">
                             <span class="campo-icono" aria-hidden="true">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M7 23v-2a4 4 0 0 1 4-4h2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </span>
                             <input type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos" required>
@@ -121,7 +120,7 @@
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
                             </span>
-                            <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com o @duoc.cl" required>
+                            <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com o @duocuc.cl" required>
                         </div>
                         <span class="error-msg" id="errorCorreo" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
                     </div>
@@ -189,23 +188,61 @@
                     </div>
                 </div>
 
-                <div class="campo-grupo">
-                    <label for="codigoPromo">Código Promocional (Opcional)</label>
-                    <div class="campo-input-wrapper">
-                        <span class="campo-icono" aria-hidden="true">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                            </svg>
-                        </span>
-                        <input type="text" id="codigoPromo" name="codigoPromo" placeholder="Código promocional">
+                <!-- Campos de Contraseña y Confirmación -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="campo-grupo">
+                        <label for="clave">Contraseña</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="clave" name="clave" placeholder="••••••••" required minlength="4" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-clave" data-target="clave" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                                <svg class="icono-ojo-mostrar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="icono-ojo-ocultar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="error-msg" id="errorClave" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="confirmarClave">Confirmar Contraseña</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="confirmarClave" name="confirmarClave" placeholder="••••••••" required minlength="4" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-clave" data-target="confirmarClave" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                                <svg class="icono-ojo-mostrar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="icono-ojo-ocultar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="error-msg" id="errorConfirmarClave" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
                     </div>
                 </div>
 
-                <button type="submit" class="boton boton-primario btn-auth-submit">Registrarse</button>
+                <button type="submit" class="boton boton-primario btn-auth-submit" style="margin-top: 1.5rem;">Registrarse</button>
             </form>
 
-            <div id="resultadoBeneficios" class="beneficios-card hidden" style="margin-top: 1.5rem; background: var(--color-fondo); border: 1.5px solid var(--color-chocolate); border-radius: 12px; padding: 1.5rem;">
+            <div id="resultadoBeneficios" class="beneficios-card hidden" style="display: none; margin-top: 1.5rem; background: var(--color-fondo); border: 1.5px solid var(--color-chocolate); border-radius: 12px; padding: 1.5rem;">
                 <h3 style="color: var(--color-chocolate); margin-top: 0;">¡Registro Exitoso!</h3>
                 <p id="mensajeCliente" style="font-weight: 700; color: var(--color-texto);"></p>
                 <ul id="listaBeneficios" style="line-height: 1.7; padding-left: 1.2rem; color: var(--color-texto);"></ul>

@@ -297,3 +297,8 @@
   flex-shrink: 0;
   font-size: 1.1rem;
 }
+
+/* ---------- Utilidades ---------- */
+.hidden {
+  display: none !important;
+}

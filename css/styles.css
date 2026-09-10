@@ -811,3 +811,193 @@ main { min-height: 60vh; }
 .btn-eliminar-link:hover {
   color: var(--color-chocolate);
 }
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   DROPDOWN DE USUARIO Y SECCIÓN MI CUENTA
+   ========================================================================== */
+.contenedor-usuario-header {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-usuario-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--color-chocolate);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color var(--transicion, 0.2s ease);
+  text-decoration: none;
+}
+
+.btn-usuario-header:hover {
+  background: transparent;
+  color: var(--color-chocolate-oscuro);
+}
+
+.btn-usuario-header svg {
+  stroke: var(--color-chocolate);
+  transition: stroke var(--transicion, 0.2s ease);
+}
+
+.btn-usuario-header:hover svg {
+  stroke: var(--color-chocolate-oscuro);
+}
+
+.btn-usuario-header .icono-flecha {
+  width: 12px;
+  height: 12px;
+  stroke: var(--color-chocolate);
+  transition: transform 0.2s ease, stroke var(--transicion, 0.2s ease);
+}
+
+.contenedor-usuario-header.activo .btn-usuario-header .icono-flecha {
+  transform: rotate(180deg);
+}
+
+.menu-desplegable-usuario {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(139, 69, 19, 0.12);
+  padding: 0.5rem 0;
+  z-index: 1000;
+  display: none;
+  animation: fadeInDownMenu 0.2s ease;
+}
+
+.contenedor-usuario-header.activo .menu-desplegable-usuario {
+  display: block;
+}
+
+.menu-desplegable-usuario a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 1.1rem;
+  color: var(--color-texto, #333333);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-desplegable-usuario a:hover {
+  background: #FDF6EE;
+  color: var(--color-chocolate);
+}
+
+.menu-desplegable-usuario .separador-menu {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0.4rem 0;
+}
+
+@keyframes fadeInDownMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos Mi Cuenta */
+.tarjeta-cuenta {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  border: 1px solid var(--color-borde, #EADBC8);
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.tarjeta-cuenta-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde, #EADBC8);
+}
+
+.tarjeta-cuenta-header h2 {
+  font-family: var(--fuente-titulos, Pacifico);
+  color: var(--color-chocolate);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.badge-beneficio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.badge-beneficio.exito {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+.badge-beneficio.info {
+  background: #F8EEE4;
+  color: var(--color-chocolate, #8B4513);
+  border: 1px solid rgba(139, 69, 19, 0.25);
+}
+
+.badge-beneficio.warning {
+  background: #FFF8E1;
+  color: #F57F17;
+  border: 1px solid #FFE082;
+}
+
+.grid-cupones-cuenta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.tarjeta-cupon-item {
+  background: linear-gradient(135deg, #FFF9F3 0%, #FFF5EB 100%);
+  border: 1.5px dashed var(--color-chocolate-claro, #D4A373);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.codigo-cupon-badge {
+  display: inline-block;
+  background: var(--color-chocolate);
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+}

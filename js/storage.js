@@ -274,7 +274,15 @@ function obtenerCarrito() {
   const datosGuardados = localStorage.getItem(CLAVE_CARRITO);
   if (!datosGuardados) return [];
   try {
-    return JSON.parse(datosGuardados);
+    const carrito = JSON.parse(datosGuardados);
+    if (Array.isArray(carrito)) {
+      carrito.forEach(item => {
+        if (item && item.nombre) {
+          item.nombre = item.nombre.replace(/🎁\s*/g, '').trim();
+        }
+      });
+    }
+    return carrito;
   } catch (error) {
     console.error('Error al parsear carrito de localStorage:', error);
     return [];
