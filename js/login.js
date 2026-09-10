@@ -14,10 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
     formLogin.addEventListener('submit', manejarEnvioLogin);
   }
 
-  const botonCerrar = document.getElementById('cerrarSesion');
-  if (botonCerrar) {
-    botonCerrar.addEventListener('click', cerrarSesion);
-  }
+  const botonesCerrar = document.querySelectorAll('#cerrarSesion, #cerrarSesionAdmin, #btnCerrarSesionDropdown, .btn-cerrar-sesion');
+  botonesCerrar.forEach(btn => {
+    btn.addEventListener('click', cerrarSesion);
+  });
+
+  document.addEventListener('click', (evento) => {
+    const btnLogout = evento.target.closest('#cerrarSesion, #cerrarSesionAdmin, #btnCerrarSesionDropdown, .btn-cerrar-sesion, [data-action="logout"]');
+    if (btnLogout) {
+      evento.preventDefault();
+      cerrarSesion(evento);
+    }
+  });
 
   pintarEstadoSesionEnHeader();
 });

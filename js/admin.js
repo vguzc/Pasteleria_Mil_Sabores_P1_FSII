@@ -11,10 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     try { inicializarMantenedorUsuarios(); } catch (e) { console.error(e); }
   }
 
-  const botonCerrar = document.getElementById('cerrarSesionAdmin');
-  if (botonCerrar && typeof cerrarSesion === 'function') {
-    botonCerrar.addEventListener('click', cerrarSesion);
-  }
+  const botonesCerrar = document.querySelectorAll('#cerrarSesionAdmin, #cerrarSesion');
+  botonesCerrar.forEach(btn => {
+    if (typeof cerrarSesion === 'function') {
+      btn.addEventListener('click', cerrarSesion);
+    }
+  });
 });
 
 function pintarNombreSesionAdmin() {
