@@ -176,7 +176,7 @@ function renderizarDrawerCarrito() {
     <div style="margin-bottom:0.85rem;">
       ${cupon ? `
         <div class="badge-cupon-aplicado" style="width:100%; justify-content:space-between;">
-          <span>🎟️ <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF)</span>
+          <span style="display:inline-flex; align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.35rem;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF)</span>
           <button type="button" onclick="quitarCuponCarrito()" class="btn-quitar-cupon" title="Quitar cupón">✕</button>
         </div>
       ` : `
@@ -281,7 +281,7 @@ function renderizarPaginaCarrito() {
         </div>
         ${cupon ? `
           <div class="badge-cupon-aplicado">
-            <span>🎟️ Cupón <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF) aplicado con éxito</span>
+            <span style="display:inline-flex; align-items:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.4rem;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Cupón <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF) aplicado con éxito</span>
             <button type="button" onclick="quitarCuponCarrito()" class="btn-quitar-cupon" title="Quitar cupón">✕</button>
           </div>
         ` : `
@@ -434,7 +434,7 @@ function procesarPagoSimulado() {
   const descuentoMonto = cupon ? Math.round(subtotal * (cupon.porcentaje / 100)) : 0;
   const total = Math.max(0, subtotal - descuentoMonto);
 
-  let resumenMsg = `🎉 ¡Gracias por tu compra en Pastelería Mil Sabores!\n\n`;
+  let resumenMsg = `¡Gracias por tu compra en Pastelería Mil Sabores!\n\n`;
   resumenMsg += `Resumen del Pedido:\n`;
   resumenMsg += `- Subtotal: $${subtotal.toLocaleString('es-CL')}\n`;
   if (cupon) {
