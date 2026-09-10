@@ -1,4 +1,4 @@
-# 🎂 Pastelería Mil Sabores - Evaluación Formativa 1 (Fullstack II)
+# 🎂 Pastelería Mil Sabores - Evaluación 1 (Fullstack II)
 
 ¡Bienvenidos al repositorio oficial del proyecto **Pastelería Mil Sabores**! Este sitio web e-commerce ha sido diseñado y desarrollado como parte de la Evaluación Formativa 1 de la asignatura **Fullstack II**.
 
