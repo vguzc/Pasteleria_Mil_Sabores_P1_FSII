@@ -13,6 +13,54 @@ const regionesYComunas = [
     },
     {
         region: "Región de La Araucanía",
-        comunas: ["Temuco", "Padre Las Casas", "Villarrica", "Pucón"]
+        comunas: ["Temuco", "Padre Las Casas", "Villarrica", "Pucón", "Curacautín"] 
+    },
+    {
+        region: "Región de Arica y Parinacota",
+        comunas: ["Arica", "Camarones", "Putre"]
+    },
+    {
+        region: "Región de Tarapacá",
+        comunas: ["Iquique", "Alto Hospicio", "Pozo Almonte"]
+    },
+    {
+        region: "Región de Antofagasta",
+        comunas: ["Antofagasta", "Calama", "Tocopilla"]
+    },
+    {
+        region: "Región de Atacama",
+        comunas: ["Copiapó", "Caldera", "Vallenar"]
+    },
+    {
+        region: "Región de Coquimbo",
+        comunas: ["La Serena", "Coquimbo", "Ovalle"]
+    },
+    {
+        region: "Región del Libertador General Bernardo O'Higgins",
+        comunas: ["Rancagua", "Machalí", "San Fernando"]
+    },
+    {
+        region: "Región del Maule",
+        comunas: ["Talca", "Curicó", "Linares"]
+    },
+    {
+        region: "Región de Ñuble",
+        comunas: ["Chillán", "Chillán Viejo", "San Carlos"]
+    },
+    {
+        region: "Región de Los Ríos",
+        comunas: ["Valdivia", "La Unión", "Río Bueno"]
+    },
+    {
+        region: "Región de Los Lagos",
+        comunas: ["Puerto Montt", "Osorno", "Castro"]
+    },
+    {
+        region: "Región de Aysén del General Carlos Ibáñez del Campo",
+        comunas: ["Coyhaique", "Puerto Aysén", "Chile Chico"]
+    },
+    {
+        region: "Región de Magallanes y de la Antártica Chilena",
+        comunas: ["Punta Arenas", "Puerto Natales", "Porvenir"]
     }
 ];
