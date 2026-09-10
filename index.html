@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastelería Mil Sabores | 50 Años de Tradición Pastela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tienda.css">
+</head>
+<body>
+
+  <!-- Encabezado Principal -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a href="index.html" class="logo">
+        <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+        <span class="logo-texto">
+          Mil Sabores
+          <span class="logo-subtexto">Café & Pastelería</span>
+        </span>
+      </a>
+      <nav class="navegacion">
+        <a href="index.html" class="activo" aria-current="page">Inicio</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="blogs.html">Blog & Recetas</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="nav-acciones">
+        <a href="login.html" class="nav-icono-link" aria-label="Iniciar sesión" title="Iniciar sesión">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+        <a href="carrito.html" class="nav-icono-link nav-carrito" aria-label="Ver carrito" title="Ver carrito">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="badge-carrito" style="display:none;">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Principal -->
+  <main>
+    <section class="hero hero-tienda" style="background: linear-gradient(135deg, #FFF5E1 0%, #FFEBE6 100%); padding: 4rem 1rem; text-align: center; border-bottom: 1px solid var(--color-borde);">
+      <div class="contenedor" style="max-width: 900px; margin: 0 auto;">
+        <span class="eyebrow" style="font-size: 1.1rem; color: var(--color-chocolate); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">50 Años de Dulzura Chilena</span>
+        <h1 style="font-family: var(--fuente-titulos); font-size: 3.2rem; color: var(--color-chocolate); margin: 0.5rem 0 1rem 0; font-weight: normal; line-height: 1.2;">Pastelería Mil Sabores</h1>
+        <p style="font-size: 1.2rem; color: var(--color-texto); line-height: 1.7; max-width: 720px; margin: 0 auto 2rem auto;">
+          Bienvenidos a nuestra repostería artesanal. Desde 1976 preparamos tortas y postres tradicionales elaborados con ingredientes seleccionados y el auténtico toque casero que nos caracteriza.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="productos.html" class="boton boton-primario" style="padding: 0.9rem 2rem; font-size: 1rem;">Ver Catálogo Completo</a>
+          <a href="registro.html" class="boton boton-secundario" style="padding: 0.9rem 2rem; font-size: 1rem;">Obtener Descuentos Especiales</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner Aniversario / Beneficios -->
+    <section class="seccion" style="padding: 3rem 1rem; background-color: #ffffff;">
+      <div class="contenedor" style="max-width: 1000px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, var(--color-chocolate) 0%, #5C2C0B 100%); color: #ffffff; border-radius: var(--radio-borde); padding: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: center; box-shadow: var(--sombra-suave);">
+          <div>
+            <span style="background-color: var(--color-rosa); color: var(--color-chocolate); font-size: 0.8rem; font-weight: 800; padding: 0.35rem 0.8rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">Beneficios 50° Aniversario</span>
+            <h2 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-fondo); margin: 0.8rem 0 0.5rem 0; font-weight: normal;">¡Descuentos por Inscribirte!</h2>
+            <p style="color: #F8E8D8; font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">
+              Regístrate y accede a un <strong>50% OFF</strong> para mayores de 50 años con el cupón <strong>FELICES50</strong>, además de un 10% OFF y torta gratis en tu semana de cumpleaños con <strong>Convenio Duoc UC</strong>.
+            </p>
+          </div>
+          <div style="text-align: center; background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.25);">
+            <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 0.5rem 0; color: var(--color-rosa);">Cupón 50% OFF (50+ Años)</p>
+            <div style="font-size: 1.8rem; font-weight: 800; letter-spacing: 3px; color: #ffffff; margin-bottom: 1rem;">FELICES50</div>
+            <a href="registro.html" class="boton boton-rosa" style="width: 100%;">Registrarme Ahora</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Especialidades Destacadas -->
+    <section class="seccion" style="padding: 3rem 1rem;">
+      <div class="contenedor">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+          <h2 style="font-family: var(--fuente-titulos); font-size: 2.5rem; color: var(--color-chocolate); margin-bottom: 0.5rem; font-weight: normal;">Nuestras Especialidades</h2>
+          <p style="color: var(--color-texto); font-size: 1.05rem; margin: 0 auto;">Descubre los favoritos de nuestros clientes, preparados día a día en nuestro taller de Providencia.</p>
+        </div>
+
+        <div id="grillaEspecialidades" class="grid-productos" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+          
+          <article class="tarjeta-producto" data-id="TC001">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Tortas Cuadradas</span>
+              <a href="detalle-producto.html?id=TC001" class="imagen-contenedor-link">
+                <img src="img/torta-tres-leches-cuadrada.png" alt="Torta Tres Leches Cuadrada" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=TC001">Torta Tres Leches Cuadrada</a></h3>
+              <p class="tarjeta-descripcion">Bizcocho esponjoso remojado en combinación de tres leches, cubierto con fino merengue italiano.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$24.990</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=TC001" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('TC001')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta-producto" data-id="TC002">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Tortas Circulares</span>
+              <a href="detalle-producto.html?id=TC002" class="imagen-contenedor-link">
+                <img src="img/torta-amor-lucuma.png" alt="Torta Amor Manjar Lúcuma Circular" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=TC002">Torta Amor Manjar Lúcuma Circular</a></h3>
+              <p class="tarjeta-descripcion">Capas de hojarasca crujiente rellenadas con manjar artesanal, crema de lúcuma fresca y suave crema pastelera.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$26.990</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=TC002" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('TC002')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta-producto" data-id="SG001">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Productos Sin Gluten</span>
+              <a href="detalle-producto.html?id=SG001" class="imagen-contenedor-link">
+                <img src="img/cheesecake-frutos-rojos.png" alt="Cheesecake Frutos Rojos Sin Gluten" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=SG001">Cheesecake Frutos Rojos Sin Gluten</a></h3>
+              <p class="tarjeta-descripcion">Cheesecake horneado con base libre de gluten (harina de almendras) y salsa artesanal de frutos del bosque.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$27.990</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=SG001" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('SG001')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="productos.html" class="boton boton-secundario" style="padding: 0.8rem 2.2rem;">Ver Todos los Productos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Especial 18 de Septiembre -->
+    <section class="seccion" style="padding: 3rem 1rem; background-color: var(--color-tarjeta-hover, #fffbf7); border-top: 1px solid rgba(107, 68, 35, 0.08); border-bottom: 1px solid rgba(107, 68, 35, 0.08);">
+      <div class="contenedor">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+          <span style="background-color: var(--color-rosa, #d32f2f); color: #ffffff; font-weight: 700; font-size: 0.85rem; padding: 0.35rem 0.85rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 0.75rem;">🇨🇱 Edición Fiestas Patrias</span>
+          <h2 style="font-family: var(--fuente-titulos); font-size: 2.5rem; color: var(--color-chocolate); margin-bottom: 0.5rem; font-weight: normal;">Especial 18 de Septiembre</h2>
+          <p style="color: var(--color-texto); font-size: 1.05rem; margin: 0 auto; max-width: 650px;">Disfruta de nuestras tradicionales empanadas artesanalmente preparadas para celebrar en familia (¡incluye opción sin gluten!).</p>
+        </div>
+
+        <div id="grillaEspecial18" class="grid-productos" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+          
+          <article class="tarjeta-producto" data-id="PT003">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Especial 18</span>
+              <a href="detalle-producto.html?id=PT003" class="imagen-contenedor-link">
+                <img src="img/empanada-pino.png" alt="Empanada de Pino Tradicional" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=PT003">Empanada de Pino Tradicional</a></h3>
+              <p class="tarjeta-descripcion">Clásica empanada chilena de horno de masa casera, rellena de jugoso pino de vacuno picado a cuchillo, huevo duro, aceituna negra y pasa.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$3.290</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=PT003" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('PT003')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta-producto" data-id="PT004">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Especial 18</span>
+              <a href="detalle-producto.html?id=PT004" class="imagen-contenedor-link">
+                <img src="img/empanada-queso.png" alt="Empanada de Queso de Horno" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=PT004">Empanada de Queso de Horno</a></h3>
+              <p class="tarjeta-descripcion">Masa casera dorada de mantequilla, rellena con abundante queso mantecoso de fundo derretido.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$2.990</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=PT004" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('PT004')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta-producto" data-id="SG003">
+            <div class="tarjeta-imagen-wrapper">
+              <span class="badge-categoria">Especial 18</span>
+              <a href="detalle-producto.html?id=SG003" class="imagen-contenedor-link">
+                <img src="img/empanada-sin-gluten.png" alt="Empanada de Pino Sin Gluten" loading="lazy">
+              </a>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=SG003">Empanada de Pino Sin Gluten</a></h3>
+              <p class="tarjeta-descripcion">Edición especial Fiestas Patrias. Empanada casera con masa certificada sin gluten, rellena de tradicional pino de vacuno, aceituna y huevo duro.</p>
+              <div class="tarjeta-footer">
+                <span class="tarjeta-precio">$3.690</span>
+                <div class="tarjeta-acciones">
+                  <a href="detalle-producto.html?id=SG003" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+                  <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('SG003')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="productos.html?cat=Especial+18" class="boton boton-primario" style="padding: 0.8rem 2.2rem;">Ver Categoría Especial 18</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de Página Unificado y Centrado -->
+  <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 3.5rem 0 2rem 0; margin-top: 0;">
+    <div class="contenedor" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; text-align: center; justify-items: center; align-items: start;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <a href="index.html" class="logo-footer">
+          <span class="logo-texto-footer">
+            Mil Sabores
+            <span class="logo-subtexto-footer">Café & Pastelería</span>
+          </span>
+        </a>
+        <p style="font-size: 0.9rem; opacity: 0.9; max-width: 300px; margin: 0 auto; text-align: center;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Navegación</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem; text-align: center;">
+          <li><a href="productos.html" style="color: var(--color-fondo);">Catálogo de Productos</a></li>
+          <li><a href="nosotros.html" style="color: var(--color-fondo);">Nuestra Historia</a></li>
+          <li><a href="contacto.html" style="color: var(--color-fondo);">Contacto & Sedes</a></li>
+        </ul>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Horario & Ubicación</h4>
+        <p style="font-size: 0.9rem; margin: 0 0 0.5rem 0; text-align: center; font-weight: 700;">Antonio Varas 666, Providencia</p>
+        <p style="font-size: 0.88rem; margin: 0; text-align: center; line-height: 1.7; opacity: 0.9;">Lunes a Sábado: 09:00 - 20:00 hrs.<br>Domingos y Festivos: 10:00 - 18:00 hrs.</p>
+      </div>
+    </div>
+    <div class="contenedor" style="text-align: center; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.85rem; opacity: 0.85;">
+      © 2026 Pastelería Mil Sabores — Evaluación Formativa 1 (Fullstack II - Duoc UC)
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/productos.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

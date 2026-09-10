@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Pastelería Mil Sabores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tienda.css">
+    <link rel="stylesheet" href="css/formularios.css">
+</head>
+<body>
+
+    <!-- Encabezado Principal -->
+    <header class="encabezado">
+        <div class="contenedor">
+            <a href="index.html" class="logo">
+                <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+                <span class="logo-texto">
+                    Mil Sabores
+                    <span class="logo-subtexto">Café & Pastelería</span>
+                </span>
+            </a>
+            <nav class="navegacion">
+                <a href="index.html">Inicio</a>
+                <a href="productos.html">Catálogo</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="blogs.html">Blog & Recetas</a>
+                <a href="contacto.html">Contacto</a>
+            </nav>
+            <div class="nav-acciones">
+                <a href="login.html" class="nav-icono-link" aria-label="Iniciar sesión" title="Iniciar sesión">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+                <a href="carrito.html" class="nav-icono-link nav-carrito" aria-label="Ver carrito" title="Ver carrito">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="badge-carrito" style="display:none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Formulario de Registro Minimalista -->
+    <main class="seccion-autenticacion" style="padding: 3rem 1rem;">
+        <div class="tarjeta-auth" style="max-width: 620px;">
+            
+            <div class="auth-header">
+                <div class="auth-icono" title="Mil Sabores">
+                    <img src="img/logo-icono.png" alt="Mil Sabores">
+                </div>
+                <h1 class="auth-titulo">Crear Cuenta</h1>
+                <p class="auth-subtitulo">Inscríbete y accede a descuentos por edad, código promocional y convenios Duoc UC.</p>
+            </div>
+
+            <form id="formRegistro" class="auth-form" novalidate>
+                
+                <div class="campo-grupo">
+                    <label for="run">RUN</label>
+                    <div class="campo-input-wrapper">
+                        <span class="campo-icono" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                <circle cx="9" cy="10" r="2"></circle>
+                                <line x1="15" y1="8" x2="17" y2="8"></line>
+                                <line x1="15" y1="12" x2="17" y2="12"></line>
+                                <line x1="7" y1="7" x2="17" y2="16"></line>
+                            </svg>
+                        </span>
+                        <input type="text" id="run" name="run" placeholder="19.876.543-K" maxlength="12" required>
+                    </div>
+                    <span class="error-msg" id="errorRun" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    <div class="campo-grupo">
+                        <label for="nombre">Nombre</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <span class="error-msg" id="errorNombre" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="apellidos">Apellidos</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos" required>
+                        </div>
+                        <span class="error-msg" id="errorApellidos" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    <div class="campo-grupo">
+                        <label for="correo">Correo Electrónico</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com o @duocuc.cl" required>
+                        </div>
+                        <span class="error-msg" id="errorCorreo" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+                        </div>
+                        <span class="error-msg" id="errorFecha" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="direccion">Dirección Calle y Número</label>
+                    <div class="campo-input-wrapper">
+                        <span class="campo-icono" aria-hidden="true">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </span>
+                        <input type="text" id="direccion" name="direccion" placeholder="Av. Siempre Viva 123" required>
+                    </div>
+                    <span class="error-msg" id="errorDireccion" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    <div class="campo-grupo">
+                        <label for="selectRegion">Región</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                                </svg>
+                            </span>
+                            <select id="selectRegion" name="region" required>
+                                <option value="">-- Selecciona Región --</option>
+                            </select>
+                        </div>
+                        <span class="error-msg" id="errorRegion" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="selectComuna">Comuna</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                </svg>
+                            </span>
+                            <select id="selectComuna" name="comuna" disabled required>
+                                <option value="">-- Selecciona Comuna --</option>
+                            </select>
+                        </div>
+                        <span class="error-msg" id="errorComuna" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+                </div>
+
+                <!-- Campos de Contraseña y Confirmación -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="campo-grupo">
+                        <label for="clave">Contraseña</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="clave" name="clave" placeholder="••••••••" required minlength="4" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-clave" data-target="clave" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                                <svg class="icono-ojo-mostrar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="icono-ojo-ocultar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="error-msg" id="errorClave" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label for="confirmarClave">Confirmar Contraseña</label>
+                        <div class="campo-input-wrapper">
+                            <span class="campo-icono" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="confirmarClave" name="confirmarClave" placeholder="••••••••" required minlength="4" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-clave" data-target="confirmarClave" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                                <svg class="icono-ojo-mostrar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="icono-ojo-ocultar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="error-msg" id="errorConfirmarClave" style="color: var(--color-error); font-size: 0.82rem; margin-top: 0.2rem; display: block;"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="boton boton-primario btn-auth-submit" style="margin-top: 1.5rem;">Registrarse</button>
+            </form>
+
+            <div id="resultadoBeneficios" class="beneficios-card hidden" style="display: none; margin-top: 1.5rem; background: var(--color-fondo); border: 1.5px solid var(--color-chocolate); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="color: var(--color-chocolate); margin-top: 0;">¡Registro Exitoso!</h3>
+                <p id="mensajeCliente" style="font-weight: 700; color: var(--color-texto);"></p>
+                <ul id="listaBeneficios" style="line-height: 1.7; padding-left: 1.2rem; color: var(--color-texto);"></ul>
+            </div>
+
+            <div class="auth-footer">
+                ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de Página Unificado y Centrado -->
+    <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 3.5rem 0 2rem 0; margin-top: 0;">
+        <div class="contenedor" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; text-align: center; justify-items: center; align-items: start;">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <a href="index.html" class="logo-footer">
+                    <span class="logo-texto-footer">
+                        Mil Sabores
+                        <span class="logo-subtexto-footer">Café & Pastelería</span>
+                    </span>
+                </a>
+                <p style="font-size: 0.9rem; opacity: 0.9; max-width: 300px; margin: 0 auto; text-align: center;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Navegación</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem; text-align: center;">
+                    <li><a href="productos.html" style="color: var(--color-fondo);">Catálogo de Productos</a></li>
+                    <li><a href="nosotros.html" style="color: var(--color-fondo);">Nuestra Historia</a></li>
+                    <li><a href="contacto.html" style="color: var(--color-fondo);">Contacto & Sedes</a></li>
+                </ul>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Horario & Ubicación</h4>
+                <p style="font-size: 0.9rem; margin: 0 0 0.5rem 0; text-align: center; font-weight: 700;">Antonio Varas 666, Providencia</p>
+                <p style="font-size: 0.88rem; margin: 0; text-align: center; line-height: 1.7; opacity: 0.9;">Lunes a Sábado: 09:00 - 20:00 hrs.<br>Domingos y Festivos: 10:00 - 18:00 hrs.</p>
+            </div>
+        </div>
+        <div class="contenedor" style="text-align: center; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.85rem; opacity: 0.85;">
+            © 2026 Pastelería Mil Sabores — Evaluación Formativa 1 (Fullstack II - Duoc UC)
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/regiones-comunas.js"></script>
+    <script src="js/registro.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

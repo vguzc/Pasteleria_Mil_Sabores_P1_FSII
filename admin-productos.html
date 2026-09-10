@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantenedor de Productos | Panel Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-requiere-rol="administrador,vendedor">
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="admin-home.html" class="logo">
+      <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+      <span class="logo-texto">
+        Mil Sabores
+        <span class="logo-subtexto">Panel Admin</span>
+      </span>
+    </a>
+    <div class="nav-acciones">
+      <span id="rolActualAdmin" class="texto-secundario" style="font-size:0.85rem; font-weight:700;"></span>
+      <a href="index.html" class="boton boton-secundario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Ver Tienda</a>
+      <button id="cerrarSesionAdmin" class="boton boton-primario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout-admin">
+  <aside class="admin-sidebar">
+    <p class="rol-actual">Panel de Administración</p>
+    <nav>
+      <a href="admin-home.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Resumen
+      </a>
+      <a href="admin-productos.html" aria-current="page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>Productos
+      </a>
+      <a href="admin-usuarios.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Usuarios
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-contenido">
+    <div class="admin-cabecera">
+      <div>
+        <h1 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); font-weight: normal; margin-bottom: 0.3rem;">Mantenedor de Productos</h1>
+        <p class="texto-secundario" style="margin:0;">Crea, edita y elimina productos del catálogo.</p>
+      </div>
+      <button id="btnNuevoProducto" class="boton boton-primario">+ Nuevo Producto</button>
+    </div>
+
+    <div class="admin-toolbar">
+      <input type="search" id="buscarProducto" placeholder="Buscar por nombre o código…" autocomplete="off">
+    </div>
+
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpoTablaProductos"></tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Modal crear/editar producto -->
+<div class="modal-fondo" id="modalProducto">
+  <div class="modal-caja">
+    <h2 id="tituloModalProducto" style="font-family: var(--fuente-titulos); color: var(--color-chocolate); font-weight: normal;">Nuevo Producto</h2>
+    <form id="formProducto" novalidate>
+
+      <div class="form-grupo" data-campo="codigo">
+        <label for="codigoProducto">Código</label>
+        <input type="text" id="codigoProducto" name="codigo" placeholder="Ej: TC001" required>
+        <span class="form-error">Formato esperado: letras + números, ej. TC001.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="nombre">
+        <label for="nombreProducto">Nombre</label>
+        <input type="text" id="nombreProducto" name="nombre" placeholder="Nombre del producto" required>
+        <span class="form-error">El nombre debe tener al menos 3 caracteres.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="categoria">
+        <label for="categoriaProducto">Categoría</label>
+        <select id="categoriaProducto" name="categoria" required>
+          <option value="">Selecciona una categoría</option>
+          <option value="Especial 18">Especial 18</option>
+          <option value="Tortas Cuadradas">Tortas Cuadradas</option>
+          <option value="Tortas Circulares">Tortas Circulares</option>
+          <option value="Postres Individuales">Postres Individuales</option>
+          <option value="Productos Sin Azúcar">Productos Sin Azúcar</option>
+          <option value="Pastelería Tradicional">Pastelería Tradicional</option>
+          <option value="Productos Sin Gluten">Productos Sin Gluten</option>
+          <option value="Productos Vegana">Productos Vegana</option>
+          <option value="Tortas Especiales">Tortas Especiales</option>
+        </select>
+        <span class="form-error">Selecciona una categoría.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="precio">
+        <label for="precioProducto">Precio (CLP)</label>
+        <input type="number" id="precioProducto" name="precio" min="1" step="1" placeholder="45000" required>
+        <span class="form-error">El precio debe ser mayor a 0.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="stock">
+        <label for="stockProducto">Stock disponible</label>
+        <input type="number" id="stockProducto" name="stock" min="0" step="1" placeholder="10" required>
+        <span class="form-error">El stock no puede ser negativo.</span>
+      </div>
+
+      <div class="modal-acciones">
+        <button type="button" id="cerrarModalProducto" class="boton boton-secundario">Cancelar</button>
+        <button type="submit" class="boton boton-primario">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem;">
+  <div class="contenedor" style="text-align: center; font-size: 0.85rem; opacity: 0.85;">
+    © 2026 Pastelería Mil Sabores — Panel de Administración
+  </div>
+</footer>
+
+<script src="js/storage.js"></script>
+<script src="js/login.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

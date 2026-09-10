@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantenedor de Usuarios | Panel Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-requiere-rol="administrador">
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="admin-home.html" class="logo">
+      <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+      <span class="logo-texto">
+        Mil Sabores
+        <span class="logo-subtexto">Panel Admin</span>
+      </span>
+    </a>
+    <div class="nav-acciones">
+      <span id="rolActualAdmin" class="texto-secundario" style="font-size:0.85rem; font-weight:700;"></span>
+      <a href="index.html" class="boton boton-secundario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Ver Tienda</a>
+      <button id="cerrarSesionAdmin" class="boton boton-primario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout-admin">
+  <aside class="admin-sidebar">
+    <p class="rol-actual">Panel de Administración</p>
+    <nav>
+      <a href="admin-home.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Resumen
+      </a>
+      <a href="admin-productos.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>Productos
+      </a>
+      <a href="admin-usuarios.html" aria-current="page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Usuarios
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-contenido">
+    <div class="admin-cabecera">
+      <div>
+        <h1 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); font-weight: normal; margin-bottom: 0.3rem;">Mantenedor de Usuarios</h1>
+        <p class="texto-secundario" style="margin:0;">Gestiona clientes, vendedores y administradores.</p>
+      </div>
+      <button id="btnNuevoUsuario" class="boton boton-primario">+ Nuevo Usuario</button>
+    </div>
+
+    <div class="admin-toolbar">
+      <input type="search" id="buscarUsuario" placeholder="Buscar por nombre o correo…">
+    </div>
+
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>RUN</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpoTablaUsuarios"></tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Modal crear/editar usuario -->
+<div class="modal-fondo" id="modalUsuario">
+  <div class="modal-caja">
+    <h2 id="tituloModalUsuario" style="font-family: var(--fuente-titulos); color: var(--color-chocolate); font-weight: normal;">Nuevo Usuario</h2>
+    <form id="formUsuario" novalidate>
+
+      <div class="form-grupo" data-campo="nombre">
+        <label for="nombreUsuario">Nombre completo</label>
+        <input type="text" id="nombreUsuario" name="nombre" placeholder="Nombre completo" required>
+        <span class="form-error">Ingresa el nombre completo.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="correo">
+        <label for="correoUsuario">Correo electrónico</label>
+        <input type="email" id="correoUsuario" name="correo" placeholder="ejemplo@correo.com" required>
+        <span class="form-error">Ingresa un correo válido.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="run">
+        <label for="runUsuario">RUN (sin puntos ni guion)</label>
+        <input type="text" id="runUsuario" name="run" placeholder="Ej: 198765432">
+        <span class="form-error">RUN sin puntos ni guion (7-9 caracteres).</span>
+      </div>
+
+      <div class="form-grupo" data-campo="rol">
+        <label for="rolUsuario">Rol</label>
+        <select id="rolUsuario" name="rol" required>
+          <option value="">Selecciona un rol</option>
+          <option value="cliente">Cliente</option>
+          <option value="vendedor">Vendedor</option>
+          <option value="administrador">Administrador</option>
+        </select>
+        <span class="form-error">Selecciona un rol.</span>
+      </div>
+
+      <p class="form-ayuda">Los usuarios nuevos reciben una contraseña temporal que deberán cambiar en su primer inicio de sesión.</p>
+
+      <div class="modal-acciones">
+        <button type="button" id="cerrarModalUsuario" class="boton boton-secundario">Cancelar</button>
+        <button type="submit" class="boton boton-primario">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem;">
+  <div class="contenedor" style="text-align: center; font-size: 0.85rem; opacity: 0.85;">
+    © 2026 Pastelería Mil Sabores — Panel de Administración
+  </div>
+</footer>
+
+<script src="js/storage.js"></script>
+<script src="js/login.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
