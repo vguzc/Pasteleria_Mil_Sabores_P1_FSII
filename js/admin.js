@@ -1,13 +1,14 @@
 const LS_USUARIOS = 'usuarios';
 
 document.addEventListener('DOMContentLoaded', () => {
-  pintarNombreSesionAdmin();
+  try { pintarNombreSesionAdmin(); } catch (e) { console.error(e); }
+  try { aplicarRestriccionesRolAdmin(); } catch (e) { console.error(e); }
 
   if (document.getElementById('cuerpoTablaProductos')) {
-    inicializarMantenedorProductos();
+    try { inicializarMantenedorProductos(); } catch (e) { console.error(e); }
   }
   if (document.getElementById('cuerpoTablaUsuarios')) {
-    inicializarMantenedorUsuarios();
+    try { inicializarMantenedorUsuarios(); } catch (e) { console.error(e); }
   }
 
   const botonCerrar = document.getElementById('cerrarSesionAdmin');
@@ -22,9 +23,59 @@ function pintarNombreSesionAdmin() {
   try {
     const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
     if (sesion) {
-      marcador.textContent = `${sesion.nombre} — ${sesion.rol}`;
+      const nombre = typeof formatearNombrePropio === 'function' 
+        ? formatearNombrePropio(sesion.nombre || sesion.correo || 'Usuario') 
+        : (sesion.nombre || 'Usuario');
+      const rolLabel = typeof etiquetaRol === 'function' 
+        ? etiquetaRol(sesion.rol) 
+        : (sesion.rol || '');
+      marcador.textContent = `${nombre} — ${rolLabel}`;
     }
   } catch { /* sin sesión, se maneja por login.js */ }
+}
+
+function aplicarRestriccionesRolAdmin() {
+  const sesion = typeof obtenerSesion === 'function' ? obtenerSesion() : null;
+  if (!sesion) return;
+
+  const esVendedor = (sesion.rol || '').toLowerCase() === 'vendedor';
+
+  if (esVendedor) {
+    // 1. Cambiar el subtítulo del logo en el header de 'Panel Admin' a 'Panel Vendedor'
+    const logoSubtexto = document.querySelector('.logo-subtexto');
+    if (logoSubtexto) {
+      logoSubtexto.textContent = 'Panel Vendedor';
+    }
+
+    // 2. Cambiar el título del sidebar a 'Panel Vendedor'
+    const rolActualSidebar = document.querySelector('.admin-sidebar .rol-actual');
+    if (rolActualSidebar) {
+      rolActualSidebar.textContent = 'Panel Vendedor';
+    }
+
+    // 3. Cambiar el título del documento (browser tab)
+    if (document.title.includes('Panel Admin') || document.title.includes('Panel de Administración')) {
+      document.title = document.title.replace(/Panel Admin|Panel de Administración/g, 'Panel Vendedor');
+    }
+
+    // 4. Eliminar por completo la opción de gestión de usuarios del menú lateral (sidebar)
+    const linkUsuarios = document.querySelector('.admin-sidebar nav a[href="admin-usuarios.html"]');
+    if (linkUsuarios) {
+      linkUsuarios.remove();
+    }
+
+    // 5. Eliminar por completo la tarjeta de gestión de usuarios del panel principal (admin-home.html)
+    const tarjetaUsuarios = document.querySelector('a[href="admin-usuarios.html"]')?.closest('div');
+    if (tarjetaUsuarios) {
+      tarjetaUsuarios.remove();
+    }
+
+    // 6. Ajustar la descripción en admin-home.html si existe
+    const descripcionHome = document.querySelector('.admin-contenido p.texto-secundario');
+    if (descripcionHome && descripcionHome.textContent.includes('usuarios')) {
+      descripcionHome.textContent = 'Administra el inventario de productos y configuraciones de la pastelería.';
+    }
+  }
 }
 
 /* ==========================================================================
@@ -32,22 +83,51 @@ function pintarNombreSesionAdmin() {
    ========================================================================== */
 
 function inicializarMantenedorProductos() {
+  const inputBusqueda = document.getElementById('buscarProducto');
+  if (inputBusqueda) inputBusqueda.value = '';
+
   renderizarTablaProductos();
 
   document.getElementById('btnNuevoProducto')?.addEventListener('click', () => abrirModalProducto(null));
   document.getElementById('formProducto')?.addEventListener('submit', guardarProducto);
   document.getElementById('cerrarModalProducto')?.addEventListener('click', cerrarModalProducto);
-  document.getElementById('buscarProducto')?.addEventListener('input', renderizarTablaProductos);
+  inputBusqueda?.addEventListener('input', renderizarTablaProductos);
 }
 
 function renderizarTablaProductos() {
   const cuerpo = document.getElementById('cuerpoTablaProductos');
   if (!cuerpo) return;
-  const filtro = (document.getElementById('buscarProducto')?.value || '').toLowerCase().trim();
-  const productos = obtenerProductos().filter(p => {
-    const cod = p.id || p.codigo || '';
-    return p.nombre.toLowerCase().includes(filtro) || cod.toLowerCase().includes(filtro);
+
+  const inputBusqueda = document.getElementById('buscarProducto');
+  const filtro = (inputBusqueda?.value || '').toLowerCase().trim();
+  let listaRaw = [];
+  try {
+    listaRaw = typeof obtenerProductos === 'function' ? obtenerProductos() : [];
+  } catch (e) {
+    console.error('Error al obtener productos:', e);
+    listaRaw = [];
+  }
+
+  // Si la lista está vacía y no hay filtro activo, restablecer productos iniciales de respaldo
+  if ((!Array.isArray(listaRaw) || listaRaw.length === 0) && filtro === '') {
+    if (typeof PRODUCTOS_INICIALES !== 'undefined' && Array.isArray(PRODUCTOS_INICIALES)) {
+      listaRaw = PRODUCTOS_INICIALES;
+      if (typeof guardarProductos === 'function') guardarProductos(PRODUCTOS_INICIALES);
+    }
+  }
+
+  let productos = listaRaw.filter(p => {
+    if (!p || typeof p !== 'object') return false;
+    const cod = String(p.id || p.codigo || '').toLowerCase();
+    const nom = String(p.nombre || '').toLowerCase();
+    const cat = String(p.categoria || '').toLowerCase();
+    return nom.includes(filtro) || cod.includes(filtro) || cat.includes(filtro);
   });
+
+  if (productos.length === 0 && filtro === '' && typeof PRODUCTOS_INICIALES !== 'undefined') {
+    productos = PRODUCTOS_INICIALES;
+    if (typeof guardarProductos === 'function') guardarProductos(PRODUCTOS_INICIALES);
+  }
 
   if (productos.length === 0) {
     cuerpo.innerHTML = `<tr><td colspan="6" class="tabla-vacia">No hay productos que coincidan con la búsqueda.</td></tr>`;
@@ -55,14 +135,19 @@ function renderizarTablaProductos() {
   }
 
   cuerpo.innerHTML = productos.map(p => {
-    const cod = p.id || p.codigo;
+    const cod = p.id || p.codigo || 'S/C';
+    const nom = p.nombre || 'Sin nombre';
+    const cat = p.categoria || 'Sin categoría';
+    const prec = Number(p.precio) || 0;
+    const stk = Number(p.stock) || 0;
+
     return `
       <tr>
-        <td>${cod}</td>
-        <td>${p.nombre}</td>
-        <td>${p.categoria}</td>
-        <td>$${Number(p.precio).toLocaleString('es-CL')}</td>
-        <td>${etiquetaStock(p.stock)}</td>
+        <td><strong>${cod}</strong></td>
+        <td>${nom}</td>
+        <td>${cat}</td>
+        <td>$${prec.toLocaleString('es-CL')}</td>
+        <td>${etiquetaStock(stk)}</td>
         <td class="acciones-fila">
           <button class="boton-icono" title="Editar" onclick="abrirModalProducto('${cod}')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>

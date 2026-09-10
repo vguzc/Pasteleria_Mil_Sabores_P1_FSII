@@ -222,30 +222,22 @@ const PRODUCTOS_INICIALES = [
  * @returns {Array} Arreglo de productos.
  */
 function obtenerProductos() {
-  const VERSION_CATALOGO = 'v26_empanada_sin_gluten';
-  const versionActual = localStorage.getItem('mil_sabores_version_catalogo');
-
-  // Si la versión guardada en el navegador es antigua o inexistente, forzar reseteo a los 16 productos oficiales
-  if (versionActual !== VERSION_CATALOGO) {
-    localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
-    localStorage.setItem('mil_sabores_version_catalogo', VERSION_CATALOGO);
-    return PRODUCTOS_INICIALES;
-  }
-
   const datosGuardados = localStorage.getItem(CLAVE_PRODUCTOS);
-  if (!datosGuardados) {
-    localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
-    return PRODUCTOS_INICIALES;
+  if (datosGuardados) {
+    try {
+      const prods = JSON.parse(datosGuardados);
+      if (Array.isArray(prods) && prods.length > 0) {
+        return prods;
+      }
+    } catch (e) {
+      console.error('Error al leer productos de localStorage:', e);
+    }
   }
 
-  try {
-    const prods = JSON.parse(datosGuardados);
-    return Array.isArray(prods) && prods.length > 0 ? prods : PRODUCTOS_INICIALES;
-  } catch (error) {
-    console.error('Error al parsear productos de localStorage:', error);
-    localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
-    return PRODUCTOS_INICIALES;
-  }
+  // Si no hay datos válidos o el arreglo está vacío, forzar reseteo con el catálogo inicial
+  localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
+  localStorage.setItem('mil_sabores_version_catalogo', 'v27_catalogo_oficial');
+  return PRODUCTOS_INICIALES;
 }
 
 /**
@@ -334,10 +326,9 @@ const CLAVE_CUPON = 'mil_sabores_cupon';
  * Cupones de descuento oficiales disponibles en el sitio.
  */
 const CUPONES_VALIDOS = {
-  'FELICES50': { porcentaje: 10, nombre: 'Aniversario 50 Años (10% OFF)' },
+  'FELICES50': { porcentaje: 50, nombre: 'Especial 50 Años (50% OFF)' },
   'DUOC10': { porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' },
-  'ESPECIAL18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' },
-  'FIESTAS18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' }
+  'ESPECIAL18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' }
 };
 
 /**

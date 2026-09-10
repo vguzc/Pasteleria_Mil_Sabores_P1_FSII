@@ -400,12 +400,38 @@ function procesarAplicarCupon(inputId) {
 
   const codigo = inputEl.value.trim().toUpperCase();
   const feedbackId = inputId === 'inputCuponBolsa' ? 'mensajeCuponBolsa' : 'mensajeCuponDrawer';
-  const feedbackEl = document.getElementById(feedbackId);
 
-  if (!codigo) {
+  if (!codigo) return;
+
+  const sesionStr = localStorage.getItem('sesionActiva');
+  const sesion = sesionStr ? JSON.parse(sesionStr) : null;
+  const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+  const usuario = sesion ? (usuarios.find(u => (u.correo || '').toLowerCase() === sesion.correo.toLowerCase()) || sesion) : null;
+  const cuponesUsados = usuario ? (usuario.cuponesUsados || []) : [];
+
+  if (cuponesUsados.includes(codigo)) {
     if (feedbackEl) {
       feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
-      feedbackEl.textContent = 'Por favor ingresa un código de cupón.';
+      feedbackEl.textContent = `Ya has utilizado el cupón "${codigo}" en una compra anterior.`;
+    }
+    return;
+  }
+
+  const correo = usuario ? (usuario.correo || '').toLowerCase() : '';
+  const esDuoc = correo.endsWith('@duocuc.cl') || correo.endsWith('@profesor.duoc.cl') || correo.endsWith('@duoc.cl');
+
+  if (codigo === 'DUOC10' && !esDuoc) {
+    if (feedbackEl) {
+      feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
+      feedbackEl.textContent = 'El cupón DUOC10 es exclusivo para convenios institucionales Duoc UC (@duocuc.cl / @profesor.duoc.cl).';
+    }
+    return;
+  }
+
+  if (codigo === 'FELICES50' && usuario && (usuario.edad === undefined || usuario.edad < 50)) {
+    if (feedbackEl) {
+      feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
+      feedbackEl.textContent = 'El cupón FELICES50 requiere tener 50 años o más.';
     }
     return;
   }
@@ -425,6 +451,39 @@ function procesarAplicarCupon(inputId) {
       feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
       feedbackEl.textContent = 'El cupón ingresado no es válido.';
     }
+  }
+}
+
+/**
+ * Marca un cupón como utilizado en la cuenta del usuario activo para eliminarlo en futuras compras.
+ */
+function marcarCuponUsadoParaUsuario(codigoCupon) {
+  if (!codigoCupon) return;
+
+  try {
+    const sesionStr = localStorage.getItem('sesionActiva');
+    const sesion = sesionStr ? JSON.parse(sesionStr) : null;
+    if (!sesion || !sesion.correo) return;
+
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    const index = usuarios.findIndex(u => (u.correo || '').toLowerCase() === sesion.correo.toLowerCase());
+
+    if (index !== -1) {
+      const cuponesUsados = usuarios[index].cuponesUsados || [];
+      if (!cuponesUsados.includes(codigoCupon)) {
+        cuponesUsados.push(codigoCupon);
+      }
+      usuarios[index].cuponesUsados = cuponesUsados;
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    }
+
+    sesion.cuponesUsados = sesion.cuponesUsados || [];
+    if (!sesion.cuponesUsados.includes(codigoCupon)) {
+      sesion.cuponesUsados.push(codigoCupon);
+    }
+    localStorage.setItem('sesionActiva', JSON.stringify(sesion));
+  } catch (err) {
+    console.error('Error al marcar cupón usado:', err);
   }
 }
 
@@ -454,6 +513,7 @@ function procesarPagoSimulado() {
   resumenMsg += `- Subtotal: $${subtotal.toLocaleString('es-CL')}\n`;
   if (cupon) {
     resumenMsg += `- Cupón ${cupon.codigo}: -$${descuentoMonto.toLocaleString('es-CL')} (${cupon.porcentaje}% OFF)\n`;
+    marcarCuponUsadoParaUsuario(cupon.codigo);
   }
   resumenMsg += `- Total Pagado: $${total.toLocaleString('es-CL')}\n\n`;
   resumenMsg += `Tu pedido ha sido procesado exitosamente.`;

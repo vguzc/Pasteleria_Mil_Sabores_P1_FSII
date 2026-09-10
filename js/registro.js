@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Obtención de Valores
         const run = document.getElementById("run").value.trim();
-        const nombre = document.getElementById("nombre").value.trim();
-        const apellidos = document.getElementById("apellidos").value.trim();
+        const nombre = formatearNombrePropio(document.getElementById("nombre").value);
+        const apellidos = formatearNombrePropio(document.getElementById("apellidos").value);
         const correo = document.getElementById("correo").value.trim().toLowerCase();
         const fechaNac = document.getElementById("fechaNacimiento").value;
         const direccion = document.getElementById("direccion").value.trim();
@@ -119,11 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
             beneficios.push("50% de Descuento por tener 50 años o más (Especial 50° Aniversario)");
         }
 
-        const esDominioDuoc = correo.endsWith("@duocuc.cl") || correo.endsWith("@profesor.duoc.cl");
-        const esCumpleaniosHoy = (hoy.getMonth() === fechaNacDate.getMonth()) && (hoy.getDate() === fechaNacDate.getDate());
+        const esDominioDuoc = correo.endsWith("@duocuc.cl") || correo.endsWith("@profesor.duoc.cl") || correo.endsWith("@duoc.cl");
 
-        if (esDominioDuoc && esCumpleaniosHoy) {
-            beneficios.push("🎂 ¡Torta Gratis de Convenio Duoc por estar de Cumpleaños Hoy!");
+        if (esDominioDuoc) {
+            beneficios.push("Convenio Duoc UC: 10% OFF en productos (código DUOC10) y Torta Gratis en la semana de tu cumpleaños.");
         }
 
         const nuevoUsuario = {
@@ -138,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             region: regionesYComunas[regionIndex].region,
             comuna,
             beneficios,
+            cuponesUsados: [],
             rol: "Cliente"
         };
 
@@ -232,4 +232,19 @@ function validarRUNChileno(runCompleto) {
     else dvEsperado = String(resto);
 
     return dvIngresado === dvEsperado;
+}
+
+/**
+ * Formatea un nombre propio o apellidos con mayúscula inicial en cada palabra (Capital Case).
+ * @param {string} texto 
+ * @returns {string}
+ */
+function formatearNombrePropio(texto) {
+    if (!texto || typeof texto !== 'string') return '';
+    return texto
+        .trim()
+        .toLowerCase()
+        .split(/\s+/)
+        .map(palabra => palabra ? palabra.charAt(0).toUpperCase() + palabra.slice(1) : '')
+        .join(' ');
 }

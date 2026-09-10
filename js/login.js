@@ -221,11 +221,13 @@ function manejarEnvioLogin(evento) {
 }
 
 function iniciarSesion(usuario) {
-  const nombreUsuario = usuario.nombre || (usuario.correo ? usuario.correo.split('@')[0] : 'Cliente');
+  const nombreRaw = usuario.nombre || (usuario.correo ? usuario.correo.split('@')[0] : 'Cliente');
+  const nombreFormateado = formatearNombrePropio(nombreRaw);
+  const apellidosFormateados = formatearNombrePropio(usuario.apellidos || '');
   const sesion = {
     correo: usuario.correo,
-    nombre: nombreUsuario,
-    apellidos: usuario.apellidos || '',
+    nombre: nombreFormateado,
+    apellidos: apellidosFormateados,
     rol: (usuario.rol || 'cliente').toLowerCase(),
     inicio: new Date().toISOString()
   };
@@ -233,6 +235,16 @@ function iniciarSesion(usuario) {
   if (typeof StorageManager !== 'undefined' && StorageManager.guardarSesion) {
     StorageManager.guardarSesion(sesion);
   }
+}
+
+function formatearNombrePropio(texto) {
+  if (!texto || typeof texto !== 'string') return '';
+  return texto
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .map(p => p ? p.charAt(0).toUpperCase() + p.slice(1) : '')
+    .join(' ');
 }
 
 function cerrarSesion(evento) {
@@ -266,8 +278,14 @@ function protegerRutaSiCorresponde() {
   const permitidos = rolesRequeridos.split(',').map(r => r.trim().toLowerCase());
   const sesion = obtenerSesion();
 
-  if (!sesion || !permitidos.includes((sesion.rol || '').toLowerCase())) {
+  if (!sesion) {
     window.location.href = 'login.html';
+    return;
+  }
+
+  const rolActual = (sesion.rol || '').toLowerCase();
+  if (!permitidos.includes(rolActual)) {
+    window.location.href = destinoSegunRol(rolActual);
   }
 }
 
@@ -280,8 +298,12 @@ function pintarEstadoSesionEnHeader() {
   if (!userElement) return;
 
   if (sesion && sesion.nombre) {
-    const primerNombre = sesion.nombre.trim().split(' ')[0];
-    
+    const primerNombre = formatearNombrePropio(sesion.nombre.trim().split(' ')[0]);
+    const rolL = (sesion.rol || '').toLowerCase();
+    const esAdmin = rolL === 'administrador';
+    const esVendedor = rolL === 'vendedor';
+    const textoPanel = esVendedor ? 'Panel Vendedor' : (esAdmin ? 'Panel Admin' : '');
+
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = `
       <div class="contenedor-usuario-header" id="contenedorUsuarioHeader">
@@ -303,6 +325,17 @@ function pintarEstadoSesionEnHeader() {
             </svg>
             Mi Cuenta
           </a>
+          ${(esAdmin || esVendedor) ? `
+          <a href="admin-home.html" role="menuitem">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            ${textoPanel}
+          </a>
+          ` : ''}
           <div class="separador-menu"></div>
           <a href="#" id="btnCerrarSesionDropdown" role="menuitem" style="color: var(--color-error, #D32F2F);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
