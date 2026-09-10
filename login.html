@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión | Pastelería Mil Sabores</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/formularios.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="index.html" class="logo">🎂 Mil Sabores</a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Catálogo</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="blogs.html">Blog</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="nav-acciones">
+      <a href="carrito.html" class="icono-boton" aria-label="Ver carrito">🛒</a>
+      <a href="login.html" class="icono-boton" aria-label="Iniciar sesión" aria-current="page">👤</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="panel-formulario tarjeta">
+    <h1>Bienvenido de vuelta</h1>
+    <p class="subtitulo">Inicia sesión para gestionar tus pedidos y beneficios.</p>
+
+    <div id="mensajeLogin" class="mensaje-alerta error oculto" role="alert"></div>
+
+    <form id="formLogin" novalidate>
+
+      <div class="form-grupo" data-campo="rol">
+        <label for="rol">Ingresar como</label>
+        <div class="selector-rol">
+          <label><input type="radio" name="rol" value="cliente" checked> Cliente</label>
+          <label><input type="radio" name="rol" value="vendedor"> Vendedor</label>
+          <label><input type="radio" name="rol" value="administrador"> Admin</label>
+        </div>
+      </div>
+
+      <div class="form-grupo" data-campo="correo">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" autocomplete="username" required>
+        <span class="form-error">Ingresa un correo electrónico válido.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="clave">
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" name="clave" autocomplete="current-password" required minlength="4">
+        <span class="form-error">La contraseña debe tener al menos 4 caracteres.</span>
+      </div>
+
+      <button type="submit" class="boton boton-primario boton-bloque">Iniciar sesión</button>
+    </form>
+
+    <p class="pie-formulario">
+      ¿Aún no tienes cuenta? <a href="registro.html">Regístrate aquí</a>
+    </p>
+  </section>
+</main>
+
+<footer class="pie-pagina">
+  <div class="contenedor">
+    <div>
+      <h3>Mil Sabores</h3>
+      <p>Repostería artesanal chilena desde hace 50 años.</p>
+    </div>
+    <div>
+      <h3>Enlaces</h3>
+      <a href="nosotros.html">Nuestra historia</a><br>
+      <a href="blogs.html">Blog</a><br>
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div>
+      <h3>Cuenta</h3>
+      <a href="login.html">Iniciar sesión</a><br>
+      <a href="registro.html">Registrarme</a>
+    </div>
+    <p class="copy">© 2026 Pastelería Mil Sabores. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/login.js"></script>
+</body>
+</html>
