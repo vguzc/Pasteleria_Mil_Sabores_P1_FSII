@@ -152,9 +152,9 @@ function renderizarDrawerCarrito() {
       <span>Subtotal:</span>
       <span>$${subtotal.toLocaleString('es-CL')}</span>
     </div>
-    <button onclick="procesarPagoSimulado()" class="boton-pill-dark" style="width:100%;">
+    <a href="carrito.html" onclick="irAlCarritoPage(event)" class="boton-pill-dark" style="width:100%; text-decoration:none; text-align:center;">
       Proceder al Pago
-    </button>
+    </a>
   `;
 }
 
@@ -164,31 +164,7 @@ function renderizarDrawerCarrito() {
 function renderizarPaginaCarrito() {
   const carrito = obtenerCarrito();
   const contenedor = document.getElementById('contenedorCarritoPage');
-  const barraWrapper = document.getElementById('barraDespachoWrapper');
   if (!contenedor) return;
-
-  const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-  const metaEnvioGratis = 30000;
-  const faltante = metaEnvioGratis - subtotal;
-  const porcentaje = Math.min(100, Math.round((subtotal / metaEnvioGratis) * 100));
-
-  // Renderizar la barra de envío express gratis
-  if (barraWrapper) {
-    if (carrito.length === 0) {
-      barraWrapper.innerHTML = '';
-    } else {
-      const textoDespacho = subtotal >= metaEnvioGratis
-        ? '¡Felicidades! Tienes <strong>despacho express gratis</strong>.'
-        : `Agrega <strong>$${faltante.toLocaleString('es-CL')}</strong> y obtén <strong>despacho express gratis</strong>.`;
-
-      barraWrapper.innerHTML = `
-        <p class="texto-despacho-express">${textoDespacho}</p>
-        <div class="track-barra-despacho">
-          <div class="fill-barra-despacho" style="width: ${porcentaje}%;"></div>
-        </div>
-      `;
-    }
-  }
 
   // Si el carrito está vacío: Tarjeta vacía con tipografía oficial de marca y texto ajustado
   if (carrito.length === 0) {
@@ -205,6 +181,8 @@ function renderizarPaginaCarrito() {
     `;
     return;
   }
+
+  const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
   // Si el carrito tiene productos: Tabla elegante centrada en tarjeta
   contenedor.innerHTML = `
@@ -314,7 +292,16 @@ function vaciarCarritoCompleto() {
 }
 
 /**
- * Simulación de pago y checkout.
+ * Dirige al usuario a la página completa de la bolsa (carrito.html).
+ */
+function irAlCarritoPage(e) {
+  if (e) e.preventDefault();
+  cerrarDrawerCarrito();
+  window.location.href = 'carrito.html';
+}
+
+/**
+ * Simulación de pago y checkout en la página del carrito.
  */
 function procesarPagoSimulado() {
   const carrito = obtenerCarrito();
