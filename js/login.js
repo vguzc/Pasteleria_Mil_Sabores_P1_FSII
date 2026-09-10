@@ -14,10 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
     formLogin.addEventListener('submit', manejarEnvioLogin);
   }
 
-  const botonCerrar = document.getElementById('cerrarSesion');
-  if (botonCerrar) {
-    botonCerrar.addEventListener('click', cerrarSesion);
-  }
+  const botonesCerrar = document.querySelectorAll('#cerrarSesion, #cerrarSesionAdmin, #btnCerrarSesionDropdown, .btn-cerrar-sesion');
+  botonesCerrar.forEach(btn => {
+    btn.addEventListener('click', cerrarSesion);
+  });
+
+  document.addEventListener('click', (evento) => {
+    const btnLogout = evento.target.closest('#cerrarSesion, #cerrarSesionAdmin, #btnCerrarSesionDropdown, .btn-cerrar-sesion, [data-action="logout"]');
+    if (btnLogout) {
+      evento.preventDefault();
+      cerrarSesion(evento);
+    }
+  });
 
   pintarEstadoSesionEnHeader();
 });
@@ -108,9 +116,19 @@ function sembrarCuentasDemo() {
 
   let modificado = false;
   cuentasDemo.forEach(demo => {
-    if (!usuarios.some(u => u.correo.toLowerCase() === demo.correo.toLowerCase())) {
+    const idx = usuarios.findIndex(u => (u.correo || '').toLowerCase() === demo.correo.toLowerCase());
+    if (idx === -1) {
       usuarios.push(demo);
       modificado = true;
+    } else {
+      if ((usuarios[idx].rol || '').toLowerCase() !== demo.rol) {
+        usuarios[idx].rol = demo.rol;
+        modificado = true;
+      }
+      if (!usuarios[idx].clave) {
+        usuarios[idx].clave = demo.clave;
+        modificado = true;
+      }
     }
   });
 
@@ -174,27 +192,31 @@ function manejarEnvioLogin(evento) {
     const usuarios = obtenerUsuarios();
     const usuarioExistente = usuarios.find(u => (u.correo || '').toLowerCase() === correo);
 
-    let usuario = null;
-
-    if (usuarioExistente) {
-      if (String(usuarioExistente.clave).trim() === clave) {
-        usuario = usuarioExistente;
+    if (!usuarioExistente) {
+      marcarError(correoInput, true, 'Esta cuenta no existe.');
+      if (mensaje) {
+        mostrarMensaje(
+          mensaje,
+          'El correo electrónico ingresado no se encuentra registrado. Por favor verifica tus datos o regístrate para crear una cuenta.',
+          'error'
+        );
       } else {
-        marcarError(claveInput, true, 'Contraseña incorrecta.');
-        if (mensaje) mostrarMensaje(mensaje, 'Contraseña incorrecta. Intenta nuevamente.', 'error');
-        else alert('Contraseña incorrecta.');
-        return;
+        alert('El correo electrónico ingresado no se encuentra registrado. Por favor regístrate.');
       }
-    } else {
-      // Si la cuenta no está explícitamente en el localStorage, se inicia sesión como cliente por defecto
-      usuario = {
-        nombre: correo.split('@')[0],
-        correo: correo,
-        clave: clave,
-        rol: 'cliente'
-      };
+      return;
     }
 
+    if (String(usuarioExistente.clave).trim() !== clave) {
+      marcarError(claveInput, true, 'Contraseña incorrecta.');
+      if (mensaje) {
+        mostrarMensaje(mensaje, 'Contraseña incorrecta. Intenta nuevamente.', 'error');
+      } else {
+        alert('Contraseña incorrecta.');
+      }
+      return;
+    }
+
+    const usuario = usuarioExistente;
     usuario.rol = (usuario.rol || 'cliente').toLowerCase();
 
     // Guardar o eliminar el correo recordado
@@ -261,7 +283,7 @@ function destinoSegunRol(rol) {
   const rolL = (rol || '').toLowerCase();
   switch (rolL) {
     case 'administrador': return 'admin-home.html';
-    case 'vendedor': return 'admin-home.html';
+    case 'vendedor': return 'vendedor-home.html';
     default: return 'index.html';
   }
 }
@@ -303,6 +325,7 @@ function pintarEstadoSesionEnHeader() {
     const rolL = (sesion.rol || '').toLowerCase();
     const esAdmin = rolL === 'administrador';
     const esVendedor = rolL === 'vendedor';
+    const urlPanel = esVendedor ? 'vendedor-home.html' : 'admin-home.html';
     const textoPanel = esVendedor ? 'Panel Vendedor' : (esAdmin ? 'Panel Admin' : '');
 
     const tempDiv = document.createElement('div');
@@ -327,7 +350,7 @@ function pintarEstadoSesionEnHeader() {
             Mi Cuenta
           </a>
           ${(esAdmin || esVendedor) ? `
-          <a href="admin-home.html" role="menuitem">
+          <a href="${urlPanel}" role="menuitem">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
@@ -502,7 +525,7 @@ function configurarModalCambiarClave() {
         guardarUsuarios(usuarios);
 
         if (mensaje) {
-          mostrarMensaje(mensaje, '¡Contraseña actualizada con éxito! Redirigiendo...', 'exito');
+          mostrarMensaje(mensaje, '¡Contraseña actualizada con éxito! Ya puedes iniciar sesión con tu nueva clave.', 'exito');
         }
 
         if (correoInput) {
@@ -516,28 +539,10 @@ function configurarModalCambiarClave() {
         }, 1300);
 
       } else {
-        const usuarioNuevo = {
-          nombre: correo.split('@')[0],
-          correo: correo,
-          clave: clave,
-          rol: 'cliente'
-        };
-        usuarios.push(usuarioNuevo);
-        guardarUsuarios(usuarios);
-
+        marcarError(correoRec, true, 'Esta cuenta no existe.');
         if (mensaje) {
-          mostrarMensaje(mensaje, '¡Cuenta actualizada con tu nueva contraseña! Ya puedes iniciar sesión.', 'exito');
+          mostrarMensaje(mensaje, 'No encontramos una cuenta registrada con este correo. Por favor verifica los datos o regístrate para crear una cuenta.', 'error');
         }
-
-        if (correoInput) {
-          correoInput.value = correo;
-        }
-
-        setTimeout(() => {
-          cerrarModal();
-          const claveInput = document.getElementById('claveLogin') || document.getElementById('clave');
-          if (claveInput) claveInput.focus();
-        }, 1300);
       }
     });
   }
