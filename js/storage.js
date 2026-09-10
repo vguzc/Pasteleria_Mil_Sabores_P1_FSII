@@ -17,7 +17,7 @@ const PRODUCTOS_INICIALES = [
     precio: 24990,
     stock: 10,
     descripcion: 'Bizcocho esponjoso remojado en combinación de tres leches, cubierto con fino merengue italiano.',
-    imagen: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/torta-tres-leches-cuadrada.png',
     destacado: true
   },
   {
@@ -27,7 +27,7 @@ const PRODUCTOS_INICIALES = [
     precio: 26990,
     stock: 8,
     descripcion: 'Capas de hojarasca crujiente rellenadas con manjar artesanal, crema de lúcuma fresca y suave crema pastelera.',
-    imagen: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/torta-amor-lucuma.png',
     destacado: true
   },
   {
@@ -37,7 +37,7 @@ const PRODUCTOS_INICIALES = [
     precio: 3490,
     stock: 25,
     descripcion: 'Base crocante de galleta mantequilla, crema suave de limón natural y copo de merengue dorado al soplete.',
-    imagen: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/pie-de-limon.png',
     destacado: false
   },
   {
@@ -47,7 +47,7 @@ const PRODUCTOS_INICIALES = [
     precio: 28990,
     stock: 6,
     descripcion: 'Bizcocho de cacao 70% endulzado con alulosa y stevia, rellenado con ganache de chocolate sin azúcar añadida.',
-    imagen: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/torta-chocolate-sin-azucar.png',
     destacado: true
   },
   {
@@ -57,7 +57,7 @@ const PRODUCTOS_INICIALES = [
     precio: 5990,
     stock: 20,
     descripcion: 'Deliciosos alfajores tradicionales de hojarasca fina rellenados generosamente con abundante manjar casero.',
-    imagen: 'https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/alfajores-hojarasca.png',
     destacado: false
   },
   {
@@ -67,7 +67,7 @@ const PRODUCTOS_INICIALES = [
     precio: 27990,
     stock: 5,
     descripcion: 'Cheesecake horneado con base libre de gluten (harina de almendras) y salsa artesanal de frutos del bosque.',
-    imagen: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/cheesecake-frutos-rojos.png',
     destacado: true
   },
   {
@@ -77,7 +77,7 @@ const PRODUCTOS_INICIALES = [
     precio: 29990,
     stock: 7,
     descripcion: 'Elaborada sin productos de origen animal. Bizcocho húmedo de cacao con crema de trufa a base de leche de coco.',
-    imagen: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/torta-vegana-trufa-cacao.png',
     destacado: false
   },
   {
@@ -87,7 +87,7 @@ const PRODUCTOS_INICIALES = [
     precio: 34990,
     stock: 4,
     descripcion: 'Edición conmemorativa de 50 años. Espectacular torta artesanal de tres pisos decorada con cremas artesanales, flores y frutos rojos.',
-    imagen: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80',
+    imagen: 'img/torta-aniversario.png',
     destacado: true
   }
 ];
@@ -104,14 +104,14 @@ function obtenerProductos() {
   }
   try {
     const prods = JSON.parse(datosGuardados);
-    // Actualizar imágenes y descripciones si existen en el catálogo base
     let modificado = false;
     prods.forEach(p => {
       const base = PRODUCTOS_INICIALES.find(b => b.id === p.id);
       if (base) {
-        if (p.imagen !== base.imagen || p.descripcion !== base.descripcion) {
+        if (p.imagen !== base.imagen || p.descripcion !== base.descripcion || p.nombre !== base.nombre) {
           p.imagen = base.imagen;
           p.descripcion = base.descripcion;
+          p.nombre = base.nombre;
           modificado = true;
         }
       }
