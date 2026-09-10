@@ -190,9 +190,54 @@ main { min-height: 60vh; }
 
 .nav-acciones {
   display: flex;
-  gap: 0.85rem;
+  gap: 1.25rem;
   align-items: center;
   flex-shrink: 0;
+}
+
+/* Iconos Minimalistas SVG (Usuario y Carrito) */
+.nav-icono-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-chocolate);
+  padding: 0.35rem;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  transition: transform var(--transicion);
+}
+
+.nav-icono-link svg {
+  width: 25px;
+  height: 25px;
+  stroke: var(--color-chocolate);
+  transition: stroke var(--transicion), transform var(--transicion);
+}
+
+.nav-icono-link:hover svg {
+  stroke: var(--color-chocolate-oscuro);
+  transform: scale(1.12);
+}
+
+.badge-carrito {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  background-color: var(--color-chocolate);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  border: 2px solid var(--color-blanco);
 }
 
 .icono-boton {

@@ -29,6 +29,16 @@ function inicializarCatalogo(grilla) {
 
   let todosLosProductos = obtenerProductos();
 
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+  if (catParam && selectCategoria) {
+    const opciones = Array.from(selectCategoria.options).map(o => o.value);
+    const coincidencia = opciones.find(o => o.toLowerCase().includes(catParam.toLowerCase()));
+    if (coincidencia) {
+      selectCategoria.value = coincidencia;
+    }
+  }
+
   function filtrarYRenderizar() {
     let resultado = [...todosLosProductos];
 

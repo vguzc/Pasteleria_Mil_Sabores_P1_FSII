@@ -41,8 +41,13 @@ function inyectarDrawerCarrito() {
   drawer.className = 'drawer-carrito';
   drawer.innerHTML = `
     <div class="drawer-header">
-      <h3>🛒 Tu Carrito (<span id="drawerContadorItems">0</span>)</h3>
-      <button class="btn-cerrar-drawer" onclick="cerrarDrawerCarrito()">&times;</button>
+      <h3>Tu bolsa</h3>
+      <button class="btn-cerrar-drawer" onclick="cerrarDrawerCarrito()" aria-label="Cerrar bolsa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
     <div id="drawerCuerpoItems" class="drawer-cuerpo"></div>
     <div id="drawerFooterSummary" class="drawer-footer"></div>
@@ -84,21 +89,36 @@ function cerrarDrawerCarrito() {
 function renderizarDrawerCarrito() {
   const cuerpo = document.getElementById('drawerCuerpoItems');
   const footer = document.getElementById('drawerFooterSummary');
-  const contador = document.getElementById('drawerContadorItems');
   if (!cuerpo || !footer) return;
 
   const carrito = obtenerCarrito();
-  const totalUnidades = obtenerTotalUnidadesCarrito();
-
-  if (contador) contador.textContent = totalUnidades;
 
   if (carrito.length === 0) {
     cuerpo.innerHTML = `
-      <div class="estado-vacio" style="padding:2.5rem 1rem; margin:auto 0;">
-        <span style="font-size: 3rem; display:block; margin-bottom:0.5rem;">🛒</span>
-        <h3 style="font-size:1.3rem;">Tu carrito está vacío</h3>
-        <p style="font-size:0.9rem; margin-bottom:1rem;">¡Agrega tus tortas y postres favoritos!</p>
-        <button onclick="cerrarDrawerCarrito()" class="boton boton-primario" style="font-size:0.85rem; padding:0.6rem 1.2rem;">Ver Catálogo</button>
+      <div class="bolsa-vacia-container">
+        <h4 class="bolsa-vacia-titulo">Tu bolsa está vacía.</h4>
+        <p class="bolsa-vacia-subtitulo">
+          ¿No sabes por dónde comenzar?<br>
+          Prueba con estas categorías:
+        </p>
+
+        <a href="productos.html?cat=Tortas+Circulares" class="tarjeta-categoria-sugerida" onclick="cerrarDrawerCarrito()">
+          <img src="img/torta-amor-lucuma.png" alt="Tortas" class="cat-sugerida-thumb">
+          <span class="cat-sugerida-nombre">Tortas</span>
+          <span class="cat-sugerida-flecha">↗</span>
+        </a>
+
+        <a href="productos.html?cat=Postres+Individuales" class="tarjeta-categoria-sugerida" onclick="cerrarDrawerCarrito()">
+          <img src="img/pie-de-limon.png" alt="Postres" class="cat-sugerida-thumb">
+          <span class="cat-sugerida-nombre">Postres</span>
+          <span class="cat-sugerida-flecha">↗</span>
+        </a>
+
+        <a href="productos.html?cat=Pastelería+Tradicional" class="tarjeta-categoria-sugerida" onclick="cerrarDrawerCarrito()">
+          <img src="img/alfajores-hojarasca.png" alt="Alfajores" class="cat-sugerida-thumb">
+          <span class="cat-sugerida-nombre">Alfajores</span>
+          <span class="cat-sugerida-flecha">↗</span>
+        </a>
       </div>
     `;
     footer.innerHTML = '';
