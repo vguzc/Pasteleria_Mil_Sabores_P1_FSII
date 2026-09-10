@@ -196,7 +196,8 @@ main { min-height: 60vh; }
 }
 
 /* Iconos Minimalistas SVG (Usuario y Carrito) */
-.nav-icono-link {
+.nav-icono-link,
+.icono-boton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -240,20 +241,6 @@ main { min-height: 60vh; }
   border: 2px solid var(--color-blanco);
 }
 
-.icono-boton {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-fondo);
-  transition: background var(--transicion);
-}
-
-.icono-boton:hover { background: var(--color-rosa); }
-
 .menu-toggle {
   display: none;
   background: none;
@@ -264,7 +251,8 @@ main { min-height: 60vh; }
 }
 
 @media (max-width: 800px) {
-  .nav-principal { display: none; }
+  .nav-principal,
+  .navegacion { display: none; }
   .menu-toggle { display: block; }
 }
 

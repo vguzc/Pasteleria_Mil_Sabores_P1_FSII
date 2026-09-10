@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog y recetas | Pastelería Mil Sabores</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .grid-blog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--espacio-md);
+  }
+  .tarjeta-blog { padding: 0; overflow: hidden; }
+  .tarjeta-blog .imagen-blog {
+    height: 160px;
+    background: linear-gradient(135deg, var(--color-rosa), var(--color-fondo));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+  }
+  .tarjeta-blog .contenido-blog { padding: var(--espacio-md); }
+  .tarjeta-blog .categoria {
+    color: var(--color-chocolate);
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .tarjeta-blog h3 { margin-bottom: 0.4rem; }
+  .tarjeta-blog .fecha { color: var(--color-texto-secundario); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="index.html" class="logo">🎂 Mil Sabores</a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Catálogo</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="blogs.html" aria-current="page">Blog</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="nav-acciones">
+      <a href="carrito.html" class="icono-boton" aria-label="Ver carrito">🛒</a>
+      <a href="login.html" class="icono-boton" aria-label="Iniciar sesión">👤</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="contenedor">
+      <p class="eyebrow">Aprende y celébra con nosotros</p>
+      <h1>Recetas y noticias del taller</h1>
+      <p class="centrado" style="margin-inline:auto;">
+        Consejos de repostería, novedades de la pastelería y aportes de estudiantes
+        de gastronomía de Duoc UC.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccion seccion-alterna">
+    <div class="contenedor">
+      <div class="grid-blog">
+
+        <article class="tarjeta tarjeta-blog">
+          <a href="detalle-blog-1.html">
+            <div class="imagen-blog">🍰</div>
+            <div class="contenido-blog">
+              <span class="categoria">Receta</span>
+              <h3>Cómo lograr un manjar casero perfecto</h3>
+              <p>Los estudiantes de gastronomía de Duoc comparten su técnica para un
+                 manjar suave, sin grumos y con el punto de dulzor justo.</p>
+              <span class="fecha">12 de agosto, 2026</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tarjeta tarjeta-blog">
+          <a href="detalle-blog-2.html">
+            <div class="imagen-blog">🎉</div>
+            <div class="contenido-blog">
+              <span class="categoria">Noticia</span>
+              <h3>Así celebramos nuestro 50° aniversario</h3>
+              <p>Un repaso a las actividades, sorpresas y descuentos especiales
+                 que preparamos para este año redondo.</p>
+              <span class="fecha">3 de agosto, 2026</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="tarjeta tarjeta-blog">
+          <a href="#">
+            <div class="imagen-blog">🌾</div>
+            <div class="contenido-blog">
+              <span class="categoria">Consejo</span>
+              <h3>Repostería sin gluten: qué considerar</h3>
+              <p>Tips prácticos para lograr bizcochos sin gluten húmedos y con
+                 buena estructura, sin sacrificar sabor.</p>
+              <span class="fecha">28 de julio, 2026</span>
+            </div>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie-pagina">
+  <div class="contenedor">
+    <div>
+      <h3>Mil Sabores</h3>
+      <p>Repostería artesanal chilena desde hace 50 años.</p>
+    </div>
+    <div>
+      <h3>Enlaces</h3>
+      <a href="nosotros.html">Nuestra historia</a><br>
+      <a href="blogs.html">Blog</a><br>
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div>
+      <h3>Cuenta</h3>
+      <a href="login.html">Iniciar sesión</a><br>
+      <a href="registro.html">Registrarme</a>
+    </div>
+    <p class="copy">© 2026 Pastelería Mil Sabores. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>

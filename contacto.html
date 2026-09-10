@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto | Pastelería Mil Sabores</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/formularios.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="index.html" class="logo">🎂 Mil Sabores</a>
+    <nav class="nav-principal" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Catálogo</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="blogs.html">Blog</a>
+      <a href="contacto.html" aria-current="page">Contacto</a>
+    </nav>
+    <div class="nav-acciones">
+      <a href="carrito.html" class="icono-boton" aria-label="Ver carrito">🛒</a>
+      <a href="login.html" class="icono-boton" aria-label="Iniciar sesión">👤</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="seccion">
+    <div class="contenedor pagina-contacto">
+
+      <div class="info-contacto">
+        <h1>Hablemos</h1>
+        <p>¿Tienes dudas sobre un pedido, un evento especial o quieres proponernos una
+           idea? Escríbenos y te responderemos a la brevedad.</p>
+
+        <div class="item">
+          <span class="icono">📍</span>
+          <div><strong>Local principal</strong><br>Av. Providencia 1234, Santiago</div>
+        </div>
+        <div class="item">
+          <span class="icono">📞</span>
+          <div><strong>Teléfono</strong><br>+56 2 2345 6789</div>
+        </div>
+        <div class="item">
+          <span class="icono">✉️</span>
+          <div><strong>Correo</strong><br>contacto@milsabores.cl</div>
+        </div>
+        <div class="item">
+          <span class="icono">🕘</span>
+          <div><strong>Horario</strong><br>Lunes a sábado, 9:00 a 20:00</div>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <div id="mensajeContacto" class="mensaje-alerta exito oculto" role="status"></div>
+
+        <form id="formContacto" novalidate>
+
+          <div class="form-grupo" data-campo="nombre">
+            <label for="nombreContacto">Nombre completo</label>
+            <input type="text" id="nombreContacto" name="nombre" required minlength="3">
+            <span class="form-error">Ingresa tu nombre completo (mínimo 3 caracteres).</span>
+          </div>
+
+          <div class="form-grupo" data-campo="correoContacto">
+            <label for="correoContacto">Correo electrónico</label>
+            <input type="email" id="correoContacto" name="correo" required>
+            <span class="form-error">Ingresa un correo electrónico válido.</span>
+          </div>
+
+          <div class="form-grupo" data-campo="asunto">
+            <label for="asunto">Asunto</label>
+            <select id="asunto" name="asunto" required>
+              <option value="">Selecciona un motivo</option>
+              <option value="pedido">Consulta sobre un pedido</option>
+              <option value="evento">Torta para evento especial</option>
+              <option value="reclamo">Reclamo o sugerencia</option>
+              <option value="otro">Otro</option>
+            </select>
+            <span class="form-error">Selecciona un asunto.</span>
+          </div>
+
+          <div class="form-grupo" data-campo="mensaje">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required minlength="10"></textarea>
+            <span class="form-ayuda"><span id="contadorMensaje">0</span>/500 caracteres</span>
+            <span class="form-error">Escribe un mensaje de al menos 10 caracteres.</span>
+          </div>
+
+          <button type="submit" class="boton boton-primario boton-bloque">Enviar mensaje</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="pie-pagina">
+  <div class="contenedor">
+    <div>
+      <h3>Mil Sabores</h3>
+      <p>Repostería artesanal chilena desde hace 50 años.</p>
+    </div>
+    <div>
+      <h3>Enlaces</h3>
+      <a href="nosotros.html">Nuestra historia</a><br>
+      <a href="blogs.html">Blog</a><br>
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div>
+      <h3>Cuenta</h3>
+      <a href="login.html">Iniciar sesión</a><br>
+      <a href="registro.html">Registrarme</a>
+    </div>
+    <p class="copy">© 2026 Pastelería Mil Sabores. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/contacto.js"></script>
+</body>
+</html>

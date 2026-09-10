@@ -1,9 +1,9 @@
 /* ==========================================================================
    PASTELERÍA MIL SABORES — css/formularios.css
-   Estilos minimalistas y elegantes para formularios de Login y Registro.
+   Estilos minimalistas y elegantes para formularios de Login, Registro y Contacto.
    ========================================================================== */
 
-/* ---------- Contenedor Principal ---------- */
+/* ---------- Contenedor Principal Autenticación ---------- */
 .seccion-autenticacion {
   min-height: calc(100vh - 200px);
   display: flex;
@@ -31,13 +31,12 @@
 
 .auth-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Icono de Pastelito sin círculo, libre y perfectamente centrado */
 .auth-icono {
   display: flex;
   align-items: center;
@@ -68,6 +67,43 @@
   font-size: 0.92rem;
   color: #777;
   margin: 0;
+}
+
+/* ---------- Selector de Rol (Cliente, Vendedor, Admin) ---------- */
+.selector-rol {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+}
+
+.selector-rol label {
+  flex: 1;
+  border: 1.5px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 0.55rem 0.4rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selector-rol input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.selector-rol label:has(input:checked),
+.selector-rol input:checked + span {
+  background-color: var(--color-chocolate);
+  border-color: var(--color-chocolate);
+  color: #FFFFFF;
 }
 
 /* ---------- Campos del Formulario ---------- */
@@ -119,7 +155,7 @@
   box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.12);
 }
 
-/* Iconos de entrada en SVG en lugar de Emojis */
+/* Iconos de entrada en SVG */
 .campo-icono {
   position: absolute;
   left: 0.9rem;
@@ -230,4 +266,34 @@
 
 .auth-footer a:hover {
   text-decoration: underline;
+}
+
+/* ---------- Estilos de Contacto e Informacionales ---------- */
+.pagina-contacto {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--espacio-lg);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .pagina-contacto { grid-template-columns: 1fr; }
+}
+
+.info-contacto .item {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.info-contacto .item .icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-rosa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
 }
