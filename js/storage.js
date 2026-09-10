@@ -329,8 +329,7 @@ const CUPONES_VALIDOS = {
   'FELICES50': { porcentaje: 10, nombre: 'Aniversario 50 Años (10% OFF)' },
   'DUOC10': { porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' },
   'ESPECIAL18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' },
-  'FIESTAS18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' },
-  'MILSABORES20': { porcentaje: 20, nombre: 'Super Descuento Mil Sabores (20% OFF)' }
+  'FIESTAS18': { porcentaje: 15, nombre: 'Especial 18 de Septiembre (15% OFF)' }
 };
 
 /**
