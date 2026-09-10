@@ -297,7 +297,7 @@ function renderizarPaginaCarrito() {
       <div class="bolsa-footer-resumen">
         <div class="subtotal-info-col">
           <h2 class="subtotal-label">Resumen de Compra</h2>
-          <p class="subtotal-nota">${cupon ? `Descuento del cupón ${cupon.codigo} aplicado.` : 'Usa tus cupones FELICES50, DUOC10 o ESPECIAL18 para obtener descuentos.'}</p>
+          <p class="subtotal-nota">${cupon ? `Descuento del cupón ${cupon.codigo} aplicado.` : 'Descuentos y envíos calculados previo al pago.'}</p>
         </div>
         <div class="subtotal-monto-col" style="text-align:right;">
           <div style="font-size:1.05rem; color:#666; margin-bottom:0.2rem;">
