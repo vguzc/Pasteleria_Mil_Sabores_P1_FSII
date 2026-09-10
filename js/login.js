@@ -275,7 +275,7 @@ function destinoSegunRol(rol) {
   const rolL = (rol || '').toLowerCase();
   switch (rolL) {
     case 'administrador': return 'admin-home.html';
-    case 'vendedor': return 'admin-home.html';
+    case 'vendedor': return 'vendedor-home.html';
     default: return 'index.html';
   }
 }
@@ -317,6 +317,7 @@ function pintarEstadoSesionEnHeader() {
     const rolL = (sesion.rol || '').toLowerCase();
     const esAdmin = rolL === 'administrador';
     const esVendedor = rolL === 'vendedor';
+    const urlPanel = esVendedor ? 'vendedor-home.html' : 'admin-home.html';
     const textoPanel = esVendedor ? 'Panel Vendedor' : (esAdmin ? 'Panel Admin' : '');
 
     const tempDiv = document.createElement('div');
@@ -341,7 +342,7 @@ function pintarEstadoSesionEnHeader() {
             Mi Cuenta
           </a>
           ${(esAdmin || esVendedor) ? `
-          <a href="admin-home.html" role="menuitem">
+          <a href="${urlPanel}" role="menuitem">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
