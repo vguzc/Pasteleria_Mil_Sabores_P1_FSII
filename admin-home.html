@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administración | Pastelería Mil Sabores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-requiere-rol="administrador,vendedor">
+
+<header class="encabezado">
+  <div class="contenedor">
+    <a href="admin-home.html" class="logo">
+      <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+      <span class="logo-texto">
+        Mil Sabores
+        <span class="logo-subtexto">Panel Admin</span>
+      </span>
+    </a>
+    <div class="nav-acciones">
+      <span id="rolActualAdmin" class="texto-secundario" style="font-size:0.85rem; font-weight:700;"></span>
+      <a href="index.html" class="boton boton-secundario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Ver Tienda</a>
+      <button id="cerrarSesionAdmin" class="boton boton-primario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout-admin">
+  <aside class="admin-sidebar">
+    <p class="rol-actual">Panel de Administración</p>
+    <nav>
+      <a href="admin-home.html" aria-current="page">📊 Resumen</a>
+      <a href="admin-productos.html">🎂 Productos</a>
+      <a href="admin-usuarios.html">👥 Usuarios</a>
+    </nav>
+  </aside>
+
+  <main class="admin-contenido">
+    <div class="admin-cabecera">
+      <div>
+        <h1 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); font-weight: normal; margin-bottom: 0.3rem;">Bienvenido al Panel de Gestión</h1>
+        <p class="texto-secundario" style="margin:0;">Administra el inventario de productos, usuarios y configuraciones de la pastelería.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+      <div style="background: var(--color-blanco); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--color-borde); box-shadow: var(--sombra-suave);">
+        <h3 style="color: var(--color-chocolate); margin-top: 0;">Gestión de Productos</h3>
+        <p style="font-size: 0.9rem; color: var(--color-texto-secundario);">Crea, edita, busca y elimina productos del catálogo general.</p>
+        <a href="admin-productos.html" class="boton boton-primario" style="width: 100%; margin-top: 1rem;">Ir a Mantenedor</a>
+      </div>
+
+      <div style="background: var(--color-blanco); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--color-borde); box-shadow: var(--sombra-suave);">
+        <h3 style="color: var(--color-chocolate); margin-top: 0;">Gestión de Usuarios</h3>
+        <p style="font-size: 0.9rem; color: var(--color-texto-secundario);">Administra clientes, vendedores y administradores del sistema.</p>
+        <a href="admin-usuarios.html" class="boton boton-primario" style="width: 100%; margin-top: 1rem;">Ir a Mantenedor</a>
+      </div>
+
+      <div style="background: var(--color-blanco); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--color-borde); box-shadow: var(--sombra-suave);">
+        <h3 style="color: var(--color-chocolate); margin-top: 0;">Tienda Principal</h3>
+        <p style="font-size: 0.9rem; color: var(--color-texto-secundario);">Regresa a la experiencia de compra de cara al público.</p>
+        <a href="index.html" class="boton boton-secundario" style="width: 100%; margin-top: 1rem;">Ver Tienda</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem;">
+  <div class="contenedor" style="text-align: center; font-size: 0.85rem; opacity: 0.85;">
+    © 2026 Pastelería Mil Sabores — Panel de Administración
+  </div>
+</footer>
+
+<script src="js/storage.js"></script>
+<script src="js/login.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

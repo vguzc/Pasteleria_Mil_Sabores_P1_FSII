@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mantenedor de usuarios | Panel Admin</title>
+<title>Mantenedor de Usuarios | Panel Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -11,18 +14,24 @@
 
 <header class="encabezado">
   <div class="contenedor">
-    <a href="admin-home.html" class="logo">🎂 Mil Sabores <span style="font-size:0.9rem; font-family:var(--fuente-texto); color:var(--color-texto-secundario);">· Admin</span></a>
+    <a href="admin-home.html" class="logo">
+      <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+      <span class="logo-texto">
+        Mil Sabores
+        <span class="logo-subtexto">Panel Admin</span>
+      </span>
+    </a>
     <div class="nav-acciones">
-      <span id="nombreUsuarioSesion" class="texto-secundario" style="font-size:0.85rem;"></span>
-      <a href="index.html" class="boton boton-secundario">Ver tienda</a>
-      <button id="cerrarSesionAdmin" class="boton boton-primario">Cerrar sesión</button>
+      <span id="rolActualAdmin" class="texto-secundario" style="font-size:0.85rem; font-weight:700;"></span>
+      <a href="index.html" class="boton boton-secundario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Ver Tienda</a>
+      <button id="cerrarSesionAdmin" class="boton boton-primario" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
     </div>
   </div>
 </header>
 
 <div class="layout-admin">
   <aside class="admin-sidebar">
-    <p class="rol-actual">Panel de administración</p>
+    <p class="rol-actual">Panel de Administración</p>
     <nav>
       <a href="admin-home.html">📊 Resumen</a>
       <a href="admin-productos.html">🎂 Productos</a>
@@ -33,10 +42,10 @@
   <main class="admin-contenido">
     <div class="admin-cabecera">
       <div>
-        <h1 style="font-size:1.6rem;">Mantenedor de usuarios</h1>
+        <h1 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); font-weight: normal; margin-bottom: 0.3rem;">Mantenedor de Usuarios</h1>
         <p class="texto-secundario" style="margin:0;">Gestiona clientes, vendedores y administradores.</p>
       </div>
-      <button id="btnNuevoUsuario" class="boton boton-primario">+ Nuevo usuario</button>
+      <button id="btnNuevoUsuario" class="boton boton-primario">+ Nuevo Usuario</button>
     </div>
 
     <div class="admin-toolbar">
@@ -61,18 +70,18 @@
 <!-- Modal crear/editar usuario -->
 <div class="modal-fondo" id="modalUsuario">
   <div class="modal-caja">
-    <h2 id="tituloModalUsuario">Nuevo usuario</h2>
+    <h2 id="tituloModalUsuario" style="font-family: var(--fuente-titulos); color: var(--color-chocolate); font-weight: normal;">Nuevo Usuario</h2>
     <form id="formUsuario" novalidate>
 
       <div class="form-grupo" data-campo="nombre">
         <label for="nombreUsuario">Nombre completo</label>
-        <input type="text" id="nombreUsuario" name="nombre" required>
+        <input type="text" id="nombreUsuario" name="nombre" placeholder="Nombre completo" required>
         <span class="form-error">Ingresa el nombre completo.</span>
       </div>
 
       <div class="form-grupo" data-campo="correo">
         <label for="correoUsuario">Correo electrónico</label>
-        <input type="email" id="correoUsuario" name="correo" required>
+        <input type="email" id="correoUsuario" name="correo" placeholder="ejemplo@correo.com" required>
         <span class="form-error">Ingresa un correo válido.</span>
       </div>
 
@@ -103,6 +112,13 @@
   </div>
 </div>
 
+<footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem;">
+  <div class="contenedor" style="text-align: center; font-size: 0.85rem; opacity: 0.85;">
+    © 2026 Pastelería Mil Sabores — Panel de Administración
+  </div>
+</footer>
+
+<script src="js/storage.js"></script>
 <script src="js/login.js"></script>
 <script src="js/admin.js"></script>
 </body>

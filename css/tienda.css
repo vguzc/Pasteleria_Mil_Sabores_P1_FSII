@@ -5,25 +5,27 @@
 
 /* ---------- Encabezado de Sección / Hero Tienda ---------- */
 .hero-tienda {
-  background: linear-gradient(135deg, rgba(255,192,203,0.3) 0%, rgba(255,245,225,0.8) 100%);
-  padding: 3rem 1.5rem;
+  background: linear-gradient(135deg, #FFF5E1 0%, #FFEBE6 100%);
+  padding: 3.5rem 1.5rem;
   text-align: center;
   border-bottom: 1px solid var(--color-borde);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .hero-tienda h1 {
   font-family: var(--fuente-titulos);
-  font-size: 2.8rem;
+  font-size: 3rem;
   color: var(--color-chocolate);
   margin: 0 0 0.5rem 0;
+  font-weight: normal;
 }
 
 .hero-tienda p {
   color: var(--color-texto);
-  font-size: 1.1rem;
-  max-width: 600px;
+  font-size: 1.15rem;
+  max-width: 650px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* ---------- Barra de Búsqueda y Filtros ---------- */
