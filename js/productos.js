@@ -15,7 +15,84 @@ document.addEventListener('DOMContentLoaded', () => {
   if (contenedorDetalle) {
     inicializarDetalleProducto(contenedorDetalle);
   }
+
+  // Verificar si estamos en la sección de Especialidades del Inicio
+  const contenedorEspecialidades = document.getElementById('grillaEspecialidades');
+  if (contenedorEspecialidades) {
+    inicializarEspecialidades(contenedorEspecialidades);
+  }
+
+  // Verificar si estamos en la sección de Especial 18 del Inicio
+  const contenedorEspecial18 = document.getElementById('grillaEspecial18');
+  if (contenedorEspecial18) {
+    inicializarEspecial18(contenedorEspecial18);
+  }
 });
+
+/**
+ * Inicializa las 3 especialidades destacadas en la página de inicio.
+ * @param {HTMLElement} contenedor 
+ */
+function inicializarEspecialidades(contenedor) {
+  const productos = obtenerProductos();
+  const destacados = productos.filter(p => p.destacado);
+  const seleccionados = destacados.length >= 3 ? destacados.slice(0, 3) : productos.slice(0, 3);
+
+  contenedor.innerHTML = seleccionados.map(p => `
+    <article class="tarjeta-producto" data-id="${p.id}">
+      <div class="tarjeta-imagen-wrapper">
+        <span class="badge-categoria">${p.categoria}</span>
+        <a href="detalle-producto.html?id=${p.id}" class="imagen-contenedor-link">
+          <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600'">
+        </a>
+      </div>
+      <div class="tarjeta-cuerpo">
+        <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=${p.id}">${p.nombre}</a></h3>
+        <p class="tarjeta-descripcion">${p.descripcion}</p>
+        <div class="tarjeta-footer">
+          <span class="tarjeta-precio">$${p.precio.toLocaleString('es-CL')}</span>
+          <div class="tarjeta-acciones">
+            <a href="detalle-producto.html?id=${p.id}" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+            <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('${p.id}')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+/**
+ * Inicializa la sección Especial 18 en la página de inicio.
+ * @param {HTMLElement} contenedor 
+ */
+function inicializarEspecial18(contenedor) {
+  const productos = obtenerProductos();
+  const productos18 = productos.filter(p => p.categoria === 'Especial 18');
+
+  if (productos18.length === 0) return;
+
+  contenedor.innerHTML = productos18.map(p => `
+    <article class="tarjeta-producto" data-id="${p.id}">
+      <div class="tarjeta-imagen-wrapper">
+        <span class="badge-categoria">${p.categoria}</span>
+        <a href="detalle-producto.html?id=${p.id}" class="imagen-contenedor-link">
+          <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600'">
+        </a>
+      </div>
+      <div class="tarjeta-cuerpo">
+        <h3 class="tarjeta-titulo"><a href="detalle-producto.html?id=${p.id}">${p.nombre}</a></h3>
+        <p class="tarjeta-descripcion">${p.descripcion}</p>
+        <div class="tarjeta-footer">
+          <span class="tarjeta-precio">$${p.precio.toLocaleString('es-CL')}</span>
+          <div class="tarjeta-acciones">
+            <a href="detalle-producto.html?id=${p.id}" class="boton boton-secundario" style="padding:0.4rem 0.75rem; font-size:0.85rem;">Ver detalle</a>
+            <button class="boton boton-primario btn-agregar-rapido" onclick="agregarAlCarritoRapido('${p.id}')" style="padding:0.4rem 0.75rem; font-size:0.85rem;">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
 
 /**
  * Inicializa el catálogo con filtros, búsqueda y renderizado dinámico.

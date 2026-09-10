@@ -1,15 +1,12 @@
-/* ==========================================================================
-   PASTELERÍA MIL SABORES — js/login.js
-   Lógica interactiva de inicio de sesión, toggle de contraseña y roles (Admin/Vendedor/Cliente).
-   ========================================================================== */
-
 const LS_USUARIOS = 'usuarios';
 const LS_SESION = 'sesionActiva';
+const LS_CORREO_RECORDADO = 'mil_sabores_correo_recordado';
 
 document.addEventListener('DOMContentLoaded', () => {
   sembrarCuentasDemo();
   protegerRutaSiCorresponde();
   configurarToggleClave();
+  cargarCorreoRecordado();
 
   const formLogin = document.getElementById('formLogin');
   if (formLogin) {
@@ -23,6 +20,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   pintarEstadoSesionEnHeader();
 });
+
+/**
+ * Carga el correo guardado previamente si el usuario seleccionó "Recordarme"
+ */
+function cargarCorreoRecordado() {
+  const correoInput = document.getElementById('correoLogin') || document.getElementById('correo');
+  const checkboxRecordar = document.getElementById('recordarSesion');
+  if (!correoInput || !checkboxRecordar) return;
+
+  const recordado = localStorage.getItem(LS_CORREO_RECORDADO);
+  if (recordado) {
+    correoInput.value = recordado;
+    checkboxRecordar.checked = true;
+  }
+}
+
+/**
+ * Guarda o elimina el correo recordado según el estado del checkbox
+ */
+function guardarOEliminarCorreoRecordado(correo) {
+  const checkboxRecordar = document.getElementById('recordarSesion');
+  if (checkboxRecordar && checkboxRecordar.checked) {
+    localStorage.setItem(LS_CORREO_RECORDADO, correo);
+  } else {
+    localStorage.removeItem(LS_CORREO_RECORDADO);
+  }
+}
 
 /**
  * Toggle de mostrar / ocultar contraseña
@@ -115,16 +139,16 @@ function manejarEnvioLogin(evento) {
   let valido = true;
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    marcarError(correoInput, true);
+    marcarError(correoInput, true, 'Ingresa un correo electrónico válido (ej: usuario@correo.com).');
     valido = false;
   }
   if (clave.length < 4) {
-    marcarError(claveInput, true);
+    marcarError(claveInput, true, 'Ingresa una contraseña válida (mínimo 4 caracteres).');
     valido = false;
   }
 
   if (!valido) {
-    if (mensaje) mostrarMensaje(mensaje, 'Por favor completa un correo y contraseña válidos (mínimo 4 caracteres).', 'error');
+    if (mensaje) mostrarMensaje(mensaje, 'Por favor corrige los campos remarcados antes de continuar.', 'error');
     return;
   }
 
@@ -142,6 +166,8 @@ function manejarEnvioLogin(evento) {
   }
 
   if (!usuario) {
+    marcarError(correoInput, true);
+    marcarError(claveInput, true);
     if (mensaje) mostrarMensaje(mensaje, 'Correo o contraseña incorrectos. Intenta nuevamente.', 'error');
     else alert('Correo o contraseña incorrectos.');
     return;
@@ -159,6 +185,9 @@ function manejarEnvioLogin(evento) {
     }
     return;
   }
+
+  // Guardar o eliminar el correo recordado
+  guardarOEliminarCorreoRecordado(correo);
 
   iniciarSesion(usuario);
 
@@ -224,10 +253,14 @@ function pintarEstadoSesionEnHeader() {
   }
 }
 
-function marcarError(input, esInvalido) {
+function marcarError(input, esInvalido, textoError) {
   const grupo = input.closest('.campo-grupo') || input.closest('.form-grupo');
   if (!grupo) return;
   grupo.classList.toggle('invalido', esInvalido);
+  const spanError = grupo.querySelector('.form-error, .error-msg');
+  if (spanError && textoError && esInvalido) {
+    spanError.textContent = textoError;
+  }
 }
 
 function limpiarErrores() {

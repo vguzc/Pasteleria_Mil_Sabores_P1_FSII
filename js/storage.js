@@ -10,6 +10,7 @@ const CLAVE_CARRITO = 'mil_sabores_carrito';
  * Catálogo inicial de productos con las 8 categorías exigidas por la pauta.
  */
 const PRODUCTOS_INICIALES = [
+  // 1. Tortas Cuadradas
   {
     id: 'TC001',
     nombre: 'Torta Tres Leches Cuadrada',
@@ -22,6 +23,18 @@ const PRODUCTOS_INICIALES = [
   },
   {
     id: 'TC002',
+    nombre: 'Torta Cuadrada Mil Sabores',
+    categoria: 'Tortas Cuadradas',
+    precio: 28990,
+    stock: 10,
+    descripcion: 'La especialidad insignia de nuestro taller. Bizcocho esponjoso remojado en suave almíbar con ron añejo y licor de naranja, intercalado con manjar casero, nueces, crema pastelera y mermelada casera de naranja.',
+    imagen: 'img/torta-mil-sabores.png',
+    destacado: true
+  },
+
+  // 2. Tortas Circulares
+  {
+    id: 'TC003',
     nombre: 'Torta Amor Manjar Lúcuma Circular',
     categoria: 'Tortas Circulares',
     precio: 26990,
@@ -30,6 +43,18 @@ const PRODUCTOS_INICIALES = [
     imagen: 'img/torta-amor-lucuma.png',
     destacado: true
   },
+  {
+    id: 'TC004',
+    nombre: 'Torta de Zanahoria',
+    categoria: 'Tortas Circulares',
+    precio: 27490,
+    stock: 6,
+    descripcion: 'Bizcocho húmedo de zanahoria fresca con especia de canela, nueces crocantes y frosting cremoso de queso crema y vainilla.',
+    imagen: 'img/torta-zanahoria.png',
+    destacado: false
+  },
+
+  // 3. Postres Individuales
   {
     id: 'PI001',
     nombre: 'Pie de Limón Individual',
@@ -41,6 +66,18 @@ const PRODUCTOS_INICIALES = [
     destacado: false
   },
   {
+    id: 'PI002',
+    nombre: 'Rollito de Canela',
+    categoria: 'Postres Individuales',
+    precio: 3490,
+    stock: 18,
+    descripcion: 'Masa suave y esponjosa enrollada con canela de Ceylán, azúcar rubia y abundante glaseado suave de mantequilla.',
+    imagen: 'img/rollito-canela.png',
+    destacado: false
+  },
+
+  // 4. Productos Sin Azúcar
+  {
     id: 'SA001',
     nombre: 'Torta Chocolate Sin Azúcar',
     categoria: 'Productos Sin Azúcar',
@@ -50,6 +87,18 @@ const PRODUCTOS_INICIALES = [
     imagen: 'img/torta-chocolate-sin-azucar.png',
     destacado: true
   },
+  {
+    id: 'SA002',
+    nombre: 'Pie de Limón Sin Azúcar',
+    categoria: 'Productos Sin Azúcar',
+    precio: 24990,
+    stock: 8,
+    descripcion: 'Base crocante de harina de almendras y avena, crema suave de limón natural endulzada con alulosa y copo de merengue dorado sin azúcar.',
+    imagen: 'img/pie-de-limon-sin-azucar.png',
+    destacado: false
+  },
+
+  // 5. Pastelería Tradicional
   {
     id: 'PT001',
     nombre: 'Pack 6 Alfajores Tradicionales',
@@ -61,6 +110,38 @@ const PRODUCTOS_INICIALES = [
     destacado: false
   },
   {
+    id: 'PT002',
+    nombre: 'Caja 12 Empolvados Caseros',
+    categoria: 'Pastelería Tradicional',
+    precio: 6990,
+    stock: 15,
+    descripcion: 'Esponjosos empolvados chilenos rellenos de manjar casero suave y espolvoreados con azúcar flor finísima.',
+    imagen: 'img/empolvados-caseros.png',
+    destacado: false
+  },
+  {
+    id: 'PT003',
+    nombre: 'Empanada de Pino Tradicional',
+    categoria: 'Especial 18',
+    precio: 3290,
+    stock: 30,
+    descripcion: 'Clásica empanada chilena de horno de masa casera, rellena de jugoso pino de vacuno picado a cuchillo, huevo duro, aceituna negra y pasa.',
+    imagen: 'img/empanada-pino.png',
+    destacado: true
+  },
+  {
+    id: 'PT004',
+    nombre: 'Empanada de Queso de Horno',
+    categoria: 'Especial 18',
+    precio: 2990,
+    stock: 25,
+    descripcion: 'Masa casera dorada de mantequilla, rellena con abundante queso mantecoso de fundo derretido.',
+    imagen: 'img/empanada-queso.png',
+    destacado: false
+  },
+
+  // 6. Productos Sin Gluten
+  {
     id: 'SG001',
     nombre: 'Cheesecake Frutos Rojos Sin Gluten',
     categoria: 'Productos Sin Gluten',
@@ -70,6 +151,28 @@ const PRODUCTOS_INICIALES = [
     imagen: 'img/cheesecake-frutos-rojos.png',
     destacado: true
   },
+  {
+    id: 'SG002',
+    nombre: 'Galletas Surtidas Sin Gluten',
+    categoria: 'Productos Sin Gluten',
+    precio: 8990,
+    stock: 15,
+    descripcion: 'Variedad artesanal de galletas horneadas libres de gluten (harina de almendras y coco) sabor chispas de chocolate, mantequilla y vainilla.',
+    imagen: 'img/galletas-sin-gluten.png',
+    destacado: false
+  },
+  {
+    id: 'SG003',
+    nombre: 'Empanada de Pino Sin Gluten',
+    categoria: 'Especial 18',
+    precio: 3690,
+    stock: 20,
+    descripcion: 'Edición especial Fiestas Patrias. Empanada casera con masa certificada sin gluten, rellena de tradicional pino de vacuno, aceituna y huevo duro.',
+    imagen: 'img/empanada-sin-gluten.png',
+    destacado: true
+  },
+
+  // 7. Productos Vegana
   {
     id: 'PV001',
     nombre: 'Torta Vegana Trufa y Cacao',
@@ -81,14 +184,36 @@ const PRODUCTOS_INICIALES = [
     destacado: false
   },
   {
+    id: 'PV002',
+    nombre: 'Mousse Zanahoria y Naranja Vegano',
+    categoria: 'Productos Vegana',
+    precio: 4290,
+    stock: 12,
+    descripcion: 'Suave mousse 100% vegetal elaborado con leche de almendras, zanahoria, ralladura de naranja orgánica y especias finas.',
+    imagen: 'img/mousse-zanahoria-vegano.png',
+    destacado: false
+  },
+
+  // 8. Tortas Especiales
+  {
     id: 'TE001',
-    nombre: 'Torta Aniversario 50 Años Mil Sabores',
+    nombre: 'Torta Especial de Primavera',
     categoria: 'Tortas Especiales',
     precio: 34990,
-    stock: 4,
-    descripcion: 'Edición conmemorativa de 50 años. Espectacular torta artesanal de tres pisos decorada con cremas artesanales, flores y frutos rojos.',
-    imagen: 'img/torta-aniversario.png',
+    stock: 6,
+    descripcion: 'Edición especial de temporada. Bizcocho ligero de vainilla y maracuyá relleno de mousseline de pistacho, frutos del bosque frescos y flores comestibles de primavera.',
+    imagen: 'img/torta-primavera.png',
     destacado: true
+  },
+  {
+    id: 'TE002',
+    nombre: 'Torta Personalizada de Bodas y Eventos',
+    categoria: 'Tortas Especiales',
+    precio: 39990,
+    stock: 3,
+    descripcion: 'Diseño elegante de dos pisos para celebraciones especiales. Bizcochos a elección decorados con flores comestibles y crema suave de vainilla.',
+    imagen: 'img/torta-bodas-eventos.png',
+    destacado: false
   }
 ];
 
@@ -97,31 +222,28 @@ const PRODUCTOS_INICIALES = [
  * @returns {Array} Arreglo de productos.
  */
 function obtenerProductos() {
+  const VERSION_CATALOGO = 'v26_empanada_sin_gluten';
+  const versionActual = localStorage.getItem('mil_sabores_version_catalogo');
+
+  // Si la versión guardada en el navegador es antigua o inexistente, forzar reseteo a los 16 productos oficiales
+  if (versionActual !== VERSION_CATALOGO) {
+    localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
+    localStorage.setItem('mil_sabores_version_catalogo', VERSION_CATALOGO);
+    return PRODUCTOS_INICIALES;
+  }
+
   const datosGuardados = localStorage.getItem(CLAVE_PRODUCTOS);
   if (!datosGuardados) {
     localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
     return PRODUCTOS_INICIALES;
   }
+
   try {
     const prods = JSON.parse(datosGuardados);
-    let modificado = false;
-    prods.forEach(p => {
-      const base = PRODUCTOS_INICIALES.find(b => b.id === p.id);
-      if (base) {
-        if (p.imagen !== base.imagen || p.descripcion !== base.descripcion || p.nombre !== base.nombre) {
-          p.imagen = base.imagen;
-          p.descripcion = base.descripcion;
-          p.nombre = base.nombre;
-          modificado = true;
-        }
-      }
-    });
-    if (modificado) {
-      localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(prods));
-    }
-    return prods;
+    return Array.isArray(prods) && prods.length > 0 ? prods : PRODUCTOS_INICIALES;
   } catch (error) {
     console.error('Error al parsear productos de localStorage:', error);
+    localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
     return PRODUCTOS_INICIALES;
   }
 }

@@ -1,4 +1,3 @@
-const LS_PRODUCTOS = 'productos';
 const LS_USUARIOS = 'usuarios';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,13 +29,9 @@ function pintarNombreSesionAdmin() {
 
 /* ==========================================================================
    MANTENEDOR DE PRODUCTOS
-   Nota: el arreglo base de productos lo puebla Vicho Guzmán en productos.js
-   (módulo Tienda). Aquí solo se gestiona la persistencia CRUD sobre
-   localStorage["productos"], sembrando datos de ejemplo si está vacío.
    ========================================================================== */
 
 function inicializarMantenedorProductos() {
-  sembrarProductosDemo();
   renderizarTablaProductos();
 
   document.getElementById('btnNuevoProducto')?.addEventListener('click', () => abrirModalProducto(null));
@@ -45,57 +40,40 @@ function inicializarMantenedorProductos() {
   document.getElementById('buscarProducto')?.addEventListener('input', renderizarTablaProductos);
 }
 
-function sembrarProductosDemo() {
-  const existentes = obtenerProductos();
-  if (existentes.length > 0) return;
-
-  guardarProductos([
-    { codigo: 'TC001', categoria: 'Tortas Cuadradas', nombre: 'Torta Cuadrada de Chocolate', precio: 45000, stock: 12 },
-    { codigo: 'TT001', categoria: 'Tortas Circulares', nombre: 'Torta Circular de Vainilla', precio: 40000, stock: 8 },
-    { codigo: 'PI001', categoria: 'Postres Individuales', nombre: 'Mousse de Chocolate', precio: 5000, stock: 30 },
-    { codigo: 'PSA001', categoria: 'Productos Sin Azúcar', nombre: 'Torta Sin Azúcar de Naranja', precio: 48000, stock: 5 },
-    { codigo: 'PG001', categoria: 'Productos Sin Gluten', nombre: 'Brownie Sin Gluten', precio: 4000, stock: 0 }
-  ]);
-}
-
-function obtenerProductos() {
-  try { return JSON.parse(localStorage.getItem(LS_PRODUCTOS)) || []; }
-  catch { return []; }
-}
-
-function guardarProductos(lista) {
-  localStorage.setItem(LS_PRODUCTOS, JSON.stringify(lista));
-}
-
 function renderizarTablaProductos() {
   const cuerpo = document.getElementById('cuerpoTablaProductos');
+  if (!cuerpo) return;
   const filtro = (document.getElementById('buscarProducto')?.value || '').toLowerCase().trim();
-  const productos = obtenerProductos().filter(p =>
-    p.nombre.toLowerCase().includes(filtro) || p.codigo.toLowerCase().includes(filtro)
-  );
+  const productos = obtenerProductos().filter(p => {
+    const cod = p.id || p.codigo || '';
+    return p.nombre.toLowerCase().includes(filtro) || cod.toLowerCase().includes(filtro);
+  });
 
   if (productos.length === 0) {
     cuerpo.innerHTML = `<tr><td colspan="6" class="tabla-vacia">No hay productos que coincidan con la búsqueda.</td></tr>`;
     return;
   }
 
-  cuerpo.innerHTML = productos.map(p => `
-    <tr>
-      <td>${p.codigo}</td>
-      <td>${p.nombre}</td>
-      <td>${p.categoria}</td>
-      <td>$${Number(p.precio).toLocaleString('es-CL')}</td>
-      <td>${etiquetaStock(p.stock)}</td>
-      <td class="acciones-fila">
-        <button class="boton-icono" title="Editar" onclick="abrirModalProducto('${p.codigo}')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-        </button>
-        <button class="boton-icono eliminar" title="Eliminar" onclick="eliminarProducto('${p.codigo}')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-        </button>
-      </td>
-    </tr>
-  `).join('');
+  cuerpo.innerHTML = productos.map(p => {
+    const cod = p.id || p.codigo;
+    return `
+      <tr>
+        <td>${cod}</td>
+        <td>${p.nombre}</td>
+        <td>${p.categoria}</td>
+        <td>$${Number(p.precio).toLocaleString('es-CL')}</td>
+        <td>${etiquetaStock(p.stock)}</td>
+        <td class="acciones-fila">
+          <button class="boton-icono" title="Editar" onclick="abrirModalProducto('${cod}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </button>
+          <button class="boton-icono eliminar" title="Eliminar" onclick="eliminarProducto('${cod}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function etiquetaStock(stock) {
@@ -107,13 +85,14 @@ function etiquetaStock(stock) {
 function abrirModalProducto(codigo) {
   const modal = document.getElementById('modalProducto');
   const form = document.getElementById('formProducto');
+  if (!modal || !form) return;
   form.reset();
   limpiarErroresFormulario(form);
 
   if (codigo) {
-    const producto = obtenerProductos().find(p => p.codigo === codigo);
+    const producto = obtenerProductos().find(p => (p.id || p.codigo) === codigo);
     if (producto) {
-      form.codigo.value = producto.codigo;
+      form.codigo.value = producto.id || producto.codigo;
       form.codigo.readOnly = true;
       form.nombre.value = producto.nombre;
       form.categoria.value = producto.categoria;
@@ -130,7 +109,7 @@ function abrirModalProducto(codigo) {
 }
 
 function cerrarModalProducto() {
-  document.getElementById('modalProducto').classList.remove('activo');
+  document.getElementById('modalProducto')?.classList.remove('activo');
 }
 
 function guardarProducto(evento) {
@@ -170,13 +149,25 @@ function guardarProducto(evento) {
   if (!valido) return;
 
   const productos = obtenerProductos();
-  const indiceExistente = productos.findIndex(p => p.codigo === codigo);
-  const registro = { codigo, nombre, categoria, precio, stock };
+  const indiceExistente = productos.findIndex(p => (p.id || p.codigo) === codigo);
 
   if (indiceExistente >= 0) {
-    productos[indiceExistente] = registro;
+    productos[indiceExistente].nombre = nombre;
+    productos[indiceExistente].categoria = categoria;
+    productos[indiceExistente].precio = precio;
+    productos[indiceExistente].stock = stock;
   } else {
-    productos.push(registro);
+    productos.push({
+      id: codigo,
+      codigo: codigo,
+      nombre: nombre,
+      categoria: categoria,
+      precio: precio,
+      stock: stock,
+      descripcion: nombre,
+      imagen: 'img/torta-tres-leches-cuadrada.png',
+      destacado: false
+    });
   }
 
   guardarProductos(productos);
@@ -186,7 +177,7 @@ function guardarProducto(evento) {
 
 function eliminarProducto(codigo) {
   if (!confirm(`¿Eliminar el producto ${codigo}? Esta acción no se puede deshacer.`)) return;
-  const productos = obtenerProductos().filter(p => p.codigo !== codigo);
+  const productos = obtenerProductos().filter(p => (p.id || p.codigo) !== codigo);
   guardarProductos(productos);
   renderizarTablaProductos();
 }
