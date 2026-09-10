@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrito de Compras | Pastelería Mil Sabores</title>
+  <title>Tu Bolsa de Compras | Pastelería Mil Sabores</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/tienda.css">
 </head>
@@ -28,13 +28,13 @@
       </nav>
       <div class="nav-acciones">
         <a href="login.html" class="nav-icono-link" aria-label="Iniciar sesión" title="Iniciar sesión">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
         </a>
         <a href="carrito.html" class="nav-icono-link nav-carrito" aria-label="Ver carrito" title="Ver carrito">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -45,27 +45,39 @@
     </div>
   </header>
 
-  <!-- Hero Carrito -->
-  <section class="hero-tienda" style="padding: 2rem 1.5rem; margin-bottom: 2rem;">
-    <div class="contenedor">
-      <h1>Tu Carrito de Compras</h1>
-      <p>Revisa y confirma tu selección de deliciosas preparaciones artesanas.</p>
-    </div>
-  </section>
+  <!-- Sección Principal Bolsa de Compras -->
+  <main class="seccion-bolsa-page">
+    <div class="contenedor-bolsa-main">
+      
+      <!-- Encabezado de la Bolsa con Tipografía Oficial Mil Sabores -->
+      <div class="bolsa-header-main">
+        <span class="bolsa-subtitulo-brand">Mil Sabores • Café & Pastelería</span>
+        
+        <!-- Barra de Progreso Despacho Express Gratis -->
+        <div id="barraDespachoWrapper" class="barra-despacho-wrapper">
+          <!-- Inyectado dinámicamente por js/carrito.js -->
+        </div>
+      </div>
 
-  <!-- Contenido Principal: Resumen y Tabla del Carrito -->
-  <main class="contenedor" style="padding-bottom: 4rem;">
-    <div id="contenedorCarritoPage">
-      <!-- Renderizado dinámicamente por js/carrito.js -->
+      <!-- Contenedor Principal (Tarjeta Vacía o Tabla + Subtotal) -->
+      <div id="contenedorCarritoPage">
+        <!-- Renderizado dinámicamente por js/carrito.js -->
+      </div>
+
     </div>
   </main>
 
   <!-- Pie de Página -->
   <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 3rem 0; margin-top: 4rem;">
     <div class="contenedor" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
-      <div>
-        <h3 style="font-family: var(--fuente-titulos); font-size: 1.8rem; margin: 0 0 1rem 0;">🎂 Mil Sabores</h3>
-        <p style="font-size: 0.9rem; opacity: 0.9;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
+      <div class="footer-col-brand">
+        <a href="index.html" class="logo-footer">
+          <span class="logo-texto-footer">
+            Mil Sabores
+            <span class="logo-subtexto-footer">Café & Pastelería</span>
+          </span>
+        </a>
+        <p style="font-size: 0.9rem; opacity: 0.9; max-width: 300px; margin: 0 auto; text-align: center;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
       </div>
       <div>
         <h4 style="margin: 0 0 1rem 0;">Navegación</h4>

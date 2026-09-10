@@ -446,6 +446,52 @@ main { min-height: 60vh; }
   color: #d9c4b3;
 }
 
+.footer-col-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-footer {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: transform var(--transicion);
+}
+
+.logo-footer:hover {
+  transform: scale(1.03);
+}
+
+.logo-icono-footer {
+  display: none;
+}
+
+.logo-texto-footer {
+  font-family: var(--fuente-titulos);
+  font-size: 2.3rem;
+  color: var(--color-fondo);
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.logo-subtexto-footer {
+  font-family: var(--fuente-texto);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2.8px;
+  color: var(--color-rosa);
+  text-transform: uppercase;
+  margin-top: 4px;
+  text-align: center;
+}
+
 /* ---------- Utilidades ---------- */
 .centrado { text-align: center; }
 .oculto { display: none !important; }

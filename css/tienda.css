@@ -682,3 +682,374 @@
   font-weight: 700;
   border-radius: 8px;
 }
+
+/* ==========================================================================
+   VISTA DE LA BOLSA ("TU BOLSA") CON TIPOGRAFÍA Y ESTILO OFICIAL MIL SABORES
+   ========================================================================== */
+
+.seccion-bolsa-page {
+  padding: 3rem 1.5rem 5rem 1.5rem;
+  background-color: var(--color-blanco);
+  min-height: calc(100vh - 350px);
+}
+
+.contenedor-bolsa-main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Encabezado con Tipografías Oficiales */
+.bolsa-header-main {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bolsa-subtitulo-brand {
+  display: block;
+  font-family: var(--fuente-texto);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--color-chocolate);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.bolsa-titulo-main {
+  font-family: var(--fuente-titulos);
+  font-size: 3.6rem;
+  color: var(--color-chocolate);
+  margin: 0 0 1.25rem 0;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.barra-despacho-wrapper {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.texto-despacho-express {
+  font-size: 0.94rem;
+  color: #555;
+  margin-bottom: 0.65rem;
+}
+
+.texto-despacho-express strong {
+  color: var(--color-chocolate);
+  font-weight: 700;
+}
+
+.track-barra-despacho {
+  width: 100%;
+  height: 6px;
+  background-color: #EDE7DE;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.fill-barra-despacho {
+  height: 100%;
+  background-color: var(--color-chocolate);
+  transition: width 0.4s ease;
+}
+
+/* Tarjeta de Carrito Vacío con Estilo Definido de Marca (Sin Icono) */
+.tarjeta-bolsa-vacia {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 3.5rem 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(93, 64, 55, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bolsa-vacia-texto {
+  text-align: center;
+  max-width: 580px;
+  margin-bottom: 2rem;
+}
+
+.bolsa-vacia-titulo {
+  font-family: var(--fuente-titulos);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--color-chocolate);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+}
+
+.bolsa-vacia-subtitulo {
+  font-size: 0.96rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Botón estilo píldora con color oficial de marca */
+.boton-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-chocolate);
+  color: #FFFFFF;
+  font-family: var(--fuente-texto);
+  font-size: 0.98rem;
+  font-weight: 700;
+  padding: 0.85rem 3rem;
+  border-radius: 30px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(139, 69, 19, 0.2);
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.boton-pill-dark:hover {
+  background-color: var(--color-chocolate-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(139, 69, 19, 0.3);
+  color: #FFFFFF;
+}
+
+/* Tarjeta para Carrito con Productos */
+.tarjeta-bolsa-llena {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 18px;
+  padding: 2.75rem 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(93, 64, 55, 0.05);
+}
+
+.tabla-bolsa-wrapper {
+  margin-bottom: 3rem;
+  overflow-x: auto;
+}
+
+.tabla-bolsa {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tabla-bolsa th {
+  padding: 1rem 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #555;
+  border-bottom: 1px solid #EBE5DC;
+  text-transform: none;
+}
+
+.tabla-bolsa th.th-precio,
+.tabla-bolsa th.th-cantidad,
+.tabla-bolsa th.th-total {
+  text-align: center;
+}
+
+.tabla-bolsa td {
+  padding: 1.5rem 0.5rem;
+  border-bottom: 1px solid #F3EDE5;
+  vertical-align: middle;
+}
+
+.td-precio,
+.td-total {
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-chocolate);
+  font-size: 1.05rem;
+}
+
+.td-cantidad {
+  text-align: center;
+}
+
+.item-bolsa-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.item-bolsa-thumb-wrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #F8F4EE;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.item-bolsa-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.item-bolsa-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.item-bolsa-nombre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-chocolate);
+}
+
+.btn-eliminar-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.88rem;
+  color: #777;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: color 0.2s;
+  font-family: var(--fuente-texto);
+}
+
+.btn-eliminar-link:hover {
+  color: var(--color-chocolate);
+}
+
+/* Control de Cantidad Minimalista */
+.control-cantidad-lafete {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #DCD3C7;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #FFFFFF;
+  height: 38px;
+}
+
+.control-cantidad-lafete button {
+  background: transparent;
+  border: none;
+  width: 34px;
+  height: 100%;
+  font-size: 1.1rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-cantidad-lafete button:hover {
+  background: rgba(139, 69, 19, 0.06);
+  color: var(--color-chocolate);
+}
+
+.control-cantidad-lafete input {
+  width: 38px;
+  height: 100%;
+  border: none;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-chocolate);
+  background: transparent;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.control-cantidad-lafete input::-webkit-outer-spin-button,
+.control-cantidad-lafete input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Subtotal al Pie */
+.bolsa-footer-resumen {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.subtotal-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-chocolate);
+  margin: 0 0 0.25rem 0;
+}
+
+.subtotal-nota {
+  font-size: 0.88rem;
+  color: #777;
+  margin: 0;
+}
+
+.subtotal-monto {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--color-chocolate);
+}
+
+.bolsa-acciones-finales {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.boton-seguir-comprando {
+  color: var(--color-chocolate);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.boton-seguir-comprando:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.btn-proceder-pago {
+  padding: 0.9rem 2.5rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 650px) {
+  .bolsa-footer-resumen {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .subtotal-monto-col {
+    align-self: flex-end;
+  }
+  .bolsa-acciones-finales {
+    flex-direction: column-reverse;
+    gap: 1.25rem;
+  }
+  .btn-proceder-pago {
+    width: 100%;
+  }
+}
+
+
