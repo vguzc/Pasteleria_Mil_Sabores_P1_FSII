@@ -11,10 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     try { inicializarMantenedorUsuarios(); } catch (e) { console.error(e); }
   }
 
-  const botonCerrar = document.getElementById('cerrarSesionAdmin');
-  if (botonCerrar && typeof cerrarSesion === 'function') {
-    botonCerrar.addEventListener('click', cerrarSesion);
-  }
+  const botonesCerrar = document.querySelectorAll('#cerrarSesionAdmin, #cerrarSesion');
+  botonesCerrar.forEach(btn => {
+    if (typeof cerrarSesion === 'function') {
+      btn.addEventListener('click', cerrarSesion);
+    }
+  });
 });
 
 function pintarNombreSesionAdmin() {
@@ -41,16 +43,24 @@ function aplicarRestriccionesRolAdmin() {
   const esVendedor = (sesion.rol || '').toLowerCase() === 'vendedor';
 
   if (esVendedor) {
-    // 1. Cambiar el subtítulo del logo en el header de 'Panel Admin' a 'Panel Vendedor'
+    // 1. Cambiar el subtítulo del logo en el header de 'Panel Admin' a 'Panel Vendedor' y su enlace
     const logoSubtexto = document.querySelector('.logo-subtexto');
     if (logoSubtexto) {
       logoSubtexto.textContent = 'Panel Vendedor';
     }
+    const logoLink = document.querySelector('a.logo[href="admin-home.html"]');
+    if (logoLink) {
+      logoLink.href = 'vendedor-home.html';
+    }
 
-    // 2. Cambiar el título del sidebar a 'Panel Vendedor'
+    // 2. Cambiar el título y enlace de Resumen en la barra lateral a 'Panel Vendedor'
     const rolActualSidebar = document.querySelector('.admin-sidebar .rol-actual');
     if (rolActualSidebar) {
       rolActualSidebar.textContent = 'Panel Vendedor';
+    }
+    const linkResumen = document.querySelector('.admin-sidebar nav a[href="admin-home.html"]');
+    if (linkResumen) {
+      linkResumen.href = 'vendedor-home.html';
     }
 
     // 3. Cambiar el título del documento (browser tab)
@@ -64,7 +74,7 @@ function aplicarRestriccionesRolAdmin() {
       linkUsuarios.remove();
     }
 
-    // 5. Eliminar por completo la tarjeta de gestión de usuarios del panel principal (admin-home.html)
+    // 5. Eliminar por completo la tarjeta de gestión de usuarios del panel principal
     const tarjetaUsuarios = document.querySelector('a[href="admin-usuarios.html"]')?.closest('div');
     if (tarjetaUsuarios) {
       tarjetaUsuarios.remove();
