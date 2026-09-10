@@ -6,9 +6,9 @@
 
 ## 📋 Descripción General
 
-**Pastelería Mil Sabores** es una plataforma web e-commerce desarrollada con **HTML5, Vanilla CSS3 y JavaScript (ES6+)**, inspirada en la celebración de los 50 años de trayectoria de la pastelería artesanal chilena.
+**Pastelería Mil Sabores** es una plataforma web e-commerce desarrollada con **HTML5, Vanilla CSS3 y JavaScript (ES6+)**, inspirada en la celebración de los 50 años de trayectoria de la pastelería artesanal chilena (1976 - 2026).
 
-El sistema cuenta con un catálogo de productos divididos en 8 categorías oficiales, un carrito de compras dinámico con cálculo de impuestos y descuentos automáticos, un sistema de autenticación multi-rol (Cliente, Vendedor y Administrador), paneles de gestión administrativa (CRUD), perfil del usuario autenticado y una sección de blog con recetas en video.
+El sistema cuenta con un catálogo de productos divididos en 8 categorías oficiales, un carrito de compras dinámico con cálculo de impuestos y descuentos automáticos, un sistema de autenticación multi-rol (Cliente, Vendedor y Administrador), paneles de gestión administrativa (CRUD), perfil de usuario con cupones activos y una sección de blog con recetas en video.
 
 ---
 
@@ -28,7 +28,7 @@ El sistema cuenta con un catálogo de productos divididos en 8 categorías ofici
 
 ### 👤 3. Autenticación y Control de Accesos Multi-Rol
 - **Cliente**: Registro con validación estricta de RUN chileno (Módulo 11), fecha de nacimiento, regiones y comunas dinámicas, y formato automático en mayúsculas para nombres propios (Title Case).
-- **Vendedor**: Acceso al **Panel Vendedor** (`admin-home.html`). Gestión habilitada exclusivamente para el mantenedor de productos (`admin-productos.html`). La sección de usuarios se encuentra completamente restringida y oculta del DOM.
+- **Vendedor**: Acceso al **Panel Vendedor** (`vendedor-home.html` / `admin-home.html`). Gestión habilitada exclusivamente para el mantenedor de productos (`admin-productos.html`). La sección de usuarios se encuentra completamente restringida y oculta del DOM.
 - **Administrador**: Acceso completo al **Panel Admin** con gestión total del mantenedor de productos (`admin-productos.html`) y mantenedor de usuarios (`admin-usuarios.html`).
 - **Protección de Rutas**: Control de acceso según el rol guardado en la sesión. Redirección automática a la vista autorizada si se intenta acceder a una ruta no permitida por URL.
 
@@ -76,14 +76,15 @@ Para facilitar la evaluación y revisión del proyecto, el sistema incluye cuent
 ├── detalle-blog-1.html         (Detalle receta manjar casero)
 ├── detalle-blog-2.html         (Detalle noticia 50° Aniversario)
 ├── contacto.html               (Formulario de contacto validado)
-├── admin-home.html             (Panel de Administración / Vendedor)
+├── admin-home.html             (Panel de Administración - Vista Admin)
+├── vendedor-home.html          (Panel de Vendedor - Vista Vendedor)
 ├── admin-productos.html        (Mantenedor CRUD de Productos)
 ├── admin-usuarios.html         (Mantenedor CRUD de Usuarios - Solo Admin)
 ├── 📁 css/
-├── │   ├── styles.css          (Sistema de diseño principal, tokens y variables)
-├── │   ├── tienda.css          (Estilos de catálogo, fichas y carrito)
-├── │   ├── formularios.css     (Estilos de registro, login y contacto)
-├── │   └── admin.css           (Estilos del panel administrativo y mantenedores)
+│   ├── styles.css              (Sistema de diseño principal, tokens y variables)
+│   ├── tienda.css              (Estilos de catálogo, fichas y carrito)
+│   ├── formularios.css     (Estilos de registro, login y contacto)
+│   └── admin.css           (Estilos del panel administrativo y mantenedores)
 └── 📁 js/
     ├── storage.js              (Persistencia e inicialización en localStorage)
     ├── regiones-comunas.js     (Diccionario dinámico de Regiones y Comunas de Chile)
