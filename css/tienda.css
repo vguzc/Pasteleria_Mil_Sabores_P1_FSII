@@ -1070,4 +1070,119 @@
   }
 }
 
+/* ==========================================================================
+   SECCIÓN DE CUPONES DE DESCUENTO EN EL CARRITO
+   ========================================================================== */
+.contenedor-cupon-bolsa {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background-color: var(--color-fondo, #fdfbf7);
+  border: 1px dashed rgba(107, 68, 35, 0.25);
+  border-radius: 8px;
+}
+
+.cupon-titulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-chocolate, #4a2c11);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cupon-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 400px;
+}
+
+.input-cupon {
+  flex: 1;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(107, 68, 35, 0.25);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-chocolate, #4a2c11);
+  background: #ffffff;
+}
+
+.input-cupon:focus {
+  outline: none;
+  border-color: var(--color-rosa, #c0392b);
+  box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.15);
+}
+
+.boton-aplicar-cupon {
+  padding: 0.55rem 1.2rem;
+  background-color: var(--color-chocolate, #4a2c11);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.boton-aplicar-cupon:hover {
+  background-color: var(--color-rosa, #c0392b);
+}
+
+.mensaje-cupon-feedback {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mensaje-cupon-exito {
+  color: #2e7d32;
+}
+
+.mensaje-cupon-error {
+  color: #c62828;
+}
+
+.badge-cupon-aplicado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(46, 125, 50, 0.1);
+  border: 1px solid rgba(46, 125, 50, 0.3);
+  color: #1b5e20;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-quitar-cupon {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-weight: 900;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  line-height: 1;
+}
+
+.btn-quitar-cupon:hover {
+  color: #b71c1c;
+  transform: scale(1.2);
+}
+
+.linea-descuento-resumen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.05rem;
+  color: #2e7d32;
+  font-weight: 700;
+  margin-top: 0.4rem;
+}
+
 

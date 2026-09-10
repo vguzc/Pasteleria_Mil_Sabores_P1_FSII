@@ -126,6 +126,9 @@ function renderizarDrawerCarrito() {
   }
 
   const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+  const cupon = obtenerCuponAplicado();
+  const descuentoMonto = cupon ? Math.round(subtotal * (cupon.porcentaje / 100)) : 0;
+  const total = Math.max(0, subtotal - descuentoMonto);
 
   cuerpo.innerHTML = carrito.map(item => {
     const key = item.cartItemId || item.id;
@@ -152,12 +155,41 @@ function renderizarDrawerCarrito() {
   }).join('');
 
   footer.innerHTML = `
-    <div class="drawer-linea-total">
-      <span>Subtotal:</span>
-      <span>$${subtotal.toLocaleString('es-CL')}</span>
+    <div style="padding:0.75rem 0; border-bottom:1px dashed rgba(107,68,35,0.2); margin-bottom:0.75rem;">
+      <div class="drawer-linea-total">
+        <span>Subtotal:</span>
+        <span>$${subtotal.toLocaleString('es-CL')}</span>
+      </div>
+      ${cupon ? `
+        <div class="linea-descuento-resumen" style="font-size:0.9rem; margin-top:0.3rem;">
+          <span>Descuento (${cupon.codigo}):</span>
+          <span>-$${descuentoMonto.toLocaleString('es-CL')}</span>
+        </div>
+      ` : ''}
+      <div class="drawer-linea-total" style="font-size:1.1rem; font-weight:800; color:var(--color-chocolate); margin-top:0.4rem;">
+        <span>Total:</span>
+        <span>$${total.toLocaleString('es-CL')}</span>
+      </div>
     </div>
+
+    <!-- Cupón de Descuento en Drawer -->
+    <div style="margin-bottom:0.85rem;">
+      ${cupon ? `
+        <div class="badge-cupon-aplicado" style="width:100%; justify-content:space-between;">
+          <span>🎟️ <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF)</span>
+          <button type="button" onclick="quitarCuponCarrito()" class="btn-quitar-cupon" title="Quitar cupón">✕</button>
+        </div>
+      ` : `
+        <div class="cupon-input-wrapper">
+          <input type="text" id="inputCuponDrawer" placeholder="Cupón (ej: FELICES50)" class="input-cupon" style="text-transform: uppercase;">
+          <button type="button" onclick="procesarAplicarCupon('inputCuponDrawer')" class="boton-aplicar-cupon">Aplicar</button>
+        </div>
+        <div id="mensajeCuponDrawer" class="mensaje-cupon-feedback"></div>
+      `}
+    </div>
+
     <a href="carrito.html" onclick="irAlCarritoPage(event)" class="boton-pill-dark" style="width:100%; text-decoration:none; text-align:center;">
-      Proceder al Pago
+      Proceder al Pago ($${total.toLocaleString('es-CL')})
     </a>
   `;
 }
@@ -187,6 +219,9 @@ function renderizarPaginaCarrito() {
   }
 
   const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+  const cupon = obtenerCuponAplicado();
+  const descuentoMonto = cupon ? Math.round(subtotal * (cupon.porcentaje / 100)) : 0;
+  const total = Math.max(0, subtotal - descuentoMonto);
 
   // Si el carrito tiene productos: Tabla elegante centrada en tarjeta
   contenedor.innerHTML = `
@@ -238,14 +273,46 @@ function renderizarPaginaCarrito() {
         </table>
       </div>
 
-      <!-- Sección de Subtotal al Pie centrada -->
+      <!-- Sección de Cupón de Descuento -->
+      <div class="contenedor-cupon-bolsa">
+        <div class="cupon-titulo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+          Cupón de Descuento
+        </div>
+        ${cupon ? `
+          <div class="badge-cupon-aplicado">
+            <span>🎟️ Cupón <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF) aplicado con éxito</span>
+            <button type="button" onclick="quitarCuponCarrito()" class="btn-quitar-cupon" title="Quitar cupón">✕</button>
+          </div>
+        ` : `
+          <div class="cupon-input-wrapper">
+            <input type="text" id="inputCuponBolsa" placeholder="Ingresa tu cupón (ej: FELICES50)" class="input-cupon" style="text-transform: uppercase;">
+            <button type="button" onclick="procesarAplicarCupon('inputCuponBolsa')" class="boton-aplicar-cupon">Aplicar Cupón</button>
+          </div>
+          <div id="mensajeCuponBolsa" class="mensaje-cupon-feedback"></div>
+        `}
+      </div>
+
+      <!-- Sección de Subtotal y Totales al Pie centrada -->
       <div class="bolsa-footer-resumen">
         <div class="subtotal-info-col">
-          <h2 class="subtotal-label">Subtotal</h2>
-          <p class="subtotal-nota">Descuentos y envíos calculados previo al pago.</p>
+          <h2 class="subtotal-label">Resumen de Compra</h2>
+          <p class="subtotal-nota">${cupon ? `Descuento del cupón ${cupon.codigo} aplicado.` : 'Usa tus cupones FELICES50, DUOC10 o ESPECIAL18 para obtener descuentos.'}</p>
         </div>
-        <div class="subtotal-monto-col">
-          <span class="subtotal-monto">$${subtotal.toLocaleString('es-CL')}</span>
+        <div class="subtotal-monto-col" style="text-align:right;">
+          <div style="font-size:1.05rem; color:#666; margin-bottom:0.2rem;">
+            Subtotal: $${subtotal.toLocaleString('es-CL')}
+          </div>
+          ${cupon ? `
+            <div class="linea-descuento-resumen">
+              <span>Descuento (${cupon.codigo}):</span>
+              <span>-$${descuentoMonto.toLocaleString('es-CL')}</span>
+            </div>
+          ` : ''}
+          <div style="margin-top:0.4rem;">
+            <span style="font-size:1rem; font-weight:700; color:var(--color-chocolate);">TOTAL: </span>
+            <span class="subtotal-monto">$${total.toLocaleString('es-CL')}</span>
+          </div>
         </div>
       </div>
 
@@ -253,7 +320,7 @@ function renderizarPaginaCarrito() {
       <div class="bolsa-acciones-finales">
         <a href="productos.html" class="boton-seguir-comprando">← Seguir comprando</a>
         <button onclick="procesarPagoSimulado()" class="boton-pill-dark btn-proceder-pago">
-          Proceder al Pago
+          Proceder al Pago ($${total.toLocaleString('es-CL')})
         </button>
       </div>
     </div>
@@ -309,14 +376,76 @@ function irAlCarritoPage(e) {
 }
 
 /**
+ * Procesa la aplicación de un cupón desde una caja de texto (Bolsa o Drawer).
+ * @param {string} inputId ID del input donde el usuario escribió el código.
+ */
+function procesarAplicarCupon(inputId) {
+  const inputEl = document.getElementById(inputId);
+  if (!inputEl) return;
+
+  const codigo = inputEl.value.trim().toUpperCase();
+  const feedbackId = inputId === 'inputCuponBolsa' ? 'mensajeCuponBolsa' : 'mensajeCuponDrawer';
+  const feedbackEl = document.getElementById(feedbackId);
+
+  if (!codigo) {
+    if (feedbackEl) {
+      feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
+      feedbackEl.textContent = 'Por favor ingresa un código de cupón.';
+    }
+    return;
+  }
+
+  if (typeof CUPONES_VALIDOS !== 'undefined' && CUPONES_VALIDOS[codigo]) {
+    const infoCupon = CUPONES_VALIDOS[codigo];
+    guardarCuponAplicado({
+      codigo: codigo,
+      porcentaje: infoCupon.porcentaje,
+      nombre: infoCupon.nombre
+    });
+
+    renderizarPaginaCarrito();
+    renderizarDrawerCarrito();
+  } else {
+    if (feedbackEl) {
+      feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
+      feedbackEl.textContent = 'Cupón no válido. Prueba con FELICES50, DUOC10 o ESPECIAL18.';
+    }
+  }
+}
+
+/**
+ * Elimina el cupón de descuento actualmente aplicado.
+ */
+function quitarCuponCarrito() {
+  guardarCuponAplicado(null);
+  renderizarPaginaCarrito();
+  renderizarDrawerCarrito();
+}
+
+/**
  * Simulación de pago y checkout en la página del carrito.
  */
 function procesarPagoSimulado() {
   const carrito = obtenerCarrito();
   if (carrito.length === 0) return;
 
-  alert('🎉 ¡Gracias por tu compra en Pastelería Mil Sabores!\n\nTu pedido ha sido procesado exitosamente.');
+  const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+  const cupon = obtenerCuponAplicado();
+  const descuentoMonto = cupon ? Math.round(subtotal * (cupon.porcentaje / 100)) : 0;
+  const total = Math.max(0, subtotal - descuentoMonto);
+
+  let resumenMsg = `🎉 ¡Gracias por tu compra en Pastelería Mil Sabores!\n\n`;
+  resumenMsg += `Resumen del Pedido:\n`;
+  resumenMsg += `- Subtotal: $${subtotal.toLocaleString('es-CL')}\n`;
+  if (cupon) {
+    resumenMsg += `- Cupón ${cupon.codigo}: -$${descuentoMonto.toLocaleString('es-CL')} (${cupon.porcentaje}% OFF)\n`;
+  }
+  resumenMsg += `- Total Pagado: $${total.toLocaleString('es-CL')}\n\n`;
+  resumenMsg += `Tu pedido ha sido procesado exitosamente.`;
+
+  alert(resumenMsg);
   guardarCarrito([]);
+  guardarCuponAplicado(null);
   cerrarDrawerCarrito();
   renderizarPaginaCarrito();
   renderizarDrawerCarrito();
