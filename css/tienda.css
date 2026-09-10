@@ -1013,13 +1013,14 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-chocolate);
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.6rem 0;
 }
 
 .subtotal-nota {
-  font-size: 0.88rem;
-  color: #777;
+  font-size: 0.9rem;
+  color: #666;
   margin: 0;
+  line-height: 1.5;
 }
 
 .subtotal-monto {

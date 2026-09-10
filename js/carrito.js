@@ -23,6 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (contenedorCarrito) {
     renderizarPaginaCarrito();
   }
+
+  // 4. Escuchar tecla Enter en inputs de cupón (Drawer y Bolsa)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      if (document.activeElement && document.activeElement.id === 'inputCuponDrawer') {
+        e.preventDefault();
+        procesarAplicarCupon('inputCuponDrawer');
+      } else if (document.activeElement && document.activeElement.id === 'inputCuponBolsa') {
+        e.preventDefault();
+        procesarAplicarCupon('inputCuponBolsa');
+      }
+    }
+  });
 });
 
 /**
@@ -181,7 +194,7 @@ function renderizarDrawerCarrito() {
         </div>
       ` : `
         <div class="cupon-input-wrapper">
-          <input type="text" id="inputCuponDrawer" placeholder="Cupón (ej: FELICES50)" class="input-cupon" style="text-transform: uppercase;">
+          <input type="text" id="inputCuponDrawer" placeholder="Ingresa tu cupón" class="input-cupon" style="text-transform: uppercase;">
           <button type="button" onclick="procesarAplicarCupon('inputCuponDrawer')" class="boton-aplicar-cupon">Aplicar</button>
         </div>
         <div id="mensajeCuponDrawer" class="mensaje-cupon-feedback"></div>
@@ -286,7 +299,7 @@ function renderizarPaginaCarrito() {
           </div>
         ` : `
           <div class="cupon-input-wrapper">
-            <input type="text" id="inputCuponBolsa" placeholder="Ingresa tu cupón (ej: FELICES50)" class="input-cupon" style="text-transform: uppercase;">
+            <input type="text" id="inputCuponBolsa" placeholder="Ingresa tu cupón" class="input-cupon" style="text-transform: uppercase;">
             <button type="button" onclick="procesarAplicarCupon('inputCuponBolsa')" class="boton-aplicar-cupon">Aplicar Cupón</button>
           </div>
           <div id="mensajeCuponBolsa" class="mensaje-cupon-feedback"></div>
@@ -297,7 +310,9 @@ function renderizarPaginaCarrito() {
       <div class="bolsa-footer-resumen">
         <div class="subtotal-info-col">
           <h2 class="subtotal-label">Resumen de Compra</h2>
-          <p class="subtotal-nota">${cupon ? `Descuento del cupón ${cupon.codigo} aplicado.` : 'Descuentos y envíos calculados previo al pago.'}</p>
+          <p class="subtotal-nota" style="margin-top:0.4rem;">
+            ${cupon ? `<span style="color:#2e7d32; font-weight:600; display:inline-flex; align-items:center; gap:0.4rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Descuento del cupón <strong>${cupon.codigo}</strong> (${cupon.porcentaje}% OFF) aplicado.</span>` : 'Descuentos y envíos calculados previo al pago.'}
+          </p>
         </div>
         <div class="subtotal-monto-col" style="text-align:right;">
           <div style="font-size:1.05rem; color:#666; margin-bottom:0.2rem;">
@@ -408,7 +423,7 @@ function procesarAplicarCupon(inputId) {
   } else {
     if (feedbackEl) {
       feedbackEl.className = 'mensaje-cupon-feedback mensaje-cupon-error';
-      feedbackEl.textContent = 'Cupón no válido. Prueba con FELICES50, DUOC10 o ESPECIAL18.';
+      feedbackEl.textContent = 'El cupón ingresado no es válido.';
     }
   }
 }
