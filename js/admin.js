@@ -374,17 +374,28 @@ function guardarUsuarioAdmin(evento) {
     marcarCampoInvalido(form.nombre, 'Ingresa el nombre completo.');
     valido = false;
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    marcarCampoInvalido(form.correo, 'Ingresa un correo válido.');
-    valido = false;
+  const usuarios = obtenerUsuariosAdmin();
+  const indiceEdicion = form.dataset.indiceEdicion;
+  const idxNum = indiceEdicion !== '' ? Number(indiceEdicion) : null;
+
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    const existeCorreo = usuarios.some((u, i) => i !== idxNum && u.correo.toLowerCase() === correo);
+    if (existeCorreo) {
+      marcarCampoInvalido(form.correo, 'Ya existe un usuario registrado con este correo.');
+      valido = false;
+    }
   }
-  if (run && !/^[0-9K]{7,9}$/.test(run)) {
-    marcarCampoInvalido(form.run, 'RUN sin puntos ni guion (7-9 caracteres).');
-    valido = false;
-  }
-  if (!rol) {
-    marcarCampoInvalido(form.rol, 'Selecciona un rol.');
-    valido = false;
+
+  if (run) {
+    const runLimpio = run.replace(/[^0-9K]/g, '');
+    const existeRun = usuarios.some((u, i) => {
+      if (i === idxNum || !u.run) return false;
+      return String(u.run).replace(/[^0-9K]/g, '') === runLimpio;
+    });
+    if (existeRun) {
+      marcarCampoInvalido(form.run, 'Ya existe un usuario registrado con este RUN.');
+      valido = false;
+    }
   }
 
   if (!valido) return;
@@ -416,6 +427,17 @@ function eliminarUsuario(indice) {
   usuarios.splice(indice, 1);
   guardarUsuariosAdmin(usuarios);
   renderizarTablaUsuarios();
+}
+
+function ejecutarRestablecerCatalogo() {
+  if (confirm('¿Deseas restablecer el catálogo de productos por defecto? Se volverán a cargar los 19 productos oficiales.')) {
+    if (typeof restablecerCatalogo === 'function') {
+      restablecerCatalogo();
+    } else if (typeof PRODUCTOS_INICIALES !== 'undefined') {
+      localStorage.setItem('mil_sabores_productos', JSON.stringify(PRODUCTOS_INICIALES));
+    }
+    renderizarTablaProductos();
+  }
 }
 
 function marcarCampoInvalido(input, textoError) {

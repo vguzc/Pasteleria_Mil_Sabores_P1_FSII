@@ -227,7 +227,10 @@ function obtenerProductos() {
     try {
       const prods = JSON.parse(datosGuardados);
       if (Array.isArray(prods) && prods.length > 0) {
-        return prods;
+        const validos = prods.filter(p => p && typeof p === 'object' && (p.id || p.codigo) && p.nombre);
+        if (validos.length > 0) {
+          return validos;
+        }
       }
     } catch (e) {
       console.error('Error al leer productos de localStorage:', e);
@@ -236,7 +239,17 @@ function obtenerProductos() {
 
   // Si no hay datos válidos o el arreglo está vacío, forzar reseteo con el catálogo inicial
   localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
-  localStorage.setItem('mil_sabores_version_catalogo', 'v27_catalogo_oficial');
+  localStorage.setItem('mil_sabores_version_catalogo', 'v28_catalogo_oficial');
+  return PRODUCTOS_INICIALES;
+}
+
+/**
+ * Restablece el catálogo completo de productos a su estado inicial por defecto.
+ * @returns {Array}
+ */
+function restablecerCatalogo() {
+  localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
+  localStorage.setItem('mil_sabores_version_catalogo', 'v28_catalogo_oficial');
   return PRODUCTOS_INICIALES;
 }
 
