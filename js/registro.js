@@ -74,6 +74,40 @@ document.addEventListener("DOMContentLoaded", () => {
             esValido = false;
         }
 
+        // Validar correo y RUN duplicados
+        const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
+        const cuentasDemo = [
+            { correo: 'admin@duoc.cl', run: '' },
+            { correo: 'admin@duocuc.cl', run: '' },
+            { correo: 'vendedor@milsabores.cl', run: '' }
+        ];
+        const todosLosUsuarios = [...usuariosGuardados, ...cuentasDemo];
+
+        const correoNormalizado = correo.toLowerCase();
+        const runLimpio = run.replace(/[^0-9kK]/g, '').toUpperCase();
+
+        if (regexCorreo.test(correo)) {
+            const existeCorreo = todosLosUsuarios.some(u => 
+                u && u.correo && u.correo.trim().toLowerCase() === correoNormalizado
+            );
+            if (existeCorreo) {
+                mostrarError("errorCorreo", "Ya existe una cuenta registrada con este correo electrónico.");
+                esValido = false;
+            }
+        }
+
+        if (validarRUNChileno(run)) {
+            const existeRun = usuariosGuardados.some(u => {
+                if (!u || !u.run) return false;
+                const rLimpio = String(u.run).replace(/[^0-9kK]/g, '').toUpperCase();
+                return rLimpio === runLimpio;
+            });
+            if (existeRun) {
+                mostrarError("errorRun", "Ya existe una cuenta registrada con este RUN.");
+                esValido = false;
+            }
+        }
+
         if (!fechaNac) {
             mostrarError("errorFecha", "Selecciona tu fecha de nacimiento.");
             esValido = false;

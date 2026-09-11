@@ -31,15 +31,20 @@
 
 <div class="layout-admin">
   <aside class="admin-sidebar">
-    <p class="rol-actual">Panel Vendedor</p>
-    <nav>
-      <a href="vendedor-home.html" aria-current="page">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Resumen
-      </a>
-      <a href="admin-productos.html">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>Productos
-      </a>
-    </nav>
+    <div>
+      <div class="rol-actual">Panel Vendedor</div>
+      <div class="sidebar-titulo-seccion">Navegación</div>
+      <nav>
+        <a href="vendedor-home.html" aria-current="page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Resumen</span>
+        </a>
+        <a href="admin-productos.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span>Productos</span>
+        </a>
+      </nav>
+    </div>
   </aside>
 
   <main class="admin-contenido">
@@ -48,22 +53,83 @@
         <h1 style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); font-weight: normal; margin-bottom: 0.3rem;">Bienvenido al Panel Vendedor</h1>
         <p class="texto-secundario" style="margin:0;">Gestiona el inventario de productos y stock del taller de la pastelería.</p>
       </div>
+      <button id="btnNuevoProducto" class="boton boton-primario">+ Nuevo Producto</button>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-      <div style="background: var(--color-blanco); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--color-borde); box-shadow: var(--sombra-suave);">
-        <h3 style="color: var(--color-chocolate); margin-top: 0;">Gestión de Productos</h3>
-        <p style="font-size: 0.9rem; color: var(--color-texto-secundario);">Crea, edita, busca y actualiza el stock de los productos del catálogo.</p>
-        <a href="admin-productos.html" class="boton boton-primario" style="width: 100%; margin-top: 1rem;">Ir a Mantenedor de Productos</a>
-      </div>
-
-      <div style="background: var(--color-blanco); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--color-borde); box-shadow: var(--sombra-suave);">
-        <h3 style="color: var(--color-chocolate); margin-top: 0;">Tienda Principal</h3>
-        <p style="font-size: 0.9rem; color: var(--color-texto-secundario);">Regresa a la experiencia de compra de cara al público.</p>
-        <a href="index.html" class="boton boton-secundario" style="width: 100%; margin-top: 1rem;">Ver Tienda</a>
-      </div>
+    <div class="admin-toolbar" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+      <input type="search" id="buscarProducto" placeholder="Buscar por nombre, código o categoría…" autocomplete="off" style="flex: 1;">
+      <button type="button" class="boton boton-secundario" style="font-size: 0.85rem; padding: 0.6rem 1rem;" onclick="ejecutarRestablecerCatalogo()">Restablecer Catálogo</button>
     </div>
+
+    <table class="tabla-admin">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpoTablaProductos"></tbody>
+    </table>
   </main>
+</div>
+
+<!-- Modal crear/editar producto -->
+<div class="modal-fondo" id="modalProducto">
+  <div class="modal-caja">
+    <h2 id="tituloModalProducto" style="font-family: var(--fuente-titulos); color: var(--color-chocolate); font-weight: normal;">Nuevo Producto</h2>
+    <form id="formProducto" novalidate>
+
+      <div class="form-grupo" data-campo="codigo">
+        <label for="codigoProducto">Código</label>
+        <input type="text" id="codigoProducto" name="codigo" placeholder="Ej: TC001" required>
+        <span class="form-error">Formato esperado: letras + números, ej. TC001.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="nombre">
+        <label for="nombreProducto">Nombre</label>
+        <input type="text" id="nombreProducto" name="nombre" placeholder="Nombre del producto" required>
+        <span class="form-error">El nombre debe tener al menos 3 caracteres.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="categoria">
+        <label for="categoriaProducto">Categoría</label>
+        <select id="categoriaProducto" name="categoria" required>
+          <option value="">Selecciona una categoría</option>
+          <option value="Especial 18">Especial 18</option>
+          <option value="Tortas Cuadradas">Tortas Cuadradas</option>
+          <option value="Tortas Circulares">Tortas Circulares</option>
+          <option value="Postres Individuales">Postres Individuales</option>
+          <option value="Productos Sin Azúcar">Productos Sin Azúcar</option>
+          <option value="Pastelería Tradicional">Pastelería Tradicional</option>
+          <option value="Productos Sin Gluten">Productos Sin Gluten</option>
+          <option value="Productos Vegana">Productos Vegana</option>
+          <option value="Tortas Especiales">Tortas Especiales</option>
+        </select>
+        <span class="form-error">Selecciona una categoría.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="precio">
+        <label for="precioProducto">Precio (CLP)</label>
+        <input type="number" id="precioProducto" name="precio" min="1" step="1" placeholder="45000" required>
+        <span class="form-error">El precio debe ser mayor a 0.</span>
+      </div>
+
+      <div class="form-grupo" data-campo="stock">
+        <label for="stockProducto">Stock disponible</label>
+        <input type="number" id="stockProducto" name="stock" min="0" step="1" placeholder="10" required>
+        <span class="form-error">El stock no puede ser negativo.</span>
+      </div>
+
+      <div class="modal-acciones">
+        <button type="button" id="cerrarModalProducto" class="boton boton-secundario">Cancelar</button>
+        <button type="submit" class="boton boton-primario">Guardar</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem;">
