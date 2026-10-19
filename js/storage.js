@@ -139,6 +139,16 @@ const PRODUCTOS_INICIALES = [
     imagen: 'img/empanada-queso.png',
     destacado: false
   },
+  {
+    id: 'PT005',
+    nombre: 'Strudel de Manzana Tradicional',
+    categoria: 'Pastelería Tradicional',
+    precio: 4990,
+    stock: 15,
+    descripcion: 'Tradicional strudel artesanal de masa hojaldrada crujiente, relleno de jugosas manzanas horneadas, canela de Ceylán, nueces crocantes y pasas al ron, espolvoreado con azúcar flor.',
+    imagen: 'img/strudel-manzana.png',
+    destacado: true
+  },
 
   // 6. Productos Sin Gluten
   {
@@ -229,6 +239,18 @@ function obtenerProductos() {
       if (Array.isArray(prods) && prods.length > 0) {
         const validos = prods.filter(p => p && typeof p === 'object' && (p.id || p.codigo) && p.nombre);
         if (validos.length > 0) {
+          let modificado = false;
+          PRODUCTOS_INICIALES.forEach(prodInicial => {
+            const idIni = prodInicial.id || prodInicial.codigo;
+            const existe = validos.some(p => (p.id || p.codigo) === idIni);
+            if (!existe) {
+              validos.push(prodInicial);
+              modificado = true;
+            }
+          });
+          if (modificado) {
+            localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(validos));
+          }
           return validos;
         }
       }
@@ -239,7 +261,7 @@ function obtenerProductos() {
 
   // Si no hay datos válidos o el arreglo está vacío, forzar reseteo con el catálogo inicial
   localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(PRODUCTOS_INICIALES));
-  localStorage.setItem('mil_sabores_version_catalogo', 'v28_catalogo_oficial');
+  localStorage.setItem('mil_sabores_version_catalogo', 'v29_strudel_manzana');
   return PRODUCTOS_INICIALES;
 }
 
