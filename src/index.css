@@ -1,0 +1,102 @@
+/* ==========================================================================
+   PASTELERÍA MIL SABORES — Estilos Globales y Personalización de Bootstrap
+   ========================================================================== */
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-primary: #8b4513;
+  --color-accent: #d4a373;
+  --color-gold: #c59b27;
+  --color-cream: #fefae0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #2b2d42;
+  background-color: #faf9f6;
+  min-height: 100vh;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Transiciones suaves */
+.transition-all {
+  transition: all 0.25s ease-in-out;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+
+/* Tarjetas de Producto */
+.product-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.product-card:hover .transition-transform {
+  transform: scale(1.05);
+}
+
+/* Tarjetas de Categoría */
+.category-card {
+  border-radius: 12px;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Truncado de texto en 2 líneas */
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Efecto hover en módulos admin */
+.hover-shadow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Estilos de Boleta para impresión */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #boleta-imprimible,
+  #boleta-imprimible *,
+  .printable-area,
+  .printable-area * {
+    visibility: visible;
+  }
+  #boleta-imprimible,
+  .printable-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background: #fff !important;
+  }
+  .d-print-none,
+  .btn,
+  nav,
+  header,
+  footer {
+    display: none !important;
+  }
+}
