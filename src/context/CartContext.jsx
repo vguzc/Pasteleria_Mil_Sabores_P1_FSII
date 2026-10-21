@@ -5,6 +5,7 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => cartService.getCart());
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [couponCode, setCouponCode] = useState(() => {
     try {
       return localStorage.getItem('mil_sabores_cupon_activo') || '';
@@ -21,9 +22,15 @@ export function CartProvider({ children }) {
     return () => window.removeEventListener('cart-updated', handleCartUpdate);
   }, []);
 
-  const addItem = (product, qty = 1) => {
+  const openDrawer = () => setIsDrawerOpen(true);
+  const closeDrawer = () => setIsDrawerOpen(false);
+
+  const addItem = (product, qty = 1, showDrawer = true) => {
     const updated = cartService.addItem(product, qty);
     setCart([...updated]);
+    if (showDrawer) {
+      setIsDrawerOpen(true);
+    }
   };
 
   const updateQuantity = (productId, qty) => {
@@ -65,6 +72,9 @@ export function CartProvider({ children }) {
       cart,
       totals,
       couponCode,
+      isDrawerOpen,
+      openDrawer,
+      closeDrawer,
       addItem,
       updateQuantity,
       removeItem,

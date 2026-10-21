@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../common/Button';
 
 /**
- * Componente ProductCard con la estética oficial de Pastelería Mil Sabores.
- * Paleta: Fondo crema, chocolate #8B4513, rosa #FFC0CB.
+ * Componente Tarjeta de Producto (ProductCard)
+ * Replica con precisión la estructura, clases y estilos del diseño original de Parcial 1.
  */
 export default function ProductCard({ product, onAddToCart }) {
   const [agregadoAnim, setAgregadoAnim] = useState(false);
@@ -24,29 +23,34 @@ export default function ProductCard({ product, onAddToCart }) {
     currency: 'CLP'
   }).format(product.precio);
 
-  const formattedOldPrice = product.precioAnterior
-    ? new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.precioAnterior)
-    : null;
-
   return (
-    <div className="card h-100 shadow-sm border-0 product-card transition-all">
-      <div
-        className="position-relative overflow-hidden text-center p-3"
-        style={{ height: '220px', backgroundColor: '#F7EFE4' }}
-      >
+    <article className="tarjeta-producto" data-id={product.id}>
+      <div className="tarjeta-imagen-wrapper">
+        <span className="badge-categoria">{product.categoria}</span>
         {product.enOferta && (
-          <span className="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1 shadow-sm fw-bold">
-            <i className="bi bi-tag-fill me-1"></i>OFERTA
+          <span
+            style={{
+              position: 'absolute',
+              top: '0.75rem',
+              right: '0.75rem',
+              backgroundColor: '#d32f2f',
+              color: '#ffffff',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              padding: '0.3rem 0.6rem',
+              borderRadius: '20px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+              zIndex: 2
+            }}
+          >
+            OFERTA
           </span>
         )}
-        <span className="badge badge-categoria-rosa position-absolute top-0 end-0 m-2 shadow-sm">
-          {product.categoria}
-        </span>
-        <Link to={`/producto/${product.id}`} className="d-block h-100 w-100">
+        <Link to={`/producto/${product.id}`} className="imagen-contenedor-link d-block h-100 w-100">
           <img
             src={product.imagen || '/img/torta-mil-sabores.png'}
             alt={product.nombre}
-            className="img-fluid h-100 object-fit-contain transition-transform"
             loading="lazy"
             onError={(e) => {
               e.target.onerror = null;
@@ -55,51 +59,34 @@ export default function ProductCard({ product, onAddToCart }) {
           />
         </Link>
       </div>
-      <div className="card-body d-flex flex-column justify-content-between p-3">
-        <div>
-          <h5 className="card-title text-truncate-2 mb-2" title={product.nombre}>
-            <Link to={`/producto/${product.id}`} className="text-decoration-none fw-bold" style={{ color: 'var(--color-chocolate)' }}>
-              {product.nombre}
-            </Link>
-          </h5>
-          <p className="card-text text-muted small text-truncate-2 mb-3">
-            {product.descripcion}
-          </p>
-        </div>
 
-        <div>
-          <div className="d-flex align-items-baseline mb-2">
-            <span className="precio-chocolate">{formattedPrice}</span>
-            {formattedOldPrice && (
-              <span className="ms-2 text-decoration-line-through text-muted small">
-                {formattedOldPrice}
-              </span>
-            )}
-            <span className="ms-auto small text-muted">
-              Stock: <strong className={product.stock <= 5 ? 'text-danger' : 'text-success'}>{product.stock}</strong>
-            </span>
-          </div>
-
-          <div className="d-flex gap-2">
+      <div className="tarjeta-cuerpo">
+        <h3 className="tarjeta-titulo">
+          <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
+        </h3>
+        <p className="tarjeta-descripcion">{product.descripcion}</p>
+        <div className="tarjeta-footer">
+          <span className="tarjeta-precio">{formattedPrice}</span>
+          <div className="tarjeta-acciones">
             <Link
               to={`/producto/${product.id}`}
-              className="btn btn-outline-primary btn-sm flex-grow-1"
+              className="boton boton-secundario"
+              style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
             >
               Ver detalle
             </Link>
-            <Button
-              variant={agregadoAnim ? 'success' : 'primary'}
-              size="sm"
+            <button
+              type="button"
+              className="boton boton-primario btn-agregar-rapido"
               onClick={handleAdd}
               disabled={product.stock <= 0}
-              className="flex-grow-1"
-              icon={agregadoAnim ? 'bi bi-check-lg' : 'bi bi-cart-plus'}
+              style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
             >
-              {agregadoAnim ? '¡Listo!' : '+ Agregar'}
-            </Button>
+              {agregadoAnim ? '✓ Listo' : '+ Agregar'}
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

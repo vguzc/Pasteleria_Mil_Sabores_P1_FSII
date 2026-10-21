@@ -5,204 +5,160 @@ import { useCart } from '../../context/CartContext';
 
 export default function Navbar() {
   const { currentUser, logout, isAdmin, isVendedor } = useAuth();
-  const { totals } = useCart();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { totals, openDrawer } = useCart();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleCartClick = (e) => {
     e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/productos?buscar=${encodeURIComponent(searchTerm.trim())}`);
-    }
+    openDrawer();
   };
 
-  const formattedTotal = new Intl.NumberFormat('es-CL', {
-    style: 'currency',
-    currency: 'CLP',
-    maximumFractionDigits: 0
-  }).format(totals.total);
-
   return (
-    <header className="sticky-top navbar-custom">
-      {/* Barra superior con avisos */}
-      <div className="top-bar-anuncio py-1">
-        <div className="container d-flex justify-content-between align-items-center">
-          <div>
-            <i className="bi bi-cake2-fill me-1 text-warning"></i>
-            <span>50 Años de Tradición y Repostería Artesanal (1976 - 2026)</span>
-          </div>
-          <div className="d-none d-md-flex gap-3">
-            <span><i className="bi bi-truck me-1"></i>Envío Gratis sobre $30.000</span>
-            <span><i className="bi bi-tag-fill me-1"></i>Cupón: <strong>FELICES50</strong> (50% OFF)</span>
-          </div>
-        </div>
-      </div>
+    <header className="encabezado">
+      <div className="contenedor">
+        {/* Logo oficial */}
+        <Link to="/" className="logo">
+          <img src="/img/logo-icono.png" alt="Mil Sabores" className="logo-icono" />
+          <span className="logo-texto">
+            Mil Sabores
+            <span className="logo-subtexto">Café & Pastelería</span>
+          </span>
+        </Link>
 
-      {/* Navbar principal */}
-      <nav className="navbar navbar-expand-lg py-2">
-        <div className="container">
-          {/* Logo con tipografía Pacifico */}
-          <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
-            <img
-              src="/img/logo-icono.png"
-              alt="Pastelería Mil Sabores"
-              width="46"
-              height="46"
-              className="logo-icono"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = '/img/logo.png';
-              }}
-            />
-            <div>
-              <span className="logo-texto-pacifico d-block">
-                Mil Sabores
-              </span>
-              <span className="logo-subtexto-lato d-block">
-                PASTELERÍA ARTESANAL
-              </span>
-            </div>
-          </Link>
+        {/* Navegación central limpia */}
+        <nav className={`navegacion ${mobileMenuOpen ? 'navegacion-abierta' : ''}`}>
+          <NavLink to="/" end className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Inicio
+          </NavLink>
+          <NavLink to="/productos" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Catálogo
+          </NavLink>
+          <NavLink to="/categorias" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Categorías
+          </NavLink>
+          <NavLink to="/ofertas" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Ofertas
+          </NavLink>
+          <NavLink to="/nosotros" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Nosotros
+          </NavLink>
+          <NavLink to="/blogs" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Blog & Recetas
+          </NavLink>
+          <NavLink to="/contacto" className={({ isActive }) => (isActive ? 'activo' : '')} onClick={() => setMobileMenuOpen(false)}>
+            Contacto
+          </NavLink>
+        </nav>
 
-          {/* Buscador central */}
-          <form onSubmit={handleSearch} className="d-none d-lg-flex mx-auto" style={{ maxWidth: '360px', width: '100%' }}>
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Buscar tortas, postres, empanadas..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                aria-label="Buscar productos"
-              />
-              <button className="btn btn-primary" type="submit" aria-label="Buscar">
-                <i className="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
-
-          {/* Acciones de usuario y carrito */}
-          <div className="d-flex align-items-center gap-2 order-lg-3">
-            {/* Botón Carrito */}
-            <Link to="/carrito" className="btn btn-carrito-badge d-flex align-items-center gap-2 shadow-sm">
-              <i className="bi bi-cart3 fs-5"></i>
-              <span className="d-none d-sm-inline">Carrito</span>
-              <span className="badge badge-item-count rounded-pill">
-                {totals.itemsCount}
-              </span>
-              <span className="d-none d-md-inline small">
-                {formattedTotal}
-              </span>
-            </Link>
-
-            {/* Menú Usuario */}
+        {/* Acciones de usuario y Carrito Desplegable (Slide) */}
+        <div className="nav-acciones">
+          {/* Icono de Usuario con Dropdown */}
+          <div className="position-relative">
             {currentUser ? (
-              <div className="dropdown">
-                <button
-                  className="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i className="bi bi-person-circle fs-5" style={{ color: 'var(--color-chocolate)' }}></i>
-                  <span className="d-none d-sm-inline small fw-bold">{currentUser.nombre}</span>
-                </button>
-                <ul className="dropdown-menu dropdown-menu-end shadow">
-                  <li className="dropdown-header">
-                    <strong>{currentUser.nombre} {currentUser.apellidos}</strong>
-                    <br />
-                    <span className="badge bg-warning text-dark text-uppercase">{currentUser.rol}</span>
-                  </li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li>
-                    <Link className="dropdown-item" to="/mi-cuenta">
-                      <i className="bi bi-person-gear me-2"></i>Mi Cuenta y Cupones
-                    </Link>
-                  </li>
-                  {(isAdmin || isVendedor) && (
-                    <li>
-                      <Link className="dropdown-item fw-bold" style={{ color: 'var(--color-chocolate)' }} to="/admin">
-                        <i className="bi bi-speedometer2 me-2"></i>Panel de Administración
-                      </Link>
-                    </li>
-                  )}
-                  <li><hr className="dropdown-divider" /></li>
-                  <li>
-                    <button className="dropdown-item text-danger" onClick={logout}>
-                      <i className="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              <button
+                type="button"
+                className="nav-icono-link"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-label="Menú de usuario"
+                title={`Sesión iniciada: ${currentUser.nombre}`}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </button>
             ) : (
-              <div className="d-flex gap-1">
-                <Link to="/login" className="btn btn-outline-primary btn-sm">
-                  Iniciar Sesión
-                </Link>
-                <Link to="/registro" className="btn btn-rosa btn-sm d-none d-sm-inline-block">
-                  Crear Cuenta
-                </Link>
-              </div>
+              <Link to="/login" className="nav-icono-link" aria-label="Iniciar sesión" title="Iniciar sesión">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
             )}
 
-            {/* Hamburguesa Mobile */}
-            <button
-              className="navbar-toggler ms-1 border-0"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarContenido"
-              aria-controls="navbarContenido"
-              aria-expanded="false"
-              aria-label="Abrir navegación"
-            >
-              <i className="bi bi-list fs-2" style={{ color: 'var(--color-chocolate)' }}></i>
-            </button>
-          </div>
-
-          {/* Links del Navbar */}
-          <div className="collapse navbar-collapse order-lg-2" id="navbarContenido">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 mt-2 mt-lg-0">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/" end>Inicio</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/productos">Catálogo</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/categorias">Categorías</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/ofertas">
-                  <span className="badge bg-danger me-1">Hot</span>Ofertas
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/nosotros">Nosotros</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/blogs">Blog</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/contacto">Contacto</NavLink>
-              </li>
-            </ul>
-
-            {/* Buscador móvil */}
-            <form onSubmit={handleSearch} className="d-lg-none mt-2">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Buscar..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="btn btn-primary" type="submit">Buscar</button>
+            {/* Dropdown del usuario autenticado */}
+            {currentUser && dropdownOpen && (
+              <div
+                className="card shadow position-absolute end-0 mt-2 p-2"
+                style={{ width: '220px', zIndex: 1100, backgroundColor: '#FFFFFF', borderColor: 'var(--color-borde)' }}
+              >
+                <div className="small fw-bold border-bottom pb-2 mb-2 px-2" style={{ color: 'var(--color-chocolate)' }}>
+                  {currentUser.nombre} {currentUser.apellidos}
+                  <span className="badge ms-1" style={{ backgroundColor: 'var(--color-rosa)', color: 'var(--color-chocolate)' }}>
+                    {currentUser.rol}
+                  </span>
+                </div>
+                <Link
+                  to="/mi-cuenta"
+                  className="dropdown-item px-2 py-1 small rounded text-decoration-none"
+                  style={{ color: 'var(--color-texto)' }}
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <i className="bi bi-person me-2"></i>Mi Cuenta
+                </Link>
+                {(isAdmin || isVendedor) && (
+                  <Link
+                    to="/admin"
+                    className="dropdown-item px-2 py-1 small rounded text-decoration-none fw-bold"
+                    style={{ color: 'var(--color-chocolate)' }}
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    <i className="bi bi-speedometer2 me-2"></i>Panel Administrativo
+                  </Link>
+                )}
+                <hr className="my-1" />
+                <button
+                  type="button"
+                  className="btn btn-link text-danger text-start p-1 small text-decoration-none"
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    logout();
+                  }}
+                >
+                  <i className="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                </button>
               </div>
-            </form>
+            )}
           </div>
+
+          {/* Icono de Carrito que abre el Slide Drawer */}
+          <button
+            type="button"
+            className="nav-icono-link nav-carrito"
+            onClick={handleCartClick}
+            aria-label="Abrir carrito de compras"
+            title="Abrir bolsa"
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {totals.itemsCount > 0 && (
+              <span className="badge-carrito">
+                {totals.itemsCount}
+              </span>
+            )}
+          </button>
+
+          {/* Menú hamburguesa mobile */}
+          <button
+            type="button"
+            className="menu-toggle d-lg-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Abrir menú"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
-      </nav>
+      </div>
     </header>
   );
 }

@@ -3,92 +3,40 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="footer-chocolate pt-5 pb-3 mt-5">
-      <div className="container">
-        <div className="row g-4">
-          {/* Columna Marca & 50 años */}
-          <div className="col-12 col-md-4">
-            <div className="d-flex align-items-center gap-2 mb-3">
-              <img
-                src="/img/logo-icono.png"
-                alt="Pastelería Mil Sabores"
-                width="44"
-                height="44"
-                className="rounded-circle bg-white p-1"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/img/logo.png';
-                }}
-              />
-              <span className="fs-3 font-pacifico text-white">
-                Mil Sabores
-              </span>
-            </div>
-            <p className="small mb-3" style={{ color: '#E8D9C3' }}>
-              Celebrando 50 años de tradición artesanal chilena (1976 - 2026). Elaboramos cada torta y pastel con ingredientes frescos de la más alta calidad y recetas familiares tradicionales.
-            </p>
-            <div className="d-flex gap-2">
-              <span className="badge px-3 py-2" style={{ backgroundColor: 'var(--color-rosa)', color: 'var(--color-chocolate)' }}>
-                <i className="bi bi-award me-1"></i>Récord Torta Más Grande 1995
-              </span>
-            </div>
-          </div>
-
-          {/* Columna Navegación Rápida */}
-          <div className="col-6 col-md-2">
-            <h6 className="text-uppercase fw-bold mb-3" style={{ color: 'var(--color-rosa)' }}>Navegación</h6>
-            <ul className="list-unstyled small">
-              <li className="mb-2"><Link to="/">Inicio</Link></li>
-              <li className="mb-2"><Link to="/productos">Catálogo Completo</Link></li>
-              <li className="mb-2"><Link to="/categorias">Categorías</Link></li>
-              <li className="mb-2"><Link to="/ofertas">Ofertas del Mes</Link></li>
-              <li className="mb-2"><Link to="/nosotros">Nuestra Historia</Link></li>
-              <li className="mb-2"><Link to="/blogs">Blog y Recetas</Link></li>
-            </ul>
-          </div>
-
-          {/* Columna Categorías Populares */}
-          <div className="col-6 col-md-3">
-            <h6 className="text-uppercase fw-bold mb-3" style={{ color: 'var(--color-rosa)' }}>Especialidades</h6>
-            <ul className="list-unstyled small">
-              <li className="mb-2"><Link to="/categoria/Tortas%20Cuadradas">Tortas Cuadradas</Link></li>
-              <li className="mb-2"><Link to="/categoria/Tortas%20Circulares">Tortas Circulares</Link></li>
-              <li className="mb-2"><Link to="/categoria/Productos%20Sin%20Azúcar">Línea Sin Azúcar</Link></li>
-              <li className="mb-2"><Link to="/categoria/Productos%20Sin%20Gluten">Línea Sin Gluten</Link></li>
-              <li className="mb-2"><Link to="/categoria/Productos%20Veganos">Línea Vegana</Link></li>
-              <li className="mb-2"><Link to="/categoria/Especial%2018">Especial Fiestas Patrias</Link></li>
-            </ul>
-          </div>
-
-          {/* Columna Contacto y Horarios */}
-          <div className="col-12 col-md-3">
-            <h6 className="text-uppercase fw-bold mb-3" style={{ color: 'var(--color-rosa)' }}>Casa Matriz</h6>
-            <p className="small mb-2" style={{ color: '#E8D9C3' }}>
-              <i className="bi bi-geo-alt-fill text-danger me-2"></i>Av. Providencia 1200, Santiago
-            </p>
-            <p className="small mb-2" style={{ color: '#E8D9C3' }}>
-              <i className="bi bi-telephone-fill text-success me-2"></i>+56 2 2345 6789
-            </p>
-            <p className="small mb-2" style={{ color: '#E8D9C3' }}>
-              <i className="bi bi-envelope-fill text-info me-2"></i>contacto@milsabores.cl
-            </p>
-            <p className="small mb-0" style={{ color: '#E8D9C3' }}>
-              <i className="bi bi-clock-fill text-warning me-2"></i>Lunes a Sábado: 08:30 - 20:30 hrs
-            </p>
-          </div>
-        </div>
-
-        <hr className="my-4 border-secondary opacity-25" />
-
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center small" style={{ color: '#E8D9C3' }}>
-          <p className="mb-0">
-            &copy; {new Date().getFullYear()} Pastelería Mil Sabores SpA. Todos los derechos reservados.
+    <footer className="pie-pagina" style={{ backgroundColor: 'var(--color-chocolate)', color: 'var(--color-fondo)', padding: '3.5rem 0 2rem 0', marginTop: '3rem' }}>
+      <div className="contenedor" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', textAlign: 'center', justifyItems: 'center', alignItems: 'start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <Link to="/" className="logo-footer">
+            <span className="logo-texto-footer">
+              Mil Sabores
+              <span className="logo-subtexto-footer">Café & Pastelería</span>
+            </span>
+          </Link>
+          <p style={{ fontSize: '0.9rem', opacity: 0.9, maxWidth: '300px', margin: '0 auto', textAlign: 'center' }}>
+            Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.
           </p>
-          <div className="d-flex gap-3 mt-2 mt-md-0">
-            <span>Evaluación Parcial N° 2 — DSY1104 Fullstack II</span>
-            <Link to="/login" style={{ color: 'var(--color-rosa)' }}>Acceso Administrativo</Link>
-          </div>
         </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <h4 style={{ margin: '0 0 1rem 0', textTransform: 'uppercase', letterSpacing: '1px' }}>Navegación</h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, lineHeight: 2, fontSize: '0.9rem', textAlign: 'center' }}>
+            <li><Link to="/productos" style={{ color: 'var(--color-fondo)' }}>Catálogo de Productos</Link></li>
+            <li><Link to="/categorias" style={{ color: 'var(--color-fondo)' }}>Categorías</Link></li>
+            <li><Link to="/ofertas" style={{ color: 'var(--color-fondo)' }}>Ofertas Especiales</Link></li>
+            <li><Link to="/nosotros" style={{ color: 'var(--color-fondo)' }}>Nuestra Historia</Link></li>
+            <li><Link to="/blogs" style={{ color: 'var(--color-fondo)' }}>Blog & Recetas</Link></li>
+            <li><Link to="/contacto" style={{ color: 'var(--color-fondo)' }}>Contacto & Sedes</Link></li>
+          </ul>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <h4 style={{ margin: '0 0 1rem 0', textTransform: 'uppercase', letterSpacing: '1px' }}>Horario & Ubicación</h4>
+          <p style={{ fontSize: '0.9rem', margin: '0 0 0.5rem 0', textAlign: 'center', fontWeight: 700 }}>Antonio Varas 666, Providencia</p>
+          <p style={{ fontSize: '0.88rem', margin: 0, textAlign: 'center', lineHeight: 1.7, opacity: 0.9 }}>
+            Lunes a Sábado: 09:00 - 20:00 hrs.<br />Domingos y Festivos: 10:00 - 18:00 hrs.
+          </p>
+        </div>
+      </div>
+      <div className="contenedor" style={{ textAlign: 'center', marginTop: '2.5rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.12)', fontSize: '0.85rem', opacity: 0.85 }}>
+        © {new Date().getFullYear()} Pastelería Mil Sabores — Evaluación Parcial N° 2 (Fullstack II - Duoc UC)
       </div>
     </footer>
   );
