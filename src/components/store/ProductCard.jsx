@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import Button from '../common/Button';
 
 /**
- * Componente ProductCard: Presenta un producto con su foto, categoría, precio en CLP y acciones.
- * Principio Single Responsibility: Maneja la visualización de un ítem individual y su feedback de agregado.
+ * Componente ProductCard con la estética oficial de Pastelería Mil Sabores.
+ * Paleta: Fondo crema, chocolate #8B4513, rosa #FFC0CB.
  */
 export default function ProductCard({ product, onAddToCart }) {
   const [agregadoAnim, setAgregadoAnim] = useState(false);
@@ -30,13 +30,16 @@ export default function ProductCard({ product, onAddToCart }) {
 
   return (
     <div className="card h-100 shadow-sm border-0 product-card transition-all">
-      <div className="position-relative overflow-hidden bg-light text-center p-3" style={{ height: '220px' }}>
+      <div
+        className="position-relative overflow-hidden text-center p-3"
+        style={{ height: '220px', backgroundColor: '#F7EFE4' }}
+      >
         {product.enOferta && (
-          <span className="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1 shadow-sm">
+          <span className="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1 shadow-sm fw-bold">
             <i className="bi bi-tag-fill me-1"></i>OFERTA
           </span>
         )}
-        <span className="badge bg-warning text-dark position-absolute top-0 end-0 m-2 px-2 py-1 shadow-sm">
+        <span className="badge badge-categoria-rosa position-absolute top-0 end-0 m-2 shadow-sm">
           {product.categoria}
         </span>
         <Link to={`/producto/${product.id}`} className="d-block h-100 w-100">
@@ -55,7 +58,7 @@ export default function ProductCard({ product, onAddToCart }) {
       <div className="card-body d-flex flex-column justify-content-between p-3">
         <div>
           <h5 className="card-title text-truncate-2 mb-2" title={product.nombre}>
-            <Link to={`/producto/${product.id}`} className="text-decoration-none text-dark fw-bold">
+            <Link to={`/producto/${product.id}`} className="text-decoration-none fw-bold" style={{ color: 'var(--color-chocolate)' }}>
               {product.nombre}
             </Link>
           </h5>
@@ -66,7 +69,7 @@ export default function ProductCard({ product, onAddToCart }) {
 
         <div>
           <div className="d-flex align-items-baseline mb-2">
-            <span className="fs-5 fw-bold text-primary">{formattedPrice}</span>
+            <span className="precio-chocolate">{formattedPrice}</span>
             {formattedOldPrice && (
               <span className="ms-2 text-decoration-line-through text-muted small">
                 {formattedOldPrice}
@@ -80,7 +83,7 @@ export default function ProductCard({ product, onAddToCart }) {
           <div className="d-flex gap-2">
             <Link
               to={`/producto/${product.id}`}
-              className="btn btn-outline-secondary btn-sm flex-grow-1"
+              className="btn btn-outline-primary btn-sm flex-grow-1"
             >
               Ver detalle
             </Link>

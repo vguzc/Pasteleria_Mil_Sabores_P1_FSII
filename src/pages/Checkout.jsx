@@ -28,7 +28,7 @@ export default function Checkout() {
   const [simulateError, setSimulateError] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Auto-completar datos si el usuario ha iniciado sesión (Requisito explícito de la pauta)
+  // Auto-completar datos si el usuario ha iniciado sesión (Requisito de la pauta)
   useEffect(() => {
     if (currentUser) {
       setFormData({
@@ -74,7 +74,6 @@ export default function Checkout() {
     e.preventDefault();
     setError('');
 
-    // Validaciones
     if (!formData.nombre.trim() || !formData.apellidos.trim() || !formData.correo.trim()) {
       setError('Por favor completa todos los campos de información del cliente.');
       return;
@@ -92,7 +91,7 @@ export default function Checkout() {
 
     setIsProcessing(true);
 
-    // Si está marcado simular error (Figura 8)
+    // Simular error si está activado
     if (simulateError) {
       setTimeout(() => {
         setIsProcessing(false);
@@ -114,7 +113,7 @@ export default function Checkout() {
       return;
     }
 
-    // Proceso de compra exitosa (Figura 7)
+    // Proceso de compra exitosa
     setTimeout(() => {
       const orderPayload = {
         cliente: {
@@ -172,17 +171,17 @@ export default function Checkout() {
 
       <div className="row justify-content-center">
         <div className="col-lg-10">
-          <div className="card shadow border-0 p-4 mb-4">
+          <div className="card shadow-sm p-4 mb-4" style={{ borderColor: 'var(--color-borde)' }}>
             {/* Header del Checkout (Figura 6) */}
-            <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+            <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3" style={{ borderColor: 'var(--color-borde)' }}>
               <div>
-                <h2 className="fw-bold font-serif mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h2 className="font-pacifico mb-1" style={{ color: 'var(--color-chocolate)' }}>
                   Carrito de compra
                 </h2>
                 <small className="text-muted">Completa la siguiente información para procesar tu pedido</small>
               </div>
               <div>
-                <span className="badge bg-primary fs-5 px-3 py-2 shadow-sm">
+                <span className="badge fs-5 px-3 py-2 shadow-sm" style={{ backgroundColor: 'var(--color-chocolate)', color: '#FFFFFF' }}>
                   Total a pagar: {formatPrice(totals.total)}
                 </span>
               </div>
@@ -190,7 +189,7 @@ export default function Checkout() {
 
             {/* Aviso de auto-completado si hay sesión activa */}
             {currentUser ? (
-              <div className="alert alert-info py-2 small d-flex align-items-center mb-4">
+              <div className="alert py-2 small d-flex align-items-center mb-4" style={{ backgroundColor: 'rgba(255, 192, 203, 0.35)', color: 'var(--color-chocolate)', border: '1px solid var(--color-rosa)' }}>
                 <i className="bi bi-info-circle-fill me-2 fs-5"></i>
                 <span>
                   Has iniciado sesión como <strong>{currentUser.nombre} {currentUser.apellidos}</strong>. Tu información y dirección han sido cargadas automáticamente.
@@ -200,7 +199,7 @@ export default function Checkout() {
               <div className="alert alert-warning py-2 small d-flex align-items-center mb-4">
                 <i className="bi bi-person-fill-exclamation me-2 fs-5"></i>
                 <span>
-                  ¿Ya tienes cuenta? <Link to="/login" className="alert-link fw-bold">Inicia sesión</Link> para autocompletar tus datos de despacho automáticamente.
+                  ¿Ya tienes cuenta? <Link to="/login" className="alert-link fw-bold" style={{ color: 'var(--color-chocolate)' }}>Inicia sesión</Link> para autocompletar tus datos de despacho automáticamente.
                 </span>
               </div>
             )}
@@ -226,7 +225,8 @@ export default function Checkout() {
                           alt={item.nombre}
                           width="45"
                           height="45"
-                          className="rounded object-fit-contain bg-light"
+                          className="rounded object-fit-contain"
+                          style={{ backgroundColor: '#F7EFE4' }}
                           onError={(e) => {
                             e.target.onerror = null;
                             e.target.src = '/img/torta-mil-sabores.png';
@@ -236,7 +236,7 @@ export default function Checkout() {
                       <td className="small fw-semibold">{item.nombre}</td>
                       <td className="text-end small">{formatPrice(item.precio)}</td>
                       <td className="text-center small">{item.cantidad}</td>
-                      <td className="text-end small fw-bold">{formatPrice(item.subtotal)}</td>
+                      <td className="text-end small fw-bold" style={{ color: 'var(--color-chocolate)' }}>{formatPrice(item.subtotal)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -248,7 +248,7 @@ export default function Checkout() {
 
               {/* Sección 1: Información del cliente */}
               <div className="mb-4">
-                <h5 className="fw-bold border-bottom pb-2 mb-3 text-secondary">
+                <h5 className="fw-bold border-bottom pb-2 mb-3" style={{ color: 'var(--color-chocolate)', borderColor: 'var(--color-borde)' }}>
                   Información del cliente
                 </h5>
                 <small className="text-muted d-block mb-3">Completa la siguiente información</small>
@@ -297,7 +297,7 @@ export default function Checkout() {
 
               {/* Sección 2: Dirección de entrega de los productos */}
               <div className="mb-4">
-                <h5 className="fw-bold border-bottom pb-2 mb-3 text-secondary">
+                <h5 className="fw-bold border-bottom pb-2 mb-3" style={{ color: 'var(--color-chocolate)', borderColor: 'var(--color-borde)' }}>
                   Dirección de entrega de los productos
                 </h5>
                 <small className="text-muted d-block mb-3">Ingrese dirección de forma detallada</small>
@@ -372,10 +372,10 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {/* Selector para simular compra exitosa o error de pago según rúbrica */}
-              <div className="p-3 bg-light rounded-3 mb-4 border d-flex justify-content-between align-items-center">
+              {/* Selector para simular compra exitosa o error de pago */}
+              <div className="p-3 rounded-3 mb-4 border d-flex justify-content-between align-items-center" style={{ backgroundColor: '#F8EFE4', borderColor: 'var(--color-borde)' }}>
                 <div>
-                  <strong className="d-block small text-dark">Simulación de Pasarela de Pago:</strong>
+                  <strong className="d-block small" style={{ color: 'var(--color-chocolate)' }}>Simulación de Pasarela de Pago:</strong>
                   <span className="text-muted small">
                     {simulateError ? 'Se simulará un rechazo bancario (Figura 8)' : 'Se simulará un pago aprobado exitosamente (Figura 7)'}
                   </span>

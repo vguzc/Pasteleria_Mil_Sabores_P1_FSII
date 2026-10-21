@@ -23,13 +23,13 @@ export default function Navbar() {
   }).format(totals.total);
 
   return (
-    <header className="sticky-top shadow-sm bg-white border-bottom">
+    <header className="sticky-top navbar-custom">
       {/* Barra superior con avisos */}
-      <div className="bg-primary text-white py-1 small">
+      <div className="top-bar-anuncio py-1">
         <div className="container d-flex justify-content-between align-items-center">
           <div>
-            <i className="bi bi-award-fill text-warning me-1"></i>
-            <span>50 Años de Tradición y Repostería Chilena (1976 - 2026)</span>
+            <i className="bi bi-cake2-fill me-1 text-warning"></i>
+            <span>50 Años de Tradición y Repostería Artesanal (1976 - 2026)</span>
           </div>
           <div className="d-none d-md-flex gap-3">
             <span><i className="bi bi-truck me-1"></i>Envío Gratis sobre $30.000</span>
@@ -39,33 +39,33 @@ export default function Navbar() {
       </div>
 
       {/* Navbar principal */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white py-2">
+      <nav className="navbar navbar-expand-lg py-2">
         <div className="container">
-          {/* Logo */}
+          {/* Logo con tipografía Pacifico */}
           <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
             <img
               src="/img/logo-icono.png"
               alt="Pastelería Mil Sabores"
-              width="44"
-              height="44"
-              className="rounded-circle shadow-sm"
+              width="46"
+              height="46"
+              className="logo-icono"
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = '/img/logo.png';
               }}
             />
             <div>
-              <span className="fw-bold fs-4 d-block lh-1 text-primary" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <span className="logo-texto-pacifico d-block">
                 Mil Sabores
               </span>
-              <small className="text-muted d-block" style={{ fontSize: '0.68rem', letterSpacing: '1px' }}>
+              <span className="logo-subtexto-lato d-block">
                 PASTELERÍA ARTESANAL
-              </small>
+              </span>
             </div>
           </Link>
 
           {/* Buscador central */}
-          <form onSubmit={handleSearch} className="d-none d-lg-flex mx-auto" style={{ maxWidth: '380px', width: '100%' }}>
+          <form onSubmit={handleSearch} className="d-none d-lg-flex mx-auto" style={{ maxWidth: '360px', width: '100%' }}>
             <div className="input-group">
               <input
                 type="text"
@@ -75,7 +75,7 @@ export default function Navbar() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 aria-label="Buscar productos"
               />
-              <button className="btn btn-outline-primary" type="submit">
+              <button className="btn btn-primary" type="submit" aria-label="Buscar">
                 <i className="bi bi-search"></i>
               </button>
             </div>
@@ -84,13 +84,13 @@ export default function Navbar() {
           {/* Acciones de usuario y carrito */}
           <div className="d-flex align-items-center gap-2 order-lg-3">
             {/* Botón Carrito */}
-            <Link to="/carrito" className="btn btn-success d-flex align-items-center gap-2 shadow-sm">
+            <Link to="/carrito" className="btn btn-carrito-badge d-flex align-items-center gap-2 shadow-sm">
               <i className="bi bi-cart3 fs-5"></i>
-              <span className="d-none d-sm-inline fw-semibold">Carrito</span>
-              <span className="badge bg-white text-dark rounded-pill">
+              <span className="d-none d-sm-inline">Carrito</span>
+              <span className="badge badge-item-count rounded-pill">
                 {totals.itemsCount}
               </span>
-              <span className="d-none d-md-inline small fw-bold">
+              <span className="d-none d-md-inline small">
                 {formattedTotal}
               </span>
             </Link>
@@ -104,14 +104,14 @@ export default function Navbar() {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <i className="bi bi-person-circle fs-5 text-primary"></i>
+                  <i className="bi bi-person-circle fs-5" style={{ color: 'var(--color-chocolate)' }}></i>
                   <span className="d-none d-sm-inline small fw-bold">{currentUser.nombre}</span>
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end shadow">
                   <li className="dropdown-header">
                     <strong>{currentUser.nombre} {currentUser.apellidos}</strong>
                     <br />
-                    <span className="badge bg-info text-dark">{currentUser.rol}</span>
+                    <span className="badge bg-warning text-dark text-uppercase">{currentUser.rol}</span>
                   </li>
                   <li><hr className="dropdown-divider" /></li>
                   <li>
@@ -121,7 +121,7 @@ export default function Navbar() {
                   </li>
                   {(isAdmin || isVendedor) && (
                     <li>
-                      <Link className="dropdown-item fw-bold text-primary" to="/admin">
+                      <Link className="dropdown-item fw-bold" style={{ color: 'var(--color-chocolate)' }} to="/admin">
                         <i className="bi bi-speedometer2 me-2"></i>Panel de Administración
                       </Link>
                     </li>
@@ -139,7 +139,7 @@ export default function Navbar() {
                 <Link to="/login" className="btn btn-outline-primary btn-sm">
                   Iniciar Sesión
                 </Link>
-                <Link to="/registro" className="btn btn-primary btn-sm d-none d-sm-inline-block">
+                <Link to="/registro" className="btn btn-rosa btn-sm d-none d-sm-inline-block">
                   Crear Cuenta
                 </Link>
               </div>
@@ -147,7 +147,7 @@ export default function Navbar() {
 
             {/* Hamburguesa Mobile */}
             <button
-              className="navbar-toggler ms-1"
+              className="navbar-toggler ms-1 border-0"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarContenido"
@@ -155,7 +155,7 @@ export default function Navbar() {
               aria-expanded="false"
               aria-label="Abrir navegación"
             >
-              <span className="navbar-toggler-icon"></span>
+              <i className="bi bi-list fs-2" style={{ color: 'var(--color-chocolate)' }}></i>
             </button>
           </div>
 
@@ -197,7 +197,7 @@ export default function Navbar() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button className="btn btn-outline-primary" type="submit">Buscar</button>
+                <button className="btn btn-primary" type="submit">Buscar</button>
               </div>
             </form>
           </div>

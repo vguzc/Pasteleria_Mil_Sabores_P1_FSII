@@ -43,8 +43,10 @@ export default function Categories() {
       </nav>
 
       <div className="text-center mb-5">
-        <span className="badge bg-warning text-dark px-3 py-2 text-uppercase mb-2">Especialidades</span>
-        <h1 className="fw-bold font-serif display-5 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <span className="badge px-3 py-2 text-uppercase mb-2" style={{ backgroundColor: 'var(--color-rosa)', color: 'var(--color-chocolate)' }}>
+          Especialidades Artesanales
+        </span>
+        <h1 className="font-pacifico display-5 mb-2" style={{ color: 'var(--color-chocolate)' }}>
           Categorías de Pastelería
         </h1>
         <p className="text-muted">
@@ -61,12 +63,17 @@ export default function Categories() {
               <button
                 type="button"
                 onClick={() => setActiveCategory(cat.nombre)}
-                className={`card w-100 text-center p-3 border-0 shadow-sm transition-all h-100 text-decoration-none ${isSelected ? 'bg-primary text-white shadow' : 'bg-light text-dark'}`}
-                style={{ cursor: 'pointer' }}
+                className={`card w-100 text-center p-3 transition-all h-100 text-decoration-none ${isSelected ? 'shadow' : ''}`}
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: isSelected ? 'var(--color-chocolate)' : 'var(--color-blanco)',
+                  borderColor: isSelected ? 'var(--color-chocolate)' : 'var(--color-borde)',
+                  color: isSelected ? '#FFFFFF' : 'var(--color-chocolate)'
+                }}
               >
                 <div
                   className="rounded-circle mx-auto mb-2 overflow-hidden bg-white shadow-sm"
-                  style={{ width: '65px', height: '65px' }}
+                  style={{ width: '65px', height: '65px', border: '2px solid var(--color-borde)' }}
                 >
                   <img
                     src={cat.imagen || '/img/torta-mil-sabores.png'}
@@ -78,7 +85,7 @@ export default function Categories() {
                     }}
                   />
                 </div>
-                <div className={`fw-bold small ${isSelected ? 'text-white' : 'text-dark'}`}>
+                <div className="fw-bold small" style={{ color: isSelected ? '#FFFFFF' : 'var(--color-chocolate)' }}>
                   {cat.nombre}
                 </div>
               </button>
@@ -88,23 +95,23 @@ export default function Categories() {
       </div>
 
       {/* Sección de la categoría activa (Figura 4) */}
-      <div className="border-top pt-4">
+      <div className="border-top pt-4" style={{ borderColor: 'var(--color-borde)' }}>
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
           <div>
-            <h2 className="fw-bold font-serif mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <h2 className="font-pacifico mb-1" style={{ color: 'var(--color-chocolate)' }}>
               {activeCategory}
             </h2>
             {currentCatObj && (
               <p className="text-muted small mb-0">{currentCatObj.descripcion}</p>
             )}
           </div>
-          <span className="badge bg-secondary fs-6 mt-2 mt-md-0">
+          <span className="badge fs-6 mt-2 mt-md-0" style={{ backgroundColor: 'var(--color-rosa)', color: 'var(--color-chocolate)' }}>
             {products.length} producto{products.length !== 1 ? 's' : ''} disponible{products.length !== 1 ? 's' : ''}
           </span>
         </div>
 
         {products.length === 0 ? (
-          <div className="alert alert-info text-center p-4">
+          <div className="card text-center p-5 border-0">
             No hay productos registrados en esta categoría por el momento.
           </div>
         ) : (

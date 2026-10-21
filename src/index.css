@@ -1,63 +1,287 @@
 /* ==========================================================================
-   PASTELERÍA MIL SABORES — Estilos Globales y Personalización de Bootstrap
+   PASTELERÍA MIL SABORES — Identidad Visual Oficial
+   Paleta: Fondo Crema (#FFF5E1), Rosa (#FFC0CB), Chocolate (#8B4513), Texto (#5D4037)
+   Tipografías: Pacifico (Títulos) y Lato (Textos de marca)
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Pacifico&display=swap');
+
 :root {
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --color-primary: #8b4513;
-  --color-accent: #d4a373;
-  --color-gold: #c59b27;
-  --color-cream: #fefae0;
+  /* Paleta oficial de marca */
+  --color-fondo: #FFF5E1;
+  --color-rosa: #FFC0CB;
+  --color-chocolate: #8B4513;
+  --color-chocolate-oscuro: #6B3410;
+  --color-rosa-oscuro: #F2A3B3;
+  --color-texto: #5D4037;
+  --color-texto-secundario: #8D6E63;
+  --color-blanco: #FFFFFF;
+  --color-exito: #4A7C59;
+  --color-error: #B3401F;
+  --color-borde: #E8D9C3;
+
+  /* Tipografías */
+  --fuente-titulos: 'Pacifico', cursive;
+  --fuente-texto: 'Lato', sans-serif;
+
+  /* Sombras y bordes */
+  --radio-borde: 8px;
+  --sombra-suave: 0 2px 10px rgba(93, 64, 55, 0.08);
+  --sombra-media: 0 6px 20px rgba(93, 64, 55, 0.15);
+  --transicion: 0.25s ease;
 }
 
+/* Base */
 body {
-  font-family: var(--font-sans);
-  color: #2b2d42;
-  background-color: #faf9f6;
-  min-height: 100vh;
+  margin: 0;
+  font-family: var(--fuente-texto);
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-.font-serif {
-  font-family: var(--font-serif);
+h1, h2, h3, .font-serif, .font-pacifico {
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  color: var(--color-chocolate);
+  letter-spacing: 0.5px;
 }
 
-/* Transiciones suaves */
+a {
+  color: var(--color-chocolate);
+  text-decoration: none;
+  transition: color var(--transicion);
+}
+a:hover {
+  color: var(--color-chocolate-oscuro);
+}
+
+/* Transiciones */
 .transition-all {
-  transition: all 0.25s ease-in-out;
+  transition: all var(--transicion);
 }
-
 .transition-transform {
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
-/* Tarjetas de Producto */
+/* ---------- Barra Superior de Avisos ---------- */
+.top-bar-anuncio {
+  background-color: var(--color-chocolate);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.top-bar-anuncio strong {
+  color: #FFE5EC;
+}
+
+/* ---------- Encabezado y Navbar ---------- */
+.navbar-custom {
+  background-color: var(--color-blanco) !important;
+  border-bottom: 2px solid var(--color-borde);
+  box-shadow: 0 2px 10px rgba(93, 64, 55, 0.06);
+}
+
+.logo-texto-pacifico {
+  font-family: var(--fuente-titulos);
+  font-size: 1.85rem;
+  color: var(--color-chocolate) !important;
+  line-height: 1;
+}
+
+.logo-subtexto-lato {
+  font-family: var(--fuente-texto);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--color-texto-secundario);
+  text-transform: uppercase;
+}
+
+.nav-link {
+  color: var(--color-texto) !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: var(--radio-borde);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-chocolate) !important;
+  background-color: rgba(255, 192, 203, 0.35);
+  border-bottom: 2px solid var(--color-chocolate);
+}
+
+/* Badge Carrito */
+.btn-carrito-badge {
+  background-color: var(--color-chocolate) !important;
+  border-color: var(--color-chocolate) !important;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  border-radius: 20px;
+}
+.btn-carrito-badge:hover {
+  background-color: var(--color-chocolate-oscuro) !important;
+}
+
+.badge-item-count {
+  background-color: var(--color-rosa) !important;
+  color: var(--color-chocolate) !important;
+  font-weight: 800;
+}
+
+/* ---------- Botones Bootstrap Overrides ---------- */
+.btn-primary {
+  background-color: var(--color-chocolate) !important;
+  border-color: var(--color-chocolate) !important;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  border-radius: var(--radio-borde);
+  transition: all var(--transicion);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-chocolate-oscuro) !important;
+  border-color: var(--color-chocolate-oscuro) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+  background-color: transparent !important;
+  border-color: var(--color-chocolate) !important;
+  color: var(--color-chocolate) !important;
+  font-weight: 700;
+  border-radius: var(--radio-borde);
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--color-chocolate) !important;
+  border-color: var(--color-chocolate) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-rosa {
+  background-color: var(--color-rosa) !important;
+  border-color: var(--color-rosa-oscuro) !important;
+  color: var(--color-chocolate) !important;
+  font-weight: 700;
+}
+.btn-rosa:hover {
+  background-color: var(--color-rosa-oscuro) !important;
+  color: var(--color-chocolate-oscuro) !important;
+}
+
+.btn-success {
+  background-color: var(--color-exito) !important;
+  border-color: var(--color-exito) !important;
+}
+.btn-danger {
+  background-color: var(--color-error) !important;
+  border-color: var(--color-error) !important;
+}
+
+/* ---------- Tarjetas de Productos ---------- */
+.card {
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-suave);
+}
+
 .product-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border-radius: 12px;
-  overflow: hidden;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+  border: 1px solid var(--color-borde) !important;
+  background-color: var(--color-blanco) !important;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-media) !important;
 }
 
-.product-card:hover .transition-transform {
-  transform: scale(1.05);
+.product-card .card-title a {
+  color: var(--color-chocolate);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.product-card .card-title a:hover {
+  color: var(--color-chocolate-oscuro);
 }
 
-/* Tarjetas de Categoría */
-.category-card {
-  border-radius: 12px;
+.badge-categoria-rosa {
+  background-color: var(--color-rosa) !important;
+  color: var(--color-chocolate) !important;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  box-shadow: 0 2px 4px rgba(93, 64, 55, 0.1);
 }
 
-.category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+.precio-chocolate {
+  color: var(--color-chocolate) !important;
+  font-weight: 800;
+  font-size: 1.25rem;
 }
 
-/* Truncado de texto en 2 líneas */
+/* ---------- Hero & Banners ---------- */
+.hero-aniversario {
+  background: linear-gradient(135deg, #FFF5E1 0%, #FFEBE6 100%);
+  border-bottom: 2px solid var(--color-borde);
+}
+
+.card-beneficio-aniversario {
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-suave);
+}
+
+/* ---------- Formularios e Inputs ---------- */
+.form-control, .form-select {
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-borde);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--color-chocolate);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+  color: var(--color-texto);
+}
+
+/* ---------- Tablas ---------- */
+.table {
+  color: var(--color-texto);
+}
+.table-light {
+  background-color: #F8EFE4 !important;
+  color: var(--color-chocolate) !important;
+  font-weight: 700;
+}
+
+/* ---------- Pie de Página (Footer) ---------- */
+.footer-chocolate {
+  background-color: #5D4037 !important;
+  color: #FFF5E1;
+  border-top: 4px solid var(--color-chocolate);
+}
+.footer-chocolate a {
+  color: #E8D9C3;
+}
+.footer-chocolate a:hover {
+  color: var(--color-rosa);
+}
+
+/* Truncado 2 líneas */
 .text-truncate-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -65,14 +289,11 @@ body {
   overflow: hidden;
 }
 
-/* Efecto hover en módulos admin */
-.hover-shadow:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Estilos de Boleta para impresión */
+/* Impresión */
 @media print {
+  body {
+    background-color: #FFFFFF !important;
+  }
   body * {
     visibility: hidden;
   }

@@ -43,7 +43,7 @@ export default function Cart() {
       </nav>
 
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="fw-bold font-serif mb-0" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <h1 className="font-pacifico mb-0" style={{ color: 'var(--color-chocolate)' }}>
           Carrito de Compras
         </h1>
         {cart.length > 0 && (
@@ -93,7 +93,8 @@ export default function Cart() {
                               alt={item.nombre}
                               width="60"
                               height="60"
-                              className="rounded object-fit-contain bg-light p-1"
+                              className="rounded object-fit-contain p-1"
+                              style={{ backgroundColor: '#F7EFE4' }}
                               onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = '/img/torta-mil-sabores.png';
@@ -101,7 +102,7 @@ export default function Cart() {
                             />
                           </td>
                           <td>
-                            <Link to={`/producto/${item.id}`} className="text-decoration-none text-dark fw-bold small">
+                            <Link to={`/producto/${item.id}`} className="text-decoration-none fw-bold small" style={{ color: 'var(--color-chocolate)' }}>
                               {item.nombre}
                             </Link>
                           </td>
@@ -115,7 +116,7 @@ export default function Cart() {
                               size="sm"
                             />
                           </td>
-                          <td className="text-end fw-bold text-primary small">
+                          <td className="text-end fw-bold small precio-chocolate">
                             {formatPrice(item.subtotal)}
                           </td>
                           <td className="text-center">
@@ -138,14 +139,14 @@ export default function Cart() {
 
             {/* Cupones de descuento */}
             <div className="card shadow-sm border-0 p-3">
-              <h6 className="fw-bold mb-2">
-                <i className="bi bi-tag-fill text-primary me-2"></i>¿Tienes un cupón de descuento?
+              <h6 className="fw-bold mb-2" style={{ color: 'var(--color-chocolate)' }}>
+                <i className="bi bi-tag-fill me-2" style={{ color: 'var(--color-chocolate)' }}></i>¿Tienes un cupón de descuento?
               </h6>
               {couponError && <AlertMessage message={couponError} type="danger" onClose={() => setCouponError('')} />}
               {couponSuccess && <AlertMessage message={couponSuccess} type="success" onClose={() => setCouponSuccess('')} />}
 
               {totals.cupon ? (
-                <div className="d-flex align-items-center justify-content-between bg-success bg-opacity-10 p-2 rounded border border-success">
+                <div className="d-flex align-items-center justify-content-between p-2 rounded border" style={{ backgroundColor: 'rgba(255, 192, 203, 0.35)', borderColor: 'var(--color-rosa)' }}>
                   <div className="small">
                     <strong>{totals.cupon.codigo}</strong>: {totals.cupon.nombre}
                   </div>
@@ -162,7 +163,7 @@ export default function Cart() {
                     value={inputCoupon}
                     onChange={(e) => setInputCoupon(e.target.value)}
                   />
-                  <button type="submit" className="btn btn-outline-primary btn-sm text-nowrap">
+                  <button type="submit" className="btn btn-primary btn-sm text-nowrap">
                     Aplicar Cupón
                   </button>
                 </form>
@@ -176,46 +177,48 @@ export default function Cart() {
           {/* Resumen del Pedido (Figura 5) */}
           <div className="col-lg-4">
             <div className="card shadow-sm border-0 p-3 sticky-top" style={{ top: '90px' }}>
-              <h5 className="fw-bold mb-3 border-bottom pb-2">Resumen de Compra</h5>
+              <h5 className="fw-bold mb-3 border-bottom pb-2" style={{ color: 'var(--color-chocolate)' }}>
+                Resumen de Compra
+              </h5>
 
               <ul className="list-group list-group-flush mb-3 small">
-                <li className="list-group-item d-flex justify-content-between px-0">
+                <li className="list-group-item d-flex justify-content-between px-0 bg-transparent">
                   <span className="text-muted">Subtotal ({totals.itemsCount} productos):</span>
                   <span>{formatPrice(totals.subtotal)}</span>
                 </li>
 
                 {totals.descuento > 0 && (
-                  <li className="list-group-item d-flex justify-content-between px-0 text-danger fw-bold">
+                  <li className="list-group-item d-flex justify-content-between px-0 text-danger fw-bold bg-transparent">
                     <span>Descuento aplicado:</span>
                     <span>-{formatPrice(totals.descuento)}</span>
                   </li>
                 )}
 
-                <li className="list-group-item d-flex justify-content-between px-0">
+                <li className="list-group-item d-flex justify-content-between px-0 bg-transparent">
                   <span className="text-muted">IVA (19% incluido):</span>
                   <span>{formatPrice(totals.iva)}</span>
                 </li>
 
-                <li className="list-group-item d-flex justify-content-between px-0">
+                <li className="list-group-item d-flex justify-content-between px-0 bg-transparent">
                   <span className="text-muted">Costo de Despacho:</span>
                   <span>
                     {totals.envio === 0 ? (
-                      <span className="badge bg-success">Gratis</span>
+                      <span className="badge" style={{ backgroundColor: 'var(--color-exito)', color: '#FFFFFF' }}>Gratis</span>
                     ) : (
                       formatPrice(totals.envio)
                     )}
                   </span>
                 </li>
 
-                <li className="list-group-item d-flex justify-content-between px-0 fs-5 fw-bold border-top pt-2">
+                <li className="list-group-item d-flex justify-content-between px-0 fs-5 fw-bold border-top pt-2 bg-transparent">
                   <span>Total:</span>
-                  <span className="text-primary">{formatPrice(totals.total)}</span>
+                  <span className="precio-chocolate">{formatPrice(totals.total)}</span>
                 </li>
               </ul>
 
               <button
                 type="button"
-                className="btn btn-success btn-lg w-100 shadow-sm"
+                className="btn btn-primary btn-lg w-100 shadow-sm"
                 onClick={handleProceedToCheckout}
               >
                 <i className="bi bi-credit-card me-2"></i>Comprar ahora
