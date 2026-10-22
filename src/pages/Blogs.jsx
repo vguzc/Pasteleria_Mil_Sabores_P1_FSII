@@ -10,7 +10,7 @@ export const BLOG_POSTS = [
     fecha: '15 de Octubre, 2026',
     autor: 'Chef Pastelera María Elena',
     resumen: 'Aprende a preparar los icónicos pasteles de nata portugueses con masa hojaldrada crujiente y suave crema de vainilla dorada.',
-    imagen: '/img/pie-de-limon.png',
+    imagen: '/img/pasteles-de-belem.jpg',
     videoUrl: 'https://www.youtube.com/embed/6iO1Q3c6h3M',
     contenido: [
       'Los Pasteles de Belém son una de las joyas de la repostería mundial nacidos en el Monasterio de los Jerónimos en Lisboa.',
