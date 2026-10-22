@@ -84,10 +84,10 @@ export default function AdminDashboard() {
               <i className="bi bi-receipt fs-3" style={{ color: 'var(--color-caramelo)' }}></i>
             </div>
             <div className="d-flex align-items-baseline gap-2 mb-1">
-              <h3 className="display-6 fw-bold mb-0" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+              <h3 className="display-6 fw-bold mb-0 text-white" style={{ fontFamily: 'var(--fuente-texto)' }}>
                 {stats.totalCompras}
               </h3>
-              <span className="small" style={{ color: '#D2C4B5' }}>boletas registradas</span>
+              <span className="small" style={{ color: '#EADFD2' }}>boletas registradas</span>
             </div>
             <div className="small mt-auto" style={{ color: '#D2C4B5' }}>
               Monto total facturado: <strong className="text-white">{formatPrice(stats.montoCompras)}</strong>

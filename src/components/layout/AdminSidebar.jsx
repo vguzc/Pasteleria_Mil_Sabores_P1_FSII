@@ -104,23 +104,34 @@ export default function AdminSidebar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/ordenes" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <i className="bi bi-receipt-cutoff"></i>
-              <span>Órdenes / Boletas</span>
-            </div>
-            <span
-              className="badge rounded-pill"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.22)',
-                color: '#FFFFFF',
-                fontSize: '0.72rem',
-                padding: '0.2rem 0.5rem'
-              }}
-              title={`${orderCount} boletas registradas`}
-            >
-              {orderCount}
-            </span>
+          <NavLink
+            to="/admin/ordenes"
+            style={({ isActive }) => getActiveStyle(isActive)}
+            className="px-3 py-2 rounded text-decoration-none d-flex align-items-center justify-content-between"
+          >
+            {({ isActive }) => (
+              <>
+                <div className="d-flex align-items-center gap-2">
+                  <i className="bi bi-receipt-cutoff"></i>
+                  <span>Órdenes / Boletas</span>
+                </div>
+                <span
+                  className="badge rounded-pill"
+                  style={{
+                    backgroundColor: isActive ? '#201610' : '#FFFFFF',
+                    color: isActive ? '#FFFFFF' : '#201610',
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    padding: '0.22rem 0.58rem',
+                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
+                    border: isActive ? '1px solid rgba(255, 255, 255, 0.35)' : '1px solid #FFFFFF'
+                  }}
+                  title={`${orderCount} boletas registradas`}
+                >
+                  {orderCount}
+                </span>
+              </>
+            )}
           </NavLink>
         </li>
         <li>

@@ -60,15 +60,28 @@ export default function AdminOrders() {
               Órdenes y Boletas
             </h1>
             <span
-              className="badge px-3 py-2 rounded-pill"
+              className="badge px-3 py-2 rounded-pill shadow-sm"
               style={{
-                backgroundColor: 'var(--color-caramelo)',
-                color: '#FFFFFF',
-                fontSize: '0.85rem',
+                backgroundColor: '#FAF4EC',
+                color: 'var(--color-espresso)',
+                border: '1.5px solid var(--color-caramelo)',
+                fontSize: '0.88rem',
                 fontWeight: 600
               }}
             >
-              {totalCount} boletas registradas
+              <span
+                className="badge rounded-pill me-1"
+                style={{
+                  backgroundColor: 'var(--color-espresso)',
+                  color: '#FFFFFF',
+                  fontSize: '0.82rem',
+                  fontWeight: 800,
+                  padding: '0.2rem 0.55rem'
+                }}
+              >
+                {totalCount}
+              </span>
+              boletas registradas
             </span>
           </div>
           <p className="text-muted small mb-0 mt-1">Gestión de compras realizadas, cambio de estado y visualización de boleta oficial</p>
@@ -92,10 +105,10 @@ export default function AdminOrders() {
             <span className="text-uppercase small fw-bold" style={{ color: 'var(--color-caramelo)', fontSize: '0.68rem', letterSpacing: '0.1em' }}>
               Total Boletas
             </span>
-            <h3 className="fw-bold mb-0 mt-1" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+            <h3 className="fw-bold mb-0 mt-1" style={{ color: '#FFFFFF', fontSize: '2rem' }}>
               {totalCount}
             </h3>
-            <small style={{ color: '#D2C4B5', fontSize: '0.74rem' }}>
+            <small style={{ color: '#EADFD2', fontSize: '0.74rem' }}>
               Monto: {formatPrice(totalMonto)}
             </small>
           </div>
@@ -106,7 +119,7 @@ export default function AdminOrders() {
             <span className="text-uppercase small fw-bold text-muted" style={{ fontSize: '0.68rem', letterSpacing: '0.1em' }}>
               Pagadas / Nuevas
             </span>
-            <h3 className="fw-bold mb-0 mt-1" style={{ fontFamily: 'var(--fuente-titulos)', color: '#2D6A4F' }}>
+            <h3 className="fw-bold mb-0 mt-1" style={{ color: '#2D6A4F', fontSize: '2rem' }}>
               {pagadasCount}
             </h3>
             <small className="text-muted" style={{ fontSize: '0.74rem' }}>Listas para cocina</small>
@@ -118,7 +131,7 @@ export default function AdminOrders() {
             <span className="text-uppercase small fw-bold text-muted" style={{ fontSize: '0.68rem', letterSpacing: '0.1em' }}>
               En Ruta / Taller
             </span>
-            <h3 className="fw-bold mb-0 mt-1" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-caramelo)' }}>
+            <h3 className="fw-bold mb-0 mt-1" style={{ color: 'var(--color-caramelo)', fontSize: '2rem' }}>
               {prepCount + despCount}
             </h3>
             <small className="text-muted" style={{ fontSize: '0.74rem' }}>{prepCount} prep. / {despCount} desp.</small>
@@ -130,7 +143,7 @@ export default function AdminOrders() {
             <span className="text-uppercase small fw-bold text-muted" style={{ fontSize: '0.68rem', letterSpacing: '0.1em' }}>
               Entregadas
             </span>
-            <h3 className="fw-bold mb-0 mt-1" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)' }}>
+            <h3 className="fw-bold mb-0 mt-1" style={{ color: 'var(--color-espresso)', fontSize: '2rem' }}>
               {entregadasCount}
             </h3>
             <small className="text-muted" style={{ fontSize: '0.74rem' }}>Completadas con éxito</small>
