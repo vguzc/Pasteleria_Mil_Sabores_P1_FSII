@@ -536,7 +536,7 @@ h3 { font-size: 1.35rem; }
 }
 
 .btn-fn-agregar-overlay.agregado {
-  background-color: var(--color-salvia);
+  background-color: var(--color-caramelo);
   color: #FFFFFF;
   opacity: 1;
   transform: translateY(0);
@@ -577,8 +577,8 @@ h3 { font-size: 1.35rem; }
 }
 
 .badge-marca-nuevo {
-  background-color: var(--color-salvia);
-  color: #FFFFFF;
+  background-color: var(--color-mantequilla);
+  color: var(--color-espresso);
 }
 
 .badge-marca-sin-gluten {
@@ -3345,8 +3345,9 @@ h3 { font-size: 1.35rem; }
 }
 
 .btn-whatsapp-visita {
-  background-color: #839785;
-  color: #FFFFFF !important;
+  background-color: var(--color-superficie);
+  color: var(--color-espresso) !important;
+  border: 1.5px solid var(--color-espresso);
   border-radius: 10px;
   padding: 0.85rem 1.25rem;
   text-align: center;
@@ -3357,14 +3358,16 @@ h3 { font-size: 1.35rem; }
   justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
-  transition: background-color var(--transicion), transform 0.15s ease;
+  transition: all var(--transicion);
   margin-top: 0.5rem;
 }
 
 .btn-whatsapp-visita:hover {
-  background-color: #6E8370;
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
   color: #FFFFFF !important;
   transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(44, 30, 22, 0.16);
 }
 
 .caja-mapa-placeholder {
