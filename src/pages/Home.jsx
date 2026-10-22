@@ -113,7 +113,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Banner Aniversario / Ticket Artesanal con Cupón FELICES50 */}
+      {/* 4. Cita Editorial / Testimonio Estilo Baker ("They said about us") */}
+      <section className="seccion-cita-baker">
+        <div className="contenedor" style={{ maxWidth: '860px', textAlign: 'center' }}>
+          <span className="cita-baker-simbolo">“</span>
+          <blockquote className="cita-baker-texto">
+            El verdadero secreto de Mil Sabores no radica únicamente en sus recetas de 1976, sino en el cariño y la devoción con que cada madrugada encienden los hornos para endulzar nuestras celebraciones familiares.
+          </blockquote>
+          <div className="cita-baker-autor">
+            <span className="autor-nombre">Crónica Gastronómica de Santiago</span>
+            <span className="autor-cargo">50 Años de Tradición y Repostería Artesanal</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Banner Aniversario / Ticket Artesanal con Cupón FELICES50 */}
       <section className="seccion-ticket-aniversario">
         <div className="contenedor" style={{ maxWidth: '1080px' }}>
           <div className="ticket-aniversario">
@@ -162,7 +176,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Especial 18 de Septiembre (Tradición Fiestas Patrias) */}
+      {/* 6. Especial 18 de Septiembre (Tradición Fiestas Patrias) */}
       {especial18.length > 0 && (
         <section
           style={{
@@ -212,8 +226,8 @@ export default function Home() {
         </section>
       )}
 
-      {/* 6. Nuestras Categorías (Baker Category Showcase) */}
-      <section style={{ padding: '5rem 1.5rem 5.5rem 1.5rem' }}>
+      {/* 7. Nuestras Categorías (Baker Category Showcase) */}
+      <section style={{ padding: '5rem 1.5rem 4rem 1.5rem' }}>
         <div className="contenedor">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <span className="seccion-baker-eyebrow">Explora Nuestro Obrador</span>
@@ -234,6 +248,47 @@ export default function Home() {
             <Link to="/categorias" className="boton boton-secundario btn-baker">
               Ver Todas las Categorías ({categories.length})
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Galería del Obrador / Momentos Artesanales Estilo Baker */}
+      <section className="seccion-galeria-obrador">
+        <div className="contenedor">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="seccion-baker-eyebrow">Detrás del Horno</span>
+            <h2 className="seccion-baker-titulo">Desde Nuestro Obrador</h2>
+            <div className="adorno-baker" />
+            <p className="seccion-baker-desc">
+              Cada preparación cuenta una historia de dedicación, paciencia y amor por la buena mesa.
+            </p>
+          </div>
+
+          <div className="grilla-galeria-baker">
+            <div className="galeria-baker-item">
+              <img src="/img/slider/slide-1-cafe.png" alt="Café de especialidad" loading="lazy" />
+              <div className="galeria-baker-overlay">
+                <span className="galeria-tag">Barismo & Café</span>
+              </div>
+            </div>
+            <div className="galeria-baker-item">
+              <img src="/img/slider/slide-2-masa.jpg" alt="Amasado artesanal" loading="lazy" />
+              <div className="galeria-baker-overlay">
+                <span className="galeria-tag">Masas Madre</span>
+              </div>
+            </div>
+            <div className="galeria-baker-item">
+              <img src="/img/slider/slide-3-croissant.jpg" alt="Hojaldres crujientes" loading="lazy" />
+              <div className="galeria-baker-overlay">
+                <span className="galeria-tag">Bollería del Día</span>
+              </div>
+            </div>
+            <div className="galeria-baker-item">
+              <img src="/img/slider/slide-4-cookies.jpg" alt="Galletas con chocolate belga" loading="lazy" />
+              <div className="galeria-baker-overlay">
+                <span className="galeria-tag">Galletas Caseras</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
