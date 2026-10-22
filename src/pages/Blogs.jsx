@@ -145,7 +145,7 @@ export default function Blogs() {
                       className="boton boton-primario btn-baker w-100 text-center"
                       style={{ fontSize: '0.85rem' }}
                     >
-                      Leer Receta Completa →
+                      Leer Artículo Completo →
                     </Link>
                   </div>
                 </div>

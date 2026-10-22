@@ -269,7 +269,7 @@ export default function Home() {
                   </h3>
                   <p className="tarjeta-blog-resumen">{post.resumen}</p>
                   <Link to={`/blog/${post.id}`} className="tarjeta-blog-link">
-                    Leer Receta Completa →
+                    Leer Artículo Completo →
                   </Link>
                 </div>
               </article>
