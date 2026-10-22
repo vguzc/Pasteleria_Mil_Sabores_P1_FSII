@@ -29,9 +29,15 @@ export default function ProductCard({ product, onAddToCart }) {
     <article className="tarjeta-producto-baker" data-id={product.id}>
       {/* 1. Contenedor de Imagen Limpio */}
       <div className="tarjeta-baker-img-wrap">
-        {product.enOferta && (
+        {product.enOferta ? (
           <span className="badge-oferta-baker">OFERTA</span>
-        )}
+        ) : product.destacado ? (
+          <span className="badge-marca-mas-vendido">MÁS VENDIDO</span>
+        ) : product.categoria && product.categoria.toLowerCase().includes('gluten') ? (
+          <span className="badge-marca-sin-gluten">SIN GLUTEN</span>
+        ) : product.categoria && product.categoria.toLowerCase().includes('vegano') ? (
+          <span className="badge-marca-vegano">VEGANO</span>
+        ) : null}
         <Link to={`/producto/${product.id}`} className="tarjeta-baker-img-link" title={`Ver detalle de ${product.nombre}`}>
           <img
             src={product.imagen || '/img/torta-mil-sabores.png'}

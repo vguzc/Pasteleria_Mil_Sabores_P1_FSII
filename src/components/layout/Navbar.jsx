@@ -18,12 +18,12 @@ export default function Navbar() {
   return (
     <header className="encabezado">
       <div className="contenedor">
-        {/* 1. Logo a la Izquierda: Monograma MS + Nombre de la Cafetería */}
-        <Link to="/" className="logo" aria-label="Mil Sabores - Inicio">
+        {/* 1. Logo a la Izquierda: Monograma MS + Identidad Oficial de Cafetería */}
+        <Link to="/" className="logo" aria-label="Mil Sabores Cafetería - Inicio">
           <img src="/img/logo-ms.png" alt="Mil Sabores" className="logo-icono-ms" />
           <div className="logo-textos">
             <span className="logo-marca">Mil Sabores</span>
-            <span className="logo-submarca">Pastelería & Café</span>
+            <span className="logo-submarca">Cafetería &bull; Buen Café, Mil Momentos</span>
           </div>
         </Link>
 

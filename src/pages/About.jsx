@@ -84,6 +84,75 @@ export default function About() {
           </div>
         </div>
 
+        {/* Identidad de Marca & Atmósfera */}
+        <div className="mb-5">
+          <div className="text-center mb-4">
+            <span className="seccion-baker-eyebrow">Identidad & Atmósfera</span>
+            <h3 style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.85rem' }}>
+              Buen Café, Mil Momentos
+            </h3>
+            <div className="adorno-baker" />
+            <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>
+              Cada detalle de nuestra cafetería ha sido pensado para acogerte: desde el letrero tradicional de nuestra fachada hasta el empaque de tus tortas favoritas.
+            </p>
+          </div>
+
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
+            <div className="col">
+              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+                <img
+                  src="/img/branding/mockup-letrero.jpg"
+                  alt="Fachada y letrero Mil Sabores"
+                  className="w-100 h-100 object-fit-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                Fachada Tradicional
+              </p>
+            </div>
+            <div className="col">
+              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+                <img
+                  src="/img/branding/mockup-vitrina.jpg"
+                  alt="Vitrina de la cafetería"
+                  className="w-100 h-100 object-fit-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                Nuestra Cafetería
+              </p>
+            </div>
+            <div className="col">
+              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+                <img
+                  src="/img/branding/mockup-bolsa.jpg"
+                  alt="Packaging artesanal para llevar"
+                  className="w-100 h-100 object-fit-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                Empaques Artesanales
+              </p>
+            </div>
+            <div className="col">
+              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+                <img
+                  src="/img/branding/mockup-vaso.jpg"
+                  alt="Vaso de café para llevar"
+                  className="w-100 h-100 object-fit-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                Café al Paso
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="text-center">
           <Link to="/productos" className="boton boton-primario btn-baker">
             Conoce Nuestras Especialidades

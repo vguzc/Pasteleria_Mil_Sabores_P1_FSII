@@ -12,7 +12,7 @@ export default function Footer() {
               <img src="/img/logo-ms-caramelo.png" alt="Mil Sabores" className="logo-ms-footer" />
               <div className="logo-textos-footer">
                 <span className="logo-marca-footer">Mil Sabores</span>
-                <span className="logo-submarca-footer">Pastelería & Café</span>
+                <span className="logo-submarca-footer">Cafetería &bull; Buen Café, Mil Momentos</span>
               </div>
             </Link>
             <p className="footer-desc">

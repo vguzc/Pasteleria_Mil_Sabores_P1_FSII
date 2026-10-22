@@ -124,16 +124,16 @@ export default function Home() {
 
               <div className="recuerdos-foto-principal">
                 <img
-                  src="/img/slider/slide-2-masa.jpg"
-                  alt="Amasado artesanal del maestro pastelero"
+                  src="/img/branding/mockup-bolsa.jpg"
+                  alt="Empaque artesanal Mil Sabores"
                   loading="lazy"
                 />
               </div>
 
               <div className="recuerdos-foto-secundaria">
                 <img
-                  src="/img/slider/slide-3-croissant.jpg"
-                  alt="Bollería recién horneada"
+                  src="/img/branding/mockup-vaso.jpg"
+                  alt="Buen Café Mil Sabores para llevar"
                   loading="lazy"
                 />
               </div>

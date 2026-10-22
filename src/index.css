@@ -1,39 +1,43 @@
 /* ==========================================================================
-   PASTELERÍA MIL SABORES — Estilo Cozy "Café de Especialidad & Avena"
-   Paleta: Avena/Lino (#F9F6F0), Espresso Tostado (#2C1E16), Caramelo Toffee (#C4884B)
-   Tipografías: Fraunces (Títulos cálidos y artesanales) y Plus Jakarta Sans (Lectura)
+   PASTELERÍA & CAFETERÍA MIL SABORES — MANUAL DE BRANDING OFICIAL
+   Paleta: Avena suave (#F6F1EA), Espresso Tostado (#4A2E1B), Caramelo Toffee (#A04D36),
+           Mantequilla Dorada (#E5BA73), Verde Salvia (#9FB19E)
+   Tipografías: Lora (Títulos elegantes, historia y tradición) y DM Sans (Cuerpo y textos modernos)
+   Tagline: "BUEN CAFÉ, MIL MOMENTOS"
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Paleta Cozy Oficial */
-  --color-fondo: #F9F6F0;           /* Avena / Lino cálido */
-  --color-espresso: #2C1E16;        /* Tostado profundo elegante */
-  --color-chocolate: #2C1E16;       /* Alias para compatibilidad */
-  --color-chocolate-oscuro: #1A110C;
-  --color-caramelo: #C4884B;        /* Caramelo toffee / Miel */
-  --color-caramelo-hover: #AF7338;
-  --color-rosa: #E8D3C0;            /* Acento suave tono latte */
-  --color-rosa-oscuro: #D6BBA5;
-  --color-salvia: #607D62;          /* Verde salvia / Matcha sutil */
+  /* Paleta Oficial del Manual de Marca */
+  --color-fondo: #F6F1EA;             /* Avena suave (Fondo base) */
+  --color-espresso: #4A2E1B;          /* Espresso Tostado (Color principal: títulos, botones) */
+  --color-chocolate: #4A2E1B;         /* Alias para compatibilidad */
+  --color-chocolate-oscuro: #2D1A0D;
+  --color-caramelo: #A04D36;          /* Caramelo Toffee (Acento primario: llamadas a la acción) */
+  --color-caramelo-hover: #863B26;
+  --color-mantequilla: #E5BA73;       /* Mantequilla Dorada (Acento secundario: badges, detalles) */
+  --color-dorado: #E5BA73;
+  --color-salvia: #9FB19E;            /* Verde Salvia (Acento secundario: elementos gráficos) */
   --color-salvia-claro: #EBF1EA;
-  --color-texto: #382921;           /* Café carbón cálido (suave para la vista) */
-  --color-texto-secundario: #7D6B5D;/* Moca atenuado */
-  --color-blanco: #FFFFFF;          /* Blanco cálido */
-  --color-superficie: #F4ECE1;      /* Superficie suave */
-  --color-borde: #EADFD2;           /* Lino tostado sutil */
+  --color-rosa: #F0E3D3;              /* Acento suave tono latte */
+  --color-rosa-oscuro: #E2CEBC;
+  --color-texto: #4A2E1B;             /* Espresso cálido */
+  --color-texto-secundario: #6F5E53;  /* Moca atenuado */
+  --color-blanco: #FFFFFF;            /* Blanco puro */
+  --color-superficie: #FAF7F2;        /* Superficie marfil suave */
+  --color-borde: #E8DFD5;             /* Borde lino suave */
   --color-exito: #4A7C59;
-  --color-error: #B3401F;
+  --color-error: #A04D36;
 
-  /* Tipografías */
-  --fuente-titulos: 'Fraunces', Georgia, serif;
-  --fuente-texto: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Tipografías Oficiales */
+  --fuente-titulos: 'Lora', 'Fraunces', Georgia, serif;
+  --fuente-texto: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Bordes y Sombras Cozy */
+  /* Bordes y Sombras Oficiales */
   --radio-borde: 10px;
-  --sombra-suave: 0 4px 20px rgba(44, 30, 22, 0.05);
-  --sombra-media: 0 8px 30px rgba(44, 30, 22, 0.10);
+  --sombra-suave: 0 4px 20px rgba(74, 46, 27, 0.05);
+  --sombra-media: 0 8px 30px rgba(74, 46, 27, 0.10);
   --transicion: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -457,21 +461,45 @@ h3 { font-size: 1.35rem; }
   transform: scale(1.08);
 }
 
-.badge-oferta-baker {
+.badge-oferta-baker,
+.badge-marca-mas-vendido,
+.badge-marca-nuevo,
+.badge-marca-sin-gluten,
+.badge-marca-vegano {
   position: absolute;
   top: 0.85rem;
   right: 0.85rem;
-  background-color: var(--color-caramelo);
-  color: #FFFFFF;
   font-family: var(--fuente-texto);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  padding: 0.3rem 0.65rem;
-  border-radius: 4px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
   text-transform: uppercase;
   z-index: 2;
-  box-shadow: 0 2px 6px rgba(196, 136, 75, 0.25);
+  box-shadow: 0 2px 8px rgba(74, 46, 27, 0.15);
+}
+
+.badge-oferta-baker,
+.badge-marca-mas-vendido {
+  background-color: var(--color-caramelo);
+  color: #FFFFFF;
+}
+
+.badge-marca-nuevo {
+  background-color: var(--color-salvia);
+  color: #FFFFFF;
+}
+
+.badge-marca-sin-gluten {
+  background-color: var(--color-superficie);
+  color: var(--color-espresso);
+  border: 1px solid var(--color-borde);
+}
+
+.badge-marca-vegano {
+  background-color: #C47C62;
+  color: #FFFFFF;
 }
 
 .tarjeta-baker-cuerpo {
