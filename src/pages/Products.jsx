@@ -144,16 +144,16 @@ export default function Products() {
       {/* 2. Barra Unificada de Controles, Búsqueda y Ordenamiento */}
       <div className="contenedor" style={{ paddingTop: '2rem' }}>
         <div className="catalogo-toolbar-baker">
-          {/* Buscador Baker */}
+          {/* Fila 1: Buscador Completo y Limpio */}
           <div className="catalogo-buscador-wrap">
-            <svg className="catalogo-icon-search" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="catalogo-icon-search" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input
               type="text"
               className="catalogo-search-input"
-              placeholder="Buscar por torta, alfajor, sabor..."
+              placeholder="Buscar por torta, alfajor, sabor o ingrediente..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               aria-label="Buscar producto"
@@ -164,15 +164,18 @@ export default function Products() {
                 className="catalogo-btn-clear"
                 onClick={() => setSearchTerm('')}
                 title="Limpiar búsqueda"
+                aria-label="Limpiar búsqueda"
               >
                 ✕
               </button>
             )}
           </div>
 
-          {/* Acciones y Selectores */}
+          {/* Fila 2: Barra de Filtros, Ordenamiento y Vista */}
           <div className="catalogo-toolbar-actions">
-            {/* Selector de Categoría Dropdown */}
+            {/* Grupo de Selectores */}
+            <div className="catalogo-selects-wrapper">
+              {/* Selector de Categoría Dropdown */}
             <div className="catalogo-select-group">
               <label htmlFor="catalogo-cat-select" className="catalogo-select-label">Categoría:</label>
               <select
@@ -210,8 +213,9 @@ export default function Products() {
                 <option value="nombre">Nombre (A - Z)</option>
               </select>
             </div>
+          </div>
 
-            {/* Selector de Vista (Por Secciones vs Grilla Continua) */}
+          {/* Selector de Vista (Por Secciones vs Grilla Continua) */}
             {!isFiltered && (
               <div className="catalogo-view-toggle" role="group" aria-label="Modo de visualización">
                 <button
