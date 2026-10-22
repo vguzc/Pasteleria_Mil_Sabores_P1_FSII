@@ -97,12 +97,13 @@ export default function About() {
             </p>
           </div>
 
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+            {/* 1. Letrero de Fachada */}
             <div className="col">
-              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+              <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-letrero.jpg"
-                  alt="Fachada y letrero Mil Sabores"
+                  src="/img/branding/mockup-letrero.png"
+                  alt="Letrero oficial y fachada de cafetería Mil Sabores"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
                 />
@@ -111,11 +112,13 @@ export default function About() {
                 Fachada Tradicional
               </p>
             </div>
+
+            {/* 2. Vitrina y Ventanal */}
             <div className="col">
-              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+              <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-vitrina.jpg"
-                  alt="Vitrina de la cafetería"
+                  src="/img/branding/mockup-vitrina.png"
+                  alt="Ventanal y vitrina de la cafetería"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
                 />
@@ -124,30 +127,49 @@ export default function About() {
                 Nuestra Cafetería
               </p>
             </div>
+
+            {/* 3. Bolsa Kraft Artesanal */}
             <div className="col">
-              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+              <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-bolsa.jpg"
-                  alt="Packaging artesanal para llevar"
+                  src="/img/branding/mockup-bolsa.png"
+                  alt="Empaques de papel Kraft artesanales"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
                 />
               </div>
               <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
-                Empaques Artesanales
+                Bolsa Kraft Artesanal
               </p>
             </div>
+
+            {/* 4. Vaso de Café para Llevar */}
             <div className="col">
-              <div className="rounded-3 overflow-hidden shadow-sm border" style={{ borderColor: 'var(--color-borde)', height: '220px' }}>
+              <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-vaso.jpg"
-                  alt="Vaso de café para llevar"
+                  src="/img/branding/mockup-vaso.png"
+                  alt="Vaso de café de especialidad para llevar"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
                 />
               </div>
               <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
-                Café al Paso
+                Café de Especialidad
+              </p>
+            </div>
+
+            {/* 5. Papelería & Sello Gofrado */}
+            <div className="col">
+              <div className="card-identidad-wrap">
+                <img
+                  src="/img/branding/mockup-papel.png"
+                  alt="Papelería institucional y sello gofrado Mil Sabores"
+                  className="w-100 h-100 object-fit-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center small mt-2 mb-0 fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                Papelería & Sello
               </p>
             </div>
           </div>
