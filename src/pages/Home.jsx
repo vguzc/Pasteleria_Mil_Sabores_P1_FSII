@@ -115,25 +115,18 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Columna Derecha: Fotos Escalonadas */}
+            {/* Columna Derecha: Imagen Branding Cafetería & Pastelería */}
             <div className="recuerdos-fotos-wrap">
               <div className="recuerdos-sello-experiencia">
                 <span className="sello-numero">50</span>
                 <span className="sello-texto">Años de Oficio</span>
               </div>
 
-              <div className="recuerdos-foto-principal">
+              <div className="recuerdos-foto-hero-wrap">
                 <img
-                  src="/img/branding/mockup-bolsa.jpg"
-                  alt="Empaque artesanal Mil Sabores"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="recuerdos-foto-secundaria">
-                <img
-                  src="/img/branding/mockup-vaso.jpg"
-                  alt="Café de especialidad y bollería"
+                  src="/img/branding/dulces-recuerdos-familia.jpg"
+                  alt="Mil Sabores Pastelería y Cafetería - Creamos Dulces Recuerdos Para Toda la Familia"
+                  className="recuerdos-foto-hero"
                   loading="lazy"
                 />
               </div>
