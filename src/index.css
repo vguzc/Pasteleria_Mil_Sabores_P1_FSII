@@ -1723,6 +1723,7 @@ h3 { font-size: 1.35rem; }
   width: auto;
   object-fit: contain;
   transition: transform var(--transicion);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
 }
 
 .logo-footer:hover .logo-ms-footer {
@@ -1745,12 +1746,12 @@ h3 { font-size: 1.35rem; }
 
 .logo-submarca-footer {
   font-family: var(--fuente-texto);
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.22em;
-  color: var(--color-caramelo);
+  color: var(--color-mantequilla);
   text-transform: uppercase;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .footer-desc {
