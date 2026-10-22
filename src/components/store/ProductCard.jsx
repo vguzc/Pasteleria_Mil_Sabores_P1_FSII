@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 
 /**
  * Componente Tarjeta de Producto (ProductCard)
- * Presentación inspirada en Baker (Qode Interactive) con tipografía refinada,
- * fotografía limpia aislada, categoría eyebrow, estrellas de valoración y botón elegante.
+ * Inspirado en el diseño minimalista de Factory Nine:
+ * - Fotografía 1:1 sobre fondo neutro cálido
+ * - Tipografía limpia, alineada estrictamente a la izquierda
+ * - Selector interactivo de porciones (1P, 8P, 20P) en círculos modernos
+ * - Precio prominente y botón "+ Agregar" de alta usabilidad
  */
 export default function ProductCard({ product, onAddToCart }) {
   const [agregadoAnim, setAgregadoAnim] = useState(false);
+  const [porcion, setPorcion] = useState('1P');
 
   if (!product) return null;
 
@@ -25,9 +29,20 @@ export default function ProductCard({ product, onAddToCart }) {
     maximumFractionDigits: 0
   }).format(product.precio);
 
+  // Opciones de formato/porción estilo Factory Nine
+  const getPortions = () => {
+    const cat = (product.categoria || '').toLowerCase();
+    if (cat.includes('individual') || cat.includes('tradicional')) {
+      return ['1P', '4P', '8P'];
+    }
+    return ['1P', '8P', '20P'];
+  };
+
+  const porciones = getPortions();
+
   return (
     <article className="tarjeta-producto-baker" data-id={product.id}>
-      {/* 1. Contenedor de Imagen Limpio */}
+      {/* 1. Fotografía Cuadrada Estilo Factory Nine */}
       <div className="tarjeta-baker-img-wrap">
         {product.enOferta ? (
           <span className="badge-oferta-baker">OFERTA</span>
@@ -38,7 +53,12 @@ export default function ProductCard({ product, onAddToCart }) {
         ) : product.categoria && product.categoria.toLowerCase().includes('vegano') ? (
           <span className="badge-marca-vegano">VEGANO</span>
         ) : null}
-        <Link to={`/producto/${product.id}`} className="tarjeta-baker-img-link" title={`Ver detalle de ${product.nombre}`}>
+
+        <Link
+          to={`/producto/${product.id}`}
+          className="tarjeta-baker-img-link w-100 h-100 d-flex align-items-center justify-content-center"
+          title={`Ver detalle de ${product.nombre}`}
+        >
           <img
             src={product.imagen || '/img/torta-mil-sabores.png'}
             alt={product.nombre}
@@ -51,21 +71,21 @@ export default function ProductCard({ product, onAddToCart }) {
         </Link>
       </div>
 
-      {/* 2. Cuerpo con Tipografía Baker */}
+      {/* 2. Cuerpo Alineado a la Izquierda (Estilo Factory Nine) */}
       <div className="tarjeta-baker-cuerpo">
         {/* Categoría Eyebrow */}
         <span className="tarjeta-baker-categoria">
           {product.categoria}
         </span>
 
-        {/* Título en Mayúsculas con Espaciado Fino */}
+        {/* Título en Negrita */}
         <h3 className="tarjeta-baker-titulo">
           <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
         </h3>
 
-        {/* Estrellas de Calidad */}
-        <div className="tarjeta-baker-estrellas" aria-label="Calificación 5 de 5 estrellas">
-          <span>★★★★★</span>
+        {/* Precio Prominente */}
+        <div className="tarjeta-baker-precio-wrap">
+          <span className="tarjeta-baker-precio">{formattedPrice}</span>
         </div>
 
         {/* Breve descripción */}
@@ -73,13 +93,26 @@ export default function ProductCard({ product, onAddToCart }) {
           <p className="tarjeta-baker-descripcion">{product.descripcion}</p>
         )}
 
-        {/* Precio Prominente */}
-        <div className="tarjeta-baker-precio-wrap">
-          <span className="tarjeta-baker-precio">{formattedPrice}</span>
-        </div>
-
-        {/* Botón de Acción Principal (+ Agregar) y Enlace de Detalle */}
+        {/* 3. Fila de Acciones: Selectores de Porciones Círculos + Botón + Agregar */}
         <div className="tarjeta-baker-acciones">
+          <div className="card-fn-porciones" aria-label="Seleccionar porción o formato">
+            {porciones.map((p) => (
+              <button
+                key={p}
+                type="button"
+                className={`btn-fn-circulo ${porcion === p ? 'activo' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setPorcion(p);
+                }}
+                title={`Formato ${p}`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+
           <button
             type="button"
             className={`btn-baker-agregar ${agregadoAnim ? 'agregado' : ''}`}
@@ -88,12 +121,6 @@ export default function ProductCard({ product, onAddToCart }) {
           >
             {agregadoAnim ? '¡Agregado!' : '+ Agregar'}
           </button>
-          <Link
-            to={`/producto/${product.id}`}
-            className="tarjeta-baker-detalle-link"
-          >
-            Ver detalle
-          </Link>
         </div>
       </div>
     </article>

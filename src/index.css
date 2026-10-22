@@ -430,8 +430,9 @@ h3 { font-size: 1.35rem; }
 .tarjeta-baker-img-wrap {
   position: relative;
   width: 100%;
-  height: 250px;
-  background: #FAF7F2;
+  aspect-ratio: 1 / 1;
+  min-height: 220px;
+  background: #F4EFEA;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -449,15 +450,15 @@ h3 { font-size: 1.35rem; }
 }
 
 .tarjeta-baker-img-wrap img {
-  max-width: 90%;
-  max-height: 200px;
+  max-width: 86%;
+  max-height: 86%;
   object-fit: contain;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 4px 10px rgba(44, 30, 22, 0.06));
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 6px 14px rgba(44, 30, 22, 0.08));
 }
 
 .tarjeta-producto-baker:hover .tarjeta-baker-img-wrap img {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .badge-oferta-baker,
@@ -501,34 +502,38 @@ h3 { font-size: 1.35rem; }
   color: #FFFFFF;
 }
 
+/* Cuerpo alineado a la izquierda según Factory Nine */
 .tarjeta-baker-cuerpo {
-  padding: 1.4rem 1.25rem 1.25rem 1.25rem;
+  padding: 1.25rem 1.15rem 1.15rem 1.15rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   flex-grow: 1;
+  width: 100%;
 }
 
 .tarjeta-baker-categoria {
   font-family: var(--fuente-texto);
   font-size: 0.72rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
   color: var(--color-caramelo);
   margin-bottom: 0.35rem;
+  text-align: left;
 }
 
 .tarjeta-baker-titulo {
   font-family: var(--fuente-texto);
   font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: var(--color-espresso);
-  margin: 0 0 0.4rem 0;
-  line-height: 1.35;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.32;
+  text-align: left;
+  width: 100%;
 }
 
 .tarjeta-baker-titulo a {
@@ -547,23 +552,13 @@ h3 { font-size: 1.35rem; }
   letter-spacing: 0.25em;
   margin-bottom: 0.5rem;
   user-select: none;
-}
-
-.tarjeta-baker-descripcion {
-  font-size: 0.84rem;
-  color: var(--color-texto-secundario);
-  line-height: 1.5;
-  margin-bottom: 0.9rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  max-width: 95%;
+  text-align: left;
 }
 
 .tarjeta-baker-precio-wrap {
-  margin-top: auto;
-  margin-bottom: 0.9rem;
+  margin: 0.15rem 0 0.55rem 0;
+  text-align: left;
+  width: 100%;
 }
 
 .tarjeta-baker-precio {
@@ -571,38 +566,98 @@ h3 { font-size: 1.35rem; }
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--color-espresso);
+  letter-spacing: -0.01em;
 }
 
+.tarjeta-baker-descripcion {
+  font-size: 0.82rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.45;
+  margin-bottom: 1.1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: left;
+  width: 100%;
+}
+
+/* Fila de acciones estilo Factory Nine: Porciones circulares a la izquierda + Botón a la derecha */
 .tarjeta-baker-acciones {
   width: 100%;
+  margin-top: auto;
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(230, 222, 212, 0.7);
+}
+
+/* Selectores circulares de porciones Factory Nine */
+.card-fn-porciones {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.btn-fn-circulo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #D6CBC1;
+  background-color: #FFFFFF;
+  color: var(--color-espresso);
+  font-family: var(--fuente-texto);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  user-select: none;
+}
+
+.btn-fn-circulo:hover {
+  border-color: var(--color-espresso);
+  background-color: #F8F4EE;
+}
+
+.btn-fn-circulo.activo {
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(44, 30, 22, 0.25);
 }
 
 .btn-baker-agregar {
-  width: 100%;
-  padding: 0.65rem 1rem;
+  flex: 1;
+  padding: 0.55rem 0.85rem;
   background-color: var(--color-espresso);
   color: #FFFFFF;
   border: 1px solid var(--color-espresso);
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 700;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: all 0.25s ease;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .btn-baker-agregar:hover:not(:disabled) {
   background-color: var(--color-caramelo);
   border-color: var(--color-caramelo);
   color: #FFFFFF;
+  transform: translateY(-1px);
 }
 
 .btn-baker-agregar:disabled {
@@ -2294,8 +2349,173 @@ h3 { font-size: 1.35rem; }
 }
 
 /* ==========================================================================
-   ESTILOS BAKER: CATÁLOGO DE PRODUCTOS REFINADO
+   ESTILOS BAKER: CATÁLOGO DE PRODUCTOS REFINADO (HERO EDITORIAL CON FOTOS)
    ========================================================================== */
+.catalogo-hero-banner {
+  padding: 4.5rem 1.5rem 4rem 1.5rem;
+  background-color: #FAF6F0;
+  border-bottom: 1px solid var(--color-borde);
+  position: relative;
+  overflow: hidden;
+}
+
+.catalogo-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .catalogo-hero-banner {
+    padding: 3rem 1.25rem 3rem 1.25rem;
+  }
+  .catalogo-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+}
+
+.catalogo-hero-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.catalogo-hero-titulo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.3rem, 4vw, 3.4rem);
+  color: var(--color-espresso);
+  line-height: 1.15;
+  margin: 0.35rem 0 0.85rem 0;
+  font-weight: 700;
+}
+
+.catalogo-hero-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-texto);
+  max-width: 580px;
+  margin-bottom: 1.6rem;
+}
+
+.catalogo-hero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.catalogo-hero-feature-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: var(--color-espresso);
+  font-weight: 600;
+}
+
+.catalogo-hero-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--color-caramelo);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+/* Composición de fotos escalonadas y sellos del catálogo */
+.catalogo-hero-fotos {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 340px;
+}
+
+.catalogo-hero-foto-principal {
+  width: 82%;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(44, 30, 22, 0.12);
+  border: 4px solid #FFFFFF;
+  position: relative;
+  z-index: 1;
+}
+
+.catalogo-hero-foto-principal img {
+  width: 100%;
+  height: 310px;
+  object-fit: cover;
+  display: block;
+}
+
+.catalogo-hero-foto-secundaria {
+  position: absolute;
+  bottom: -22px;
+  right: -5px;
+  width: 48%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 14px 30px rgba(44, 30, 22, 0.16);
+  border: 4px solid #FFFFFF;
+  z-index: 2;
+}
+
+.catalogo-hero-foto-secundaria img {
+  width: 100%;
+  height: 195px;
+  object-fit: cover;
+  display: block;
+}
+
+.catalogo-hero-sello {
+  position: absolute;
+  top: -15px;
+  left: 0px;
+  z-index: 3;
+  filter: drop-shadow(0 6px 14px rgba(44, 30, 22, 0.18));
+}
+
+.catalogo-hero-sello-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  display: block;
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease;
+}
+
+.catalogo-hero-sello:hover .catalogo-hero-sello-img {
+  transform: rotate(0deg) scale(1.05);
+}
+
+@media (max-width: 575px) {
+  .catalogo-hero-fotos {
+    min-height: 280px;
+  }
+  .catalogo-hero-foto-principal img {
+    height: 230px;
+  }
+  .catalogo-hero-foto-secundaria {
+    width: 52%;
+    bottom: -15px;
+    right: 0;
+  }
+  .catalogo-hero-foto-secundaria img {
+    height: 145px;
+  }
+  .catalogo-hero-sello-img {
+    width: 75px;
+    height: 75px;
+  }
+}
+
 .catalogo-baker-header {
   padding: 3.5rem 1.5rem 2.2rem 1.5rem;
   background-color: #FFFFFF;

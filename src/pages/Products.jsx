@@ -71,50 +71,72 @@ export default function Products() {
 
   return (
     <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
-      {/* 1. Encabezado Hero del Catálogo Unificado con Categorías */}
-      <section className="catalogo-baker-header">
+      {/* 1. Encabezado Hero Editorial del Catálogo con Fotografías y Branding */}
+      <section className="catalogo-hero-banner">
         <div className="contenedor">
-          <nav aria-label="breadcrumb" className="mb-3">
-            <ol className="breadcrumb small justify-content-center mb-2">
-              <li className="breadcrumb-item">
-                <Link to="/" style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}>Inicio</Link>
-              </li>
-              {selectedCategory !== 'Todas' ? (
-                <>
-                  <li className="breadcrumb-item">
-                    <button
-                      type="button"
-                      className="btn btn-link p-0 small text-decoration-none"
-                      style={{ color: 'var(--color-espresso)' }}
-                      onClick={handleResetFilters}
-                    >
-                      Catálogo
-                    </button>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
-                    {selectedCategory}
-                  </li>
-                </>
-              ) : (
-                <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
-                  Catálogo de Productos
-                </li>
-              )}
-            </ol>
-          </nav>
+          <div className="catalogo-hero-grid">
+            {/* Columna Izquierda: Información Editorial */}
+            <div className="catalogo-hero-info">
+              <span className="seccion-baker-eyebrow">
+                {selectedCategory !== 'Todas' ? 'Línea de Pastelería Artesanal' : 'Repostería Artesanal & Cafetería'}
+              </span>
+              <h1 className="catalogo-hero-titulo">
+                {selectedCategory !== 'Todas' ? selectedCategory : 'Nuestro Catálogo'}
+              </h1>
+              <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
+              <p className="catalogo-hero-desc">
+                {selectedCategory !== 'Todas'
+                  ? (currentCat?.descripcion || `Descubre nuestra exclusiva variedad de ${selectedCategory.toLowerCase()}, elaboradas con recetas tradicionales, ingredientes nobles y dedicación artesanal.`)
+                  : 'Descubre nuestras elaboraciones artesanales preparadas cada madrugada en Manuel Montt con materias primas nobles, fermentación pausada y más de medio siglo de tradición familiar.'}
+              </p>
 
-          <span className="seccion-baker-eyebrow">
-            {selectedCategory !== 'Todas' ? 'Línea de Pastelería Artesanal' : 'Repostería Artesanal & Cafetería'}
-          </span>
-          <h1 className="seccion-baker-titulo" style={{ fontSize: 'clamp(2.2rem, 3.8vw, 3.2rem)' }}>
-            {selectedCategory !== 'Todas' ? selectedCategory : 'Nuestro Catálogo'}
-          </h1>
-          <div className="adorno-baker" />
-          <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>
-            {selectedCategory !== 'Todas'
-              ? (currentCat?.descripcion || `Descubre nuestra exclusiva variedad de ${selectedCategory.toLowerCase()}, elaboradas con recetas tradicionales y materias primas nobles.`)
-              : 'Descubre nuestras elaboraciones artesanales preparadas cada día con materias primas nobles y recetas tradicionales desde 1976.'}
-          </p>
+              {/* Sellos de Confianza y Calidad Artesanal */}
+              <div className="catalogo-hero-features">
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Horneado Diario</span>
+                </div>
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Mantequilla de Campo</span>
+                </div>
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Líneas Clásica e Inclusiva</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Composición de Fotos Escalonadas y Branding */}
+            <div className="catalogo-hero-fotos">
+              {/* Foto Principal: Croissants dorados artesanales */}
+              <div className="catalogo-hero-foto-principal">
+                <img
+                  src="/img/slider/slide-3-croissant.jpg"
+                  alt="Bollería y pastelería fresca recién horneada"
+                  loading="eager"
+                />
+              </div>
+
+              {/* Foto Secundaria: Vaso de café de especialidad Mil Sabores */}
+              <div className="catalogo-hero-foto-secundaria">
+                <img
+                  src="/img/branding/mockup-vaso.jpg"
+                  alt="Cafetería de especialidad Mil Sabores"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Sello Circular Flotante Oficial de Tradición */}
+              <div className="catalogo-hero-sello">
+                <img
+                  src="/img/branding/sello-circular-transparent.png"
+                  alt="Sello Mil Sabores Calidad Artesanal"
+                  className="catalogo-hero-sello-img"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
