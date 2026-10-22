@@ -400,45 +400,71 @@ h3 { font-size: 1.35rem; }
   color: #FFFFFF !important;
 }
 
-/* ---------- Grilla y Tarjeta de Producto Baker Refinada ---------- */
+/* ---------- Grilla y Tarjeta de Producto Baker Refinada (Estilo Factory Nine) ---------- */
+.catalogo-page .contenedor {
+  width: min(1240px, 94%);
+}
+
 .grilla-productos,
 .grid-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.25rem 1.5rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 1199px) {
+  .grilla-productos,
+  .grid-productos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem 1.25rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .grilla-productos,
+  .grid-productos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grilla-productos,
+  .grid-productos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 0.65rem;
+  }
 }
 
 .tarjeta-producto-baker {
-  background: var(--color-blanco);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(44, 30, 22, 0.04);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.25s ease;
-  border: 1px solid var(--color-borde);
   position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tarjeta-producto-baker:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 30px rgba(44, 30, 22, 0.09);
-  border-color: #D4C2B0;
+  transform: translateY(-4px);
 }
 
 .tarjeta-baker-img-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  min-height: 220px;
-  background: #F4EFEA;
+  background-color: #FAF6F0;
+  border-radius: 6px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--color-borde);
-  padding: 1.25rem;
+  border: 1px solid rgba(220, 210, 200, 0.45);
+  padding: 0;
 }
 
 .tarjeta-baker-img-link {
@@ -447,18 +473,78 @@ h3 { font-size: 1.35rem; }
   justify-content: center;
   width: 100%;
   height: 100%;
+  padding: 1.15rem;
+  text-decoration: none;
 }
 
 .tarjeta-baker-img-wrap img {
-  max-width: 86%;
-  max-height: 86%;
+  max-width: 90%;
+  max-height: 90%;
   object-fit: contain;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 6px 14px rgba(44, 30, 22, 0.08));
 }
 
 .tarjeta-producto-baker:hover .tarjeta-baker-img-wrap img {
-  transform: scale(1.06);
+  transform: scale(1.05);
+}
+
+/* Botón flotante Factory Nine: banner que emerge en la base de la imagen al hacer hover */
+.btn-fn-agregar-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0.72rem 0.5rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  border-top: 1px solid rgba(44, 30, 22, 0.08);
+  color: var(--color-espresso);
+  font-family: var(--fuente-texto);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.tarjeta-producto-baker:hover .btn-fn-agregar-overlay,
+.tarjeta-producto-baker:focus-within .btn-fn-agregar-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.btn-fn-agregar-overlay:hover {
+  background-color: var(--color-espresso);
+  color: #FFFFFF;
+}
+
+.btn-fn-agregar-overlay.agregado {
+  background-color: var(--color-salvia);
+  color: #FFFFFF;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* En pantallas táctiles sin hover el botón permanece accesible */
+@media (hover: none) {
+  .btn-fn-agregar-overlay {
+    transform: translateY(0);
+    opacity: 0.95;
+    background: rgba(255, 255, 255, 0.96);
+  }
 }
 
 .badge-oferta-baker,
@@ -467,17 +553,17 @@ h3 { font-size: 1.35rem; }
 .badge-marca-sin-gluten,
 .badge-marca-vegano {
   position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
+  top: 0.65rem;
+  right: 0.65rem;
   font-family: var(--fuente-texto);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  padding: 0.35rem 0.8rem;
-  border-radius: 20px;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
   text-transform: uppercase;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(74, 46, 27, 0.15);
+  box-shadow: 0 2px 6px rgba(74, 46, 27, 0.12);
 }
 
 .badge-oferta-baker,
@@ -504,7 +590,7 @@ h3 { font-size: 1.35rem; }
 
 /* Cuerpo alineado a la izquierda según Factory Nine */
 .tarjeta-baker-cuerpo {
-  padding: 1.25rem 1.15rem 1.15rem 1.15rem;
+  padding: 0.85rem 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -515,22 +601,22 @@ h3 { font-size: 1.35rem; }
 
 .tarjeta-baker-categoria {
   font-family: var(--fuente-texto);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 700;
-  color: var(--color-caramelo);
-  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: #9A8B7C;
+  margin-bottom: 0.25rem;
   text-align: left;
 }
 
 .tarjeta-baker-titulo {
   font-family: var(--fuente-texto);
-  font-size: 1.05rem;
+  font-size: 0.96rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   color: var(--color-espresso);
-  margin: 0 0 0.35rem 0;
+  margin: 0 0 0.25rem 0;
   line-height: 1.32;
   text-align: left;
   width: 100%;
@@ -556,24 +642,24 @@ h3 { font-size: 1.35rem; }
 }
 
 .tarjeta-baker-precio-wrap {
-  margin: 0.15rem 0 0.55rem 0;
+  margin: 0 0 0.35rem 0;
   text-align: left;
   width: 100%;
 }
 
 .tarjeta-baker-precio {
   font-family: var(--fuente-texto);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 0.92rem;
+  font-weight: 600;
   color: var(--color-espresso);
   letter-spacing: -0.01em;
 }
 
 .tarjeta-baker-descripcion {
-  font-size: 0.82rem;
-  color: var(--color-texto-secundario);
-  line-height: 1.45;
-  margin-bottom: 1.1rem;
+  font-size: 0.78rem;
+  color: #78716C;
+  line-height: 1.42;
+  margin-bottom: 0.65rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -582,32 +668,19 @@ h3 { font-size: 1.35rem; }
   width: 100%;
 }
 
-/* Fila de acciones estilo Factory Nine: Porciones circulares a la izquierda + Botón a la derecha */
-.tarjeta-baker-acciones {
-  width: 100%;
-  margin-top: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.65rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(230, 222, 212, 0.7);
-}
-
-/* Selectores circulares de porciones Factory Nine */
+/* Selectores circulares de porciones Factory Nine (1P, 8P, 20P) */
 .card-fn-porciones {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
+  gap: 0.45rem;
+  margin-top: 0.1rem;
 }
 
 .btn-fn-circulo {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1.5px solid #D6CBC1;
+  border: 1.5px solid var(--color-espresso);
   background-color: #FFFFFF;
   color: var(--color-espresso);
   font-family: var(--fuente-texto);
@@ -623,15 +696,13 @@ h3 { font-size: 1.35rem; }
 }
 
 .btn-fn-circulo:hover {
-  border-color: var(--color-espresso);
-  background-color: #F8F4EE;
+  background-color: #FAF4EC;
 }
 
 .btn-fn-circulo.activo {
   background-color: var(--color-espresso);
   border-color: var(--color-espresso);
   color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(44, 30, 22, 0.25);
 }
 
 .btn-baker-agregar {

@@ -70,7 +70,7 @@ export default function Products() {
   const currentCat = categories.find(c => c.nombre.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
-    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+    <div className="catalogo-page" style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
       {/* 1. Encabezado Hero Editorial del Catálogo con Fotografías y Branding */}
       <section className="catalogo-hero-banner">
         <div className="contenedor">

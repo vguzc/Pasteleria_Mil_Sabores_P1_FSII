@@ -95,7 +95,7 @@ export default function ProductCard({ product, onAddToCart }) {
 
         <Link
           to={`/producto/${product.id}`}
-          className="tarjeta-baker-img-link w-100 h-100 d-flex align-items-center justify-content-center"
+          className="tarjeta-baker-img-link"
           title={`Ver detalle de ${product.nombre}`}
         >
           <img
@@ -108,9 +108,24 @@ export default function ProductCard({ product, onAddToCart }) {
             }}
           />
         </Link>
+
+        {/* Botón flotante Factory Nine: se desliza sobre la imagen al hacer hover */}
+        <button
+          type="button"
+          className={`btn-fn-agregar-overlay ${agregadoAnim ? 'agregado' : ''}`}
+          onClick={handleAdd}
+          disabled={product.stock <= 0}
+          title={`Agregar ${product.nombre} (${porcion}) al carro`}
+        >
+          {product.stock <= 0
+            ? 'Agotado'
+            : agregadoAnim
+              ? '¡Agregado al Carro!'
+              : '+ AGREGAR AL CARRO'}
+        </button>
       </div>
 
-      {/* 2. Cuerpo Alineado a la Izquierda (Estilo Factory Nine) */}
+      {/* 2. Cuerpo Alineado a la Izquierda Estilo Factory Nine */}
       <div className="tarjeta-baker-cuerpo">
         {/* Categoría Eyebrow */}
         <span className="tarjeta-baker-categoria">
@@ -122,44 +137,33 @@ export default function ProductCard({ product, onAddToCart }) {
           <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
         </h3>
 
-        {/* Precio Prominente Dinámico */}
+        {/* Precio Prominente Dinámico directamente bajo el título */}
         <div className="tarjeta-baker-precio-wrap">
           <span className="tarjeta-baker-precio">{formattedPrice}</span>
         </div>
 
-        {/* Breve descripción */}
+        {/* Breve descripción en tono sutil */}
         {product.descripcion && (
           <p className="tarjeta-baker-descripcion">{product.descripcion}</p>
         )}
 
-        {/* 3. Fila de Acciones: Selectores de Porciones Círculos + Botón + Agregar */}
-        <div className="tarjeta-baker-acciones">
-          <div className="card-fn-porciones" aria-label="Seleccionar porción o formato">
-            {portionConfig.options.map((p) => (
-              <button
-                key={p}
-                type="button"
-                className={`btn-fn-circulo ${porcion === p ? 'activo' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setPorcion(p);
-                }}
-                title={`Formato ${p}`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className={`btn-baker-agregar ${agregadoAnim ? 'agregado' : ''}`}
-            onClick={handleAdd}
-            disabled={product.stock <= 0}
-          >
-            {agregadoAnim ? '¡Agregado!' : '+ Agregar'}
-          </button>
+        {/* 3. Selector Circular de Porciones Factory Nine (1P, 8P, 20P) */}
+        <div className="card-fn-porciones" aria-label="Seleccionar porción o formato">
+          {portionConfig.options.map((p) => (
+            <button
+              key={p}
+              type="button"
+              className={`btn-fn-circulo ${porcion === p ? 'activo' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPorcion(p);
+              }}
+              title={`Formato ${p}`}
+            >
+              {p}
+            </button>
+          ))}
         </div>
       </div>
     </article>
