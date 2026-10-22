@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { orderService } from '../../services/db';
 
 export default function AdminSidebar() {
   const { currentUser, logout, isAdmin } = useAuth();
+  const [orderCount, setOrderCount] = useState(() => {
+    try {
+      return orderService.getAll().length;
+    } catch {
+      return 0;
+    }
+  });
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      try {
+        setOrderCount(orderService.getAll().length);
+      } catch {
+        // ignore
+      }
+    };
+    window.addEventListener('storage-updated', handleUpdate);
+    return () => window.removeEventListener('storage-updated', handleUpdate);
+  }, []);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -83,9 +104,23 @@ export default function AdminSidebar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/ordenes" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
-            <i className="bi bi-receipt-cutoff"></i>
-            <span>Órdenes / Boletas</span>
+          <NavLink to="/admin/ordenes" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center gap-2">
+              <i className="bi bi-receipt-cutoff"></i>
+              <span>Órdenes / Boletas</span>
+            </div>
+            <span
+              className="badge rounded-pill"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.22)',
+                color: '#FFFFFF',
+                fontSize: '0.72rem',
+                padding: '0.2rem 0.5rem'
+              }}
+              title={`${orderCount} boletas registradas`}
+            >
+              {orderCount}
+            </span>
           </NavLink>
         </li>
         <li>

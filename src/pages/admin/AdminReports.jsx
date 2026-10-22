@@ -5,9 +5,15 @@ export default function AdminReports() {
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
+  const loadData = () => {
     setOrders(orderService.getAll());
     setProducts(productService.getAll());
+  };
+
+  useEffect(() => {
+    loadData();
+    window.addEventListener('storage-updated', loadData);
+    return () => window.removeEventListener('storage-updated', loadData);
   }, []);
 
   const totalVentas = orders.reduce((acc, o) => acc + (o.total || 0), 0);
@@ -50,7 +56,7 @@ export default function AdminReports() {
             <h3 className="fw-bold mt-2 mb-1" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)' }}>
               {formatPrice(totalVentas)}
             </h3>
-            <small className="text-muted">{orders.length} pedidos procesados</small>
+            <small className="text-muted">{orders.length} boletas procesadas</small>
           </div>
         </div>
         <div className="col-md-4">

@@ -14,7 +14,7 @@ export default function AdminDashboard() {
     productosCriticos: 0
   });
 
-  useEffect(() => {
+  const loadStats = () => {
     const orders = orderService.getAll();
     const products = productService.getAll();
     const users = userService.getAll();
@@ -31,6 +31,12 @@ export default function AdminDashboard() {
       totalCategorias: categories.length,
       productosCriticos: criticos.length
     });
+  };
+
+  useEffect(() => {
+    loadStats();
+    window.addEventListener('storage-updated', loadStats);
+    return () => window.removeEventListener('storage-updated', loadStats);
   }, []);
 
   const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
@@ -73,13 +79,16 @@ export default function AdminDashboard() {
           >
             <div className="d-flex justify-content-between align-items-center mb-2">
               <span className="text-uppercase small fw-bold" style={{ color: 'var(--color-caramelo)', letterSpacing: '0.12em', fontSize: '0.72rem' }}>
-                Órdenes & Boletas
+                Total Boletas Emitidas
               </span>
               <i className="bi bi-receipt fs-3" style={{ color: 'var(--color-caramelo)' }}></i>
             </div>
-            <h3 className="display-6 fw-bold mb-1" style={{ fontFamily: 'var(--fuente-titulos)' }}>
-              {stats.totalCompras}
-            </h3>
+            <div className="d-flex align-items-baseline gap-2 mb-1">
+              <h3 className="display-6 fw-bold mb-0" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+                {stats.totalCompras}
+              </h3>
+              <span className="small" style={{ color: '#D2C4B5' }}>boletas registradas</span>
+            </div>
             <div className="small mt-auto" style={{ color: '#D2C4B5' }}>
               Monto total facturado: <strong className="text-white">{formatPrice(stats.montoCompras)}</strong>
             </div>
@@ -169,7 +178,10 @@ export default function AdminDashboard() {
               <i className="bi bi-receipt fs-4"></i>
             </div>
             <h6 className="fw-bold mb-1" style={{ color: 'var(--color-espresso)' }}>Órdenes & Boletas</h6>
-            <small className="text-muted">Gestión y seguimiento de boletas emitidas</small>
+            <small className="text-muted d-block mb-2">Gestión y seguimiento de boletas emitidas</small>
+            <span className="badge mt-auto" style={{ backgroundColor: '#FAF4EC', color: 'var(--color-espresso)', border: '1px solid var(--color-borde)', fontSize: '0.75rem', fontWeight: 600 }}>
+              {stats.totalCompras} boletas registradas
+            </span>
           </Link>
         </div>
 
