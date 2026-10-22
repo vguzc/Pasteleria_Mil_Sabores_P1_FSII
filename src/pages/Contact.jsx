@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AlertMessage from '../components/common/AlertMessage';
 
 export default function Contact() {
@@ -31,28 +30,27 @@ export default function Contact() {
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '3.5rem 0 6rem 0' }}>
-      <div className="contenedor">
-        <nav aria-label="breadcrumb" className="mb-4">
-          <ol className="breadcrumb small">
-            <li className="breadcrumb-item"><Link to="/" style={{ color: 'var(--color-espresso)' }}>Inicio</Link></li>
-            <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>Contacto</li>
-          </ol>
-        </nav>
-
-        <div className="text-center mb-5">
-          <span className="seccion-baker-eyebrow">
-            Estamos Para Atenderte
-          </span>
-          <h1 className="seccion-baker-titulo" style={{ fontSize: 'clamp(2.3rem, 4vw, 3.2rem)' }}>
-            Contáctanos
-          </h1>
-          <div className="adorno-baker" />
-          <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>
-            ¿Tienes dudas sobre pedidos especiales, tortas de matrimonio o el estado de tu despacho? Escríbenos y nuestro equipo te responderá con prontitud.
-          </p>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+      {/* 1. Hero Banner de Contacto Full Width / Borde a Borde a lo largo de la página */}
+      <section className="contacto-hero-banner">
+        <div className="contenedor">
+          <div className="contacto-hero-contenido">
+            <span className="contacto-hero-eyebrow">
+              Estamos Para Atenderte
+            </span>
+            <h1 className="contacto-hero-titulo">
+              Contáctanos
+            </h1>
+            <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
+            <p className="contacto-hero-desc">
+              ¿Tienes dudas sobre pedidos especiales, tortas de celebración o el estado de tu despacho? Escríbenos o visítanos en nuestro taller y nuestro equipo te responderá con prontitud.
+            </p>
+          </div>
         </div>
+      </section>
 
+      {/* 2. Formulario y Canales de Atención */}
+      <div className="contenedor" style={{ paddingTop: '3.5rem' }}>
         <div className="row g-5">
           {/* Formulario */}
           <div className="col-lg-7">
