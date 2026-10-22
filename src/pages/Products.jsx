@@ -124,7 +124,6 @@ export default function Products() {
                   src="/img/galeria/pastelero-azucar-flor.png"
                   alt="Maestro pastelero decorando repostería artesanal"
                   loading="lazy"
-                  style={{ objectPosition: 'center 20%' }}
                 />
               </div>
 

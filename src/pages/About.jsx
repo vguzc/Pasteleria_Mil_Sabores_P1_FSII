@@ -40,20 +40,20 @@ export default function About() {
 
             {/* Columna Derecha: Composición de Fotos Escalonadas y Branding */}
             <div className="catalogo-hero-fotos">
-              {/* Foto Principal: Amasado artesanal tradicional a mano con harina */}
+              {/* Foto Principal: Vitrina de croissants y hojaldres dorados */}
               <div className="catalogo-hero-foto-principal">
                 <img
-                  src="/img/galeria/amasado-manos-harina.png"
-                  alt="Amasado artesanal a mano tradicional desde 1976"
+                  src="/img/galeria/vitrina-croissants-dorados.png"
+                  alt="Vitrina de bollería y hojaldres recién horneados"
                   loading="eager"
                 />
               </div>
 
-              {/* Foto Secundaria: Vitrina de croissants y hojaldres dorados */}
+              {/* Foto Secundaria: Amasado artesanal tradicional a mano con harina */}
               <div className="catalogo-hero-foto-secundaria">
                 <img
-                  src="/img/galeria/vitrina-croissants-dorados.png"
-                  alt="Vitrina de bollería y hojaldres recién horneados"
+                  src="/img/galeria/amasado-manos-harina.png"
+                  alt="Amasado artesanal a mano tradicional desde 1976"
                   loading="lazy"
                 />
               </div>
