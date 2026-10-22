@@ -7,9 +7,12 @@ import { REGIONES_Y_COMUNAS } from '../services/chileData';
 import AlertMessage from '../components/common/AlertMessage';
 
 export default function Checkout() {
-  const { cart, totals, clearCart, scheduling, updateScheduling } = useCart();
+  const { cart, totals, clearCart, scheduling, updateScheduling, applyCoupon, removeCoupon, couponCode } = useCart();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+
+  const [inputCoupon, setInputCoupon] = useState('');
+  const [couponMsg, setCouponMsg] = useState({ text: '', type: '' });
 
   // Estados del formulario
   const [formData, setFormData] = useState({
@@ -68,6 +71,31 @@ export default function Checkout() {
       region: newRegion,
       comuna: reg ? reg.comunas[0] : ''
     }));
+  };
+
+  const handleApplyCoupon = (e) => {
+    e.preventDefault();
+    setCouponMsg({ text: '', type: '' });
+    if (!inputCoupon.trim()) return;
+
+    const res = applyCoupon(inputCoupon);
+    if (res.success) {
+      setCouponMsg({
+        text: `Cupón ${res.coupon.codigo} aplicado con éxito (-${res.coupon.porcentaje}%).`,
+        type: 'success'
+      });
+      setInputCoupon('');
+    } else {
+      setCouponMsg({
+        text: res.message || 'Cupón no válido o expirado.',
+        type: 'danger'
+      });
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    removeCoupon();
+    setCouponMsg({ text: 'Cupón removido.', type: 'info' });
   };
 
   const handleSubmit = (e) => {
@@ -458,6 +486,91 @@ export default function Checkout() {
                     </div>
                   </>
                 )}
+              </div>
+
+              {/* Sección 3: Cupón de Descuento y Resumen de Totales */}
+              <div className="mb-4 p-4 rounded-3 border" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }}>
+                <h5 className="fw-bold border-bottom pb-2 mb-3" style={{ color: 'var(--color-chocolate)', borderColor: 'var(--color-borde)' }}>
+                  Cupón de Descuento & Desglose de Pago
+                </h5>
+
+                {/* Formulario de Cupón (movido desde el carrito a esta etapa de pago) */}
+                <div className="mb-4 p-3 rounded-3 bg-white border" style={{ borderColor: 'var(--color-borde)' }}>
+                  <label className="form-label small fw-bold text-dark d-block mb-2">
+                    ¿Tienes un cupón de descuento?
+                  </label>
+                  {totals.cupon ? (
+                    <div className="d-flex justify-content-between align-items-center p-2 rounded" style={{ backgroundColor: '#EFE8E1', border: '1px solid #D5B99A' }}>
+                      <span className="small">
+                        Cupón activo: <strong>{totals.cupon.codigo}</strong> (-{totals.cupon.porcentaje}% de descuento = -{formatPrice(totals.descuento)})
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger btn-sm py-0 px-2"
+                        onClick={handleRemoveCoupon}
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex gap-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Cupón (ej: FELICES50)"
+                        value={inputCoupon}
+                        onChange={(e) => setInputCoupon(e.target.value)}
+                        style={{ maxWidth: '320px', borderColor: 'var(--color-borde)' }}
+                      />
+                      <button
+                        type="button"
+                        className="boton boton-primario btn-baker px-4"
+                        onClick={handleApplyCoupon}
+                        style={{ padding: '0.5rem 1.4rem' }}
+                      >
+                        Aplicar
+                      </button>
+                    </div>
+                  )}
+
+                  {couponMsg.text && (
+                    <div className={`small mt-2 text-${couponMsg.type === 'danger' ? 'danger' : 'success'} fw-semibold`}>
+                      {couponMsg.text}
+                    </div>
+                  )}
+                </div>
+
+                {/* Desglose de Totales */}
+                <div className="row g-2 small">
+                  <div className="col-6 text-muted">Subtotal productos:</div>
+                  <div className="col-6 text-end fw-semibold text-dark">{formatPrice(totals.subtotal)}</div>
+
+                  {totals.descuento > 0 && (
+                    <>
+                      <div className="col-6 text-danger fw-bold">Descuento ({totals.cupon?.codigo}):</div>
+                      <div className="col-6 text-end text-danger fw-bold">-{formatPrice(totals.descuento)}</div>
+                    </>
+                  )}
+
+                  <div className="col-6 text-muted">IVA (19% incluido):</div>
+                  <div className="col-6 text-end text-muted">{formatPrice(totals.iva)}</div>
+
+                  <div className="col-6 text-muted">Costo de despacho / retiro:</div>
+                  <div className="col-6 text-end fw-semibold text-dark">
+                    {totals.envio === 0 ? (
+                      <span className="text-success fw-bold">Gratis</span>
+                    ) : (
+                      formatPrice(totals.envio)
+                    )}
+                  </div>
+
+                  <div className="col-12 border-top pt-2 mt-2">
+                    <div className="d-flex justify-content-between align-items-baseline">
+                      <span className="fs-5 fw-bold" style={{ color: 'var(--color-espresso)' }}>Total a Pagar:</span>
+                      <span className="fs-4 fw-bold" style={{ color: 'var(--color-caramelo)' }}>{formatPrice(totals.total)}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Selector para simular compra exitosa o error de pago */}

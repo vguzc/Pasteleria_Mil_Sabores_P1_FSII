@@ -14,7 +14,7 @@ import { useCart } from '../../context/CartContext';
 export default function ProductCard({ product, onAddToCart }) {
   if (!product) return null;
 
-  const { cart } = useCart();
+  const { cart, openQuickView } = useCart();
   const itemInCart = (cart || []).find((item) => item.id === product.id);
   const inCartQty = itemInCart ? itemInCart.cantidad : 0;
   const productStock = typeof product.stock === 'number' ? product.stock : 99;
@@ -70,7 +70,8 @@ export default function ProductCard({ product, onAddToCart }) {
     maximumFractionDigits: 0
   }).format(currentPrice);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    if (e) e.stopPropagation();
     if (isOutOfStock || isMaxInCart) return;
 
     if (onAddToCart) {
@@ -121,6 +122,12 @@ export default function ProductCard({ product, onAddToCart }) {
           to={`/producto/${product.id}`}
           className="tarjeta-baker-img-link"
           title={`Ver detalle de ${product.nombre}`}
+          onClick={(e) => {
+            if (openQuickView) {
+              e.preventDefault();
+              openQuickView(product);
+            }
+          }}
         >
           <img
             src={product.imagen || '/img/torta-mil-sabores.png'}
@@ -154,7 +161,17 @@ export default function ProductCard({ product, onAddToCart }) {
 
         {/* Título en Negrita */}
         <h3 className="tarjeta-baker-titulo">
-          <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
+          <Link
+            to={`/producto/${product.id}`}
+            onClick={(e) => {
+              if (openQuickView) {
+                e.preventDefault();
+                openQuickView(product);
+              }
+            }}
+          >
+            {product.nombre}
+          </Link>
         </h3>
 
         {/* Precio Prominente Dinámico directamente bajo el título */}

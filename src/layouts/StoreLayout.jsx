@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import CartDrawer from '../components/cart/CartDrawer';
+import ProductQuickViewDrawer from '../components/store/ProductQuickViewDrawer';
 
 export default function StoreLayout() {
   return (
@@ -12,6 +13,8 @@ export default function StoreLayout() {
         <Outlet />
       </main>
       <Footer />
+      {/* Vista previa lateral deslizante del producto */}
+      <ProductQuickViewDrawer />
       {/* Drawer deslizante del carrito */}
       <CartDrawer />
     </div>

@@ -1029,6 +1029,568 @@ h3 { font-size: 1.35rem; }
   color: var(--color-caramelo);
 }
 
+/* =============================================================
+   VISTA PREVIA RÁPIDA LATERAL DE PRODUCTO (Slide Drawer)
+   Inspirado en Factory Nine / Catálogo Moderno
+============================================================= */
+.quickview-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9998;
+}
+
+.quickview-backdrop.quickview-backdrop-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.quickview-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  background: #FFFFFF;
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.quickview-drawer.quickview-drawer-open {
+  transform: translateX(0);
+}
+
+.quickview-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.quickview-image-container {
+  position: relative;
+  width: 100%;
+  background-color: #f7f7f7;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quickview-img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  display: block;
+}
+
+.quickview-btn-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  z-index: 10;
+}
+
+.quickview-btn-close:hover {
+  transform: scale(1.06);
+  background-color: #F5F5F5;
+}
+
+.quickview-body {
+  padding: 1.5rem 1.75rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.quickview-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #111111;
+  margin: 0 0 0.65rem 0;
+  line-height: 1.25;
+}
+
+.quickview-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 1.25rem;
+}
+
+.quickview-portion-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.quickview-portion-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #222222;
+}
+
+.quickview-portion-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quickview-pill-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #FFFFFF;
+  color: #111111;
+  border: 1px solid #222222;
+  transition: all 0.15s ease;
+}
+
+.quickview-pill-btn:hover {
+  background-color: #F0F0F0;
+}
+
+.quickview-pill-btn.active {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+
+.quickview-description {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #444444;
+  margin-bottom: 2rem;
+  flex: 1;
+}
+
+.quickview-action {
+  margin-top: auto;
+}
+
+.quickview-btn-add {
+  width: 100%;
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.95rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.quickview-btn-add:hover {
+  background: #222222;
+  transform: translateY(-1px);
+}
+
+/* =============================================================
+   REDISEÑO DEL CARRITO (Slide Drawer - Imágenes 3, 4 y 5)
+============================================================= */
+.fn-cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  background: #FFFFFF;
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+}
+
+.fn-cart-drawer.drawer-abierto {
+  transform: translateX(0);
+}
+
+.fn-cart-header {
+  padding: 1.25rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ECECEC;
+}
+
+.fn-cart-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #111111;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.fn-cart-btn-close {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.fn-cart-btn-close:hover {
+  transform: scale(1.15);
+}
+
+.fn-cart-savings-bar {
+  padding: 0.75rem 1.5rem 0.6rem 1.5rem;
+  background: #FFFFFF;
+}
+
+.fn-cart-savings-text {
+  font-size: 0.82rem;
+  color: #222222;
+  margin-bottom: 0.45rem;
+}
+
+.fn-cart-savings-track {
+  width: 100%;
+  height: 3px;
+  background: #EBEBEB;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fn-cart-savings-progress {
+  height: 100%;
+  background: #000000;
+  transition: width 0.3s ease;
+}
+
+.fn-cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem;
+}
+
+.fn-cart-section-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 1.1rem;
+}
+
+.fn-cart-item {
+  display: flex;
+  gap: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.fn-cart-item-img {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #EEEEEE;
+  flex-shrink: 0;
+}
+
+.fn-cart-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fn-cart-item-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #111111;
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+}
+
+.fn-cart-item-portion {
+  font-size: 0.82rem;
+  color: #444444;
+  margin-bottom: 0.35rem;
+}
+
+.fn-cart-item-price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 0.65rem;
+}
+
+.fn-cart-qty-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96px;
+  border: 1px solid #D5D5D5;
+  border-radius: 9999px;
+  padding: 3px 10px;
+  background: #FFFFFF;
+}
+
+.fn-cart-qty-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #222222;
+  padding: 2px 6px;
+}
+
+.fn-cart-qty-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.fn-cart-qty-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111111;
+}
+
+.fn-cart-item-remove {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #111111;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 0.45rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.fn-cart-item-remove:hover {
+  text-decoration: underline;
+}
+
+.fn-cart-subtotal-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1.2rem 0 1rem 0;
+  border-top: 1px solid #ECECEC;
+  margin-top: 0.5rem;
+}
+
+.fn-cart-subtotal-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #111111;
+  text-transform: uppercase;
+}
+
+.fn-cart-subtotal-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #111111;
+}
+
+.fn-cart-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.fn-cart-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.9rem 0.4rem;
+  border-radius: 8px;
+  border: 1px solid #E2E2E2;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 105px;
+}
+
+.fn-cart-mode-card.active {
+  background: #D9D9D9;
+  border-color: #B5B5B5;
+}
+
+.fn-cart-mode-icon {
+  margin-bottom: 0.45rem;
+  color: #111111;
+}
+
+.fn-cart-mode-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #111111;
+  line-height: 1.25;
+}
+
+.fn-cart-mode-details {
+  margin-bottom: 1.25rem;
+}
+
+.fn-cart-today-text {
+  font-size: 0.88rem;
+  color: #222222;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.fn-cart-search-comuna {
+  display: flex;
+  border: 1px solid #D5D5D5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.fn-cart-search-input {
+  flex: 1;
+  border: none;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.fn-cart-search-btn {
+  background: #EFEFEF;
+  border: none;
+  border-left: 1px solid #D5D5D5;
+  padding: 0 1rem;
+  cursor: pointer;
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fn-cart-branch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ECECEC;
+  border-radius: 6px;
+  padding: 0.65rem;
+  background: #FAFAFA;
+}
+
+.fn-cart-branch-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: #FFFFFF;
+  border: 1px solid #ECECEC;
+  cursor: pointer;
+}
+
+.fn-cart-branch-item.selected {
+  border-color: #111111;
+  background: #F4F4F4;
+}
+
+.fn-cart-branch-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 0.15rem;
+}
+
+.fn-cart-branch-address {
+  font-size: 0.78rem;
+  color: #555555;
+  line-height: 1.3;
+}
+
+.fn-cart-branch-info-link {
+  font-size: 0.74rem;
+  color: #111111;
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.fn-cart-footer {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  background: #FFFFFF;
+  border-top: 1px solid #ECECEC;
+}
+
+.fn-cart-btn-continue {
+  width: 100%;
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.95rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fn-cart-btn-continue:hover {
+  background: #222222;
+  transform: translateY(-1px);
+}
+
+.fn-cart-footer-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #555555;
+  text-align: left;
+  margin-top: 0.65rem;
+  margin-bottom: 0;
+}
+
 /* ---------- Pie de Página (Footer) ---------- */
 .pie-pagina {
   background-color: #241811;

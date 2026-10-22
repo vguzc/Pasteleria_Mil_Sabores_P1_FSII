@@ -16,10 +16,13 @@ const STORAGE_KEYS = {
 
 export const DEFAULT_SCHEDULING = {
   modalidad: 'despacho', // 'despacho' | 'retiro'
+  tipoModo: 'hoy', // 'hoy' | 'despacho_programado' | 'retiro_programado'
   fecha: '',             // YYYY-MM-DD
   franjaHoraria: 'tarde', // 'manana' | 'tarde' | 'atardecer'
   dedicatoria: '',
-  direccionRetiro: 'Av. Providencia 1200, Providencia, Santiago'
+  comuna: 'Providencia',
+  sucursalRetiro: 'Factory Nine Chicureo',
+  direccionRetiro: 'P.º Colina Sur 14600, Colina, Santiago'
 };
 
 // -------------------------------------------------------------
@@ -729,7 +732,8 @@ export const cartService = {
   addItem(product, quantity = 1) {
     const cart = this.getCart();
     const products = productService.getAll();
-    const currentProd = products.find(p => p.id === product.id) || product;
+    const baseId = product.baseId || (typeof product.id === 'string' ? product.id.split('-')[0] : product.id);
+    const currentProd = products.find(p => p.id === product.id || p.id === baseId) || product;
     const stockLimit = typeof currentProd.stock === 'number' ? currentProd.stock : 99;
 
     if (stockLimit <= 0) {
@@ -756,6 +760,9 @@ export const cartService = {
       }
       cart[index].stock = stockLimit;
       cart[index].subtotal = cart[index].cantidad * cart[index].precio;
+      if (product.porcion && !cart[index].porcion) {
+        cart[index].porcion = product.porcion;
+      }
     } else {
       const allowedQty = Math.min(quantity, stockLimit);
       if (allowedQty >= stockLimit) {
@@ -770,7 +777,8 @@ export const cartService = {
         stock: stockLimit,
         subtotal: product.precio * allowedQty,
         imagen: product.imagen,
-        categoria: product.categoria
+        categoria: product.categoria,
+        porcion: product.porcion || '1P'
       });
     }
     this.saveCart(cart);

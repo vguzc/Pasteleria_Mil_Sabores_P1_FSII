@@ -6,6 +6,7 @@ const CartContext = createContext(null);
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => cartService.getCart());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [stockNotice, setStockNotice] = useState(null);
   const [scheduling, setScheduling] = useState(() => cartService.getScheduling());
   const [couponCode, setCouponCode] = useState(() => {
@@ -33,6 +34,13 @@ export function CartProvider({ children }) {
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
+
+  const openQuickView = (product) => {
+    setQuickViewProduct(product);
+  };
+  const closeQuickView = () => {
+    setQuickViewProduct(null);
+  };
 
   const clearStockNotice = () => setStockNotice(null);
 
@@ -104,6 +112,9 @@ export function CartProvider({ children }) {
       isDrawerOpen,
       openDrawer,
       closeDrawer,
+      quickViewProduct,
+      openQuickView,
+      closeQuickView,
       addItem,
       updateQuantity,
       removeItem,
@@ -131,6 +142,9 @@ export function useCart() {
       isDrawerOpen: false,
       openDrawer: () => {},
       closeDrawer: () => {},
+      quickViewProduct: null,
+      openQuickView: () => {},
+      closeQuickView: () => {},
       addItem: () => {},
       updateQuantity: () => {},
       removeItem: () => {},

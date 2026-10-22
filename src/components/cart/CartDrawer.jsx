@@ -1,6 +1,31 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { REGIONES_Y_COMUNAS } from '../../services/chileData';
+
+const SUCURSALES_RETIRO = [
+  {
+    id: 'chicureo',
+    nombre: 'Factory Nine Chicureo',
+    direccion: 'P.º Colina Sur 14600',
+    comuna: 'colina, 9340000',
+    info: 'Lunes a Domingo de 10:00 a 20:00 hrs. Retiro en mesón de entrega con tu orden.'
+  },
+  {
+    id: 'providencia',
+    nombre: 'Taller Central Manuel Montt',
+    direccion: 'Av. Providencia 1200',
+    comuna: 'Providencia, 7500000',
+    info: 'Lunes a Domingo de 10:00 a 20:30 hrs. A pasos de la estación Metro Manuel Montt.'
+  },
+  {
+    id: 'lascondes',
+    nombre: 'Sucursal Las Condes',
+    direccion: 'Av. Las Condes 9500',
+    comuna: 'Las Condes, 7550000',
+    info: 'Lunes a Domingo de 10:30 a 19:30 hrs. Estacionamiento privado disponible.'
+  }
+];
 
 export default function CartDrawer() {
   const {
@@ -10,299 +35,498 @@ export default function CartDrawer() {
     closeDrawer,
     updateQuantity,
     removeItem,
-    applyCoupon,
-    removeCoupon,
+    scheduling,
+    updateScheduling,
     stockNotice,
-    clearStockNotice,
-    scheduling
+    clearStockNotice
   } = useCart();
 
-  const [inputCoupon, setInputCoupon] = useState('');
-  const [couponError, setCouponError] = useState('');
   const navigate = useNavigate();
 
-  const handleCheckout = () => {
+  // Modo de entrega activo: 'hoy' | 'despacho_programado' | 'retiro_programado'
+  const [activeMode, setActiveMode] = useState(() => {
+    if (scheduling?.tipoModo) return scheduling.tipoModo;
+    if (scheduling?.modalidad === 'retiro') return 'retiro_programado';
+    return 'hoy';
+  });
+
+  // Comuna para despacho programado
+  const [comunaInput, setComunaInput] = useState(scheduling?.comuna || '');
+  const [comunaSugerida, setComunaSugerida] = useState([]);
+  const [mostrarSugerencias, setMostrarSugerencias] = useState(false);
+
+  // Sucursal de retiro seleccionada
+  const [selectedBranch, setSelectedBranch] = useState(
+    scheduling?.sucursalRetiro || 'Factory Nine Chicureo'
+  );
+  const [infoBranchVisible, setInfoBranchVisible] = useState(null);
+
+  // Fecha y franja horaria
+  const [selectedDate, setSelectedDate] = useState(scheduling?.fecha || '');
+  const [selectedTime, setSelectedTime] = useState(scheduling?.franjaHoraria || 'tarde');
+
+  // Lista de comunas de la Región Metropolitana
+  const comunasRM = React.useMemo(() => {
+    const rm = REGIONES_Y_COMUNAS.find(r => r.region.includes('Metropolitana'));
+    return rm ? rm.comunas : ['Santiago', 'Providencia', 'Las Condes', 'Vitacura', 'Ñuñoa', 'Colina'];
+  }, []);
+
+  useEffect(() => {
+    if (scheduling?.tipoModo) {
+      setActiveMode(scheduling.tipoModo);
+    }
+  }, [scheduling]);
+
+  const handleComunaChange = (e) => {
+    const val = e.target.value;
+    setComunaInput(val);
+    if (val.trim().length > 0) {
+      const match = comunasRM.filter(c => c.toLowerCase().includes(val.toLowerCase()));
+      setComunaSugerida(match.slice(0, 5));
+      setMostrarSugerencias(true);
+    } else {
+      setMostrarSugerencias(false);
+    }
+  };
+
+  const handleSelectComuna = (c) => {
+    setComunaInput(c);
+    setMostrarSugerencias(false);
+  };
+
+  const formatPrice = (val) => '$' + Number(val || 0).toLocaleString('es-CL');
+
+  // Barra de ahorro de envío (meta $20.000 como en la Imagen 3)
+  const metaEnvio = 20000;
+  const restanteAhorro = Math.max(0, metaEnvio - totals.subtotal);
+  const porcentajeAhorro = Math.min(100, Math.round((totals.subtotal / metaEnvio) * 100));
+
+  const handleContinue = () => {
+    const isRetiro = activeMode === 'retiro_programado';
+    const sucursalObj = SUCURSALES_RETIRO.find(s => s.nombre === selectedBranch) || SUCURSALES_RETIRO[0];
+
+    updateScheduling({
+      modalidad: isRetiro ? 'retiro' : 'despacho',
+      tipoModo: activeMode,
+      comuna: comunaInput || 'Providencia',
+      sucursalRetiro: selectedBranch,
+      direccionRetiro: isRetiro ? `${sucursalObj.direccion}, ${sucursalObj.comuna}` : '',
+      fecha: selectedDate,
+      franjaHoraria: selectedTime
+    });
+
     closeDrawer();
     navigate('/checkout');
   };
 
-  const handleViewCart = () => {
-    closeDrawer();
-    navigate('/carrito');
-  };
-
-  const handleApplyCoupon = (e) => {
-    e.preventDefault();
-    setCouponError('');
-    if (!inputCoupon.trim()) return;
-
-    const res = applyCoupon(inputCoupon);
-    if (!res.success) {
-      setCouponError(res.message);
-    } else {
-      setInputCoupon('');
-    }
-  };
-
-  const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(val || 0);
-
   return (
     <>
-      {/* Backdrop oscuro translúcido */}
+      {/* Backdrop */}
       <div
         className={`backdrop-carrito ${isDrawerOpen ? 'backdrop-abierto' : ''}`}
         onClick={closeDrawer}
         aria-hidden="true"
-      ></div>
+      />
 
-      {/* Panel Desplegable (Slide Drawer) */}
+      {/* Panel Desplegable Moderno */}
       <aside
         id="drawerCarrito"
-        className={`drawer-carrito ${isDrawerOpen ? 'drawer-abierto' : ''}`}
-        aria-label="Carrito de compras desplegable"
+        className={`fn-cart-drawer ${isDrawerOpen ? 'drawer-abierto' : ''}`}
+        aria-label="Carrito de compras"
+        aria-hidden={!isDrawerOpen}
       >
-        {/* Cabecera del Drawer */}
-        <div className="drawer-header">
-          <div>
-            <span style={{ fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-caramelo)', fontWeight: 700, display: 'block' }}>
-              Tu Selección
-            </span>
-            <h3 style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', margin: 0, fontSize: '1.75rem' }}>
-              Bolsa de Compra
-            </h3>
-          </div>
+        {/* 1. Header con total de ítems */}
+        <div className="fn-cart-header">
+          <h2 className="fn-cart-title">
+            CARRITO ({totals.itemsCount})
+          </h2>
           <button
             type="button"
-            className="btn-cerrar-drawer"
+            className="fn-cart-btn-close"
             onClick={closeDrawer}
-            aria-label="Cerrar bolsa"
+            aria-label="Cerrar carrito"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
 
-        {/* Cuerpo con ítems */}
-        <div className="drawer-cuerpo">
+        {/* 2. Barra de Ahorro en Envío (Imagen 3) */}
+        {cart.length > 0 && (
+          <div className="fn-cart-savings-bar">
+            <div className="fn-cart-savings-text">
+              {restanteAhorro > 0 ? (
+                <>
+                  Agrega <strong>{formatPrice(restanteAhorro)}</strong> más y ahorra <strong>$2.000</strong> en tu envío
+                </>
+              ) : (
+                <>
+                  <strong>¡Ahorro de $2.000 conseguido!</strong> Tienes tarifa preferencial de envío
+                </>
+              )}
+            </div>
+            <div className="fn-cart-savings-track">
+              <div
+                className="fn-cart-savings-progress"
+                style={{ width: `${porcentajeAhorro}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* 3. Cuerpo del Carrito */}
+        <div className="fn-cart-body">
           {stockNotice && (
-            <div className="alert p-2 small mb-3 d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-caramelo)', color: 'var(--color-espresso)', borderRadius: '6px' }}>
-              <div style={{ fontSize: '0.75rem' }}>
-                <i className="bi bi-exclamation-circle-fill me-1" style={{ color: 'var(--color-caramelo)' }}></i>
+            <div className="alert p-2 small mb-3 d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF4EC', border: '1px solid #D5B99A', color: '#2C1E16', borderRadius: '6px' }}>
+              <div style={{ fontSize: '0.78rem' }}>
                 {stockNotice.mensaje}
               </div>
-              <button type="button" className="btn-close btn-close-sm" onClick={clearStockNotice} aria-label="Cerrar aviso"></button>
+              <button type="button" className="btn-close btn-close-sm" onClick={clearStockNotice} aria-label="Cerrar aviso" />
             </div>
           )}
 
           {cart.length === 0 ? (
-            <div className="bolsa-vacia-container text-center py-5 px-3">
-              <div style={{ width: '64px', height: '64px', margin: '0 auto 1.25rem', borderRadius: '50%', backgroundColor: '#F3ECE3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-moca)' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="9" cy="21" r="1"></circle>
-                  <circle cx="20" cy="21" r="1"></circle>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-              </div>
-              <h4 className="bolsa-vacia-titulo" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.4rem' }}>Tu bolsa está vacía</h4>
+            <div className="bolsa-vacia-container text-center py-5">
+              <h4 className="bolsa-vacia-titulo mb-2">Tu bolsa está vacía</h4>
               <p className="bolsa-vacia-subtitulo text-muted small mb-4">
-                Descubre nuestras especialidades recién horneadas y añádelas con un solo clic:
+                Explora nuestras creaciones recién horneadas y añádelas con un toque.
               </p>
-
               <Link
-                to="/productos?categoria=Tortas%20Circulares"
-                className="tarjeta-categoria-sugerida"
+                to="/productos"
+                className="btn btn-dark rounded-pill px-4 py-2"
                 onClick={closeDrawer}
               >
-                <img src="/img/torta-amor-lucuma.png" alt="Tortas" className="cat-sugerida-thumb" />
-                <span className="cat-sugerida-nombre">Tortas Circulares</span>
-                <span className="cat-sugerida-flecha">→</span>
-              </Link>
-
-              <Link
-                to="/productos?categoria=Pastelería%20Tradicional"
-                className="tarjeta-categoria-sugerida"
-                onClick={closeDrawer}
-              >
-                <img src="/img/alfajores-hojarasca.png" alt="Pastelería Tradicional" className="cat-sugerida-thumb" />
-                <span className="cat-sugerida-nombre">Pastelería Tradicional</span>
-                <span className="cat-sugerida-flecha">→</span>
-              </Link>
-
-              <Link
-                to="/productos?categoria=Productos%20Sin%20Gluten"
-                className="tarjeta-categoria-sugerida"
-                onClick={closeDrawer}
-              >
-                <img src="/img/cheesecake-frutos-rojos.png" alt="Línea Sin Gluten" className="cat-sugerida-thumb" />
-                <span className="cat-sugerida-nombre">Línea Sin Gluten</span>
-                <span className="cat-sugerida-flecha">→</span>
+                Ver Catálogo
               </Link>
             </div>
           ) : (
-            <div className="drawer-items-lista">
-              {cart.map((item) => {
-                const itemStock = typeof item.stock === 'number' ? item.stock : 99;
-                const isMax = item.cantidad >= itemStock;
+            <>
+              <div className="fn-cart-section-label">
+                Productos
+              </div>
 
-                return (
-                  <div key={item.id} className="drawer-item d-flex gap-3 align-items-center mb-3 pb-3 border-bottom" style={{ borderColor: 'var(--color-borde)' }}>
-                    <img
-                      src={item.imagen || '/img/torta-mil-sabores.png'}
-                      alt={item.nombre}
-                      width="65"
-                      height="65"
-                      className="rounded object-fit-contain p-1"
-                      style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/img/torta-mil-sabores.png';
-                      }}
-                    />
-                    <div className="flex-grow-1 min-w-0">
-                      <Link
-                        to={`/producto/${item.id}`}
-                        className="d-block fw-bold text-truncate small mb-1"
-                        style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}
-                        onClick={closeDrawer}
-                      >
-                        {item.nombre}
-                      </Link>
-                      <div className="d-flex align-items-baseline gap-2">
-                        <span className="small fw-bold" style={{ color: 'var(--color-caramelo)' }}>
+              {/* Lista de productos */}
+              <div className="fn-cart-items-list">
+                {cart.map((item) => {
+                  const itemStock = typeof item.stock === 'number' ? item.stock : 99;
+                  const isMax = item.cantidad >= itemStock;
+
+                  return (
+                    <div key={item.id} className="fn-cart-item">
+                      <img
+                        src={item.imagen || '/img/torta-mil-sabores.png'}
+                        alt={item.nombre}
+                        className="fn-cart-item-img"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/img/torta-mil-sabores.png';
+                        }}
+                      />
+
+                      <div className="fn-cart-item-info">
+                        <div className="fn-cart-item-name">
+                          {item.nombre.toUpperCase()}
+                        </div>
+
+                        <div className="fn-cart-item-portion">
+                          Tamaño: {item.porcion || '1P'}
+                        </div>
+
+                        <div className="fn-cart-item-price">
                           {formatPrice(item.precio)}
-                        </span>
-                        {isMax && (
-                          <span className="badge" style={{ fontSize: '0.65rem', backgroundColor: '#FAF4EC', color: '#B54234', border: '1px solid var(--color-borde)' }}>
-                            Stock máx. ({itemStock})
-                          </span>
-                        )}
-                      </div>
-                      {/* Control de cantidad */}
-                      <div className="d-flex align-items-center gap-2 mt-2">
-                        <div className="input-group input-group-sm" style={{ width: '90px' }}>
+                        </div>
+
+                        {/* Selector de cantidad estilo cápsula redondeada */}
+                        <div className="fn-cart-qty-pill">
                           <button
                             type="button"
-                            className="btn btn-outline-secondary px-2 py-0"
+                            className="fn-cart-qty-btn"
                             onClick={() => updateQuantity(item.id, item.cantidad - 1)}
                             disabled={item.cantidad <= 1}
+                            aria-label="Disminuir cantidad"
                           >
-                            -
+                            −
                           </button>
-                          <span className="input-group-text bg-white px-2 py-0 small fw-bold">
+                          <span className="fn-cart-qty-val">
                             {item.cantidad}
                           </span>
                           <button
                             type="button"
-                            className="btn btn-outline-secondary px-2 py-0"
+                            className="fn-cart-qty-btn"
                             onClick={() => updateQuantity(item.id, item.cantidad + 1)}
                             disabled={isMax}
-                            title={isMax ? `Stock máximo alcanzado (${itemStock} unid.)` : 'Aumentar cantidad'}
+                            aria-label="Aumentar cantidad"
                           >
                             +
                           </button>
                         </div>
+
+                        {/* Enlace QUITAR */}
                         <button
                           type="button"
-                          className="btn btn-link text-danger p-0 ms-auto small text-decoration-none"
+                          className="fn-cart-item-remove"
                           onClick={() => removeItem(item.id)}
-                          title="Eliminar de la bolsa"
                         >
-                          <i className="bi bi-trash3"></i>
+                          QUITAR
                         </button>
                       </div>
                     </div>
+                  );
+                })}
+              </div>
+
+              {/* Fila de Subtotal */}
+              <div className="fn-cart-subtotal-row">
+                <span className="fn-cart-subtotal-label">SUBTOTAL</span>
+                <span className="fn-cart-subtotal-val">{formatPrice(totals.subtotal)} CLP</span>
+              </div>
+
+              {/* 4. Tarjetas de Modalidad de Entrega (3 columnas) */}
+              <div className="fn-cart-modes-grid">
+                {/* Opción 1: Envío o retiro hoy */}
+                <button
+                  type="button"
+                  className={`fn-cart-mode-card ${activeMode === 'hoy' ? 'active' : ''}`}
+                  onClick={() => setActiveMode('hoy')}
+                >
+                  <div className="fn-cart-mode-icon">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                      <path d="M2 12h20"></path>
+                    </svg>
                   </div>
-                );
-              })}
-            </div>
+                  <span className="fn-cart-mode-text">
+                    Envío o retiro hoy
+                  </span>
+                </button>
+
+                {/* Opción 2: Programar envío próximos días */}
+                <button
+                  type="button"
+                  className={`fn-cart-mode-card ${activeMode === 'despacho_programado' ? 'active' : ''}`}
+                  onClick={() => setActiveMode('despacho_programado')}
+                >
+                  <div className="fn-cart-mode-icon">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="3" width="15" height="13"></rect>
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                  </div>
+                  <span className="fn-cart-mode-text">
+                    Programar envío próximos días
+                  </span>
+                </button>
+
+                {/* Opción 3: Programar retiro próximos días */}
+                <button
+                  type="button"
+                  className={`fn-cart-mode-card ${activeMode === 'retiro_programado' ? 'active' : ''}`}
+                  onClick={() => setActiveMode('retiro_programado')}
+                >
+                  <div className="fn-cart-mode-icon">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                  </div>
+                  <span className="fn-cart-mode-text">
+                    Programar retiro próximos días
+                  </span>
+                </button>
+              </div>
+
+              {/* 5. Área dinámica según la modalidad seleccionada */}
+              <div className="fn-cart-mode-details">
+                {/* Estado 1: Envío o retiro hoy (Imagen 3) */}
+                {activeMode === 'hoy' && (
+                  <p className="fn-cart-today-text">
+                    Haz tu pedido antes de las 19:00 y lo recibes hoy.
+                  </p>
+                )}
+
+                {/* Estado 2: Programar envío próximos días (Imagen 4) */}
+                {activeMode === 'despacho_programado' && (
+                  <div>
+                    <label className="form-label small fw-bold mb-1 text-dark">
+                      Indica tu comuna de entrega:
+                    </label>
+                    <div className="position-relative">
+                      <div className="fn-cart-search-comuna">
+                        <input
+                          type="text"
+                          className="fn-cart-search-input"
+                          placeholder="Por favor, ingresa tu comuna"
+                          value={comunaInput}
+                          onChange={handleComunaChange}
+                          onFocus={() => {
+                            if (comunaInput.trim().length > 0) setMostrarSugerencias(true);
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="fn-cart-search-btn"
+                          aria-label="Buscar comuna"
+                          onClick={() => setMostrarSugerencias(!mostrarSugerencias)}
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          </svg>
+                        </button>
+                      </div>
+
+                      {mostrarSugerencias && comunaSugerida.length > 0 && (
+                        <div className="list-group position-absolute w-100 shadow-sm" style={{ zIndex: 20, top: '100%', marginTop: '2px' }}>
+                          {comunaSugerida.map((c) => (
+                            <button
+                              key={c}
+                              type="button"
+                              className="list-group-item list-group-item-action py-2 small text-start"
+                              onClick={() => handleSelectComuna(c)}
+                            >
+                              {c}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="row g-2 mt-2">
+                      <div className="col-6">
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Fecha de entrega:</label>
+                        <input
+                          type="date"
+                          className="form-control form-control-sm"
+                          value={selectedDate}
+                          min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Bloque horario:</label>
+                        <select
+                          className="form-select form-select-sm"
+                          value={selectedTime}
+                          onChange={(e) => setSelectedTime(e.target.value)}
+                        >
+                          <option value="manana">Mañana (10:00 - 13:00)</option>
+                          <option value="tarde">Tarde (14:00 - 18:00)</option>
+                          <option value="atardecer">Atardecer (18:00 - 20:30)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Estado 3: Programar retiro próximos días (Imagen 5) */}
+                {activeMode === 'retiro_programado' && (
+                  <div>
+                    <div className="mb-2">
+                      <strong className="d-block text-dark" style={{ fontSize: '0.86rem' }}>
+                        Encuentra el lugar de retiro más cercano
+                      </strong>
+                      <span className="text-muted" style={{ fontSize: '0.78rem' }}>
+                        Por favor, selecciona un lugar de retiro, fecha y hora
+                      </span>
+                    </div>
+
+                    <div className="fn-cart-branch-list mb-3">
+                      {SUCURSALES_RETIRO.map((branch) => {
+                        const isSelected = selectedBranch === branch.nombre;
+                        return (
+                          <div
+                            key={branch.id}
+                            className={`fn-cart-branch-item ${isSelected ? 'selected' : ''}`}
+                            onClick={() => setSelectedBranch(branch.nombre)}
+                          >
+                            <input
+                              type="radio"
+                              name="sucursalRetiro"
+                              id={`sucursal-${branch.id}`}
+                              checked={isSelected}
+                              onChange={() => setSelectedBranch(branch.nombre)}
+                              className="mt-1"
+                            />
+                            <div className="flex-grow-1">
+                              <label htmlFor={`sucursal-${branch.id}`} className="fn-cart-branch-title d-block mb-0 cursor-pointer">
+                                {branch.nombre}
+                              </label>
+                              <div className="fn-cart-branch-address">
+                                {branch.direccion}
+                              </div>
+                              <div className="fn-cart-branch-address">
+                                {branch.comuna}
+                              </div>
+                              <button
+                                type="button"
+                                className="fn-cart-branch-info-link border-0 bg-transparent p-0 text-decoration-underline"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setInfoBranchVisible(infoBranchVisible === branch.id ? null : branch.id);
+                                }}
+                              >
+                                Más información
+                              </button>
+                              {infoBranchVisible === branch.id && (
+                                <div className="small mt-1 p-2 rounded bg-light border" style={{ fontSize: '0.72rem' }}>
+                                  {branch.info}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="row g-2">
+                      <div className="col-6">
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Fecha de retiro:</label>
+                        <input
+                          type="date"
+                          className="form-control form-control-sm"
+                          value={selectedDate}
+                          min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Horario:</label>
+                        <select
+                          className="form-select form-select-sm"
+                          value={selectedTime}
+                          onChange={(e) => setSelectedTime(e.target.value)}
+                        >
+                          <option value="manana">Mañana (10:00 - 13:00)</option>
+                          <option value="tarde">Tarde (14:00 - 18:00)</option>
+                          <option value="atardecer">Atardecer (18:00 - 20:30)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
 
-        {/* Footer del Drawer con resumen y checkout */}
+        {/* 6. Footer con Botón Continuar (Imágenes 3 y 4) */}
         {cart.length > 0 && (
-          <div className="drawer-footer p-3 border-top" style={{ backgroundColor: '#FFFFFF', borderColor: 'var(--color-borde)' }}>
-            {/* Agendamiento activo resumen */}
-            {scheduling?.fecha ? (
-              <div className="p-2 mb-2 rounded small d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
-                <span style={{ fontSize: '0.74rem', color: 'var(--color-espresso)', fontWeight: 600 }}>
-                  <i className="bi bi-calendar-check me-1" style={{ color: 'var(--color-caramelo)' }}></i>
-                  {scheduling.modalidad === 'retiro' ? 'Retiro' : 'Entrega'}: {scheduling.fecha} ({scheduling.franjaHoraria})
-                </span>
-                <button type="button" className="btn btn-link p-0 small text-decoration-none" style={{ color: 'var(--color-caramelo)', fontSize: '0.72rem' }} onClick={handleViewCart}>
-                  Cambiar
-                </button>
-              </div>
-            ) : (
-              <div className="p-2 mb-2 rounded small d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
-                <span style={{ fontSize: '0.74rem', color: 'var(--color-espresso)' }}>
-                  <i className="bi bi-clock-history me-1" style={{ color: 'var(--color-caramelo)' }}></i>
-                  ¿Deseas programar tu entrega?
-                </span>
-                <button type="button" className="btn btn-link p-0 small text-decoration-none fw-semibold" style={{ color: 'var(--color-caramelo)', fontSize: '0.72rem' }} onClick={handleViewCart}>
-                  Agendar
-                </button>
-              </div>
-            )}
-            {/* Cupón rápido */}
-            {totals.cupon ? (
-              <div className="d-flex justify-content-between align-items-center p-2 mb-2 rounded small" style={{ backgroundColor: '#F5EFEB', color: 'var(--color-espresso)', border: '1px solid var(--color-borde)' }}>
-                <span>Cupón activo: <strong>{totals.cupon.codigo}</strong> (-{formatPrice(totals.descuento)})</span>
-                <button type="button" className="btn-close btn-close-sm" onClick={removeCoupon} aria-label="Quitar cupón"></button>
-              </div>
-            ) : (
-              <form onSubmit={handleApplyCoupon} className="d-flex gap-2 mb-2">
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  placeholder="Cupón (ej: FELICES50)"
-                  value={inputCoupon}
-                  onChange={(e) => setInputCoupon(e.target.value)}
-                  style={{ borderColor: 'var(--color-borde)' }}
-                />
-                <button
-                  type="submit"
-                  className="btn btn-sm text-nowrap"
-                  style={{ backgroundColor: 'var(--color-caramelo)', color: '#FFFFFF', fontWeight: 600 }}
-                >
-                  Aplicar
-                </button>
-              </form>
-            )}
-            {couponError && <div className="text-danger small mb-2">{couponError}</div>}
-
-            <div className="d-flex justify-content-between small text-muted mb-1">
-              <span>Subtotal:</span>
-              <span>{formatPrice(totals.subtotal)}</span>
-            </div>
-            {totals.descuento > 0 && (
-              <div className="d-flex justify-content-between small text-danger fw-bold mb-1">
-                <span>Descuento ({totals.cupon?.codigo}):</span>
-                <span>-{formatPrice(totals.descuento)}</span>
-              </div>
-            )}
-            <div className="d-flex justify-content-between fs-5 fw-bold mb-3" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-texto)' }}>
-              <span>Total a pagar:</span>
-              <span style={{ color: 'var(--color-caramelo)' }}>{formatPrice(totals.total)}</span>
-            </div>
-
-            <div className="d-flex flex-column gap-2">
-              <button
-                type="button"
-                className="boton boton-primario w-100"
-                onClick={handleCheckout}
-              >
-                Comprar / Ir a Pagar
-              </button>
-              <button
-                type="button"
-                className="boton boton-secundario w-100"
-                onClick={handleViewCart}
-              >
-                Ver bolsa completa
-              </button>
-            </div>
+          <div className="fn-cart-footer">
+            <button
+              type="button"
+              className="fn-cart-btn-continue"
+              onClick={handleContinue}
+            >
+              Continuar
+            </button>
+            <p className="fn-cart-footer-note">
+              Antes de los costos de envío.
+            </p>
           </div>
         )}
       </aside>
