@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { productService } from '../services/db';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/store/ProductCard';
 
 export default function Offers() {
   const [offerProducts, setOfferProducts] = useState([]);
+  const [couponCopied, setCouponCopied] = useState(false);
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -13,55 +13,70 @@ export default function Offers() {
     setOfferProducts(offers);
   }, []);
 
+  const handleCopyCoupon = () => {
+    navigator.clipboard.writeText('FELICES50');
+    setCouponCopied(true);
+    setTimeout(() => setCouponCopied(false), 2200);
+  };
+
   return (
-    <div className="container py-4">
-      <nav aria-label="breadcrumb" className="mb-4">
-        <ol className="breadcrumb small">
-          <li className="breadcrumb-item"><Link to="/">Inicio</Link></li>
-          <li className="breadcrumb-item active" aria-current="page">Ofertas Especiales</li>
-        </ol>
-      </nav>
-
-      {/* Banner promocional con colores oficiales */}
-      <div
-        className="p-5 mb-5 rounded-4 position-relative overflow-hidden shadow-sm"
-        style={{
-          background: 'linear-gradient(135deg, #8B4513 0%, #6B3410 60%, #FFC0CB 100%)',
-          color: '#FFFFFF'
-        }}
-      >
-        <div className="position-relative z-1" style={{ maxWidth: '650px' }}>
-          <span className="badge px-3 py-2 text-uppercase fw-bold mb-3" style={{ backgroundColor: 'var(--color-rosa)', color: 'var(--color-chocolate)' }}>
-            Descuentos Imperdibles
-          </span>
-          <h1 className="display-5 font-pacifico mb-3 text-white">
-            Aprovecha Nuestras Ofertas del Mes
-          </h1>
-          <p className="lead mb-4" style={{ color: '#FFF5E1' }}>
-            Disfruta de tus tortas y especialidades favoritas con precios rebajados por tiempo limitado. ¡No olvides ingresar el cupón <strong>FELICES50</strong> para 50% de descuento en tu compra si tienes 50+ años!
-          </p>
-        </div>
-      </div>
-
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="font-pacifico mb-0" style={{ color: 'var(--color-chocolate)' }}>
-          Productos en Promoción ({offerProducts.length})
-        </h2>
-      </div>
-
-      {offerProducts.length === 0 ? (
-        <div className="card text-center p-5 border-0 shadow-sm">
-          No hay productos en oferta activa en este momento. Vuelve a consultar pronto.
-        </div>
-      ) : (
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-          {offerProducts.map((prod) => (
-            <div key={prod.id} className="col">
-              <ProductCard product={prod} onAddToCart={addItem} />
+    <div className="catalogo-page" style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+      {/* 1. Hero Banner Promocional Full Width / Borde a Borde como en el Inicio */}
+      <section className="ofertas-hero-banner">
+        <div className="contenedor">
+          <div className="ofertas-hero-contenido">
+            <span className="ofertas-hero-eyebrow">
+              Edición Limitada • Promociones del Mes
+            </span>
+            <h1 className="ofertas-hero-titulo">
+              Ofertas Especiales del Maestro Pastelero
+            </h1>
+            <p className="ofertas-hero-desc">
+              Disfruta de tus tortas y dulces favoritos con precios rebajados por tiempo limitado. Recuerda que mayores de 50 años acceden a un <strong>50% de descuento</strong> con el cupón oficial.
+            </p>
+            <div className="d-flex align-items-center gap-3 flex-wrap">
+              <div className="ofertas-cupon-badge">
+                <span>Cupón de Descuento:</span>
+                <span className="ofertas-cupon-codigo">FELICES50</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyCoupon}
+                className="btn btn-sm btn-outline-light"
+                style={{ borderRadius: '20px', padding: '0.45rem 1rem', fontSize: '0.85rem', fontWeight: 600 }}
+              >
+                {couponCopied ? '¡Cupón Copiado!' : 'Copiar Cupón'}
+              </button>
             </div>
-          ))}
+          </div>
         </div>
-      )}
+      </section>
+
+      {/* 2. Listado de Productos en Oferta con Grilla Continua */}
+      <div className="contenedor" style={{ paddingTop: '3.5rem' }}>
+        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <div>
+            <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+              Selección con Descuento
+            </span>
+            <h2 className="seccion-baker-titulo" style={{ fontSize: '2rem', textAlign: 'left', margin: 0 }}>
+              Productos en Promoción ({offerProducts.length})
+            </h2>
+          </div>
+        </div>
+
+        {offerProducts.length === 0 ? (
+          <div className="card text-center p-5 border-0 shadow-sm rounded-3" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)' }}>
+            <p className="text-muted mb-0">No hay productos en oferta activa en este momento. Vuelve a consultar pronto.</p>
+          </div>
+        ) : (
+          <div className="grilla-productos">
+            {offerProducts.map((prod) => (
+              <ProductCard key={prod.id} product={prod} onAddToCart={addItem} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

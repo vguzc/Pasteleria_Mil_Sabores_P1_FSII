@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AlertMessage from '../components/common/AlertMessage';
+import { validarTelefonoChileno } from '../services/chileData';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [telefonoTocado, setTelefonoTocado] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,178 +22,333 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.nombre.trim() || !formData.correo.trim() || !formData.mensaje.trim()) {
-      setError('Por favor completa todos los campos requeridos.');
+    setError('');
+
+    if (!formData.nombre.trim()) {
+      setError('Por favor ingresa tu nombre completo.');
       return;
     }
-    setError('');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.correo.trim() || !emailRegex.test(formData.correo.trim())) {
+      setError('Por favor ingresa un correo electrónico válido (ej: usuario@ejemplo.cl).');
+      return;
+    }
+
+    setTelefonoTocado(true);
+    if (!formData.telefono.trim()) {
+      setError('Por favor ingresa un número de teléfono o WhatsApp de contacto.');
+      return;
+    }
+
+    if (!validarTelefonoChileno(formData.telefono)) {
+      setError('Por favor ingresa un número de teléfono válido (ej: +56 9 8765 4321 o 987654321, 9 dígitos locales).');
+      return;
+    }
+
+    if (!formData.mensaje.trim()) {
+      setError('Por favor ingresa el mensaje o detalle de tu consulta.');
+      return;
+    }
+
     setSubmitted(true);
     setFormData({ nombre: '', correo: '', telefono: '', asunto: 'consulta-general', mensaje: '' });
+    setTelefonoTocado(false);
   };
 
   return (
-    <div className="container py-4">
-      <nav aria-label="breadcrumb" className="mb-4">
-        <ol className="breadcrumb small">
-          <li className="breadcrumb-item"><Link to="/">Inicio</Link></li>
-          <li className="breadcrumb-item active" aria-current="page">Contacto</li>
-        </ol>
-      </nav>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh' }}>
+      {/* 1. Hero Banner de Contacto Full Width con la Fotografía Oficial de la Cafetería */}
+      <section className="contacto-hero-banner">
+        <div className="contenedor">
+          <div className="contacto-hero-contenido">
+            <span className="contacto-hero-eyebrow">
+              ESTAMOS PARA TI
+            </span>
+            <h1 className="contacto-hero-titulo">
+              Conversemos con un Café
+            </h1>
+            <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
+            <p className="contacto-hero-desc">
+              ¿Tienes alguna pregunta, pedido especial o simplemente quieres saludarnos? Nos encantará saber de ti. Escríbenos a través del formulario o visítanos en nuestro taller y cafetería.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      <div className="text-center mb-5">
-        <span className="badge bg-primary px-3 py-2 text-uppercase mb-2">Estamos para ayudarte</span>
-        <h1 className="fw-bold font-serif display-4 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-          Contáctanos
-        </h1>
-        <p className="text-muted max-w-600 mx-auto">
-          ¿Tienes dudas sobre eventos especiales, tortas personalizadas o el estado de tu despacho? Escríbenos y te responderemos a la brevedad.
-        </p>
-      </div>
+      {/* 2. Sección de Contacto: Franja Entera Borde a Borde */}
+      <section className="seccion-contacto-franja-entera">
+        <div className="contenedor">
+          <div className="franja-contacto-grid">
+            {/* Columna Izquierda: Escríbenos */}
+            <div className="franja-contacto-col-escribenos">
+              <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.35rem' }}>
+                Atención al Cliente
+              </span>
+              <h2 className="franja-contacto-titulo">
+                Escríbenos
+              </h2>
+              <div className="adorno-baker" style={{ margin: '0.6rem 0 1.25rem 0' }} />
+              <p className="franja-contacto-bajada">
+                ¿Tienes alguna consulta especial, pedido para eventos o dudas sobre tu despacho? Déjanos tu mensaje y nuestro equipo pastelero te responderá a la brevedad.
+              </p>
 
-      <div className="row g-5">
-        {/* Formulario */}
-        <div className="col-lg-7">
-          <div className="card shadow-sm border-0 p-4 rounded-4">
-            <h4 className="fw-bold font-serif mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>
-              Envíanos un Mensaje
-            </h4>
+              {submitted && (
+                <AlertMessage
+                  message="¡Tu mensaje ha sido enviado con éxito! Nuestro equipo pastelero te contactará a la brevedad."
+                  type="success"
+                  onClose={() => setSubmitted(false)}
+                />
+              )}
+              {error && <AlertMessage message={error} type="danger" onClose={() => setError('')} />}
 
-            {submitted && (
-              <AlertMessage
-                message="¡Tu mensaje ha sido enviado con éxito! Nuestro equipo de atención te contactará a la brevedad."
-                type="success"
-                onClose={() => setSubmitted(false)}
-              />
-            )}
-            {error && <AlertMessage message={error} type="danger" onClose={() => setError('')} />}
-
-            <form onSubmit={handleSubmit}>
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <label className="form-label small fw-bold">Nombre Completo *</label>
+              <form onSubmit={handleSubmit} className="formulario-contacto-franja">
+                <div className="mb-3">
+                  <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                    Tu nombre
+                  </label>
                   <input
                     type="text"
                     name="nombre"
                     className="form-control"
-                    placeholder="Ej: Laura Morales"
+                    placeholder="¿Cómo te llamas?"
                     value={formData.nombre}
                     onChange={handleChange}
                     required
                   />
                 </div>
 
-                <div className="col-md-6">
-                  <label className="form-label small fw-bold">Correo Electrónico *</label>
+                <div className="mb-3">
+                  <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                    Correo electrónico
+                  </label>
                   <input
                     type="email"
                     name="correo"
                     className="form-control"
-                    placeholder="laura@correo.cl"
+                    placeholder="tu@correo.cl"
                     value={formData.correo}
                     onChange={handleChange}
                     required
                   />
                 </div>
 
-                <div className="col-md-6">
-                  <label className="form-label small fw-bold">Teléfono / WhatsApp</label>
+                <div className="mb-3">
+                  <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                    Teléfono / WhatsApp
+                  </label>
                   <input
                     type="tel"
                     name="telefono"
-                    className="form-control"
+                    className={`form-control ${telefonoTocado ? (validarTelefonoChileno(formData.telefono) ? 'is-valid' : 'is-invalid') : ''}`}
                     placeholder="+56 9 8765 4321"
                     value={formData.telefono}
                     onChange={handleChange}
+                    onBlur={() => setTelefonoTocado(true)}
+                    required
                   />
+                  {telefonoTocado && formData.telefono && !validarTelefonoChileno(formData.telefono) && (
+                    <small className="text-danger d-block mt-1" style={{ fontSize: '0.74rem' }}>
+                      Número no válido. Debe tener 9 dígitos locales (ej: +56 9 8765 4321 o 987654321).
+                    </small>
+                  )}
                 </div>
 
-                <div className="col-md-6">
-                  <label className="form-label small fw-bold">Motivo de Contacto</label>
+                <div className="mb-3">
+                  <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                    ¿En qué podemos ayudarte?
+                  </label>
                   <select
                     name="asunto"
                     className="form-select"
                     value={formData.asunto}
                     onChange={handleChange}
                   >
-                    <option value="consulta-general">Consulta General</option>
+                    <option value="consulta-general">Selecciona un motivo</option>
                     <option value="torta-personalizada">Cotización Torta de Bodas/Eventos</option>
                     <option value="estado-despacho">Estado de Despacho</option>
                     <option value="convenio-empresa">Convenio Empresas o Duoc UC</option>
+                    <option value="otro">Otro requerimiento</option>
                   </select>
                 </div>
 
-                <div className="col-12">
-                  <label className="form-label small fw-bold">Mensaje *</label>
+                <div className="mb-4">
+                  <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)' }}>
+                    Tu mensaje
+                  </label>
                   <textarea
                     name="mensaje"
                     className="form-control"
                     rows="4"
-                    placeholder="Detalla tu consulta o requerimiento especial..."
+                    placeholder="Cuéntanos qué necesitas..."
                     value={formData.mensaje}
                     onChange={handleChange}
                     required
                   ></textarea>
                 </div>
 
-                <div className="col-12 mt-4">
-                  <button type="submit" className="btn btn-primary px-4 py-2 fw-bold shadow-sm">
-                    <i className="bi bi-send-fill me-2"></i>Enviar Consulta
-                  </button>
+                <button type="submit" className="boton-enviar-contacto">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                  <span>Enviar mensaje</span>
+                </button>
+              </form>
+            </div>
+
+            {/* Columna Derecha: Ven a visitarnos */}
+            <div className="franja-contacto-col-visitanos">
+              <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.35rem' }}>
+                Punto de Encuentro
+              </span>
+              <h2 className="franja-contacto-titulo">
+                Ven a visitarnos
+              </h2>
+              <div className="adorno-baker" style={{ margin: '0.6rem 0 1.25rem 0' }} />
+              <p className="franja-contacto-bajada">
+                Te esperamos en nuestro salón y cafetería en el corazón de Providencia para compartir un momento dulce y disfrutar de café de especialidad.
+              </p>
+
+              {/* Nuestra cafetería */}
+              <div className="contacto-canal-item mb-4">
+                <div className="contacto-canal-icono">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="contacto-canal-titulo">
+                    Nuestra cafetería
+                  </h4>
+                  <p className="contacto-canal-texto">
+                    Av. Providencia 1200, Santiago
+                  </p>
                 </div>
               </div>
-            </form>
+
+              {/* Horarios */}
+              <div className="contacto-canal-item mb-4">
+                <div className="contacto-canal-icono">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="contacto-canal-titulo">
+                    Horarios de Atención
+                  </h4>
+                  <p className="contacto-canal-texto" style={{ lineHeight: 1.5 }}>
+                    Lunes a Sábado: 08:30 – 20:30<br />
+                    Domingos y Festivos: 09:30 – 18:00
+                  </p>
+                </div>
+              </div>
+
+              {/* Hablemos por WhatsApp */}
+              <div className="contacto-canal-item mb-4">
+                <div className="contacto-canal-icono">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                  </svg>
+                </div>
+                <div className="w-100">
+                  <h4 className="contacto-canal-titulo">
+                    Hablemos por WhatsApp
+                  </h4>
+                  <p className="contacto-canal-texto mb-3">
+                    Atención personalizada y respuestas rápidas
+                  </p>
+                  <a
+                    href="https://wa.me/56991234567?text=Hola%20Pastelería%20Mil%20Sabores,%20quisiera%20hacer%20una%20consulta"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-whatsapp-visita"
+                  >
+                    <span>Escribir por WhatsApp</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Guía de llegada y accesibilidad del local */}
+              <div className="tarjeta-guia-visita mt-auto">
+                <div className="tarjeta-guia-cabecera">
+                  <span className="tarjeta-guia-badge">Datos útiles</span>
+                  <h4 className="tarjeta-guia-titulo">Cómo llegar & Servicios</h4>
+                </div>
+
+                <div className="tarjeta-guia-grilla">
+                  {/* Metro */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="4" y="3" width="16" height="15" rx="3"></rect>
+                        <path d="M4 11h16"></path>
+                        <path d="M8 8v.01"></path>
+                        <path d="M16 8v.01"></path>
+                        <path d="M8 18l-2 3"></path>
+                        <path d="M16 18l2 3"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Metro Manuel Montt (L1)</strong>
+                      <span>A 3 cuadras caminando por Av. Providencia</span>
+                    </div>
+                  </div>
+
+                  {/* Estacionamiento */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                        <path d="M9 17V7h4a3 3 0 0 1 0 6H9"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Estacionamiento</strong>
+                      <span>Espacios para clientes por Providencia y calles aledañas</span>
+                    </div>
+                  </div>
+
+                  {/* Terraza Pet-Friendly */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="4" r="2"></circle>
+                        <circle cx="18" cy="8" r="2"></circle>
+                        <circle cx="20" cy="16" r="2"></circle>
+                        <path d="M9 10a5 5 0 0 1 5 5v3.5a2.5 2.5 0 0 1-5 0V15a3 3 0 0 0-3-3H4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Terraza Pet-Friendly</strong>
+                      <span>Mascotas bienvenidas con platitos de agua fresca</span>
+                    </div>
+                  </div>
+
+                  {/* Bicicletero y Rampa */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                        <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5L9 9l4-3 3 4h4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Bicicletero & Rampa</strong>
+                      <span>Acceso universal continuo y zona segura para bicicletas</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Canales y Horarios */}
-        <div className="col-lg-5">
-          <div className="card bg-light border-0 p-4 rounded-4 h-100">
-            <h4 className="fw-bold font-serif mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-              Atención Presencial y Canales
-            </h4>
-
-            <div className="d-flex gap-3 mb-4">
-              <div className="bg-primary text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '48px', height: '48px' }}>
-                <i className="bi bi-geo-alt-fill fs-5"></i>
-              </div>
-              <div>
-                <strong className="d-block">Taller y Casa Matriz</strong>
-                <span className="text-muted small">Av. Providencia 1200, Santiago de Chile</span>
-              </div>
-            </div>
-
-            <div className="d-flex gap-3 mb-4">
-              <div className="bg-success text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '48px', height: '48px' }}>
-                <i className="bi bi-telephone-fill fs-5"></i>
-              </div>
-              <div>
-                <strong className="d-block">Teléfono Fijo & WhatsApp</strong>
-                <span className="text-muted small">+56 2 2345 6789 / +56 9 9123 4567</span>
-              </div>
-            </div>
-
-            <div className="d-flex gap-3 mb-4">
-              <div className="bg-info text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '48px', height: '48px' }}>
-                <i className="bi bi-envelope-fill fs-5"></i>
-              </div>
-              <div>
-                <strong className="d-block">Consultas por Correo</strong>
-                <span className="text-muted small">contacto@milsabores.cl</span>
-              </div>
-            </div>
-
-            <div className="d-flex gap-3">
-              <div className="bg-warning text-dark rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '48px', height: '48px' }}>
-                <i className="bi bi-clock-fill fs-5"></i>
-              </div>
-              <div>
-                <strong className="d-block">Horario de Horno & Retiro</strong>
-                <span className="text-muted small">Lunes a Sábado: 08:30 a 20:30 hrs<br />Domingos y Festivos: 09:30 a 14:30 hrs</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

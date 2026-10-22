@@ -89,3 +89,33 @@ export function validarRutChileno(rutCompleto) {
 
   return dv === dvStr;
 }
+
+export function validarTelefonoChileno(tel) {
+  if (!tel || typeof tel !== 'string') return false;
+  const trimmed = tel.trim();
+  if (!trimmed) return false;
+
+  // Solo permitir caracteres válidos en números telefónicos (+, dígitos, espacios, guiones, paréntesis)
+  if (!/^[\d\s\-\(\)\+]+$/.test(trimmed)) return false;
+
+  const cleaned = trimmed.replace(/[\s\-\(\)\.\+]/g, '');
+  if (!/^\d+$/.test(cleaned)) return false;
+
+  // Si comienza con código de país 56: ej +56 9 8765 4321 -> 56987654321 (11 dígitos totales, 9 locales)
+  if (cleaned.startsWith('56')) {
+    const local = cleaned.slice(2);
+    return local.length === 9 && /^[2-9]\d{8}$/.test(local);
+  }
+
+  // 9 dígitos comenzando con 2-9 (móvil 9 dígitos o fijo metropolitano/regional 9 dígitos)
+  if (cleaned.length === 9 && /^[2-9]\d{8}$/.test(cleaned)) {
+    return true;
+  }
+
+  // Fijo tradicional de 8 dígitos
+  if (cleaned.length === 8 && /^\d{8}$/.test(cleaned)) {
+    return true;
+  }
+
+  return false;
+}

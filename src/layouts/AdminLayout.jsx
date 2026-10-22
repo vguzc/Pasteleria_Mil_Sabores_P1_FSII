@@ -22,30 +22,64 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="d-flex bg-light min-vh-100">
+    <div className="d-flex min-vh-100" style={{ backgroundColor: 'var(--color-fondo)' }}>
       {/* Sidebar fijo */}
       <AdminSidebar />
 
       {/* Contenedor Principal */}
       <div className="flex-grow-1 d-flex flex-column" style={{ minWidth: 0 }}>
         {/* Barra superior de administración */}
-        <header className="bg-white border-bottom py-2 px-4 d-flex justify-content-between align-items-center shadow-sm">
+        <header
+          className="py-3 px-4 d-flex justify-content-between align-items-center shadow-sm"
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderBottom: '1px solid var(--color-borde)'
+          }}
+        >
           <div className="d-flex align-items-center gap-2">
-            <span className="text-muted small">Panel de Gestión /</span>
-            <span className="fw-semibold text-dark text-capitalize">
-              {location.pathname.replace('/admin', '').replace('/', '') || 'Dashboard'}
+            <span className="small text-muted">Panel de Gestión /</span>
+            <span className="fw-bold text-capitalize" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
+              {location.pathname.replace('/admin', '').replace('/', '') || 'Dashboard General'}
             </span>
           </div>
 
           <div className="d-flex align-items-center gap-3">
-            <Link to="/" className="btn btn-outline-primary btn-sm">
-              <i className="bi bi-box-arrow-up-right me-1"></i>Ir a la Tienda
+            <Link
+              to="/"
+              className="btn btn-sm"
+              style={{
+                backgroundColor: '#FAF4EC',
+                color: 'var(--color-espresso)',
+                border: '1px solid var(--color-borde)',
+                fontWeight: 600,
+                fontSize: '0.82rem'
+              }}
+            >
+              <i className="bi bi-box-arrow-up-right me-1 text-muted"></i>Ir a la Tienda
             </Link>
-            <div className="d-flex align-items-center gap-2 border-start ps-3">
-              <i className="bi bi-person-circle fs-4 text-primary"></i>
-              <div className="small">
-                <span className="d-block fw-bold lh-1">{currentUser.nombre}</span>
-                <span className="badge bg-warning text-dark text-uppercase" style={{ fontSize: '0.65rem' }}>
+            <div className="d-flex align-items-center gap-2 border-start ps-3" style={{ borderColor: 'var(--color-borde)' }}>
+              <div
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#F3ECE3',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--color-espresso)',
+                  fontWeight: 700,
+                  fontSize: '0.85rem'
+                }}
+              >
+                {currentUser.nombre.charAt(0)}
+              </div>
+              <div className="small lh-1">
+                <span className="d-block fw-bold" style={{ color: 'var(--color-espresso)' }}>{currentUser.nombre}</span>
+                <span
+                  className="badge mt-1 text-uppercase"
+                  style={{ backgroundColor: 'var(--color-caramelo)', color: '#FFFFFF', fontSize: '0.62rem' }}
+                >
                   {currentUser.rol}
                 </span>
               </div>
@@ -54,7 +88,7 @@ export default function AdminLayout() {
         </header>
 
         {/* Contenido dinámico */}
-        <main className="p-4 flex-grow-1 overflow-auto">
+        <main className="p-4 flex-grow-1 overflow-auto" style={{ backgroundColor: 'var(--color-fondo)' }}>
           <Outlet />
         </main>
       </div>

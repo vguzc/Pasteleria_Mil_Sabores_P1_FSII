@@ -10,7 +10,43 @@ const STORAGE_KEYS = {
   USERS: 'mil_sabores_react_usuarios',
   ORDERS: 'mil_sabores_react_ordenes',
   CART: 'mil_sabores_react_carrito',
-  ACTIVE_USER: 'mil_sabores_react_sesion'
+  ACTIVE_USER: 'mil_sabores_react_sesion',
+  SCHEDULING: 'mil_sabores_react_agendamiento'
+};
+
+export const SUCURSALES_RETIRO = [
+  {
+    id: 'chicureo',
+    nombre: 'Mil Sabores Chicureo',
+    direccion: 'P.º Colina Sur 14600',
+    comuna: 'Colina, 9340000',
+    info: 'Lunes a Domingo de 10:00 a 20:00 hrs. Retiro en mesón de entrega con tu orden.'
+  },
+  {
+    id: 'providencia',
+    nombre: 'Taller Central Manuel Montt',
+    direccion: 'Av. Providencia 1200',
+    comuna: 'Providencia, 7500000',
+    info: 'Lunes a Domingo de 10:00 a 20:30 hrs. A pasos de la estación Metro Manuel Montt.'
+  },
+  {
+    id: 'lascondes',
+    nombre: 'Sucursal Las Condes',
+    direccion: 'Av. Las Condes 9500',
+    comuna: 'Las Condes, 7550000',
+    info: 'Lunes a Domingo de 10:30 a 19:30 hrs. Estacionamiento privado disponible.'
+  }
+];
+
+export const DEFAULT_SCHEDULING = {
+  modalidad: 'despacho', // 'despacho' | 'retiro'
+  tipoModo: 'hoy', // 'hoy' | 'despacho_programado' | 'retiro_programado'
+  fecha: '',             // YYYY-MM-DD
+  franjaHoraria: 'tarde', // 'manana' | 'tarde' | 'atardecer'
+  dedicatoria: '',
+  comuna: 'Providencia',
+  sucursalRetiro: 'Mil Sabores Chicureo',
+  direccionRetiro: 'P.º Colina Sur 14600, Colina, Santiago'
 };
 
 // -------------------------------------------------------------
@@ -229,11 +265,11 @@ export const INITIAL_PRODUCTS = [
     destacado: false,
     enOferta: false
   },
-  // 9. Especial Fiestas Patrias
+  // 9. Pastelería Tradicional & Salada
   {
     id: 'PT003',
     nombre: 'Empanada de Pino Tradicional',
-    categoria: 'Especial 18',
+    categoria: 'Pastelería Tradicional',
     precio: 3290,
     precioAnterior: 3790,
     stock: 30,
@@ -245,7 +281,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'PT004',
     nombre: 'Empanada de Queso de Horno',
-    categoria: 'Especial 18',
+    categoria: 'Pastelería Tradicional',
     precio: 2990,
     precioAnterior: null,
     stock: 25,
@@ -257,11 +293,11 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'SG003',
     nombre: 'Empanada de Pino Sin Gluten',
-    categoria: 'Especial 18',
+    categoria: 'Productos Sin Gluten',
     precio: 3690,
     precioAnterior: 4190,
     stock: 20,
-    descripcion: 'Edición especial Fiestas Patrias libre de gluten con tradicional pino de vacuno y aceituna.',
+    descripcion: 'Edición artesanal libre de gluten con tradicional pino de vacuno y aceituna.',
     imagen: '/img/empanada-sin-gluten.png',
     destacado: true,
     enOferta: true
@@ -276,8 +312,7 @@ export const INITIAL_CATEGORIES = [
   { id: 'cat-5', nombre: 'Pastelería Tradicional', descripcion: 'Chilenitos, empolvados, alfajores y strudel de receta centenaria', imagen: '/img/alfajores-hojarasca.png' },
   { id: 'cat-6', nombre: 'Productos Sin Gluten', descripcion: '100% libres de gluten con certificación y sabor inigualable', imagen: '/img/cheesecake-frutos-rojos.png' },
   { id: 'cat-7', nombre: 'Productos Veganos', descripcion: 'Sin ingredientes de origen animal, suaves y deliciosos', imagen: '/img/torta-vegana-trufa-cacao.png' },
-  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: '/img/torta-primavera.png' },
-  { id: 'cat-9', nombre: 'Especial 18', descripcion: 'Nuestras aclamadas empanadas de pino y queso para celebrar', imagen: '/img/empanada-pino.png' }
+  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: '/img/torta-primavera.png' }
 ];
 
 export const INITIAL_USERS = [
@@ -397,8 +432,7 @@ export const INITIAL_ORDERS = [
 
 export const VALID_COUPONS = {
   'FELICES50': { codigo: 'FELICES50', porcentaje: 50, nombre: 'Especial 50 Años (50% OFF)' },
-  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' },
-  'ESPECIAL18': { codigo: 'ESPECIAL18', porcentaje: 15, nombre: 'Especial Fiestas Patrias (15% OFF)' }
+  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' }
 };
 
 // -------------------------------------------------------------
@@ -432,7 +466,16 @@ function writeStorage(key, data) {
 // -------------------------------------------------------------
 export const productService = {
   getAll() {
-    return readStorage(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+    const list = readStorage(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+    return list.map(p => {
+      if (p.categoria === 'Especial 18') {
+        return {
+          ...p,
+          categoria: p.id === 'SG003' ? 'Productos Sin Gluten' : 'Pastelería Tradicional'
+        };
+      }
+      return p;
+    });
   },
 
   getById(id) {
@@ -505,7 +548,8 @@ export const productService = {
 // -------------------------------------------------------------
 export const categoryService = {
   getAll() {
-    return readStorage(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES);
+    const list = readStorage(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES);
+    return list.filter(c => c && c.nombre !== 'Especial 18' && c.id !== 'cat-9');
   },
 
   create(categoryData) {
@@ -696,24 +740,74 @@ export const cartService = {
     window.dispatchEvent(new Event('cart-updated'));
   },
 
+  getScheduling() {
+    return readStorage(STORAGE_KEYS.SCHEDULING, DEFAULT_SCHEDULING);
+  },
+
+  saveScheduling(data) {
+    const current = this.getScheduling();
+    const updated = { ...current, ...data };
+    writeStorage(STORAGE_KEYS.SCHEDULING, updated);
+    window.dispatchEvent(new Event('scheduling-updated'));
+    return updated;
+  },
+
   addItem(product, quantity = 1) {
     const cart = this.getCart();
+    const products = productService.getAll();
+    const baseId = product.baseId || (typeof product.id === 'string' ? product.id.split('-')[0] : product.id);
+    const currentProd = products.find(p => p.id === product.id || p.id === baseId) || product;
+    const stockLimit = typeof currentProd.stock === 'number' ? currentProd.stock : 99;
+
+    if (stockLimit <= 0) {
+      cart.maxReached = true;
+      cart.stockLimit = 0;
+      cart.added = 0;
+      return cart;
+    }
+
     const index = cart.findIndex(item => item.id === product.id);
+    let maxReached = false;
+    let added = 0;
 
     if (index > -1) {
-      cart[index].cantidad += quantity;
+      const currentQty = cart[index].cantidad;
+      const targetQty = currentQty + quantity;
+      if (targetQty >= stockLimit) {
+        cart[index].cantidad = stockLimit;
+        maxReached = true;
+        added = stockLimit - currentQty;
+      } else {
+        cart[index].cantidad = targetQty;
+        added = quantity;
+      }
+      cart[index].stock = stockLimit;
       cart[index].subtotal = cart[index].cantidad * cart[index].precio;
+      if (product.porcion && !cart[index].porcion) {
+        cart[index].porcion = product.porcion;
+      }
     } else {
+      const allowedQty = Math.min(quantity, stockLimit);
+      if (allowedQty >= stockLimit) {
+        maxReached = true;
+      }
+      added = allowedQty;
       cart.push({
         id: product.id,
         nombre: product.nombre,
         precio: product.precio,
-        cantidad: quantity,
-        subtotal: product.precio * quantity,
-        imagen: product.imagen
+        cantidad: allowedQty,
+        stock: stockLimit,
+        subtotal: product.precio * allowedQty,
+        imagen: product.imagen,
+        categoria: product.categoria,
+        porcion: product.porcion || '1P'
       });
     }
     this.saveCart(cart);
+    cart.maxReached = maxReached;
+    cart.stockLimit = stockLimit;
+    cart.added = added;
     return cart;
   },
 
@@ -722,10 +816,16 @@ export const cartService = {
     if (quantity <= 0) {
       cart = cart.filter(item => item.id !== productId);
     } else {
+      const products = productService.getAll();
+      const prod = products.find(p => p.id === productId);
+      const stockLimit = prod && typeof prod.stock === 'number' ? prod.stock : 99;
+      const finalQty = Math.min(stockLimit, quantity);
+
       const item = cart.find(i => i.id === productId);
       if (item) {
-        item.cantidad = quantity;
-        item.subtotal = item.precio * quantity;
+        item.stock = stockLimit;
+        item.cantidad = finalQty;
+        item.subtotal = item.precio * finalQty;
       }
     }
     this.saveCart(cart);
@@ -742,7 +842,7 @@ export const cartService = {
     this.saveCart([]);
   },
 
-  calculateTotals(cart, couponCode = null) {
+  calculateTotals(cart, couponCode = null, deliveryType = 'despacho') {
     const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
     
     let descuento = 0;
@@ -754,8 +854,25 @@ export const cartService = {
 
     const baseImponible = Math.max(0, subtotal - descuento);
     const iva = Math.round(baseImponible * 0.19);
-    // Despacho gratis si subtotal > $30.000, si no tarifa plana $3.990 (si hay items)
-    const envio = cart.length === 0 ? 0 : (subtotal >= 30000 ? 0 : 3990);
+    // Regla de envío oficial alineada con el Drawer y el Checkout:
+    // 1. Carrito vacío o retiro en pastelería = $0
+    // 2. Despacho gratis si subtotal >= $30.000 ($0)
+    // 3. Tarifa preferencial con ahorro de $2.000 (envío a $1.990) si subtotal >= $20.000
+    // 4. Tarifa estándar de $3.990 si subtotal < $20.000
+    let envio = 0;
+    let ahorroEnvio = 0;
+    if (cart.length > 0 && deliveryType !== 'retiro') {
+      if (subtotal >= 30000) {
+        envio = 0;
+        ahorroEnvio = 3990;
+      } else if (subtotal >= 20000) {
+        envio = 1990;
+        ahorroEnvio = 2000;
+      } else {
+        envio = 3990;
+        ahorroEnvio = 0;
+      }
+    }
     const total = baseImponible + envio;
 
     return {
@@ -764,6 +881,8 @@ export const cartService = {
       cupon: cuponAplicado,
       iva,
       envio,
+      ahorroEnvio,
+      envioGratis: (cart.length > 0 && deliveryType !== 'retiro' && subtotal >= 30000),
       total,
       itemsCount: cart.reduce((acc, item) => acc + item.cantidad, 0)
     };

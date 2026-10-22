@@ -78,55 +78,58 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
   };
 
   return (
-    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(32, 22, 16, 0.65)', backdropFilter: 'blur(4px)' }}>
       <div className="modal-dialog modal-lg modal-dialog-centered">
-        <div className="modal-content shadow-lg border-0">
+        <div className="modal-content shadow-lg border-0" style={{ borderRadius: '8px', overflow: 'hidden' }}>
           <form onSubmit={handleSubmit}>
-            <div className="modal-header bg-dark text-white">
-              <h5 className="modal-title">
-                <i className={`bi ${product ? 'bi-pencil-square' : 'bi-plus-circle'} me-2`}></i>
-                {product ? 'Editar Producto' : 'Nuevo Producto'}
+            <div className="modal-header text-white" style={{ backgroundColor: '#201610', borderBottom: '1px solid var(--color-borde)' }}>
+              <h5 className="modal-title" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+                <i className={`bi ${product ? 'bi-pencil-square' : 'bi-plus-circle'} me-2`} style={{ color: 'var(--color-caramelo)' }}></i>
+                {product ? 'Editar Receta / Producto' : 'Nueva Receta / Producto'}
               </h5>
               <button type="button" className="btn-close btn-close-white" onClick={onClose} aria-label="Cerrar"></button>
             </div>
-            <div className="modal-body p-4">
-              {error && <div className="alert alert-danger py-2">{error}</div>}
+            <div className="modal-body p-4" style={{ backgroundColor: '#FAF7F2' }}>
+              {error && <div className="alert alert-danger py-2 small">{error}</div>}
 
               <div className="row g-3">
                 <div className="col-md-4">
-                  <label className="form-label small fw-bold">Código / ID</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Código / ID</label>
                   <input
                     type="text"
                     name="id"
                     className="form-control"
-                    placeholder="Ej: TC005 (Autogenerado si vacío)"
+                    placeholder="Ej: TC005 (Autogenerado)"
                     value={formData.id}
                     onChange={handleChange}
                     disabled={!!product}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-8">
-                  <label className="form-label small fw-bold">Nombre del Producto *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Nombre del Producto *</label>
                   <input
                     type="text"
                     name="nombre"
                     className="form-control"
-                    placeholder="Ej: Torta Selva Negra"
+                    placeholder="Ej: Torta Selva Negra Tradicional"
                     value={formData.nombre}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Categoría *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Categoría *</label>
                   <select
                     name="categoria"
                     className="form-select"
                     value={formData.categoria}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   >
                     {categories.map((cat, i) => (
                       <option key={i} value={cat.nombre}>{cat.nombre}</option>
@@ -135,7 +138,7 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                 </div>
 
                 <div className="col-md-3">
-                  <label className="form-label small fw-bold">Precio ($ CLP) *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Precio ($ CLP) *</label>
                   <input
                     type="number"
                     name="precio"
@@ -145,11 +148,12 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     value={formData.precio}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-3">
-                  <label className="form-label small fw-bold">Stock Disponible *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Stock Disponible *</label>
                   <input
                     type="number"
                     name="stock"
@@ -159,11 +163,12 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     value={formData.stock}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Precio Anterior (Opcional tachado)</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Precio Anterior (Opcional tachado)</label>
                   <input
                     type="number"
                     name="precioAnterior"
@@ -172,11 +177,12 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     min="0"
                     value={formData.precioAnterior}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Ruta / URL de Imagen</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Ruta / URL de Imagen</label>
                   <input
                     type="text"
                     name="imagen"
@@ -184,11 +190,12 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     placeholder="/img/torta-mil-sabores.png"
                     value={formData.imagen}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-12">
-                  <label className="form-label small fw-bold">Descripción del Producto</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Descripción del Producto</label>
                   <textarea
                     name="descripcion"
                     className="form-control"
@@ -196,6 +203,7 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     placeholder="Detalles sobre ingredientes, textura y presentación..."
                     value={formData.descripcion}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   ></textarea>
                 </div>
 
@@ -209,7 +217,7 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                       checked={formData.destacado}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label" htmlFor="checkDestacado">Destacar en Inicio</label>
+                    <label className="form-check-label small fw-semibold" htmlFor="checkDestacado">Destacar en Inicio</label>
                   </div>
 
                   <div className="form-check form-switch">
@@ -221,16 +229,16 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                       checked={formData.enOferta}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label" htmlFor="checkOferta">Mostrar en Sección Ofertas</label>
+                    <label className="form-check-label small fw-semibold" htmlFor="checkOferta">Mostrar en Sección Ofertas</label>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <div className="modal-footer" style={{ backgroundColor: '#FFFFFF', borderTop: '1px solid var(--color-borde)' }}>
+              <button type="button" className="boton boton-secundario btn-baker" onClick={onClose}>
                 Cancelar
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="boton boton-primario btn-baker">
                 <i className="bi bi-save me-1"></i>Guardar Producto
               </button>
             </div>

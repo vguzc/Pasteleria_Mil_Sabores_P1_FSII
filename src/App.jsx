@@ -1,7 +1,24 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import StoreLayout from './layouts/StoreLayout';
 import AdminLayout from './layouts/AdminLayout';
+
+// Desplazamiento automático al inicio al cambiar de ruta o pulsar el logo
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+// Redirección elegante: Categorías unificadas dentro del Catálogo
+function CategoryRedirect() {
+  const { categoryName } = useParams();
+  return <Navigate to={`/productos?categoria=${encodeURIComponent(categoryName || '')}`} replace />;
+}
 
 // Store Pages
 import Home from './pages/Home';
@@ -32,14 +49,17 @@ import AdminProfile from './pages/admin/AdminProfile';
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       {/* Rutas Públicas de la Tienda */}
       <Route path="/" element={<StoreLayout />}>
         <Route index element={<Home />} />
         <Route path="productos" element={<Products />} />
         <Route path="producto/:id" element={<ProductDetail />} />
-        <Route path="categorias" element={<Categories />} />
-        <Route path="categoria/:categoryName" element={<Categories />} />
+        {/* Unificación de Categorías dentro del Catálogo */}
+        <Route path="categorias" element={<Navigate to="/productos" replace />} />
+        <Route path="categoria/:categoryName" element={<CategoryRedirect />} />
         <Route path="ofertas" element={<Offers />} />
         <Route path="carrito" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
@@ -70,5 +90,6 @@ export default function App() {
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }

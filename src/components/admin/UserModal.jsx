@@ -65,22 +65,22 @@ export default function UserModal({ user, onSave, onClose }) {
   };
 
   return (
-    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(32, 22, 16, 0.65)', backdropFilter: 'blur(4px)' }}>
       <div className="modal-dialog modal-lg modal-dialog-centered">
-        <div className="modal-content shadow border-0">
+        <div className="modal-content shadow border-0" style={{ borderRadius: '8px', overflow: 'hidden' }}>
           <form onSubmit={handleSubmit}>
-            <div className="modal-header bg-dark text-white">
-              <h5 className="modal-title">
-                {user ? 'Editar Usuario' : 'Nuevo Usuario'}
+            <div className="modal-header text-white" style={{ backgroundColor: '#201610', borderBottom: '1px solid var(--color-borde)' }}>
+              <h5 className="modal-title" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+                {user ? 'Editar Cuenta de Usuario' : 'Registrar Nueva Cuenta'}
               </h5>
-              <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
+              <button type="button" className="btn-close btn-close-white" onClick={onClose} aria-label="Cerrar"></button>
             </div>
-            <div className="modal-body p-4">
-              {error && <div className="alert alert-danger py-2">{error}</div>}
+            <div className="modal-body p-4" style={{ backgroundColor: '#FAF7F2' }}>
+              {error && <div className="alert alert-danger py-2 small">{error}</div>}
 
               <div className="row g-3">
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Nombre *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Nombre *</label>
                   <input
                     type="text"
                     name="nombre"
@@ -88,11 +88,12 @@ export default function UserModal({ user, onSave, onClose }) {
                     value={formData.nombre}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Apellidos *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Apellidos *</label>
                   <input
                     type="text"
                     name="apellidos"
@@ -100,11 +101,12 @@ export default function UserModal({ user, onSave, onClose }) {
                     value={formData.apellidos}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Correo Electrónico *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Correo Electrónico *</label>
                   <input
                     type="email"
                     name="correo"
@@ -112,11 +114,12 @@ export default function UserModal({ user, onSave, onClose }) {
                     value={formData.correo}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-3">
-                  <label className="form-label small fw-bold">Contraseña *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Contraseña *</label>
                   <input
                     type="password"
                     name="clave"
@@ -124,16 +127,18 @@ export default function UserModal({ user, onSave, onClose }) {
                     value={formData.clave}
                     onChange={handleChange}
                     required
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-3">
-                  <label className="form-label small fw-bold">Rol en el Sistema *</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Rol en el Sistema *</label>
                   <select
                     name="rol"
                     className="form-select"
                     value={formData.rol}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   >
                     <option value="cliente">Cliente</option>
                     <option value="vendedor">Vendedor</option>
@@ -142,7 +147,7 @@ export default function UserModal({ user, onSave, onClose }) {
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">RUT Chileno</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>RUT Chileno</label>
                   <input
                     type="text"
                     name="rut"
@@ -150,49 +155,54 @@ export default function UserModal({ user, onSave, onClose }) {
                     placeholder="12.345.678-9"
                     value={formData.rut}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Fecha de Nacimiento</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Fecha de Nacimiento</label>
                   <input
                     type="date"
                     name="fechaNacimiento"
                     className="form-control"
                     value={formData.fechaNacimiento}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-8">
-                  <label className="form-label small fw-bold">Dirección / Calle</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Dirección / Calle</label>
                   <input
                     type="text"
                     name="direccion"
                     className="form-control"
                     value={formData.direccion}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-4">
-                  <label className="form-label small fw-bold">Depto / Casa</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Depto / Casa</label>
                   <input
                     type="text"
                     name="departamento"
                     className="form-control"
                     value={formData.departamento}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Región</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Región</label>
                   <select
                     name="region"
                     className="form-select"
                     value={formData.region}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   >
                     {REGIONES_Y_COMUNAS.map((r, i) => (
                       <option key={i} value={r.region}>{r.region}</option>
@@ -201,12 +211,13 @@ export default function UserModal({ user, onSave, onClose }) {
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-bold">Comuna</label>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Comuna</label>
                   <select
                     name="comuna"
                     className="form-select"
                     value={formData.comuna}
                     onChange={handleChange}
+                    style={{ borderColor: 'var(--color-borde)' }}
                   >
                     {comunasDisponibles.map((c, i) => (
                       <option key={i} value={c}>{c}</option>
@@ -215,9 +226,9 @@ export default function UserModal({ user, onSave, onClose }) {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
-              <button type="submit" className="btn btn-primary">Guardar Usuario</button>
+            <div className="modal-footer" style={{ backgroundColor: '#FFFFFF', borderTop: '1px solid var(--color-borde)' }}>
+              <button type="button" className="boton boton-secundario btn-baker" onClick={onClose}>Cancelar</button>
+              <button type="submit" className="boton boton-primario btn-baker">Guardar Usuario</button>
             </div>
           </form>
         </div>
