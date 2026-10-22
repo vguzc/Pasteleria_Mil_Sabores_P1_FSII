@@ -179,7 +179,7 @@ export default function CartDrawer() {
               </p>
               <Link
                 to="/productos"
-                className="btn btn-dark rounded-pill px-4 py-2"
+                className="boton boton-primario btn-baker px-4 py-2"
                 onClick={closeDrawer}
               >
                 Ver Catálogo
@@ -512,7 +512,8 @@ export default function CartDrawer() {
               className="fn-cart-btn-continue"
               onClick={handleContinue}
             >
-              Continuar
+              <span>Continuar al Pago Seguro</span>
+              <i className="bi bi-arrow-right"></i>
             </button>
             <p className="fn-cart-footer-note">
               Antes de los costos de envío.

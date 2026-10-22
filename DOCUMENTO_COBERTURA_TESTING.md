@@ -1,45 +1,39 @@
-# 🧪 Documento de Cobertura y Análisis de Testing Unitario
-## Proyecto: Pastelería Mil Sabores — Frontend React
-**Asignatura:** Desarrollo Fullstack II (DSY1104) — Duoc UC  
+# Informe Técnico de Cobertura y Testing Unitario
+## Evaluación Automatizada de Componentes React — Pastelería Mil Sabores
+**Institución:** Duoc UC — Escuela de Informática y Telecomunicaciones  
+**Carrera:** Ingeniería en Informática / Analista Programador Computacional  
+**Asignatura:** Desarrollo Fullstack II (DSY1104)  
 **Evaluación:** Evaluación Parcial N° 2  
-**Herramientas de Testeo:** Karma Runner v6.4.4 + Jasmine Core v5.1.2 + Webpack 5 + Babel Loader + React Testing Library  
+**Herramientas de Testeo:** Karma Runner 6.4.4 + Jasmine Core 5.1.2 + Webpack 5 + Babel Loader + React Testing Library  
 **Navegador de Ejecución:** Chrome Headless (ChromeHeadlessNoSandbox) en Windows  
-**Resultado Global:** **10 de 10 Pruebas Exitosas (10/10 — 100% de Aprobación, 0 Errores)**  
-**Tiempo de Ejecución:** ~0.07 segundos
+**Resultado Global:** 10 de 10 Pruebas Exitosas (100% de Aprobación — 0 Fallos)  
+**Tiempo de Ejecución:** 0.117 segundos  
 
 ---
 
-## 1. Objetivos del Proceso de Testeo
+## 1. Resumen Ejecutivo y Objetivos
 
-El objetivo primordial del proceso de pruebas unitarias consiste en verificar de manera automatizada y repetible la calidad de software del frontend en React para la tienda **Pastelería Mil Sabores**, abarcando:
-1. **Renderizado correcto y condicional** de componentes visuales en el DOM.
-2. **Propiedades (props)** transferidas e interpretadas adecuadamente entre componentes padres e hijos.
-3. **Gestión del estado interno (state)** ante la interacción reactiva del usuario.
-4. **Manejo y simulación de eventos sintéticos** de React (`click`, `change`, `submit`).
-5. **Aislamiento de la lógica de negocio y persistencia mediante Mocks y Spies** de Jasmine.
+El presente informe documenta el proceso de verificación técnica y pruebas unitarias automatizadas implementadas sobre el frontend en React 18 de la tienda online Pastelería Mil Sabores. La suite de pruebas fue diseñada para satisfacer el 100% de los criterios de evaluación de la asignatura Desarrollo Fullstack II (DSY1104), abarcando:
+1. **Renderizado de Listas:** Recorrido iterativo de colecciones y consistencia estructural en el DOM.
+2. **Renderizado Condicional:** Visibilidad y supresión de elementos en función de estados lógicos.
+3. **Transferencia de Propiedades (Props):** Paso de funciones callback y estructuras de datos complejas hacia componentes hijos.
+4. **Gestión de Estado Interno (State):** Reactividad y mutación controlada con el hook `useState`.
+5. **Simulación de Eventos de Usuario:** Ejecución desatendida de clics sintéticos y envíos de formulario con `fireEvent`.
+6. **Aislamiento y Mocks (Spies):** Suplantación de capas de persistencia y comprobación matemática de lógica comercial.
 
 ---
 
-## 2. Configuración del Entorno de Pruebas (Test Environment)
+## 2. Entorno y Configuración Técnica
 
-### 2.1 Pila de Herramientas (Toolchain)
-
-```plaintext
-Karma Runner (v6.4.4)
-  └── Framework Jasmine (v5.1.2)
-        └── Preprocesador karma-webpack (v5.0.1)
-              └── Babel Loader (v9.1.3) con preset-react y preset-env
-                    └── React Testing Library (v16.2.0)
-                          └── Navegador: ChromeHeadlessNoSandbox (Windows 10/11)
-```
-
-### 2.2 Archivo de Configuración `karma.conf.cjs`
-Karma se configuró de forma específica para transpilar componentes JSX modernos de React mediante Webpack y Babel, ejecutando las pruebas en un entorno real de navegador sin interfaz gráfica (*Headless*) para simular fielmente el comportamiento de los navegadores de los clientes finales:
+La infraestructura de testing se integró en el archivo `karma.conf.cjs`, configurando Karma como ejecutor de pruebas, Jasmine como marco de aserciones y Webpack con Babel para la transpilación de JSX en Chrome Headless:
 
 ```javascript
-// Extracto representativo de karma.conf.cjs
+// karma.conf.cjs
+const path = require('path');
+
 module.exports = function (config) {
   config.set({
+    basePath: '',
     frameworks: ['jasmine', 'webpack'],
     files: [
       { pattern: 'test/**/*.spec.jsx', watched: false }
@@ -72,12 +66,6 @@ module.exports = function (config) {
       }
     },
     browsers: ['ChromeHeadlessNoSandbox'],
-    customLaunchers: {
-      ChromeHeadlessNoSandbox: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
-      }
-    },
     singleRun: true
   });
 };
@@ -85,102 +73,87 @@ module.exports = function (config) {
 
 ---
 
-## 3. Matriz de Cobertura y Desglose de los 10 Tests (10/10)
+## 3. Matriz Consolidada de Pruebas Unitarias (10/10)
 
-A continuación se detalla la correspondencia exacta de cada prueba con los requisitos formulados en la pauta oficial:
-
-| N° | Categoría Evaluada | Archivo de Especificación | Componente / Servicio | Propósito del Test | Resultado |
+| N° | Criterio Evaluado | Archivo de Especificación | Componente / Módulo | Técnica Empleada | Resultado |
 | :---: | :--- | :--- | :--- | :--- | :---: |
-| **1** | **Renderizado Correcto** | `test/1_render_list.spec.jsx` | `ProductList` | Verifica que los componentes de lista rendericen todos los elementos de un dataset provisto (3/3 productos). | ✅ **SUCCESS** |
-| **2** | **Renderizado Condicional** | `test/2_render_conditional.spec.jsx` | `AlertMessage` | Comprueba que el mensaje de error solo se renderice en el DOM cuando la propiedad `message` existe y no dibuje nada si está vacío. | ✅ **SUCCESS** |
-| **3** | **Props (Propiedades)** | `test/3_button_props.spec.jsx` | `Button` | Confirma que el botón reciba la etiqueta (`label`) y ejecute la función callback `onClick` al ser presionado. | ✅ **SUCCESS** |
-| **4** | **Props (Propiedades)** | `test/4_product_card_props.spec.jsx` | `ProductCard` | Verifica que la tarjeta reciba el objeto `product` con nombre, categoría, precio formateado y badge promocional. | ✅ **SUCCESS** |
-| **5** | **Gestión de Estado** | `test/5_form_state.spec.jsx` | `SearchForm` | Comprueba que el estado interno cambie y se refleje en la vista cuando el usuario introduce texto en un `<input>`. | ✅ **SUCCESS** |
-| **6** | **Gestión de Estado** | `test/6_quantity_selector_state.spec.jsx` | `QuantitySelector` | Verifica que el contador numérico incremente y decremente su estado respetando límites mínimos y máximos. | ✅ **SUCCESS** |
-| **7** | **Simulación de Eventos** | `test/7_event_add_cart.spec.jsx` | `ProductCard` | Simula un clic en el botón `+ Agregar` y verifica que se dispare el evento `onAddToCart` con la entidad de producto como argumento. | ✅ **SUCCESS** |
-| **8** | **Simulación de Eventos** | `test/8_event_form_submit.spec.jsx` | `SimpleContactForm` | Simula el envío de un formulario (`submit`) y comprueba que se invoque el manejador llamando a `preventDefault()`. | ✅ **SUCCESS** |
-| **9** | **Mocks y Servicios CRUD** | `test/9_mock_crud_service.spec.jsx` | `productService` | Utiliza `spyOn` de Jasmine para mockear métodos de lectura (`getAll`) y creación (`create`), aislando el almacenamiento físico. | ✅ **SUCCESS** |
-| **10**| **Mocks y Lógica de Negocio** | `test/10_mock_checkout_totals.spec.jsx` | `cartService` | Mockea un carrito y valida el cálculo matemático exacto de subtotal, descuento del 50% con cupón `FELICES50`, IVA 19% y regla de despacho gratis. | ✅ **SUCCESS** |
+| **01** | Renderizado de Listas | `test/1_render_list.spec.jsx` | `ProductList` | Recorrido `.map()` | Aprobado |
+| **02** | Renderizado Condicional | `test/2_render_conditional.spec.jsx` | `AlertMessage` | Condición booleana | Aprobado |
+| **03** | Props en Componentes | `test/3_button_props.spec.jsx` | `Button` | Callback `onClick` | Aprobado |
+| **04** | Props Complejas (Objetos) | `test/4_product_card_props.spec.jsx` | `ProductCard` | Desestructuración | Aprobado |
+| **05** | Gestión de Estado (Inputs) | `test/5_form_state.spec.jsx` | `SearchForm` | Hook `useState` | Aprobado |
+| **06** | Gestión de Estado (Contador) | `test/6_quantity_selector_state.spec.jsx` | `QuantitySelector` | Incremento / Decremento | Aprobado |
+| **07** | Simulación de Eventos (Click) | `test/7_event_add_cart.spec.jsx` | `ProductCard` | `fireEvent.click` | Aprobado |
+| **08** | Simulación de Eventos (Submit) | `test/8_event_form_submit.spec.jsx` | `SimpleContactForm` | `preventDefault` | Aprobado |
+| **09** | Aislamiento con Spies / Mocks | `test/9_mock_crud_service.spec.jsx` | `productService` | `jasmine.spyOn` | Aprobado |
+| **10** | Validación Lógica de Negocio | `test/10_mock_checkout_totals.spec.jsx` | `cartService` | Cálculos y Cupones | Aprobado |
 
 ---
 
-## 4. Análisis Detallado de Implementación por Prueba
+## 4. Detalle Técnico de los Casos de Prueba
 
-### Prueba 1: Renderizado de Listas (`1_render_list.spec.jsx`)
-- **Concepto:** Verificación estructural del DOM generado mediante el hook `.map()`.
-- **Estrategia:** Se pasa una colección de 3 objetos producto. La aserción valida que la longitud de nodos obtenidos mediante `screen.getAllByTestId('product-item')` sea exactamente igual a `3`.
+### Prueba 1: Renderizado Estructural de Colecciones
+- **Objetivo:** Validar que `ProductList` renderice exactamente el número de nodos correspondientes a la longitud del arreglo entregado.
+- **Implementación:** Se suministra un arreglo de 3 productos y se valida mediante `screen.getAllByTestId('product-item').length === 3`.
 
-### Prueba 2: Renderizado Condicional (`2_render_conditional.spec.jsx`)
-- **Concepto:** Renderizado dinámico condicional basado en verdad lógica (`if (!message) return null;`).
-- **Estrategia:** Se ejecuta una primera renderización con `message=""` verificando que `container.firstChild` sea `null`. Luego se re-renderiza con un texto de error y se valida que `screen.getByRole('alert')` esté presente y visible en el DOM.
+### Prueba 2: Renderizado Condicional Basado en Propiedades
+- **Objetivo:** Confirmar que `AlertMessage` retorna `null` cuando la propiedad `message` está vacía y genera el contenedor accesible cuando recibe una cadena de texto.
+- **Implementación:** Primera aserción sobre `container.firstChild === null`, re-renderizado con mensaje y comprobación de `screen.getByRole('alert')`.
 
-### Prueba 3: Recepción de Propiedades en Botón (`3_button_props.spec.jsx`)
-- **Concepto:** Principio de *Single Responsibility* y componentes tontos/reutilizables.
-- **Estrategia:** Se suministra un spy de Jasmine `jasmine.createSpy('handleClick')` y una cadena de texto a la propiedad `label`. Se verifica que la clase `btn-primary` esté aplicada y que al emitir `fireEvent.click`, el spy registre exactamente 1 invocación (`toHaveBeenCalledTimes(1)`).
+### Prueba 3 y 4: Propiedades Simples y Modelos Complejos
+- **Objetivo:** Asegurar la transmisión de eventos mediante callbacks en `Button` y el formateo de moneda nacional ($24.990) y badge de oferta en `ProductCard`.
+- **Implementación:** Uso de `jasmine.createSpy('handleClick')` con verificación de `toHaveBeenCalledTimes(1)` y aserciones de formato numérico en pesos chilenos.
 
-### Prueba 4: Propiedades en Tarjeta de Producto (`4_product_card_props.spec.jsx`)
-- **Concepto:** Paso de entidades complejas (objetos) a componentes de catálogo.
-- **Estrategia:** Se entrega un objeto `Product` con atributos de negocio (nombre, categoría, precio en CLP, stock, enOferta). Se comprueba que el componente formatee la moneda como `$24.990` y renderice el badge `OFERTA`.
+### Prueba 5 y 6: Gestión del Estado Interno (State)
+- **Objetivo:** Comprobar la mutación de estado en componentes controlados (`SearchForm`) y verificar que el selector numérico (`QuantitySelector`) modifique el valor mostrado respetando cotas numéricas.
+- **Implementación:** Disparo de `fireEvent.change` sobre elementos `<input>` y aserción de valor actualizado.
 
-### Prueba 5: Estado en Inputs de Formulario (`5_form_state.spec.jsx`)
-- **Concepto:** Componentes controlados (*Controlled Components*) con `useState`.
-- **Estrategia:** Se simula la escritura de un usuario mediante `fireEvent.change(input, { target: { value: 'Torta de Lúcuma' } })`. Se comprueba que el valor de la propiedad `input.value` y el elemento dependiente del estado se actualicen instantáneamente.
+### Prueba 7 y 8: Simulación de Eventos Sintéticos
+- **Objetivo:** Simular interacción del usuario mediante `fireEvent.click` al añadir un ítem al carrito y `fireEvent.submit` en el formulario de contacto verificando la neutralización de la recarga nativa de página.
+- **Implementación:** Disparo de eventos sintéticos y aserción de llamada al manejador evitando recarga con `e.preventDefault()`.
 
-### Prueba 6: Estado de Contador de Cantidad (`6_quantity_selector_state.spec.jsx`)
-- **Concepto:** Mutación controlada de estado numérico y prevención de valores fuera de rango.
-- **Estrategia:** Se monta el componente con un valor inicial de 2. Al hacer clic en el botón de incremento sube a 3; al pulsar el botón de decremento desciende a 2.
-
-### Prueba 7: Simulación de Evento Agregar al Carrito (`7_event_add_cart.spec.jsx`)
-- **Concepto:** Simulación de eventos sintéticos y comunicación entre componentes hijos y el contexto global.
-- **Estrategia:** Se busca el botón `+ Agregar` en la tarjeta y se emite un clic sintético. Se valida que el spy `handleAddToCart` se haya ejecutado con el objeto del producto específico.
-
-### Prueba 8: Simulación de Envío de Formulario (`8_event_form_submit.spec.jsx`)
-- **Concepto:** Intercepción del ciclo de vida del formulario web para prevenir recargas completas de página (`e.preventDefault()`).
-- **Estrategia:** Se emite `fireEvent.submit(form)` y se comprueba que el callback asociado procese los valores de los controles sin recargar el navegador.
-
-### Prueba 9: Uso de Mocks para Servicio CRUD (`9_mock_crud_service.spec.jsx`)
-- **Concepto:** Principio de aislamiento de pruebas unitarias (*Mocking* y *Stubbing*).
-- **Estrategia:** Mediante `spyOn(productService, 'getAll').and.returnValue(mockList)`, se sustituye la lectura de `localStorage` por un arreglo mockeado en memoria. Se valida que el servicio responda sin depender del hardware ni de datos previos.
-
-### Prueba 10: Mock de Carrito y Cálculo de Totales (`10_mock_checkout_totals.spec.jsx`)
-- **Concepto:** Validación de algoritmos de tarificación comercial y reglas de negocio.
-- **Estrategia:** Se simula un carrito con 2 ítems:
-  - 1x Torta Tres Leches ($24.990)
-  - 2x Pie de Limón ($3.490 c/u = $6.980)
-  - **Subtotal:** $31.970.
-  - **Prueba sin cupón:** Despacho gratis ($0 por ser > $30.000), total $31.970.
-  - **Prueba con cupón `FELICES50`:** Descuento del 50% ($15.985), total a pagar = $15.985. Aserción matemática exacta al 100%.
+### Prueba 9 y 10: Aislamiento con Spies y Reglas Comerciales
+- **Objetivo:** Sustituir llamadas al sistema de almacenamiento con `spyOn(productService, 'getAll')` y verificar el algoritmo de tarificación: Subtotal ($31.970), descuento del 50% con cupón `FELICES50` ($15.985) y despacho gratis ($0 por superar $30.000).
+- **Implementación:** Mocking con Jasmine y validación aritmética exacta de los valores devueltos por `cartService.calculateTotals`.
 
 ---
 
-## 5. Evidencia de Ejecución Exitosa en Terminal
+## 5. Evidencia de Ejecución Oficial (Log de Terminal)
 
-A continuación se adjunta el log directo emitido por Karma y Chrome Headless al ejecutar `npm test`:
+Registro emitido al ejecutar `npm test` en consola:
 
 ```plaintext
 > pasteleria-mil-sabores-react@2.0.0 test
 > karma start karma.conf.cjs --single-run
 
 Webpack bundling...
-webpack 5.112.0 compiled successfully in 1632 ms
+asset commons.js 2.14 MiB [emitted] (name: commons) (id hint: commons)
+asset runtime.js 9.16 KiB [emitted] (name: runtime)
+webpack 5.112.0 compiled successfully in 2145 ms
 INFO [karma-server]: Karma v6.4.4 server started at http://localhost:9876/
 INFO [launcher]: Launching browsers ChromeHeadlessNoSandbox with concurrency unlimited
 INFO [launcher]: Starting browser ChromeHeadless
-INFO [Chrome Headless 155.0.0.0 (Windows 10)]: Connected on socket with id 11196167
-Chrome Headless 155.0.0.0 (Windows 10): Executed 1 of 10 SUCCESS (0.04 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 2 of 10 SUCCESS (0.042 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 3 of 10 SUCCESS (0.045 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 4 of 10 SUCCESS (0.05 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 5 of 10 SUCCESS (0.052 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 6 of 10 SUCCESS (0.053 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 7 of 10 SUCCESS (0.054 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 8 of 10 SUCCESS (0.057 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 9 of 10 SUCCESS (0.059 secs)
-Chrome Headless 155.0.0.0 (Windows 10): Executed 10 of 10 SUCCESS (0.06 secs)
-TOTAL: 10 SUCCESS (0.07 secs / 0.06 secs)
+INFO [Chrome Headless 156.0.0.0 (Windows 10)]: Connected on socket with id 21968276
+Chrome Headless 156.0.0.0 (Windows 10): Executed 1 of 10 SUCCESS (0.025 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 2 of 10 SUCCESS (0.030 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 3 of 10 SUCCESS (0.057 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 4 of 10 SUCCESS (0.072 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 5 of 10 SUCCESS (0.074 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 6 of 10 SUCCESS (0.079 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 7 of 10 SUCCESS (0.086 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 8 of 10 SUCCESS (0.087 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 9 of 10 SUCCESS (0.089 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 10 of 10 SUCCESS (0.090 secs)
+TOTAL: 10 SUCCESS (0.117 secs / 0.090 secs)
 ```
 
 ---
 
-## 6. Conclusión
-El conjunto de 10 pruebas unitarias con Jasmine y Karma satisface íntegramente los estándares exigidos para alcanzar la calificación máxima (**100% de logro**) en los indicadores **IE2.2.1**, **IE2.2.2**, **IE2.3.1** e **IE2.3.2**, certificando la robustez de los componentes React desarrollados.
+## 6. Mapeo con Indicadores de Logro (Rúbrica Duoc UC)
+
+| Indicador | Criterio Evaluado | Evidencia Técnica en el Proyecto | Cumplimiento |
+| :---: | :--- | :--- | :---: |
+| **IE2.2.1** | Implementa pruebas unitarias para componentes básicos de interfaz gráfica. | Tests 1 al 4 validan renderizado de listas, condicionales y paso de propiedades. | 100% Logrado |
+| **IE2.2.2** | Evalúa la interacción del usuario y cambios de estado en componentes React. | Tests 5 al 8 simulan mutaciones de `useState` y eventos sintéticos de formulario. | 100% Logrado |
+| **IE2.3.1** | Aplica mocks y stubs para aislar dependencias externas y servicios de datos. | Test 9 implementa `jasmine.spyOn` aislando la persistencia de `productService`. | 100% Logrado |
+| **IE2.3.2** | Verifica lógica de negocio compleja, cálculos matemáticos y validaciones. | Test 10 certifica fórmulas comerciales, aplicación de cupones y umbrales de despacho. | 100% Logrado |

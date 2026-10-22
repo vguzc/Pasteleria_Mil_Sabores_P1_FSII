@@ -1495,9 +1495,13 @@ h3 { font-size: 1.35rem; }
 }
 
 .fn-cart-mode-card.active {
-  background: var(--color-gris-arena);
-  border-color: var(--color-borde-fuerte);
-  box-shadow: 0 2px 8px rgba(74, 46, 27, 0.06);
+  background: #FAF4EC;
+  border: 2px solid var(--color-caramelo);
+  box-shadow: 0 4px 12px rgba(160, 77, 54, 0.12);
+}
+
+.fn-cart-mode-card.active .fn-cart-mode-icon {
+  color: var(--color-caramelo);
 }
 
 .fn-cart-mode-icon {
@@ -1632,22 +1636,29 @@ h3 { font-size: 1.35rem; }
 
 .fn-cart-btn-continue {
   width: 100%;
-  background: var(--color-negro-tostado);
+  background-color: var(--color-espresso);
   color: var(--color-blanco);
-  border: none;
-  border-radius: 9999px;
-  padding: 0.95rem 1.5rem;
+  border: 1.5px solid var(--color-espresso);
+  border-radius: 10px;
+  padding: 0.9rem 1.5rem;
   font-family: var(--fuente-texto);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.25s ease, transform 0.15s ease;
-  box-shadow: 0 4px 14px rgba(32, 22, 16, 0.2);
+  transition: all var(--transicion);
+  box-shadow: 0 4px 14px rgba(74, 46, 27, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .fn-cart-btn-continue:hover {
-  background: var(--color-caramelo);
-  transform: translateY(-1px);
+  background-color: var(--color-caramelo);
+  border-color: var(--color-caramelo);
+  color: var(--color-blanco);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(160, 77, 54, 0.22);
 }
 
 .fn-cart-footer-note {
