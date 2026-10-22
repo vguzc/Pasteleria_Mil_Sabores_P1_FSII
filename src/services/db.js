@@ -229,11 +229,11 @@ export const INITIAL_PRODUCTS = [
     destacado: false,
     enOferta: false
   },
-  // 9. Especial Fiestas Patrias
+  // 9. Pastelería Tradicional & Salada
   {
     id: 'PT003',
     nombre: 'Empanada de Pino Tradicional',
-    categoria: 'Especial 18',
+    categoria: 'Pastelería Tradicional',
     precio: 3290,
     precioAnterior: 3790,
     stock: 30,
@@ -245,7 +245,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'PT004',
     nombre: 'Empanada de Queso de Horno',
-    categoria: 'Especial 18',
+    categoria: 'Pastelería Tradicional',
     precio: 2990,
     precioAnterior: null,
     stock: 25,
@@ -257,11 +257,11 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'SG003',
     nombre: 'Empanada de Pino Sin Gluten',
-    categoria: 'Especial 18',
+    categoria: 'Productos Sin Gluten',
     precio: 3690,
     precioAnterior: 4190,
     stock: 20,
-    descripcion: 'Edición especial Fiestas Patrias libre de gluten con tradicional pino de vacuno y aceituna.',
+    descripcion: 'Edición artesanal libre de gluten con tradicional pino de vacuno y aceituna.',
     imagen: '/img/empanada-sin-gluten.png',
     destacado: true,
     enOferta: true
@@ -276,8 +276,7 @@ export const INITIAL_CATEGORIES = [
   { id: 'cat-5', nombre: 'Pastelería Tradicional', descripcion: 'Chilenitos, empolvados, alfajores y strudel de receta centenaria', imagen: '/img/alfajores-hojarasca.png' },
   { id: 'cat-6', nombre: 'Productos Sin Gluten', descripcion: '100% libres de gluten con certificación y sabor inigualable', imagen: '/img/cheesecake-frutos-rojos.png' },
   { id: 'cat-7', nombre: 'Productos Veganos', descripcion: 'Sin ingredientes de origen animal, suaves y deliciosos', imagen: '/img/torta-vegana-trufa-cacao.png' },
-  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: '/img/torta-primavera.png' },
-  { id: 'cat-9', nombre: 'Especial 18', descripcion: 'Nuestras aclamadas empanadas de pino y queso para celebrar', imagen: '/img/empanada-pino.png' }
+  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: '/img/torta-primavera.png' }
 ];
 
 export const INITIAL_USERS = [
@@ -432,7 +431,16 @@ function writeStorage(key, data) {
 // -------------------------------------------------------------
 export const productService = {
   getAll() {
-    return readStorage(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+    const list = readStorage(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+    return list.map(p => {
+      if (p.categoria === 'Especial 18') {
+        return {
+          ...p,
+          categoria: p.id === 'SG003' ? 'Productos Sin Gluten' : 'Pastelería Tradicional'
+        };
+      }
+      return p;
+    });
   },
 
   getById(id) {
@@ -505,7 +513,8 @@ export const productService = {
 // -------------------------------------------------------------
 export const categoryService = {
   getAll() {
-    return readStorage(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES);
+    const list = readStorage(STORAGE_KEYS.CATEGORIES, INITIAL_CATEGORIES);
+    return list.filter(c => c && c.nombre !== 'Especial 18' && c.id !== 'cat-9');
   },
 
   create(categoryData) {

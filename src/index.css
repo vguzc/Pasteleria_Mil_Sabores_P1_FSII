@@ -2269,7 +2269,7 @@ h3 { font-size: 1.35rem; }
    ESTILOS BAKER: CATÁLOGO DE PRODUCTOS REFINADO
    ========================================================================== */
 .catalogo-baker-header {
-  padding: 4.5rem 1.5rem 2.5rem 1.5rem;
+  padding: 3.5rem 1.5rem 2.2rem 1.5rem;
   background-color: #FFFFFF;
   border-bottom: 1px solid var(--color-borde);
   text-align: center;
@@ -2319,20 +2319,106 @@ h3 { font-size: 1.35rem; }
   flex-wrap: wrap;
 }
 
-.catalogo-search-input {
-  max-width: 380px;
-  width: 100%;
-  padding: 0.65rem 1rem;
-  border-radius: 6px;
+/* Barra unificada de controles Baker */
+.catalogo-toolbar-baker {
+  background-color: #FFFFFF;
   border: 1px solid var(--color-borde);
-  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(44, 30, 22, 0.03);
+}
+
+.catalogo-buscador-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  max-width: 380px;
+}
+
+.catalogo-icon-search {
+  position: absolute;
+  left: 0.9rem;
+  color: var(--color-moca);
+  pointer-events: none;
+}
+
+.catalogo-search-input {
+  width: 100%;
+  padding: 0.6rem 2.2rem 0.6rem 2.4rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: #FAF7F2;
   font-size: 0.88rem;
-  color: var(--color-texto);
+  color: var(--color-espresso);
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .catalogo-search-input:focus {
+  border-color: var(--color-caramelo);
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(196, 136, 75, 0.15);
+}
+
+.catalogo-btn-clear {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--color-moca);
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.catalogo-btn-clear:hover {
+  color: var(--color-espresso);
+}
+
+.catalogo-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.catalogo-select-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.catalogo-select-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-espresso);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.catalogo-select-control {
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: #FAF7F2;
+  color: var(--color-espresso);
+  font-size: 0.86rem;
+  font-family: inherit;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.catalogo-select-control:focus {
   border-color: var(--color-caramelo);
 }
 
@@ -2346,4 +2432,179 @@ h3 { font-size: 1.35rem; }
   outline: none;
   min-width: 200px;
   cursor: pointer;
+}
+
+.catalogo-view-toggle {
+  display: flex;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+
+.btn-view-toggle {
+  background: transparent;
+  border: none;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-moca);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-view-toggle:hover {
+  color: var(--color-espresso);
+  background-color: #FAF4EC;
+}
+
+.btn-view-toggle.activo {
+  background-color: var(--color-espresso);
+  color: #FFFFFF;
+}
+
+/* Barra de pills de categorías en una sola fila con scroll horizontal limpio */
+.catalogo-pills-bar-wrap {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.catalogo-pills-bar {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.25rem 0.15rem 0.6rem 0.15rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.catalogo-pills-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-quick-pill {
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-moca);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-quick-pill:hover {
+  background-color: #FAF4EC;
+  border-color: #E2D4C5;
+  color: var(--color-espresso);
+}
+
+.btn-quick-pill.activo {
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(44, 30, 22, 0.15);
+}
+
+/* Filtros activos */
+.catalogo-active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge-filtro-activo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: #FAF4EC;
+  border: 1px solid #E2D4C5;
+  border-radius: 20px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-espresso);
+}
+
+.badge-filtro-activo button {
+  background: none;
+  border: none;
+  color: var(--color-caramelo);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.badge-filtro-activo button:hover {
+  color: var(--color-espresso);
+}
+
+/* Secciones agrupadas por categoría */
+.catalogo-secciones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.catalogo-seccion-categoria {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-borde);
+  border-radius: 14px;
+  padding: 1.75rem 1.75rem 2rem 1.75rem;
+  box-shadow: 0 2px 10px rgba(44, 30, 22, 0.03);
+}
+
+.catalogo-seccion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-borde);
+  margin-bottom: 1.5rem;
+}
+
+.catalogo-seccion-titulo {
+  font-family: var(--fuente-titulos);
+  color: var(--color-espresso);
+  font-size: 1.65rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.catalogo-seccion-desc {
+  font-size: 0.88rem;
+  color: var(--color-moca);
+  max-width: 600px;
+}
+
+.catalogo-badge-count {
+  background-color: #FAF4EC;
+  border: 1px solid #E2D4C5;
+  color: var(--color-espresso);
+  border-radius: 20px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.catalogo-link-ver-cat {
+  color: var(--color-caramelo) !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: opacity 0.2s ease;
+}
+
+.catalogo-link-ver-cat:hover {
+  opacity: 0.8;
 }
