@@ -3312,3 +3312,162 @@ h3 { font-size: 1.35rem; }
   border-color: rgba(181, 66, 52, 0.4);
   transform: translateY(-1px);
 }
+
+/* ==========================================================================
+   BOLETA ELECTRÓNICA OFICIAL Y REGLAS DE IMPRESIÓN (PDF & PRINT)
+   ========================================================================== */
+
+/* Regla para ocultar el bloque exclusivo de impresión en pantalla */
+.boleta-print-only {
+  display: none !important;
+}
+
+/* Reglas de pantalla para Boleta Oficial */
+.boleta-oficial-documento {
+  transition: all 0.2s ease;
+}
+
+.boleta-sii-box {
+  transition: transform 0.2s ease;
+}
+
+@media print {
+  /* Configuración de página de impresión */
+  @page {
+    size: portrait;
+    margin: 8mm 12mm 10mm 12mm;
+  }
+
+  /* Reset total del lienzo */
+  html,
+  body {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ocultar elementos generales de la web no imprimibles */
+  header,
+  footer,
+  nav,
+  .encabezado,
+  .top-bar-anuncio,
+  .pie-pagina,
+  .admin-sidebar,
+  .admin-navbar,
+  .sidebar-backdrop,
+  .drawer-overlay,
+  .drawer-carrito,
+  .d-print-none,
+  .btn,
+  .boton,
+  .alert,
+  .modal-backdrop,
+  .modal-header,
+  .modal-footer,
+  .checkout-success-pantalla {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Modales Bootstrap adaptados a documento impreso */
+  body.modal-open,
+  .modal {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .modal-dialog {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .modal-content {
+    border: none !important;
+    box-shadow: none !important;
+    background: #FFFFFF !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .modal-body {
+    padding: 0 !important;
+    background: #FFFFFF !important;
+  }
+
+  /* Mostrar la boleta dedicada en impresión */
+  .boleta-print-only {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* Estilos específicos de la boleta impresa */
+  .boleta-oficial-documento {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    color: #111111 !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .boleta-sii-box {
+    border: 2.5px solid #C41E25 !important;
+    color: #C41E25 !important;
+    background-color: #FFFDFD !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .boleta-oficial-documento table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  .boleta-oficial-documento tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+
+  .boleta-oficial-documento th {
+    background-color: #F5EFEB !important;
+    color: #2C1E16 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .boleta-ted-box {
+    border: 1.5px solid #333333 !important;
+    background-color: #FAF9F6 !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
