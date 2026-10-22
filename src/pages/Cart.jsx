@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { SUCURSALES_RETIRO } from '../services/db';
 import QuantitySelector from '../components/cart/QuantitySelector';
 import AlertMessage from '../components/common/AlertMessage';
 
 export default function Cart() {
+  const { currentUser } = useAuth();
   const {
     cart,
     totals,
@@ -39,7 +41,7 @@ export default function Cart() {
     const code = (typeof codeToApply === 'string' ? codeToApply : inputCoupon).trim();
     if (!code) return;
 
-    const res = applyCoupon(code);
+    const res = applyCoupon(code, currentUser?.correo || '');
     if (res.success) {
       setCouponSuccess(`¡Cupón "${res.coupon.codigo}" aplicado con éxito! (${res.coupon.porcentaje}% de descuento)`);
       setInputCoupon('');
@@ -415,22 +417,20 @@ export default function Cart() {
                       </button>
                     </form>
 
-                    <div className="mt-3 pt-2 border-top d-flex align-items-center gap-2 flex-wrap" style={{ borderColor: 'var(--color-borde)' }}>
-                      <span className="text-muted" style={{ fontSize: '0.74rem' }}>Cupones oficiales:</span>
-                      <button
-                        type="button"
-                        className="cupon-chip"
-                        onClick={(e) => handleApplyCoupon(e, 'FELICES50')}
-                      >
-                        FELICES50 (-50%)
-                      </button>
-                      <button
-                        type="button"
-                        className="cupon-chip"
-                        onClick={(e) => handleApplyCoupon(e, 'DUOC10')}
-                      >
-                        DUOC10 (-10%)
-                      </button>
+                    {/* Nota informativa estándar e-commerce sin botones píldora */}
+                    <div className="mt-3 pt-2 border-top text-muted" style={{ borderColor: 'var(--color-borde)', fontSize: '0.74rem', lineHeight: '1.4' }}>
+                      <div className="d-flex align-items-start gap-1 mb-1">
+                        <i className="bi bi-info-circle flex-shrink-0 mt-0.5" style={{ color: 'var(--color-caramelo)' }}></i>
+                        <span>
+                          <strong>DUOC10</strong> (-10%): beneficio exclusivo para la comunidad Duoc UC (<code>@duocuc.cl</code> / <code>@profesor.duoc.cl</code>).
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-start gap-1">
+                        <i className="bi bi-info-circle flex-shrink-0 mt-0.5" style={{ color: 'var(--color-caramelo)' }}></i>
+                        <span>
+                          <strong>FELICES50</strong> (-50%): beneficio especial por aniversario para clientes de 50 años o más.
+                        </span>
+                      </div>
                     </div>
                   </div>
                 )}

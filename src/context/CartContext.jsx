@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { cartService, VALID_COUPONS, DEFAULT_SCHEDULING } from '../services/db';
+import { cartService, authService, isDuocEmail, VALID_COUPONS, DEFAULT_SCHEDULING } from '../services/db';
 
 const CartContext = createContext(null);
 
@@ -87,14 +87,26 @@ export function CartProvider({ children }) {
     return updated;
   };
 
-  const applyCoupon = (code) => {
+  const applyCoupon = (code, userEmail = null) => {
     const normalized = (code || '').trim().toUpperCase();
-    if (VALID_COUPONS[normalized]) {
-      setCouponCode(normalized);
-      localStorage.setItem('mil_sabores_cupon_activo', normalized);
-      return { success: true, coupon: VALID_COUPONS[normalized] };
+    if (!VALID_COUPONS[normalized]) {
+      return { success: false, message: 'Cupón no válido o expirado.' };
     }
-    return { success: false, message: 'Cupón no válido o expirado.' };
+
+    if (normalized === 'DUOC10') {
+      const activeUser = authService.getCurrentUser();
+      const emailToCheck = (userEmail || activeUser?.correo || '').trim();
+      if (!isDuocEmail(emailToCheck)) {
+        return {
+          success: false,
+          message: 'El cupón DUOC10 es exclusivo para la comunidad Duoc UC (@duocuc.cl / @profesor.duoc.cl). Ingresa tu correo institucional en los datos de contacto para activarlo.'
+        };
+      }
+    }
+
+    setCouponCode(normalized);
+    localStorage.setItem('mil_sabores_cupon_activo', normalized);
+    return { success: true, coupon: VALID_COUPONS[normalized] };
   };
 
   const removeCoupon = () => {

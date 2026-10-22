@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderService, productService, SUCURSALES_RETIRO } from '../services/db';
+import { orderService, productService, SUCURSALES_RETIRO, isDuocEmail } from '../services/db';
 import { REGIONES_Y_COMUNAS } from '../services/chileData';
 import QuantitySelector from '../components/cart/QuantitySelector';
 import AlertMessage from '../components/common/AlertMessage';
@@ -85,6 +85,15 @@ export default function Checkout() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === 'correo' && totals.cupon?.codigo === 'DUOC10') {
+      if (value.trim() && !isDuocEmail(value.trim())) {
+        removeCoupon();
+        setCouponMsg({
+          text: 'El cupón DUOC10 fue removido porque el correo ingresado no pertenece a Duoc UC (@duocuc.cl / @profesor.duoc.cl).',
+          type: 'danger'
+        });
+      }
+    }
   };
 
   const handleRegionChange = (e) => {
@@ -102,7 +111,8 @@ export default function Checkout() {
     setCouponMsg({ text: '', type: '' });
     if (!code) return;
 
-    const res = applyCoupon(code);
+    const emailToValidate = (formData.correo || currentUser?.correo || '').trim().toLowerCase();
+    const res = applyCoupon(code, emailToValidate);
     if (res.success) {
       setCouponMsg({
         text: `Cupón "${res.coupon.codigo}" aplicado con éxito (-${res.coupon.porcentaje}% de descuento).`,
@@ -138,6 +148,14 @@ export default function Checkout() {
     if (!isRetiro && (!formData.calle.trim() || !formData.region || !formData.comuna)) {
       setError('Por favor ingresa tu calle, número, región y comuna para el despacho a domicilio.');
       return;
+    }
+
+    if (totals.cupon?.codigo === 'DUOC10') {
+      const email = (formData.correo || currentUser?.correo || '').trim().toLowerCase();
+      if (!isDuocEmail(email)) {
+        setError('El cupón DUOC10 es exclusivo para la comunidad Duoc UC (@duocuc.cl, @profesor.duoc.cl o @duoc.cl). Por favor ingresa tu correo institucional en los datos de contacto.');
+        return;
+      }
     }
 
     if (cart.length === 0) {
@@ -804,23 +822,20 @@ export default function Checkout() {
                           </button>
                         </div>
 
-                        {/* Chips oficiales vigentes: FELICES50 y DUOC10 */}
-                        <div className="mt-2 pt-2 border-top d-flex align-items-center gap-1 flex-wrap" style={{ borderColor: 'rgba(213, 185, 154, 0.4)' }}>
-                          <span className="text-muted" style={{ fontSize: '0.7rem' }}>Disponibles:</span>
-                          <button
-                            type="button"
-                            className="cupon-chip"
-                            onClick={() => handleApplyCoupon('FELICES50')}
-                          >
-                            FELICES50 (-50%)
-                          </button>
-                          <button
-                            type="button"
-                            className="cupon-chip"
-                            onClick={() => handleApplyCoupon('DUOC10')}
-                          >
-                            DUOC10 (-10%)
-                          </button>
+                        {/* Nota informativa estándar e-commerce sin botones píldora */}
+                        <div className="mt-2 pt-2 border-top text-muted" style={{ borderColor: 'rgba(213, 185, 154, 0.4)', fontSize: '0.72rem', lineHeight: '1.4' }}>
+                          <div className="d-flex align-items-start gap-1 mb-1">
+                            <i className="bi bi-info-circle flex-shrink-0 mt-0.5" style={{ color: 'var(--color-caramelo)' }}></i>
+                            <span>
+                              <strong>DUOC10</strong> (-10%): exclusivo con correo institucional (<code>@duocuc.cl</code> / <code>@profesor.duoc.cl</code>).
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-start gap-1">
+                            <i className="bi bi-info-circle flex-shrink-0 mt-0.5" style={{ color: 'var(--color-caramelo)' }}></i>
+                            <span>
+                              <strong>FELICES50</strong> (-50%): beneficio 50 años para clientes de 50 años o más.
+                            </span>
+                          </div>
                         </div>
                       </div>
                     )}

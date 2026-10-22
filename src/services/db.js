@@ -432,8 +432,14 @@ export const INITIAL_ORDERS = [
 
 export const VALID_COUPONS = {
   'FELICES50': { codigo: 'FELICES50', porcentaje: 50, nombre: 'Especial 50 Años (50% OFF)' },
-  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' }
+  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)', soloDuoc: true }
 };
+
+export function isDuocEmail(email) {
+  if (!email || typeof email !== 'string') return false;
+  const lower = email.trim().toLowerCase();
+  return lower.endsWith('@duocuc.cl') || lower.endsWith('@profesor.duoc.cl') || lower.endsWith('@duoc.cl');
+}
 
 // -------------------------------------------------------------
 // HELPERS LOCALSTORAGE
@@ -675,6 +681,8 @@ export const userService = {
 // -------------------------------------------------------------
 // OPERACIONES CRUD — ÓRDENES / BOLETAS
 // -------------------------------------------------------------
+export const authService = userService;
+
 export const orderService = {
   getAll() {
     return readStorage(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
