@@ -273,14 +273,77 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Espacio para mapa de ubicación */}
-              <div className="caja-mapa-placeholder mt-auto">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-                  <line x1="8" y1="2" x2="8" y2="18"></line>
-                  <line x1="16" y1="6" x2="16" y2="22"></line>
-                </svg>
-                <span>Espacio para mapa de ubicación</span>
+              {/* Guía de llegada y accesibilidad del local */}
+              <div className="tarjeta-guia-visita mt-auto">
+                <div className="tarjeta-guia-cabecera">
+                  <span className="tarjeta-guia-badge">Datos útiles</span>
+                  <h4 className="tarjeta-guia-titulo">Cómo llegar & Servicios</h4>
+                </div>
+
+                <div className="tarjeta-guia-grilla">
+                  {/* Metro */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="4" y="3" width="16" height="15" rx="3"></rect>
+                        <path d="M4 11h16"></path>
+                        <path d="M8 8v.01"></path>
+                        <path d="M16 8v.01"></path>
+                        <path d="M8 18l-2 3"></path>
+                        <path d="M16 18l2 3"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Metro Manuel Montt (L1)</strong>
+                      <span>A 3 cuadras caminando por Av. Providencia</span>
+                    </div>
+                  </div>
+
+                  {/* Estacionamiento */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                        <path d="M9 17V7h4a3 3 0 0 1 0 6H9"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Estacionamiento</strong>
+                      <span>Espacios para clientes por Providencia y calles aledañas</span>
+                    </div>
+                  </div>
+
+                  {/* Terraza Pet-Friendly */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="4" r="2"></circle>
+                        <circle cx="18" cy="8" r="2"></circle>
+                        <circle cx="20" cy="16" r="2"></circle>
+                        <path d="M9 10a5 5 0 0 1 5 5v3.5a2.5 2.5 0 0 1-5 0V15a3 3 0 0 0-3-3H4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Terraza Pet-Friendly</strong>
+                      <span>Mascotas bienvenidas con platitos de agua fresca</span>
+                    </div>
+                  </div>
+
+                  {/* Bicicletero y Rampa */}
+                  <div className="tarjeta-guia-item">
+                    <div className="tarjeta-guia-icono">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                        <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5L9 9l4-3 3 4h4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>Bicicletero & Rampa</strong>
+                      <span>Acceso universal continuo y zona segura para bicicletas</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
