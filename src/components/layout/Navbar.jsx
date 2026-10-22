@@ -57,13 +57,9 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* 2. Logo CENTRADO estilo Baker */}
-        <Link to="/" className="logo-centrado">
+        {/* 2. Logo CENTRADO: Solo la imagen del MS */}
+        <Link to="/" className="logo-centrado" aria-label="Mil Sabores - Inicio">
           <img src="/img/logo-ms.png" alt="Mil Sabores" className="logo-ms-centro" />
-          <div className="logo-textos-centro">
-            <span className="logo-marca-centro">Mil Sabores</span>
-            <span className="logo-submarca-centro">Pastelería & Café</span>
-          </div>
         </Link>
 
         {/* 3. Navegación Derecha + Acciones (Desktop) */}

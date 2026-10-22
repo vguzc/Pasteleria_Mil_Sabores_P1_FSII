@@ -82,7 +82,7 @@ export default function ProductCard({ product, onAddToCart }) {
               disabled={product.stock <= 0}
               style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
             >
-              {agregadoAnim ? '✓ Listo' : '+ Agregar'}
+              {agregadoAnim ? 'Agregado' : '+ Agregar'}
             </button>
           </div>
         </div>
