@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" width="100%" height="auto">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@800&amp;family=Montserrat:wght@700&amp;display=swap');
+      .bubbly-left { font-family: 'Sniglet', cursive; text-anchor: start; }
+      .sans-sub-left { font-family: 'Montserrat', sans-serif; text-anchor: start; font-weight: 700; }
+    </style>
+  </defs>
+  
+  <!-- Grupo del Icono (Taza Cozy) alineado a la izquierda -->
+  <g transform="translate(150, 125)">
+    <!-- Taza Cozy -->
+    <path d="M-35,0 L35,0 L25,45 C20,60 -20,60 -25,45 Z" fill="#8B4513"/>
+    <!-- Asa de la taza -->
+    <path d="M35,10 C55,10 55,35 28,35" fill="none" stroke="#8B4513" stroke-width="8" stroke-linecap="round"/>
+    <!-- Corona de Muffin / Espuma de Café -->
+    <path d="M-40,0 C-40,-35 40,-35 40,0 Z" fill="#D2691E"/>
+    <!-- Detalle de Corazón en la taza -->
+    <path d="M0,15 C-10,15 -15,25 0,38 C15,25 10,15 0,15 Z" fill="#FFF5E1"/>
+    <!-- Ondas de Vapor cálido -->
+    <path d="M-12,-25 Q-20,-40 -10,-55" fill="none" stroke="#FFC0CB" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M10,-20 Q2,-35 12,-50" fill="none" stroke="#FFC0CB" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Textos colocados al lado derecho del icono y alineados a la izquierda -->
+  <text x="240" y="135" class="bubbly-left" font-size="64" fill="#8B4513" letter-spacing="1.5">MIL SABORES</text>
+  <text x="245" y="175" class="sans-sub-left" font-size="14" fill="#5D4037" letter-spacing="6">CAFÉ &amp; PASTELERÍA</text>
+</svg>
