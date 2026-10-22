@@ -57,39 +57,29 @@ export default function Cart() {
   const selectedBranchName = scheduling?.sucursalRetiro || 'Mil Sabores Chicureo';
 
   return (
-    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
-      {/* 1. Hero Editorial de la Bolsa de Compras (Mismo estilo que Catálogo, Contacto y Nosotros) */}
-      <section className="catalogo-hero-banner mb-4">
-        <div className="contenedor">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div>
-              <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.35rem' }}>
-                Tu Selección Artesanal
-              </span>
-              <h1 className="catalogo-hero-titulo" style={{ margin: '0.2rem 0 0.7rem 0' }}>
-                Bolsa de Compras
-              </h1>
-              <div className="adorno-baker" style={{ margin: '0.5rem 0 1rem 0' }} />
-              <p className="catalogo-hero-desc" style={{ marginBottom: 0 }}>
-                Revisa tus productos seleccionados, ajusta las porciones y programa tu fecha de entrega antes de pasar al pago seguro.
-              </p>
-            </div>
-            {cart.length > 0 && (
-              <div>
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={clearCart}
-                  style={{ fontSize: '0.82rem' }}
-                >
-                  <i className="bi bi-trash3 me-1"></i>Vaciar Bolsa
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '2.5rem 0 6rem 0' }}>
       <div className="contenedor">
+        {/* Encabezado limpio de la Bolsa de Compras (sin breadcrumbs) */}
+        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 pt-2">
+          <div>
+            <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+              Tu Selección
+            </span>
+            <h1 className="seccion-baker-titulo" style={{ fontSize: '2.4rem', textAlign: 'left', margin: 0 }}>
+              Bolsa de Compras
+            </h1>
+          </div>
+          {cart.length > 0 && (
+            <button
+              className="btn btn-outline-danger btn-sm"
+              onClick={clearCart}
+              style={{ fontSize: '0.8rem' }}
+            >
+              <i className="bi bi-trash3 me-1"></i>Vaciar Bolsa
+            </button>
+          )}
+        </div>
+
         {/* Alerta de límite de stock en tiempo real */}
         {stockNotice && (
           <div
