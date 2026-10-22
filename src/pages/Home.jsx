@@ -17,10 +17,10 @@ export default function Home() {
 
   useEffect(() => {
     const allProducts = productService.getAll();
-    // Especialidades principales (Tres Leches, Amor Lúcuma, Cheesecake Sin Gluten, Strudel de Manzana)
-    const espIds = ['TC001', 'TC003', 'SG001', 'PT005'];
+    // Especialidades principales (3 delicias emblemáticas para un diseño armónico y equilibrado)
+    const espIds = ['TC001', 'TC003', 'SG001'];
     const esp = allProducts.filter(p => espIds.includes(p.id));
-    setEspecialidades(esp.length > 0 ? esp : allProducts.slice(0, 4));
+    setEspecialidades(esp.length >= 3 ? esp.slice(0, 3) : allProducts.slice(0, 3));
 
     // Categorías principales
     setCategories(categoryService.getAll().slice(0, 4));
@@ -61,7 +61,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grilla-productos">
+          <div className="grilla-productos" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', maxWidth: '1080px', margin: '0 auto 2.5rem auto' }}>
             {especialidades.map((prod) => (
               <ProductCard key={prod.id} product={prod} onAddToCart={addItem} />
             ))}
