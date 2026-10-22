@@ -14,6 +14,30 @@ const STORAGE_KEYS = {
   SCHEDULING: 'mil_sabores_react_agendamiento'
 };
 
+export const SUCURSALES_RETIRO = [
+  {
+    id: 'chicureo',
+    nombre: 'Mil Sabores Chicureo',
+    direccion: 'P.º Colina Sur 14600',
+    comuna: 'Colina, 9340000',
+    info: 'Lunes a Domingo de 10:00 a 20:00 hrs. Retiro en mesón de entrega con tu orden.'
+  },
+  {
+    id: 'providencia',
+    nombre: 'Taller Central Manuel Montt',
+    direccion: 'Av. Providencia 1200',
+    comuna: 'Providencia, 7500000',
+    info: 'Lunes a Domingo de 10:00 a 20:30 hrs. A pasos de la estación Metro Manuel Montt.'
+  },
+  {
+    id: 'lascondes',
+    nombre: 'Sucursal Las Condes',
+    direccion: 'Av. Las Condes 9500',
+    comuna: 'Las Condes, 7550000',
+    info: 'Lunes a Domingo de 10:30 a 19:30 hrs. Estacionamiento privado disponible.'
+  }
+];
+
 export const DEFAULT_SCHEDULING = {
   modalidad: 'despacho', // 'despacho' | 'retiro'
   tipoModo: 'hoy', // 'hoy' | 'despacho_programado' | 'retiro_programado'
@@ -21,7 +45,7 @@ export const DEFAULT_SCHEDULING = {
   franjaHoraria: 'tarde', // 'manana' | 'tarde' | 'atardecer'
   dedicatoria: '',
   comuna: 'Providencia',
-  sucursalRetiro: 'Factory Nine Chicureo',
+  sucursalRetiro: 'Mil Sabores Chicureo',
   direccionRetiro: 'P.º Colina Sur 14600, Colina, Santiago'
 };
 
@@ -831,8 +855,25 @@ export const cartService = {
 
     const baseImponible = Math.max(0, subtotal - descuento);
     const iva = Math.round(baseImponible * 0.19);
-    // Retiro en tienda = envio $0; despacho gratis si subtotal > $30.000, o $3.990
-    const envio = (cart.length === 0 || deliveryType === 'retiro') ? 0 : (subtotal >= 30000 ? 0 : 3990);
+    // Regla de envío oficial alineada con el Drawer y el Checkout:
+    // 1. Carrito vacío o retiro en pastelería = $0
+    // 2. Despacho gratis si subtotal >= $30.000 ($0)
+    // 3. Tarifa preferencial con ahorro de $2.000 (envío a $1.990) si subtotal >= $20.000
+    // 4. Tarifa estándar de $3.990 si subtotal < $20.000
+    let envio = 0;
+    let ahorroEnvio = 0;
+    if (cart.length > 0 && deliveryType !== 'retiro') {
+      if (subtotal >= 30000) {
+        envio = 0;
+        ahorroEnvio = 3990;
+      } else if (subtotal >= 20000) {
+        envio = 1990;
+        ahorroEnvio = 2000;
+      } else {
+        envio = 3990;
+        ahorroEnvio = 0;
+      }
+    }
     const total = baseImponible + envio;
 
     return {
@@ -841,6 +882,8 @@ export const cartService = {
       cupon: cuponAplicado,
       iva,
       envio,
+      ahorroEnvio,
+      envioGratis: (cart.length > 0 && deliveryType !== 'retiro' && subtotal >= 30000),
       total,
       itemsCount: cart.reduce((acc, item) => acc + item.cantidad, 0)
     };

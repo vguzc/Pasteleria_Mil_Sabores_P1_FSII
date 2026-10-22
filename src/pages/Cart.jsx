@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { SUCURSALES_RETIRO } from '../services/db';
 import QuantitySelector from '../components/cart/QuantitySelector';
 import AlertMessage from '../components/common/AlertMessage';
 
@@ -31,13 +32,14 @@ export default function Cart() {
   tomorrow.setDate(today.getDate() + 1);
   const tomorrowStr = tomorrow.toISOString().split('T')[0];
 
-  const handleApplyCoupon = (e) => {
-    e.preventDefault();
+  const handleApplyCoupon = (e, codeToApply) => {
+    if (e && e.preventDefault) e.preventDefault();
     setCouponError('');
     setCouponSuccess('');
-    if (!inputCoupon.trim()) return;
+    const code = (typeof codeToApply === 'string' ? codeToApply : inputCoupon).trim();
+    if (!code) return;
 
-    const res = applyCoupon(inputCoupon);
+    const res = applyCoupon(code);
     if (res.success) {
       setCouponSuccess(`¡Cupón "${res.coupon.codigo}" aplicado con éxito! (${res.coupon.porcentaje}% de descuento)`);
       setInputCoupon('');
@@ -51,6 +53,8 @@ export default function Cart() {
   };
 
   const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val || 0);
+
+  const selectedBranchName = scheduling?.sucursalRetiro || 'Mil Sabores Chicureo';
 
   return (
     <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '3.5rem 0 6rem 0' }}>
@@ -156,44 +160,45 @@ export default function Cart() {
                                 />
                               </td>
                               <td>
-                                <Link to={`/producto/${item.id}`} className="text-decoration-none fw-bold small d-block" style={{ color: 'var(--color-espresso)' }}>
+                                <strong style={{ color: 'var(--color-espresso)', fontSize: '0.92rem' }}>
                                   {item.nombre}
-                                </Link>
-                                <div className="d-flex align-items-center gap-2 mt-1">
-                                  <span className="small text-muted" style={{ fontSize: '0.75rem' }}>{item.categoria}</span>
-                                  {isMax && (
-                                    <span className="badge" style={{ fontSize: '0.65rem', backgroundColor: '#FAF4EC', color: '#B54234', border: '1px solid var(--color-borde)' }}>
-                                      Máx. {itemStock} unid.
-                                    </span>
-                                  )}
-                                </div>
-                              </td>
-                              <td className="text-end small">
-                                {formatPrice(item.precio)}
-                              </td>
-                              <td className="text-center">
-                                <QuantitySelector
-                                  value={item.cantidad}
-                                  onChange={(val) => updateQuantity(item.id, val)}
-                                  min={1}
-                                  max={itemStock}
-                                  size="sm"
-                                />
-                                {isMax && (
-                                  <span className="d-block text-danger fw-semibold mt-1" style={{ fontSize: '0.68rem' }}>
-                                    Límite de stock alcanzado
+                                </strong>
+                                {item.porciones && (
+                                  <span className="text-muted small d-block" style={{ fontSize: '0.78rem' }}>
+                                    Formato: {item.porciones} porciones
+                                  </span>
+                                )}
+                                {item.stock <= 5 && (
+                                  <span className="badge bg-warning text-dark mt-1" style={{ fontSize: '0.7rem' }}>
+                                    ¡Solo quedan {item.stock} en taller!
                                   </span>
                                 )}
                               </td>
-                              <td className="text-end fw-bold small" style={{ color: 'var(--color-caramelo)' }}>
+                              <td className="text-end small">{formatPrice(item.precio)}</td>
+                              <td className="text-center">
+                                <div className="d-inline-block">
+                                  <QuantitySelector
+                                    quantity={item.cantidad}
+                                    min={1}
+                                    max={itemStock}
+                                    onChange={(newQty) => updateQuantity(item.id, newQty)}
+                                  />
+                                  {isMax && (
+                                    <div className="text-danger mt-1" style={{ fontSize: '0.7rem' }}>
+                                      Máximo alcanzado ({itemStock})
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="text-end fw-bold" style={{ color: 'var(--color-caramelo)' }}>
                                 {formatPrice(item.subtotal)}
                               </td>
                               <td className="text-center">
                                 <button
-                                  type="button"
-                                  className="btn btn-sm btn-outline-danger py-0 px-2"
-                                  title="Eliminar producto"
+                                  className="btn btn-outline-danger btn-sm border-0"
                                   onClick={() => removeItem(item.id)}
+                                  title="Eliminar producto"
+                                  aria-label={`Eliminar ${item.nombre}`}
                                 >
                                   <i className="bi bi-trash3"></i>
                                 </button>
@@ -216,7 +221,7 @@ export default function Cart() {
                   </h5>
                 </div>
                 <p className="text-muted small mb-4">
-                  Elaboramos nuestros productos diariamente de forma artesanal. Elige el día, el bloque horario y si deseas recibirlo a domicilio o retirarlo en nuestra pastelería.
+                  Elaboramos nuestros productos diariamente de forma artesanal. Elige el día, el bloque horario y si deseas recibirlo a domicilio o retirarlo en nuestras pastelerías.
                 </p>
 
                 {/* 1. Selección de Modalidad */}
@@ -275,7 +280,7 @@ export default function Cart() {
                               onChange={() => updateScheduling({ modalidad: 'retiro' })}
                             />
                             <label className="form-check-label fw-bold" htmlFor="modoRetiro" style={{ color: 'var(--color-espresso)' }}>
-                              Retiro en Pastelería
+                              Retiro en Sucursal
                             </label>
                           </div>
                           <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>
@@ -283,12 +288,33 @@ export default function Cart() {
                           </span>
                         </div>
                         <p className="text-muted small mt-2 mb-0" style={{ fontSize: '0.78rem' }}>
-                          Av. Providencia 1200 (Metro Manuel Montt). Listo sin costo de envío.
+                          Disponible en Chicureo, Providencia o Las Condes sin costo de envío.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Sub-selector de sucursal si modalidad es retiro */}
+                {scheduling?.modalidad === 'retiro' && (
+                  <div className="mb-4 p-3 rounded-3 border" style={{ backgroundColor: '#FAF4EC', borderColor: 'var(--color-caramelo)' }}>
+                    <label className="form-label small fw-bold d-block mb-2" style={{ color: 'var(--color-espresso)' }}>
+                      Elige la sucursal de retiro:
+                    </label>
+                    <select
+                      className="form-select form-select-sm"
+                      value={selectedBranchName}
+                      onChange={(e) => updateScheduling({ sucursalRetiro: e.target.value })}
+                      style={{ borderColor: 'var(--color-borde)' }}
+                    >
+                      {SUCURSALES_RETIRO.map((branch) => (
+                        <option key={branch.id} value={branch.nombre}>
+                          {branch.nombre} — {branch.direccion}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {/* 2. Selección de Fecha y Franja Horaria */}
                 <div className="row g-3 mb-4">
@@ -381,23 +407,47 @@ export default function Cart() {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleApplyCoupon} className="d-flex gap-2">
-                    <input
-                      type="text"
-                      className="form-control form-control-sm"
-                      placeholder="Ej: FELICES50, DUOC10"
-                      value={inputCoupon}
-                      onChange={(e) => setInputCoupon(e.target.value)}
-                      style={{ borderColor: 'var(--color-borde)', maxWidth: '280px' }}
-                    />
-                    <button type="submit" className="boton boton-primario btn-baker" style={{ padding: '0.45rem 1.1rem', fontSize: '0.82rem' }}>
-                      Aplicar Cupón
-                    </button>
-                  </form>
+                  <div>
+                    <form onSubmit={(e) => handleApplyCoupon(e, inputCoupon)} className="d-flex gap-2">
+                      <input
+                        type="text"
+                        className="form-control form-control-sm"
+                        placeholder="Ej: FELICES50, DUOC10"
+                        value={inputCoupon}
+                        onChange={(e) => setInputCoupon(e.target.value)}
+                        style={{ borderColor: 'var(--color-borde)', maxWidth: '280px' }}
+                      />
+                      <button type="submit" className="boton boton-primario btn-baker" style={{ padding: '0.45rem 1.1rem', fontSize: '0.82rem' }}>
+                        Aplicar Cupón
+                      </button>
+                    </form>
+
+                    <div className="mt-3 pt-2 border-top d-flex align-items-center gap-2 flex-wrap" style={{ borderColor: 'var(--color-borde)' }}>
+                      <span className="text-muted" style={{ fontSize: '0.74rem' }}>Cupones oficiales:</span>
+                      <button
+                        type="button"
+                        className="cupon-chip"
+                        onClick={(e) => handleApplyCoupon(e, 'FELICES50')}
+                      >
+                        FELICES50 (-50%)
+                      </button>
+                      <button
+                        type="button"
+                        className="cupon-chip"
+                        onClick={(e) => handleApplyCoupon(e, 'DUOC10')}
+                      >
+                        DUOC10 (-10%)
+                      </button>
+                      <button
+                        type="button"
+                        className="cupon-chip"
+                        onClick={(e) => handleApplyCoupon(e, 'ESPECIAL18')}
+                      >
+                        ESPECIAL18 (-15%)
+                      </button>
+                    </div>
+                  </div>
                 )}
-                <div className="mt-2 small text-muted">
-                  Cupones oficiales: <code style={{ color: 'var(--color-caramelo)' }}>FELICES50</code> (50% OFF para mayores de 50) | <code style={{ color: 'var(--color-caramelo)' }}>DUOC10</code> (10% OFF Convenio Duoc UC)
-                </div>
               </div>
             </div>
 
@@ -415,7 +465,7 @@ export default function Cart() {
                     Entrega Programada:
                   </div>
                   <div className="small text-muted">
-                    Modalidad: <strong>{scheduling?.modalidad === 'retiro' ? 'Retiro en Pastelería' : 'Despacho a Domicilio'}</strong>
+                    Modalidad: <strong>{scheduling?.modalidad === 'retiro' ? `Retiro en ${selectedBranchName}` : 'Despacho a Domicilio'}</strong>
                   </div>
                   {scheduling?.fecha && (
                     <div className="small text-muted">
@@ -437,7 +487,7 @@ export default function Cart() {
 
                   {totals.descuento > 0 && (
                     <li className="list-group-item d-flex justify-content-between px-0 text-danger fw-bold bg-transparent border-0">
-                      <span>Descuento cupón:</span>
+                      <span>Descuento cupón ({totals.cupon?.codigo}):</span>
                       <span>-{formatPrice(totals.descuento)}</span>
                     </li>
                   )}
@@ -454,6 +504,11 @@ export default function Cart() {
                         <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>Gratis (Retiro)</span>
                       ) : totals.envio === 0 ? (
                         <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>Gratis</span>
+                      ) : totals.subtotal >= 20000 ? (
+                        <span>
+                          {formatPrice(totals.envio)}
+                          <small className="text-success d-block text-end" style={{ fontSize: '0.7rem' }}>Ahorras $2.000</small>
+                        </span>
                       ) : (
                         formatPrice(totals.envio)
                       )}
@@ -472,7 +527,7 @@ export default function Cart() {
                   onClick={handleProceedToCheckout}
                   style={{ padding: '0.85rem 1.25rem' }}
                 >
-                  <i className="bi bi-credit-card me-2"></i>Ir a Pagar
+                  <i className="bi bi-credit-card me-2"></i>Continuar al Pago Seguro
                 </button>
 
                 <div className="text-center mt-3">

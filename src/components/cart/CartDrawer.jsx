@@ -2,30 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { REGIONES_Y_COMUNAS } from '../../services/chileData';
-
-const SUCURSALES_RETIRO = [
-  {
-    id: 'chicureo',
-    nombre: 'Factory Nine Chicureo',
-    direccion: 'P.º Colina Sur 14600',
-    comuna: 'colina, 9340000',
-    info: 'Lunes a Domingo de 10:00 a 20:00 hrs. Retiro en mesón de entrega con tu orden.'
-  },
-  {
-    id: 'providencia',
-    nombre: 'Taller Central Manuel Montt',
-    direccion: 'Av. Providencia 1200',
-    comuna: 'Providencia, 7500000',
-    info: 'Lunes a Domingo de 10:00 a 20:30 hrs. A pasos de la estación Metro Manuel Montt.'
-  },
-  {
-    id: 'lascondes',
-    nombre: 'Sucursal Las Condes',
-    direccion: 'Av. Las Condes 9500',
-    comuna: 'Las Condes, 7550000',
-    info: 'Lunes a Domingo de 10:30 a 19:30 hrs. Estacionamiento privado disponible.'
-  }
-];
+import { SUCURSALES_RETIRO } from '../../services/db';
 
 export default function CartDrawer() {
   const {
@@ -57,7 +34,7 @@ export default function CartDrawer() {
 
   // Sucursal de retiro seleccionada
   const [selectedBranch, setSelectedBranch] = useState(
-    scheduling?.sucursalRetiro || 'Factory Nine Chicureo'
+    scheduling?.sucursalRetiro || 'Mil Sabores Chicureo'
   );
   const [infoBranchVisible, setInfoBranchVisible] = useState(null);
 
@@ -96,10 +73,13 @@ export default function CartDrawer() {
 
   const formatPrice = (val) => '$' + Number(val || 0).toLocaleString('es-CL');
 
-  // Barra de ahorro de envío (meta $20.000 como en la Imagen 3)
-  const metaEnvio = 20000;
-  const restanteAhorro = Math.max(0, metaEnvio - totals.subtotal);
-  const porcentajeAhorro = Math.min(100, Math.round((totals.subtotal / metaEnvio) * 100));
+  // Barra de ahorro de envío sincronizada:
+  // - A los $20.000 se ahorran $2.000 (despacho a $1.990)
+  // - A los $30.000 el despacho es 100% gratis ($0)
+  const metaAhorro = 20000;
+  const metaGratis = 30000;
+  const restanteAhorro = Math.max(0, metaAhorro - totals.subtotal);
+  const porcentajeProgreso = Math.min(100, Math.round((totals.subtotal / metaGratis) * 100));
 
   const handleContinue = () => {
     const isRetiro = activeMode === 'retiro_programado';
@@ -157,20 +137,24 @@ export default function CartDrawer() {
         {cart.length > 0 && (
           <div className="fn-cart-savings-bar">
             <div className="fn-cart-savings-text">
-              {restanteAhorro > 0 ? (
+              {totals.subtotal >= metaGratis ? (
                 <>
-                  Agrega <strong>{formatPrice(restanteAhorro)}</strong> más y ahorra <strong>$2.000</strong> en tu envío
+                  <strong>¡Envío 100% gratis conseguido!</strong> Tu compra califica para despacho gratuito.
+                </>
+              ) : totals.subtotal >= metaAhorro ? (
+                <>
+                  <strong>¡Ahorro de $2.000 conseguido!</strong> Despacho preferencial a $1.990 (gratis desde {formatPrice(metaGratis)}).
                 </>
               ) : (
                 <>
-                  <strong>¡Ahorro de $2.000 conseguido!</strong> Tienes tarifa preferencial de envío
+                  Agrega <strong>{formatPrice(restanteAhorro)}</strong> más y ahorra <strong>$2.000</strong> en tu envío
                 </>
               )}
             </div>
             <div className="fn-cart-savings-track">
               <div
                 className="fn-cart-savings-progress"
-                style={{ width: `${porcentajeAhorro}%` }}
+                style={{ width: `${porcentajeProgreso}%` }}
               />
             </div>
           </div>

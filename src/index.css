@@ -4377,3 +4377,191 @@ h3 { font-size: 1.35rem; }
   }
 }
 
+
+
+/* ==========================================================================
+   FRANJAS DEL CHECKOUT (INFORMACIÓN PERSONAL & PAGO SEGURO)
+   ========================================================================== */
+.franja-checkout-panel {
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 14px;
+  padding: 2.2rem 2.4rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 18px rgba(44, 30, 22, 0.04);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.franja-checkout-panel:hover {
+  box-shadow: 0 6px 24px rgba(44, 30, 22, 0.07);
+}
+
+.franja-checkout-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.franja-checkout-numero {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-espresso);
+  color: var(--color-blanco);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: var(--fuente-titulos);
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(44, 30, 22, 0.2);
+}
+
+.franja-checkout-titulo {
+  font-family: var(--fuente-titulos);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-espresso);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.franja-checkout-bajada {
+  font-size: 0.86rem;
+  color: var(--color-texto-secundario);
+  margin: 0.25rem 0 0 0;
+}
+
+.franja-checkout-subtitulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-chocolate);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkout-mode-card {
+  padding: 1rem 1.15rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-borde);
+  background-color: var(--color-superficie);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkout-mode-card:hover {
+  border-color: var(--color-caramelo);
+  background-color: #FAF5EF;
+}
+
+.checkout-mode-card.is-active {
+  border-color: var(--color-caramelo);
+  background-color: #FAF4EC;
+  box-shadow: 0 2px 8px rgba(199, 137, 74, 0.12);
+}
+
+.checkout-branch-item {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-blanco);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 0.6rem;
+}
+
+.checkout-branch-item:hover {
+  border-color: var(--color-caramelo);
+}
+
+.checkout-branch-item.is-selected {
+  border-color: var(--color-caramelo);
+  background-color: #FAF5EF;
+  border-width: 1.5px;
+}
+
+.caja-cupon-checkout {
+  background-color: #FAF7F2;
+  border: 1px dashed #D5B99A;
+  border-radius: 10px;
+  padding: 1.15rem;
+}
+
+.cupon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid var(--color-caramelo);
+  background: #FFFBF6;
+  color: var(--color-espresso);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cupon-chip:hover {
+  background: var(--color-caramelo);
+  color: var(--color-blanco);
+}
+
+.caja-resumen-pago {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 100%);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 1.4rem;
+}
+
+.btn-pagar-webpay {
+  background: linear-gradient(135deg, var(--color-espresso) 0%, #3D2619 100%);
+  color: var(--color-blanco);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.95rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(44, 30, 22, 0.25);
+  transition: all 0.25s ease;
+}
+
+.btn-pagar-webpay:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-chocolate) 0%, var(--color-caramelo) 100%);
+  color: var(--color-blanco);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(199, 137, 74, 0.35);
+}
+
+.btn-pagar-webpay:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .franja-checkout-panel {
+    padding: 1.4rem 1.1rem;
+    border-radius: 10px;
+    margin-bottom: 1.4rem;
+  }
+  .franja-checkout-titulo {
+    font-size: 1.25rem;
+  }
+  .franja-checkout-numero {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+}
