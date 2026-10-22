@@ -146,7 +146,7 @@ export default function CartDrawer() {
             onClick={closeDrawer}
             aria-label="Cerrar carrito"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -292,7 +292,7 @@ export default function CartDrawer() {
                   onClick={() => setActiveMode('hoy')}
                 >
                   <div className="fn-cart-mode-icon">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
                       <path d="M2 12h20"></path>
@@ -310,7 +310,7 @@ export default function CartDrawer() {
                   onClick={() => setActiveMode('despacho_programado')}
                 >
                   <div className="fn-cart-mode-icon">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="1" y="3" width="15" height="13"></rect>
                       <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
                       <circle cx="5.5" cy="18.5" r="2.5"></circle>
@@ -329,7 +329,7 @@ export default function CartDrawer() {
                   onClick={() => setActiveMode('retiro_programado')}
                 >
                   <div className="fn-cart-mode-icon">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                       <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
@@ -352,7 +352,7 @@ export default function CartDrawer() {
                 {/* Estado 2: Programar envío próximos días (Imagen 4) */}
                 {activeMode === 'despacho_programado' && (
                   <div>
-                    <label className="form-label small fw-bold mb-1 text-dark">
+                    <label className="form-label small fw-bold mb-1" style={{ color: 'var(--color-espresso)' }}>
                       Indica tu comuna de entrega:
                     </label>
                     <div className="position-relative">
@@ -387,6 +387,7 @@ export default function CartDrawer() {
                               key={c}
                               type="button"
                               className="list-group-item list-group-item-action py-2 small text-start"
+                              style={{ color: 'var(--color-espresso)' }}
                               onClick={() => handleSelectComuna(c)}
                             >
                               {c}
@@ -398,21 +399,23 @@ export default function CartDrawer() {
 
                     <div className="row g-2 mt-2">
                       <div className="col-6">
-                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Fecha de entrega:</label>
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: 'var(--color-texto-secundario)' }}>Fecha de entrega:</label>
                         <input
                           type="date"
                           className="form-control form-control-sm"
                           value={selectedDate}
                           min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
                           onChange={(e) => setSelectedDate(e.target.value)}
+                          style={{ borderColor: 'var(--color-borde)', color: 'var(--color-espresso)' }}
                         />
                       </div>
                       <div className="col-6">
-                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Bloque horario:</label>
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: 'var(--color-texto-secundario)' }}>Bloque horario:</label>
                         <select
                           className="form-select form-select-sm"
                           value={selectedTime}
                           onChange={(e) => setSelectedTime(e.target.value)}
+                          style={{ borderColor: 'var(--color-borde)', color: 'var(--color-espresso)' }}
                         >
                           <option value="manana">Mañana (10:00 - 13:00)</option>
                           <option value="tarde">Tarde (14:00 - 18:00)</option>
@@ -427,10 +430,10 @@ export default function CartDrawer() {
                 {activeMode === 'retiro_programado' && (
                   <div>
                     <div className="mb-2">
-                      <strong className="d-block text-dark" style={{ fontSize: '0.86rem' }}>
+                      <strong className="d-block" style={{ fontSize: '0.86rem', color: 'var(--color-espresso)' }}>
                         Encuentra el lugar de retiro más cercano
                       </strong>
-                      <span className="text-muted" style={{ fontSize: '0.78rem' }}>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--color-texto-secundario)' }}>
                         Por favor, selecciona un lugar de retiro, fecha y hora
                       </span>
                     </div>
@@ -451,6 +454,7 @@ export default function CartDrawer() {
                               checked={isSelected}
                               onChange={() => setSelectedBranch(branch.nombre)}
                               className="mt-1"
+                              style={{ accentColor: 'var(--color-caramelo)' }}
                             />
                             <div className="flex-grow-1">
                               <label htmlFor={`sucursal-${branch.id}`} className="fn-cart-branch-title d-block mb-0 cursor-pointer">
@@ -473,7 +477,7 @@ export default function CartDrawer() {
                                 Más información
                               </button>
                               {infoBranchVisible === branch.id && (
-                                <div className="small mt-1 p-2 rounded bg-light border" style={{ fontSize: '0.72rem' }}>
+                                <div className="small mt-1 p-2 rounded border" style={{ fontSize: '0.72rem', backgroundColor: 'var(--color-superficie)', borderColor: 'var(--color-borde)', color: 'var(--color-espresso)' }}>
                                   {branch.info}
                                 </div>
                               )}
@@ -485,21 +489,23 @@ export default function CartDrawer() {
 
                     <div className="row g-2">
                       <div className="col-6">
-                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Fecha de retiro:</label>
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: 'var(--color-texto-secundario)' }}>Fecha de retiro:</label>
                         <input
                           type="date"
                           className="form-control form-control-sm"
                           value={selectedDate}
                           min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
                           onChange={(e) => setSelectedDate(e.target.value)}
+                          style={{ borderColor: 'var(--color-borde)', color: 'var(--color-espresso)' }}
                         />
                       </div>
                       <div className="col-6">
-                        <label className="form-label" style={{ fontSize: '0.74rem', color: '#444' }}>Horario:</label>
+                        <label className="form-label" style={{ fontSize: '0.74rem', color: 'var(--color-texto-secundario)' }}>Horario:</label>
                         <select
                           className="form-select form-select-sm"
                           value={selectedTime}
                           onChange={(e) => setSelectedTime(e.target.value)}
+                          style={{ borderColor: 'var(--color-borde)', color: 'var(--color-espresso)' }}
                         >
                           <option value="manana">Mañana (10:00 - 13:00)</option>
                           <option value="tarde">Tarde (14:00 - 18:00)</option>

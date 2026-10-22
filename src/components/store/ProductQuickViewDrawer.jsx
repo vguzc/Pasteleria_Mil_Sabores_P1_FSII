@@ -105,7 +105,7 @@ export default function ProductQuickViewDrawer() {
                 onClick={closeQuickView}
                 aria-label="Cerrar vista previa"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
@@ -122,8 +122,24 @@ export default function ProductQuickViewDrawer() {
               />
             </div>
 
-            {/* Contenido / Detalles */}
+            {/* Contenido / Detalles con Estilo y Paleta Mil Sabores */}
             <div className="quickview-body">
+              {product.categoria && (
+                <span
+                  style={{
+                    fontSize: '0.74rem',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'var(--color-caramelo)',
+                    fontWeight: 700,
+                    marginBottom: '0.35rem',
+                    display: 'block'
+                  }}
+                >
+                  {product.categoria}
+                </span>
+              )}
+
               <h2 className="quickview-title">
                 {product.nombre.toUpperCase()}
               </h2>
@@ -155,10 +171,10 @@ export default function ProductQuickViewDrawer() {
 
               {/* Descripción */}
               <div className="quickview-description">
-                {product.descripcion || 'Elaborado artesanalmente con recetas tradicionales e ingredientes seleccionados de primera calidad.'}
+                {product.descripcion || 'Elaborado artesanalmente en nuestro taller con recetas tradicionales e ingredientes seleccionados de primera calidad.'}
               </div>
 
-              {/* Botón negro Agregar al carro */}
+              {/* Botón Agregar al carro con estética Mil Sabores */}
               <div className="quickview-action">
                 <button
                   type="button"
