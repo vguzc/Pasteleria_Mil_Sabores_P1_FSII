@@ -121,53 +121,38 @@ export default function About() {
           borderTop: '1px solid var(--color-borde)',
           borderBottom: '1px solid var(--color-borde)',
           padding: '4.5rem 0',
-          margin: '2rem 0 4.5rem 0',
-          position: 'relative'
+          margin: '2rem 0 4.5rem 0'
         }}
       >
         <div className="contenedor">
-          <div className="row justify-content-center">
-            <div className="col-12 col-lg-10 col-xl-9">
+          <div className="row align-items-center g-4">
+            <div className="col-md-2 text-center text-md-end">
               <div
-                className="p-4 p-md-4 rounded-4"
                 style={{
-                  backgroundColor: 'rgba(255, 253, 249, 0.82)',
-                  backdropFilter: 'blur(3px)',
-                  border: '1px solid rgba(196, 136, 75, 0.28)',
-                  boxShadow: '0 8px 24px rgba(44, 30, 22, 0.08)'
+                  width: '84px',
+                  height: '84px',
+                  margin: '0 auto',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--color-caramelo)',
+                  border: '2px solid var(--color-caramelo)',
+                  backgroundColor: 'rgba(44, 30, 22, 0.05)',
+                  boxShadow: '0 4px 14px rgba(44, 30, 22, 0.08)'
                 }}
               >
-                <div className="row align-items-center g-3 g-md-4">
-                  <div className="col-md-auto text-center">
-                    <div
-                      style={{
-                        width: '78px',
-                        height: '78px',
-                        margin: '0 auto',
-                        borderRadius: '50%',
-                        backgroundColor: '#FAF4EC',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'var(--color-caramelo)',
-                        border: '1.5px solid rgba(196, 136, 75, 0.35)',
-                        boxShadow: '0 4px 12px rgba(44, 30, 22, 0.08)'
-                      }}
-                    >
-                      <i className="bi bi-trophy-fill fs-2"></i>
-                    </div>
-                  </div>
-                  <div className="col-md">
-                    <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Hito Histórico</span>
-                    <h3 className="fw-bold mb-2" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: 'clamp(1.45rem, 2.3vw, 1.95rem)' }}>
-                      El Gran Hito: Récord Guinness 1995
-                    </h3>
-                    <p className="mb-0" style={{ lineHeight: 1.75, fontSize: '1rem', color: '#3A2E26' }}>
-                      En el año 1995, nuestro equipo de maestros pasteleros elaboró la torta de milhojas más grande de Sudamérica: más de 500 metros lineales rellenos con manjar artesanal de campo, congregando a miles de familias en una jornada solidaria que marcó la historia de la gastronomía nacional.
-                    </p>
-                  </div>
-                </div>
+                <i className="bi bi-trophy-fill fs-1"></i>
               </div>
+            </div>
+            <div className="col-md-10">
+              <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Hito Histórico</span>
+              <h3 className="fw-bold mb-2" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: 'clamp(1.5rem, 2.4vw, 1.95rem)' }}>
+                El Gran Hito: Récord Guinness 1995
+              </h3>
+              <p className="mb-0" style={{ lineHeight: 1.75, fontSize: '1.02rem', color: '#2C1E16', maxWidth: '820px', fontWeight: 500 }}>
+                En el año 1995, nuestro equipo de maestros pasteleros elaboró la torta de milhojas más grande de Sudamérica: más de 500 metros lineales rellenos con manjar artesanal de campo, congregando a miles de familias en una jornada solidaria que marcó la historia de la gastronomía nacional.
+              </p>
             </div>
           </div>
         </div>
