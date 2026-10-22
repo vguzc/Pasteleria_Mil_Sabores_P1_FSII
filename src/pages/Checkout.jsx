@@ -307,7 +307,7 @@ export default function Checkout() {
             {/* ========================================================================= */}
             <div className="col-lg-8">
               {/* 1. SECCIÓN: PRODUCTOS EN TU CARRITO */}
-              <div className="card shadow-sm border-0 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '10px' }}>
+              <div className="card shadow-sm border-0 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '12px' }}>
                 <div className="card-header bg-transparent py-3 px-4 d-flex justify-content-between align-items-center" style={{ borderBottom: '1px solid var(--color-borde)' }}>
                   <div className="d-flex align-items-center gap-2">
                     <i className="bi bi-bag-check-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
@@ -322,14 +322,14 @@ export default function Checkout() {
 
                 <div className="table-responsive">
                   <table className="table align-middle mb-0">
-                    <thead style={{ backgroundColor: '#F5EFEB', borderBottom: '1px solid var(--color-borde)' }} className="small">
+                    <thead style={{ backgroundColor: 'var(--color-superficie)', borderBottom: '1px solid var(--color-borde)' }}>
                       <tr>
-                        <th style={{ width: '70px', color: 'var(--color-espresso)' }}>Pastel</th>
-                        <th style={{ color: 'var(--color-espresso)' }}>Descripción</th>
-                        <th className="text-end" style={{ width: '100px', color: 'var(--color-espresso)' }}>Precio</th>
-                        <th className="text-center" style={{ width: '130px', color: 'var(--color-espresso)' }}>Cantidad</th>
-                        <th className="text-end" style={{ width: '110px', color: 'var(--color-espresso)' }}>Subtotal</th>
-                        <th className="text-center" style={{ width: '50px', color: 'var(--color-espresso)' }}></th>
+                        <th style={{ width: '72px', color: 'var(--color-texto-secundario)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }} className="ps-4">Pastel</th>
+                        <th style={{ color: 'var(--color-texto-secundario)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Descripción</th>
+                        <th className="text-end" style={{ width: '100px', color: 'var(--color-texto-secundario)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Precio</th>
+                        <th className="text-center" style={{ width: '135px', color: 'var(--color-texto-secundario)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Cantidad</th>
+                        <th className="text-end" style={{ width: '110px', color: 'var(--color-texto-secundario)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Subtotal</th>
+                        <th className="text-center pe-4" style={{ width: '50px' }}></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -378,7 +378,7 @@ export default function Checkout() {
                                 />
                               </div>
                             </td>
-                            <td className="text-end fw-bold" style={{ color: 'var(--color-caramelo)' }}>
+                            <td className="text-end fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.96rem' }}>
                               {formatPrice(item.subtotal)}
                             </td>
                             <td className="text-center pe-3">
@@ -401,7 +401,7 @@ export default function Checkout() {
               </div>
 
               {/* 2. SECCIÓN: MODALIDAD DE ENTREGA & AGENDAMIENTO */}
-              <div className="card shadow-sm border-0 p-4 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '10px' }}>
+              <div className="card shadow-sm border-0 p-4 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '12px' }}>
                 <div className="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom" style={{ borderColor: 'var(--color-borde)' }}>
                   <i className="bi bi-truck fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
                   <h5 className="fw-bold mb-0" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
@@ -665,7 +665,7 @@ export default function Checkout() {
               </div>
 
               {/* 3. SECCIÓN: DATOS DE CONTACTO DEL CLIENTE */}
-              <div className="card shadow-sm border-0 p-4 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '10px' }}>
+              <div className="card shadow-sm border-0 p-4 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '12px' }}>
                 <div className="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom" style={{ borderColor: 'var(--color-borde)' }}>
                   <i className="bi bi-person-lines-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
                   <h5 className="fw-bold mb-0" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
@@ -775,7 +775,7 @@ export default function Checkout() {
             {/* ========================================================================= */}
             <div className="col-lg-4">
               <div className="sticky-top" style={{ top: '90px' }}>
-                <div className="card shadow-sm border-0 p-4 mb-3" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '10px' }}>
+                <div className="card shadow-sm border-0 p-4 mb-3" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '12px' }}>
                   <h5 className="fw-bold mb-3 border-bottom pb-2" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
                     Resumen del Pedido
                   </h5>
@@ -882,7 +882,7 @@ export default function Checkout() {
                     {!isRetiro && (
                       <div className="col-12 mt-1">
                         {totals.subtotal >= 30000 ? (
-                          <div className="p-1 px-2 rounded small text-center" style={{ backgroundColor: '#EBF4EE', color: '#2D6A4F', fontSize: '0.7rem' }}>
+                          <div className="p-1 px-2 rounded small text-center" style={{ backgroundColor: 'var(--color-salvia-claro)', color: 'var(--color-exito)', fontSize: '0.7rem' }}>
                             <i className="bi bi-check-circle-fill me-1"></i>¡Tu pedido califica para despacho gratis!
                           </div>
                         ) : totals.subtotal >= 20000 ? (
@@ -900,8 +900,8 @@ export default function Checkout() {
                     {/* TOTAL FINAL A PAGAR: Destacado al final del desglose */}
                     <div className="col-12 border-top pt-3 mt-3">
                       <div className="d-flex justify-content-between align-items-baseline">
-                        <span className="fs-5 fw-bold" style={{ color: 'var(--color-espresso)' }}>Total a Pagar:</span>
-                        <span className="fs-3 fw-bold" style={{ color: 'var(--color-caramelo)' }}>
+                        <span className="fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '1.05rem' }}>Total a Pagar:</span>
+                        <span className="fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '1.6rem', letterSpacing: '-0.5px' }}>
                           {formatPrice(totals.total)}
                         </span>
                       </div>
@@ -912,7 +912,7 @@ export default function Checkout() {
                   <div className="p-3 rounded-3 mb-3 border" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }}>
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <span className="small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
-                        <i className="bi bi-shield-lock-fill me-1" style={{ color: '#2D6A4F' }}></i>
+                        <i className="bi bi-shield-lock-fill me-1" style={{ color: 'var(--color-exito)' }}></i>
                         Transacción Segura Webpay Plus
                       </span>
                       <span className="badge" style={{ backgroundColor: '#FAF4EC', color: 'var(--color-caramelo)', border: '1px solid var(--color-caramelo)', fontSize: '0.64rem' }}>
