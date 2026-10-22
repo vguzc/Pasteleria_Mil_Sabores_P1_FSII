@@ -248,31 +248,6 @@ export default function Products() {
           </div>
         </div>
 
-        {/* 3. Barra de Navegación Rápida de Categorías (Pills de 1 sola fila con scroll suave) */}
-        <div className="catalogo-pills-bar-wrap">
-          <div className="catalogo-pills-bar">
-            <button
-              type="button"
-              className={`btn-quick-pill ${selectedCategory === 'Todas' ? 'activo' : ''}`}
-              onClick={() => handleCategoryChange('Todas')}
-            >
-              Todas ({products.length})
-            </button>
-            {categories.map((cat) => {
-              const count = products.filter(p => p.categoria.toLowerCase() === cat.nombre.toLowerCase()).length;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  className={`btn-quick-pill ${selectedCategory.toLowerCase() === cat.nombre.toLowerCase() ? 'activo' : ''}`}
-                  onClick={() => handleCategoryChange(cat.nombre)}
-                >
-                  {cat.nombre} ({count})
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
         {/* 4. Filtros Activos (si se está filtrando o buscando) */}
         {isFiltered && (
