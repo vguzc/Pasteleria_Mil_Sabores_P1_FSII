@@ -3436,16 +3436,11 @@ h3 { font-size: 1.35rem; }
 }
 
 .tarjeta-guia-visita {
-  position: relative;
-  background: linear-gradient(135deg, rgba(32, 22, 16, 0.78) 0%, rgba(45, 26, 13, 0.70) 50%, rgba(32, 22, 16, 0.82) 100%),
-              url('/img/galeria/cafe-croissant-mesa.png') center/cover no-repeat;
-  border: 1px solid rgba(196, 136, 75, 0.4);
-  border-radius: 14px;
-  padding: 1.65rem 1.75rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 1.5rem 1.65rem;
   margin-top: 1.5rem;
-  color: #FFFFFF;
-  box-shadow: 0 8px 24px rgba(32, 22, 16, 0.16);
-  overflow: hidden;
 }
 
 .tarjeta-guia-cabecera {
@@ -3454,7 +3449,7 @@ h3 { font-size: 1.35rem; }
   justify-content: space-between;
   margin-bottom: 1.15rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .tarjeta-guia-badge {
@@ -3463,21 +3458,19 @@ h3 { font-size: 1.35rem; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #F8E5D2;
-  background-color: rgba(196, 136, 75, 0.32);
-  border: 1px solid rgba(196, 136, 75, 0.55);
+  color: var(--color-espresso);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  backdrop-filter: blur(4px);
 }
 
 .tarjeta-guia-titulo {
   font-family: var(--fuente-texto);
   font-size: 0.98rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--color-espresso);
   margin: 0;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .tarjeta-guia-grilla {
@@ -3496,14 +3489,12 @@ h3 { font-size: 1.35rem; }
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.14);
+  background-color: var(--color-superficie);
   color: var(--color-caramelo);
-  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  backdrop-filter: blur(4px);
 }
 
 .tarjeta-guia-item strong {
@@ -3511,17 +3502,16 @@ h3 { font-size: 1.35rem; }
   font-family: var(--fuente-texto);
   font-size: 0.84rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--color-espresso);
   margin-bottom: 0.15rem;
   line-height: 1.3;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
 .tarjeta-guia-item span {
   display: block;
   font-family: var(--fuente-texto);
   font-size: 0.78rem;
-  color: #E8DFD5;
+  color: var(--color-texto-secundario);
   line-height: 1.35;
 }
 
