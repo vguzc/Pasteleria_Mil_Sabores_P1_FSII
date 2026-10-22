@@ -4,6 +4,7 @@ import { productService, categoryService } from '../services/db';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/store/ProductCard';
 import CategoryCard from '../components/store/CategoryCard';
+import BakerHeroSlider from '../components/store/BakerHeroSlider';
 
 export default function Home() {
   const [especialidades, setEspecialidades] = useState([]);
@@ -35,31 +36,8 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      {/* 1. Hero Principal Estilo Baker */}
-      <section className="hero-baker">
-        <div className="contenedor" style={{ maxWidth: '920px', margin: '0 auto' }}>
-          <span className="hero-baker-eyebrow">
-            <span>✦</span> 50 Años de Dulzura Chilena · Desde 1976 <span>✦</span>
-          </span>
-          <h1 className="hero-baker-titulo">
-            Pastelería & Café <em>Artesanal</em>
-          </h1>
-          <div className="adorno-baker">
-            <span>✻</span>
-          </div>
-          <p className="hero-baker-desc">
-            Bienvenidos a nuestro taller repostero. Desde hace cinco décadas preparamos tortas y postres tradicionales elaborados con ingredientes nobles, paciencia y el auténtico toque casero que distingue nuestras mesas.
-          </p>
-          <div className="d-flex gap-3 justify-content-center flex-wrap">
-            <Link to="/productos" className="boton boton-primario btn-baker">
-              Ver Catálogo Completo
-            </Link>
-            <Link to="/ofertas" className="boton boton-secundario btn-baker">
-              Ofertas Especiales
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 1. Hero Slider Interactivo con Imágenes y Diapositivas Estilo Baker */}
+      <BakerHeroSlider />
 
       {/* 2. Barra de Pilares de Oficio (Baker Features Bar) */}
       <section className="barra-pilares-baker">
