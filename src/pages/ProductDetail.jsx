@@ -13,7 +13,14 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [related, setRelated] = useState([]);
   const [addedAlert, setAddedAlert] = useState(false);
-  const { addItem, openDrawer } = useCart();
+  const { cart, addItem, openDrawer } = useCart();
+
+  const itemInCart = product ? (cart || []).find(item => item.id === product.id) : null;
+  const inCartQty = itemInCart ? itemInCart.cantidad : 0;
+  const productStock = product && typeof product.stock === 'number' ? product.stock : 99;
+  const availableStock = Math.max(0, productStock - inCartQty);
+  const isMaxInCart = inCartQty >= productStock && productStock > 0;
+  const isOutOfStock = productStock <= 0;
 
   useEffect(() => {
     const found = productService.getById(id);
@@ -126,13 +133,19 @@ export default function ProductDetail() {
             <div className="p-3 rounded-3 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)' }}>
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <span className="small text-muted">Disponibilidad Pastelera:</span>
-                <strong style={{ color: product.stock <= 5 ? '#B54234' : '#2D6A4F' }}>
-                  {product.stock > 0 ? `${product.stock} unidades frescas listas para retiro o despacho` : 'Agotado'}
+                <strong style={{ color: isOutOfStock || isMaxInCart ? '#B54234' : productStock <= 5 ? '#B54234' : '#2D6A4F' }}>
+                  {isOutOfStock
+                    ? 'Agotado temporalmente'
+                    : isMaxInCart
+                      ? `Stock máximo alcanzado (${productStock} unid. en bolsa)`
+                      : inCartQty > 0
+                        ? `${availableStock} unidades disponibles (${inCartQty} en tu bolsa)`
+                        : `${productStock} unidades frescas listas para retiro o despacho`}
                 </strong>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <span className="small text-muted">Tiempo de Elaboración & Despacho:</span>
-                <span className="small fw-semibold" style={{ color: 'var(--color-espresso)' }}>Mismo día o 24 hrs hábiles</span>
+                <span className="small fw-semibold" style={{ color: 'var(--color-espresso)' }}>Mismo día o fecha agendada</span>
               </div>
             </div>
 
@@ -144,7 +157,7 @@ export default function ProductDetail() {
                   value={quantity}
                   onChange={setQuantity}
                   min={1}
-                  max={Math.max(1, product.stock)}
+                  max={Math.max(1, availableStock)}
                 />
               </div>
               <div className="flex-grow-1 align-self-end">
@@ -153,10 +166,14 @@ export default function ProductDetail() {
                   size="lg"
                   className="w-100 btn-baker"
                   onClick={handleAddToCart}
-                  disabled={product.stock <= 0}
-                  icon="bi bi-bag-plus"
+                  disabled={isOutOfStock || isMaxInCart || availableStock <= 0}
+                  icon={isMaxInCart ? 'bi bi-lock' : 'bi bi-bag-plus'}
                 >
-                  Agregar a la Bolsa
+                  {isOutOfStock
+                    ? 'Agotado'
+                    : isMaxInCart
+                      ? 'Stock Máximo en Carrito'
+                      : 'Agregar a la Bolsa'}
                 </Button>
               </div>
             </div>

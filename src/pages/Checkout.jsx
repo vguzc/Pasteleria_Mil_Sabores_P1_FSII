@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { orderService } from '../services/db';
+import { orderService, productService } from '../services/db';
 import { REGIONES_Y_COMUNAS } from '../services/chileData';
 import AlertMessage from '../components/common/AlertMessage';
 
 export default function Checkout() {
-  const { cart, totals, clearCart } = useCart();
+  const { cart, totals, clearCart, scheduling, updateScheduling } = useCart();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -79,7 +79,8 @@ export default function Checkout() {
       return;
     }
 
-    if (!formData.calle.trim() || !formData.region || !formData.comuna) {
+    const isRetiro = scheduling?.modalidad === 'retiro';
+    if (!isRetiro && (!formData.calle.trim() || !formData.region || !formData.comuna)) {
       setError('Por favor completa la dirección de entrega obligatoria.');
       return;
     }
@@ -87,6 +88,16 @@ export default function Checkout() {
     if (cart.length === 0) {
       setError('Tu carrito de compras está vacío.');
       return;
+    }
+
+    // Validación de stock en tiempo real antes de procesar el pago
+    const allProducts = productService.getAll();
+    for (const item of cart) {
+      const p = allProducts.find(prod => prod.id === item.id);
+      if (p && item.cantidad > p.stock) {
+        setError(`Stock insuficiente para "${item.nombre}". Solo quedan ${p.stock} unidades en el taller.`);
+        return;
+      }
     }
 
     setIsProcessing(true);
@@ -120,11 +131,18 @@ export default function Checkout() {
           nombre: formData.nombre.trim(),
           apellidos: formData.apellidos.trim(),
           correo: formData.correo.trim(),
-          direccion: formData.calle.trim(),
-          departamento: formData.departamento.trim(),
+          direccion: isRetiro ? 'Retiro en Pastelería (Av. Providencia 1200)' : formData.calle.trim(),
+          departamento: isRetiro ? '' : formData.departamento.trim(),
           region: formData.region,
           comuna: formData.comuna,
           indicaciones: formData.indicaciones.trim()
+        },
+        agendamiento: {
+          modalidad: scheduling?.modalidad || 'despacho',
+          fecha: scheduling?.fecha || new Date().toISOString().split('T')[0],
+          franjaHoraria: scheduling?.franjaHoraria || 'tarde',
+          dedicatoria: scheduling?.dedicatoria || '',
+          direccionRetiro: 'Av. Providencia 1200, Providencia, Santiago'
         },
         items: [...cart],
         subtotal: totals.subtotal,
@@ -297,81 +315,149 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {/* Sección 2: Dirección de entrega de los productos */}
+              {/* Resumen de Entrega Programada / Retiro */}
+              <div className="mb-4 p-4 rounded-3" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
+                <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                  <div className="d-flex align-items-center gap-2">
+                    <i className="bi bi-calendar-check-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+                    <h5 className="fw-bold mb-0" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
+                      Entrega Programada: {scheduling?.modalidad === 'retiro' ? 'Retiro en Pastelería' : 'Despacho a Domicilio'}
+                    </h5>
+                  </div>
+                  <Link to="/carrito" className="btn btn-outline-secondary btn-sm py-0 px-2" style={{ fontSize: '0.78rem' }}>
+                    Modificar en Bolsa
+                  </Link>
+                </div>
+
+                <div className="row g-3 mt-1 small">
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Modalidad:</span>
+                    <strong>{scheduling?.modalidad === 'retiro' ? 'Retiro en Taller (Gratis)' : 'Despacho con Cadena de Frío'}</strong>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Fecha Agendada:</span>
+                    <strong>{scheduling?.fecha ? scheduling.fecha : 'Fecha flexible (Horneado hoy/mañana)'}</strong>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Bloque Horario:</span>
+                    <strong>{scheduling?.franjaHoraria === 'manana' ? 'Mañana (10:00 - 13:00 hrs)' : scheduling?.franjaHoraria === 'atardecer' ? 'Atardecer (18:00 - 20:30 hrs)' : 'Tarde (14:00 - 18:00 hrs)'}</strong>
+                  </div>
+                  {scheduling?.dedicatoria && (
+                    <div className="col-12 mt-2 pt-2 border-top" style={{ borderColor: 'var(--color-borde)' }}>
+                      <span className="text-muted d-block">Dedicatoria en Chocolate / Indicaciones:</span>
+                      <em className="text-dark">"{scheduling.dedicatoria}"</em>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Sección 2: Dirección de entrega o Punto de Retiro */}
               <div className="mb-4">
                 <h5 className="fw-bold border-bottom pb-2 mb-3" style={{ color: 'var(--color-chocolate)', borderColor: 'var(--color-borde)' }}>
-                  Dirección de entrega de los productos
+                  {scheduling?.modalidad === 'retiro' ? 'Punto de Retiro Oficial en Pastelería' : 'Dirección de entrega de los productos'}
                 </h5>
-                <small className="text-muted d-block mb-3">Ingrese dirección de forma detallada</small>
 
-                <div className="row g-3">
-                  <div className="col-md-8">
-                    <label className="form-label small fw-bold">Calle *</label>
-                    <input
-                      type="text"
-                      name="calle"
-                      className="form-control"
-                      placeholder="Los Crisantemos, Edificio Norte"
-                      value={formData.calle}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                {scheduling?.modalidad === 'retiro' ? (
+                  <div className="p-3 rounded-3 mb-3 border" style={{ backgroundColor: '#FAF4EC', borderColor: 'var(--color-caramelo)' }}>
+                    <div className="d-flex align-items-center gap-2 mb-1">
+                      <i className="bi bi-geo-alt-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+                      <strong style={{ color: 'var(--color-espresso)' }}>Taller Central Pastelería Mil Sabores</strong>
+                    </div>
+                    <p className="small mb-1 text-muted">
+                      Av. Providencia 1200 (a pasos del Metro Manuel Montt), Providencia, Santiago de Chile.
+                    </p>
+                    <small className="text-muted d-block mb-3">
+                      Horario continuado para retiro: Lunes a Domingo de 10:00 a 20:30 hrs. Presenta tu orden al retirar.
+                    </small>
 
-                  <div className="col-md-4">
-                    <label className="form-label small fw-bold">Departamento (opcional)</label>
-                    <input
-                      type="text"
-                      name="departamento"
-                      className="form-control"
-                      placeholder="Ej: Depto 603"
-                      value={formData.departamento}
-                      onChange={handleChange}
-                    />
+                    <div className="row g-2">
+                      <div className="col-12">
+                        <label className="form-label small fw-bold">Notas o quién retira el pedido (opcional):</label>
+                        <input
+                          type="text"
+                          name="indicaciones"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: Retirará mi hermana María González con mi número de orden"
+                          value={formData.indicaciones}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
                   </div>
+                ) : (
+                  <>
+                    <small className="text-muted d-block mb-3">Ingrese dirección de forma detallada</small>
 
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold">Región *</label>
-                    <select
-                      name="region"
-                      className="form-select"
-                      value={formData.region}
-                      onChange={handleRegionChange}
-                      required
-                    >
-                      {REGIONES_Y_COMUNAS.map((r, i) => (
-                        <option key={i} value={r.region}>{r.region}</option>
-                      ))}
-                    </select>
-                  </div>
+                    <div className="row g-3">
+                      <div className="col-md-8">
+                        <label className="form-label small fw-bold">Calle *</label>
+                        <input
+                          type="text"
+                          name="calle"
+                          className="form-control"
+                          placeholder="Los Crisantemos, Edificio Norte"
+                          value={formData.calle}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold">Comuna *</label>
-                    <select
-                      name="comuna"
-                      className="form-select"
-                      value={formData.comuna}
-                      onChange={handleChange}
-                      required
-                    >
-                      {comunasDisponibles.map((c, i) => (
-                        <option key={i} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-bold">Departamento (opcional)</label>
+                        <input
+                          type="text"
+                          name="departamento"
+                          className="form-control"
+                          placeholder="Ej: Depto 603"
+                          value={formData.departamento}
+                          onChange={handleChange}
+                        />
+                      </div>
 
-                  <div className="col-12">
-                    <label className="form-label small fw-bold">Indicaciones para la entrega (opcional)</label>
-                    <textarea
-                      name="indicaciones"
-                      className="form-control"
-                      rows="2"
-                      placeholder="Ej: El martes no estaremos en el depto, pero puede dejárselo con el conserje."
-                      value={formData.indicaciones}
-                      onChange={handleChange}
-                    ></textarea>
-                  </div>
-                </div>
+                      <div className="col-md-6">
+                        <label className="form-label small fw-bold">Región *</label>
+                        <select
+                          name="region"
+                          className="form-select"
+                          value={formData.region}
+                          onChange={handleRegionChange}
+                          required
+                        >
+                          {REGIONES_Y_COMUNAS.map((r, i) => (
+                            <option key={i} value={r.region}>{r.region}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label className="form-label small fw-bold">Comuna *</label>
+                        <select
+                          name="comuna"
+                          className="form-select"
+                          value={formData.comuna}
+                          onChange={handleChange}
+                          required
+                        >
+                          {comunasDisponibles.map((c, i) => (
+                            <option key={i} value={c}>{c}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-12">
+                        <label className="form-label small fw-bold">Indicaciones para la entrega (opcional)</label>
+                        <textarea
+                          name="indicaciones"
+                          className="form-control"
+                          rows="2"
+                          placeholder="Ej: El martes no estaremos en el depto, pero puede dejárselo con el conserje."
+                          value={formData.indicaciones}
+                          onChange={handleChange}
+                        ></textarea>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Selector para simular compra exitosa o error de pago */}

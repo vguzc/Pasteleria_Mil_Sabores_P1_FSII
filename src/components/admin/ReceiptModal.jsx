@@ -67,6 +67,28 @@ export default function ReceiptModal({ order, onClose }) {
               </div>
             </div>
 
+            {/* Agendamiento y Coordinación */}
+            {order.agendamiento && (
+              <div className="p-3 rounded mb-3" style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-caramelo)' }}>
+                <h6 className="fw-bold border-bottom pb-1 mb-2" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
+                  Entrega Programada ({order.agendamiento.modalidad === 'retiro' ? 'Retiro en Pastelería' : 'Despacho a Domicilio'})
+                </h6>
+                <div className="row g-2 small">
+                  <div className="col-sm-6">
+                    <strong>Fecha:</strong> {order.agendamiento.fecha || 'Inmediato'}
+                  </div>
+                  <div className="col-sm-6">
+                    <strong>Horario:</strong> {order.agendamiento.franjaHoraria === 'manana' ? 'Mañana (10:00 - 13:00 hrs)' : order.agendamiento.franjaHoraria === 'atardecer' ? 'Atardecer (18:00 - 20:30 hrs)' : 'Tarde (14:00 - 18:00 hrs)'}
+                  </div>
+                  {order.agendamiento.dedicatoria && (
+                    <div className="col-12 mt-1">
+                      <strong>Dedicatoria en Chocolate / Nota:</strong> <em>"{order.agendamiento.dedicatoria}"</em>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Detalle de Productos */}
             <div className="table-responsive">
               <table className="table table-sm align-middle mb-3 bg-white rounded shadow-sm">

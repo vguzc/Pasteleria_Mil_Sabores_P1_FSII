@@ -5,11 +5,31 @@ import QuantitySelector from '../components/cart/QuantitySelector';
 import AlertMessage from '../components/common/AlertMessage';
 
 export default function Cart() {
-  const { cart, totals, updateQuantity, removeItem, clearCart, applyCoupon, removeCoupon } = useCart();
+  const {
+    cart,
+    totals,
+    updateQuantity,
+    removeItem,
+    clearCart,
+    applyCoupon,
+    removeCoupon,
+    scheduling,
+    updateScheduling,
+    stockNotice,
+    clearStockNotice
+  } = useCart();
+
   const [inputCoupon, setInputCoupon] = useState('');
   const [couponError, setCouponError] = useState('');
   const [couponSuccess, setCouponSuccess] = useState('');
   const navigate = useNavigate();
+
+  // Fechas de referencia para el agendamiento
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const tomorrowStr = tomorrow.toISOString().split('T')[0];
 
   const handleApplyCoupon = (e) => {
     e.preventDefault();
@@ -30,7 +50,7 @@ export default function Cart() {
     navigate('/checkout');
   };
 
-  const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
+  const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val || 0);
 
   return (
     <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '3.5rem 0 6rem 0' }}>
@@ -63,6 +83,20 @@ export default function Cart() {
           )}
         </div>
 
+        {/* Alerta de límite de stock en tiempo real */}
+        {stockNotice && (
+          <div
+            className="alert d-flex align-items-center justify-content-between shadow-sm mb-4"
+            style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-caramelo)', color: 'var(--color-espresso)', borderRadius: '8px' }}
+          >
+            <div>
+              <i className="bi bi-exclamation-triangle-fill me-2 fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+              {stockNotice.mensaje}
+            </div>
+            <button type="button" className="btn-close" onClick={clearStockNotice} aria-label="Cerrar"></button>
+          </div>
+        )}
+
         {cart.length === 0 ? (
           <div
             className="text-center py-5 px-3 rounded-3"
@@ -83,8 +117,9 @@ export default function Cart() {
           </div>
         ) : (
           <div className="row g-4">
-            {/* Tabla de Productos del Carrito */}
+            {/* Columna Izquierda: Tabla de Productos, Agendamiento y Cupones */}
             <div className="col-lg-8">
+              {/* Tabla de Productos del Carrito */}
               <div className="card shadow-sm border-0 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '8px' }}>
                 <div className="card-body p-0">
                   <div className="table-responsive">
@@ -94,62 +129,237 @@ export default function Cart() {
                           <th style={{ width: '80px', color: 'var(--color-espresso)' }}>Imagen</th>
                           <th style={{ color: 'var(--color-espresso)' }}>Producto</th>
                           <th className="text-end" style={{ width: '110px', color: 'var(--color-espresso)' }}>Precio</th>
-                          <th className="text-center" style={{ width: '130px', color: 'var(--color-espresso)' }}>Cantidad</th>
+                          <th className="text-center" style={{ width: '140px', color: 'var(--color-espresso)' }}>Cantidad</th>
                           <th className="text-end" style={{ width: '110px', color: 'var(--color-espresso)' }}>Subtotal</th>
                           <th className="text-center" style={{ width: '70px', color: 'var(--color-espresso)' }}>Quitar</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {cart.map((item) => (
-                          <tr key={item.id} style={{ borderBottom: '1px solid var(--color-borde)' }}>
-                            <td>
-                              <img
-                                src={item.imagen || '/img/torta-mil-sabores.png'}
-                                alt={item.nombre}
-                                width="64"
-                                height="64"
-                                className="rounded object-fit-contain p-1"
-                                style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = '/img/torta-mil-sabores.png';
-                                }}
-                              />
-                            </td>
-                            <td>
-                              <Link to={`/producto/${item.id}`} className="text-decoration-none fw-bold small d-block" style={{ color: 'var(--color-espresso)' }}>
-                                {item.nombre}
-                              </Link>
-                              <span className="small text-muted">{item.categoria}</span>
-                            </td>
-                            <td className="text-end small">
-                              {formatPrice(item.precio)}
-                            </td>
-                            <td className="text-center">
-                              <QuantitySelector
-                                value={item.cantidad}
-                                onChange={(val) => updateQuantity(item.id, val)}
-                                size="sm"
-                              />
-                            </td>
-                            <td className="text-end fw-bold small" style={{ color: 'var(--color-caramelo)' }}>
-                              {formatPrice(item.subtotal)}
-                            </td>
-                            <td className="text-center">
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-outline-danger py-0 px-2"
-                                title="Eliminar producto"
-                                onClick={() => removeItem(item.id)}
-                              >
-                                ✕
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                        {cart.map((item) => {
+                          const itemStock = typeof item.stock === 'number' ? item.stock : 99;
+                          const isMax = item.cantidad >= itemStock;
+
+                          return (
+                            <tr key={item.id} style={{ borderBottom: '1px solid var(--color-borde)' }}>
+                              <td>
+                                <img
+                                  src={item.imagen || '/img/torta-mil-sabores.png'}
+                                  alt={item.nombre}
+                                  width="64"
+                                  height="64"
+                                  className="rounded object-fit-contain p-1"
+                                  style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = '/img/torta-mil-sabores.png';
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                <Link to={`/producto/${item.id}`} className="text-decoration-none fw-bold small d-block" style={{ color: 'var(--color-espresso)' }}>
+                                  {item.nombre}
+                                </Link>
+                                <div className="d-flex align-items-center gap-2 mt-1">
+                                  <span className="small text-muted" style={{ fontSize: '0.75rem' }}>{item.categoria}</span>
+                                  {isMax && (
+                                    <span className="badge" style={{ fontSize: '0.65rem', backgroundColor: '#FAF4EC', color: '#B54234', border: '1px solid var(--color-borde)' }}>
+                                      Máx. {itemStock} unid.
+                                    </span>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="text-end small">
+                                {formatPrice(item.precio)}
+                              </td>
+                              <td className="text-center">
+                                <QuantitySelector
+                                  value={item.cantidad}
+                                  onChange={(val) => updateQuantity(item.id, val)}
+                                  min={1}
+                                  max={itemStock}
+                                  size="sm"
+                                />
+                                {isMax && (
+                                  <span className="d-block text-danger fw-semibold mt-1" style={{ fontSize: '0.68rem' }}>
+                                    Límite de stock alcanzado
+                                  </span>
+                                )}
+                              </td>
+                              <td className="text-end fw-bold small" style={{ color: 'var(--color-caramelo)' }}>
+                                {formatPrice(item.subtotal)}
+                              </td>
+                              <td className="text-center">
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-outline-danger py-0 px-2"
+                                  title="Eliminar producto"
+                                  onClick={() => removeItem(item.id)}
+                                >
+                                  <i className="bi bi-trash3"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
+                </div>
+              </div>
+
+              {/* SECCIÓN: Programar / Agendar Pedido */}
+              <div className="card shadow-sm border-0 p-4 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '8px' }}>
+                <div className="d-flex align-items-center gap-2 mb-2">
+                  <i className="bi bi-calendar2-week-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+                  <h5 className="fw-bold mb-0" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
+                    Programar Fecha & Horario de Entrega
+                  </h5>
+                </div>
+                <p className="text-muted small mb-4">
+                  Elaboramos nuestros productos diariamente de forma artesanal. Elige el día, el bloque horario y si deseas recibirlo a domicilio o retirarlo en nuestra pastelería.
+                </p>
+
+                {/* 1. Selección de Modalidad */}
+                <div className="mb-4">
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                    1. Modalidad de Entrega:
+                  </label>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <div
+                        className={`p-3 rounded-3 border h-100 cursor-pointer ${scheduling?.modalidad === 'despacho' ? 'border-2' : ''}`}
+                        style={{
+                          backgroundColor: scheduling?.modalidad === 'despacho' ? '#FAF4EC' : '#FAF7F2',
+                          borderColor: scheduling?.modalidad === 'despacho' ? 'var(--color-caramelo)' : 'var(--color-borde)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => updateScheduling({ modalidad: 'despacho' })}
+                      >
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="modalidadEntrega"
+                            id="modoDespacho"
+                            checked={scheduling?.modalidad === 'despacho'}
+                            onChange={() => updateScheduling({ modalidad: 'despacho' })}
+                          />
+                          <label className="form-check-label fw-bold d-block" htmlFor="modoDespacho" style={{ color: 'var(--color-espresso)' }}>
+                            Despacho a Domicilio
+                          </label>
+                        </div>
+                        <p className="text-muted small mt-2 mb-0" style={{ fontSize: '0.78rem' }}>
+                          Llevamos tu pedido con cadena de frío garantizada hasta la puerta de tu hogar.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="col-md-6">
+                      <div
+                        className={`p-3 rounded-3 border h-100 cursor-pointer ${scheduling?.modalidad === 'retiro' ? 'border-2' : ''}`}
+                        style={{
+                          backgroundColor: scheduling?.modalidad === 'retiro' ? '#FAF4EC' : '#FAF7F2',
+                          borderColor: scheduling?.modalidad === 'retiro' ? 'var(--color-caramelo)' : 'var(--color-borde)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => updateScheduling({ modalidad: 'retiro' })}
+                      >
+                        <div className="form-check d-flex justify-content-between align-items-center">
+                          <div>
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="modalidadEntrega"
+                              id="modoRetiro"
+                              checked={scheduling?.modalidad === 'retiro'}
+                              onChange={() => updateScheduling({ modalidad: 'retiro' })}
+                            />
+                            <label className="form-check-label fw-bold" htmlFor="modoRetiro" style={{ color: 'var(--color-espresso)' }}>
+                              Retiro en Pastelería
+                            </label>
+                          </div>
+                          <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>
+                            Gratis ($0)
+                          </span>
+                        </div>
+                        <p className="text-muted small mt-2 mb-0" style={{ fontSize: '0.78rem' }}>
+                          Av. Providencia 1200 (Metro Manuel Montt). Listo sin costo de envío.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Selección de Fecha y Franja Horaria */}
+                <div className="row g-3 mb-4">
+                  <div className="col-md-6">
+                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                      2. Fecha de Entrega / Retiro:
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control form-control-sm"
+                      value={scheduling?.fecha || ''}
+                      min={todayStr}
+                      onChange={(e) => updateScheduling({ fecha: e.target.value })}
+                      style={{ borderColor: 'var(--color-borde)' }}
+                    />
+                    <div className="d-flex gap-2 mt-2">
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary btn-sm py-0 px-2"
+                        style={{ fontSize: '0.72rem' }}
+                        onClick={() => updateScheduling({ fecha: todayStr })}
+                      >
+                        Hoy ({todayStr})
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary btn-sm py-0 px-2"
+                        style={{ fontSize: '0.72rem' }}
+                        onClick={() => updateScheduling({ fecha: tomorrowStr })}
+                      >
+                        Mañana ({tomorrowStr})
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                      3. Franja Horaria Preferente:
+                    </label>
+                    <select
+                      className="form-select form-select-sm"
+                      value={scheduling?.franjaHoraria || 'tarde'}
+                      onChange={(e) => updateScheduling({ franjaHoraria: e.target.value })}
+                      style={{ borderColor: 'var(--color-borde)' }}
+                    >
+                      <option value="manana">Mañana (10:00 - 13:00 hrs)</option>
+                      <option value="tarde">Tarde (14:00 - 18:00 hrs)</option>
+                      <option value="atardecer">Atardecer (18:00 - 20:30 hrs)</option>
+                    </select>
+                    <small className="text-muted d-block mt-1" style={{ fontSize: '0.72rem' }}>
+                      Coordinaremos contigo si hay alguna contingencia en la ruta.
+                    </small>
+                  </div>
+                </div>
+
+                {/* 3. Dedicatoria o Notas del Pedido */}
+                <div>
+                  <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                    4. Dedicatoria en Placa de Chocolate o Instrucciones Especiales:
+                  </label>
+                  <textarea
+                    className="form-control form-control-sm"
+                    rows="2"
+                    placeholder="Ej: Escribir con chocolate '¡Feliz Cumpleaños Claudia!' o instrucciones de entrega para conserjería."
+                    value={scheduling?.dedicatoria || ''}
+                    onChange={(e) => updateScheduling({ dedicatoria: e.target.value })}
+                    style={{ borderColor: 'var(--color-borde)' }}
+                  />
+                  <small className="text-muted d-block mt-1" style={{ fontSize: '0.72rem' }}>
+                    Sin costo adicional en todas nuestras tortas de celebración.
+                  </small>
                 </div>
               </div>
 
@@ -198,6 +408,27 @@ export default function Cart() {
                   Resumen de Compra
                 </h5>
 
+                {/* Resumen del Agendamiento */}
+                <div className="p-3 rounded mb-3" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
+                  <div className="small fw-bold mb-1" style={{ color: 'var(--color-espresso)' }}>
+                    <i className="bi bi-clock-history me-1" style={{ color: 'var(--color-caramelo)' }}></i>
+                    Entrega Programada:
+                  </div>
+                  <div className="small text-muted">
+                    Modalidad: <strong>{scheduling?.modalidad === 'retiro' ? 'Retiro en Pastelería' : 'Despacho a Domicilio'}</strong>
+                  </div>
+                  {scheduling?.fecha && (
+                    <div className="small text-muted">
+                      Fecha: <strong>{scheduling.fecha}</strong> ({scheduling.franjaHoraria})
+                    </div>
+                  )}
+                  {scheduling?.dedicatoria && (
+                    <div className="small text-muted text-truncate mt-1">
+                      Dedicatoria: <em>"{scheduling.dedicatoria}"</em>
+                    </div>
+                  )}
+                </div>
+
                 <ul className="list-group list-group-flush mb-3 small">
                   <li className="list-group-item d-flex justify-content-between px-0 bg-transparent border-0">
                     <span className="text-muted">Subtotal ({totals.itemsCount} productos):</span>
@@ -219,7 +450,9 @@ export default function Cart() {
                   <li className="list-group-item d-flex justify-content-between px-0 bg-transparent border-0">
                     <span className="text-muted">Costo de Despacho:</span>
                     <span>
-                      {totals.envio === 0 ? (
+                      {scheduling?.modalidad === 'retiro' ? (
+                        <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>Gratis (Retiro)</span>
+                      ) : totals.envio === 0 ? (
                         <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>Gratis</span>
                       ) : (
                         formatPrice(totals.envio)

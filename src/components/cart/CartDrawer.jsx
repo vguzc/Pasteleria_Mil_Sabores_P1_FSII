@@ -11,7 +11,10 @@ export default function CartDrawer() {
     updateQuantity,
     removeItem,
     applyCoupon,
-    removeCoupon
+    removeCoupon,
+    stockNotice,
+    clearStockNotice,
+    scheduling
   } = useCart();
 
   const [inputCoupon, setInputCoupon] = useState('');
@@ -83,6 +86,16 @@ export default function CartDrawer() {
 
         {/* Cuerpo con ítems */}
         <div className="drawer-cuerpo">
+          {stockNotice && (
+            <div className="alert p-2 small mb-3 d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-caramelo)', color: 'var(--color-espresso)', borderRadius: '6px' }}>
+              <div style={{ fontSize: '0.75rem' }}>
+                <i className="bi bi-exclamation-circle-fill me-1" style={{ color: 'var(--color-caramelo)' }}></i>
+                {stockNotice.mensaje}
+              </div>
+              <button type="button" className="btn-close btn-close-sm" onClick={clearStockNotice} aria-label="Cerrar aviso"></button>
+            </div>
+          )}
+
           {cart.length === 0 ? (
             <div className="bolsa-vacia-container text-center py-5 px-3">
               <div style={{ width: '64px', height: '64px', margin: '0 auto 1.25rem', borderRadius: '50%', backgroundColor: '#F3ECE3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-moca)' }}>
@@ -129,66 +142,80 @@ export default function CartDrawer() {
             </div>
           ) : (
             <div className="drawer-items-lista">
-              {cart.map((item) => (
-                <div key={item.id} className="drawer-item d-flex gap-3 align-items-center mb-3 pb-3 border-bottom" style={{ borderColor: 'var(--color-borde)' }}>
-                  <img
-                    src={item.imagen || '/img/torta-mil-sabores.png'}
-                    alt={item.nombre}
-                    width="65"
-                    height="65"
-                    className="rounded object-fit-contain p-1"
-                    style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/img/torta-mil-sabores.png';
-                    }}
-                  />
-                  <div className="flex-grow-1 min-w-0">
-                    <Link
-                      to={`/producto/${item.id}`}
-                      className="d-block fw-bold text-truncate small mb-1"
-                      style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}
-                      onClick={closeDrawer}
-                    >
-                      {item.nombre}
-                    </Link>
-                    <div className="small fw-bold" style={{ color: 'var(--color-caramelo)' }}>
-                      {formatPrice(item.precio)}
-                    </div>
-                    {/* Control de cantidad */}
-                    <div className="d-flex align-items-center gap-2 mt-2">
-                      <div className="input-group input-group-sm" style={{ width: '90px' }}>
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary px-2 py-0"
-                          onClick={() => updateQuantity(item.id, item.cantidad - 1)}
-                          disabled={item.cantidad <= 1}
-                        >
-                          -
-                        </button>
-                        <span className="input-group-text bg-white px-2 py-0 small fw-bold">
-                          {item.cantidad}
+              {cart.map((item) => {
+                const itemStock = typeof item.stock === 'number' ? item.stock : 99;
+                const isMax = item.cantidad >= itemStock;
+
+                return (
+                  <div key={item.id} className="drawer-item d-flex gap-3 align-items-center mb-3 pb-3 border-bottom" style={{ borderColor: 'var(--color-borde)' }}>
+                    <img
+                      src={item.imagen || '/img/torta-mil-sabores.png'}
+                      alt={item.nombre}
+                      width="65"
+                      height="65"
+                      className="rounded object-fit-contain p-1"
+                      style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/img/torta-mil-sabores.png';
+                      }}
+                    />
+                    <div className="flex-grow-1 min-w-0">
+                      <Link
+                        to={`/producto/${item.id}`}
+                        className="d-block fw-bold text-truncate small mb-1"
+                        style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}
+                        onClick={closeDrawer}
+                      >
+                        {item.nombre}
+                      </Link>
+                      <div className="d-flex align-items-baseline gap-2">
+                        <span className="small fw-bold" style={{ color: 'var(--color-caramelo)' }}>
+                          {formatPrice(item.precio)}
                         </span>
+                        {isMax && (
+                          <span className="badge" style={{ fontSize: '0.65rem', backgroundColor: '#FAF4EC', color: '#B54234', border: '1px solid var(--color-borde)' }}>
+                            Stock máx. ({itemStock})
+                          </span>
+                        )}
+                      </div>
+                      {/* Control de cantidad */}
+                      <div className="d-flex align-items-center gap-2 mt-2">
+                        <div className="input-group input-group-sm" style={{ width: '90px' }}>
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary px-2 py-0"
+                            onClick={() => updateQuantity(item.id, item.cantidad - 1)}
+                            disabled={item.cantidad <= 1}
+                          >
+                            -
+                          </button>
+                          <span className="input-group-text bg-white px-2 py-0 small fw-bold">
+                            {item.cantidad}
+                          </span>
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary px-2 py-0"
+                            onClick={() => updateQuantity(item.id, item.cantidad + 1)}
+                            disabled={isMax}
+                            title={isMax ? `Stock máximo alcanzado (${itemStock} unid.)` : 'Aumentar cantidad'}
+                          >
+                            +
+                          </button>
+                        </div>
                         <button
                           type="button"
-                          className="btn btn-outline-secondary px-2 py-0"
-                          onClick={() => updateQuantity(item.id, item.cantidad + 1)}
+                          className="btn btn-link text-danger p-0 ms-auto small text-decoration-none"
+                          onClick={() => removeItem(item.id)}
+                          title="Eliminar de la bolsa"
                         >
-                          +
+                          <i className="bi bi-trash3"></i>
                         </button>
                       </div>
-                      <button
-                        type="button"
-                        className="btn btn-link text-danger p-0 ms-auto small text-decoration-none"
-                        onClick={() => removeItem(item.id)}
-                        title="Eliminar de la bolsa"
-                      >
-                        <i className="bi bi-trash3"></i>
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -196,6 +223,28 @@ export default function CartDrawer() {
         {/* Footer del Drawer con resumen y checkout */}
         {cart.length > 0 && (
           <div className="drawer-footer p-3 border-top" style={{ backgroundColor: '#FFFFFF', borderColor: 'var(--color-borde)' }}>
+            {/* Agendamiento activo resumen */}
+            {scheduling?.fecha ? (
+              <div className="p-2 mb-2 rounded small d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--color-espresso)', fontWeight: 600 }}>
+                  <i className="bi bi-calendar-check me-1" style={{ color: 'var(--color-caramelo)' }}></i>
+                  {scheduling.modalidad === 'retiro' ? 'Retiro' : 'Entrega'}: {scheduling.fecha} ({scheduling.franjaHoraria})
+                </span>
+                <button type="button" className="btn btn-link p-0 small text-decoration-none" style={{ color: 'var(--color-caramelo)', fontSize: '0.72rem' }} onClick={handleViewCart}>
+                  Cambiar
+                </button>
+              </div>
+            ) : (
+              <div className="p-2 mb-2 rounded small d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--color-espresso)' }}>
+                  <i className="bi bi-clock-history me-1" style={{ color: 'var(--color-caramelo)' }}></i>
+                  ¿Deseas programar tu entrega?
+                </span>
+                <button type="button" className="btn btn-link p-0 small text-decoration-none fw-semibold" style={{ color: 'var(--color-caramelo)', fontSize: '0.72rem' }} onClick={handleViewCart}>
+                  Agendar
+                </button>
+              </div>
+            )}
             {/* Cupón rápido */}
             {totals.cupon ? (
               <div className="d-flex justify-content-between align-items-center p-2 mb-2 rounded small" style={{ backgroundColor: '#F5EFEB', color: 'var(--color-espresso)', border: '1px solid var(--color-borde)' }}>

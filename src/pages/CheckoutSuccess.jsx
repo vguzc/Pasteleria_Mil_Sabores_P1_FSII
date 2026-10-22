@@ -112,28 +112,66 @@ export default function CheckoutSuccess() {
                 </div>
               </div>
 
+              {/* Programación de Entrega o Retiro */}
+              <div className="mb-4 p-4 rounded-3" style={{ backgroundColor: '#FAF7F2', border: '1px solid var(--color-borde)' }}>
+                <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Coordinación Pastelera</span>
+                <h5 className="fw-bold mb-3" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)' }}>
+                  {order.agendamiento?.modalidad === 'retiro' ? 'Retiro en Pastelería Mil Sabores' : 'Despacho Programado a Domicilio'}
+                </h5>
+                <div className="row g-3 small">
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Modalidad:</span>
+                    <strong>{order.agendamiento?.modalidad === 'retiro' ? 'Retiro en Taller (Av. Providencia 1200)' : 'Despacho a Domicilio'}</strong>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Fecha Programada:</span>
+                    <strong>{order.agendamiento?.fecha || new Date(order.fecha).toLocaleDateString('es-CL')}</strong>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="text-muted d-block">Bloque Horario:</span>
+                    <strong className="text-capitalize">
+                      {order.agendamiento?.franjaHoraria === 'manana'
+                        ? 'Mañana (10:00 - 13:00 hrs)'
+                        : order.agendamiento?.franjaHoraria === 'atardecer'
+                          ? 'Atardecer (18:00 - 20:30 hrs)'
+                          : 'Tarde (14:00 - 18:00 hrs)'}
+                    </strong>
+                  </div>
+                  {order.agendamiento?.dedicatoria && (
+                    <div className="col-12 mt-2 pt-2 border-top" style={{ borderColor: 'var(--color-borde)' }}>
+                      <span className="text-muted d-block">Dedicatoria en Placa de Chocolate / Nota:</span>
+                      <em className="text-dark">"{order.agendamiento.dedicatoria}"</em>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Dirección de entrega */}
               <div className="mb-4">
-                <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Despacho a Domicilio</span>
+                <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+                  {order.agendamiento?.modalidad === 'retiro' ? 'Retiro en Taller' : 'Despacho a Domicilio'}
+                </span>
                 <h5 className="fw-bold mb-3" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)' }}>
-                  Dirección de Entrega
+                  {order.agendamiento?.modalidad === 'retiro' ? 'Punto de Retiro Seleccionado' : 'Dirección de Entrega'}
                 </h5>
                 <div className="row g-3">
                   <div className="col-md-8">
-                    <label className="form-label small text-muted mb-0">Calle y Número</label>
-                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.direccion || ''} readOnly />
+                    <label className="form-label small text-muted mb-0">
+                      {order.agendamiento?.modalidad === 'retiro' ? 'Punto de Retiro' : 'Calle y Número'}
+                    </label>
+                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.agendamiento?.modalidad === 'retiro' ? 'Av. Providencia 1200 (Metro Manuel Montt)' : (order.cliente?.direccion || '')} readOnly />
                   </div>
                   <div className="col-md-4">
                     <label className="form-label small text-muted mb-0">Depto / Casa</label>
-                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.departamento || ''} readOnly />
+                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.departamento || '-'} readOnly />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label small text-muted mb-0">Región</label>
-                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.region || ''} readOnly />
+                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.region || 'Región Metropolitana de Santiago'} readOnly />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label small text-muted mb-0">Comuna</label>
-                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.cliente?.comuna || ''} readOnly />
+                    <input type="text" className="form-control form-control-sm" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }} value={order.agendamiento?.modalidad === 'retiro' ? 'Providencia' : (order.cliente?.comuna || '')} readOnly />
                   </div>
                 </div>
               </div>

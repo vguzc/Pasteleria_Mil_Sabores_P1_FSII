@@ -10,7 +10,16 @@ const STORAGE_KEYS = {
   USERS: 'mil_sabores_react_usuarios',
   ORDERS: 'mil_sabores_react_ordenes',
   CART: 'mil_sabores_react_carrito',
-  ACTIVE_USER: 'mil_sabores_react_sesion'
+  ACTIVE_USER: 'mil_sabores_react_sesion',
+  SCHEDULING: 'mil_sabores_react_agendamiento'
+};
+
+export const DEFAULT_SCHEDULING = {
+  modalidad: 'despacho', // 'despacho' | 'retiro'
+  fecha: '',             // YYYY-MM-DD
+  franjaHoraria: 'tarde', // 'manana' | 'tarde' | 'atardecer'
+  dedicatoria: '',
+  direccionRetiro: 'Av. Providencia 1200, Providencia, Santiago'
 };
 
 // -------------------------------------------------------------
@@ -705,24 +714,69 @@ export const cartService = {
     window.dispatchEvent(new Event('cart-updated'));
   },
 
+  getScheduling() {
+    return readStorage(STORAGE_KEYS.SCHEDULING, DEFAULT_SCHEDULING);
+  },
+
+  saveScheduling(data) {
+    const current = this.getScheduling();
+    const updated = { ...current, ...data };
+    writeStorage(STORAGE_KEYS.SCHEDULING, updated);
+    window.dispatchEvent(new Event('scheduling-updated'));
+    return updated;
+  },
+
   addItem(product, quantity = 1) {
     const cart = this.getCart();
+    const products = productService.getAll();
+    const currentProd = products.find(p => p.id === product.id) || product;
+    const stockLimit = typeof currentProd.stock === 'number' ? currentProd.stock : 99;
+
+    if (stockLimit <= 0) {
+      cart.maxReached = true;
+      cart.stockLimit = 0;
+      cart.added = 0;
+      return cart;
+    }
+
     const index = cart.findIndex(item => item.id === product.id);
+    let maxReached = false;
+    let added = 0;
 
     if (index > -1) {
-      cart[index].cantidad += quantity;
+      const currentQty = cart[index].cantidad;
+      const targetQty = currentQty + quantity;
+      if (targetQty >= stockLimit) {
+        cart[index].cantidad = stockLimit;
+        maxReached = true;
+        added = stockLimit - currentQty;
+      } else {
+        cart[index].cantidad = targetQty;
+        added = quantity;
+      }
+      cart[index].stock = stockLimit;
       cart[index].subtotal = cart[index].cantidad * cart[index].precio;
     } else {
+      const allowedQty = Math.min(quantity, stockLimit);
+      if (allowedQty >= stockLimit) {
+        maxReached = true;
+      }
+      added = allowedQty;
       cart.push({
         id: product.id,
         nombre: product.nombre,
         precio: product.precio,
-        cantidad: quantity,
-        subtotal: product.precio * quantity,
-        imagen: product.imagen
+        cantidad: allowedQty,
+        stock: stockLimit,
+        subtotal: product.precio * allowedQty,
+        imagen: product.imagen,
+        categoria: product.categoria
       });
     }
     this.saveCart(cart);
+    cart.maxReached = maxReached;
+    cart.stockLimit = stockLimit;
+    cart.added = added;
     return cart;
   },
 
@@ -731,10 +785,16 @@ export const cartService = {
     if (quantity <= 0) {
       cart = cart.filter(item => item.id !== productId);
     } else {
+      const products = productService.getAll();
+      const prod = products.find(p => p.id === productId);
+      const stockLimit = prod && typeof prod.stock === 'number' ? prod.stock : 99;
+      const finalQty = Math.min(stockLimit, quantity);
+
       const item = cart.find(i => i.id === productId);
       if (item) {
-        item.cantidad = quantity;
-        item.subtotal = item.precio * quantity;
+        item.stock = stockLimit;
+        item.cantidad = finalQty;
+        item.subtotal = item.precio * finalQty;
       }
     }
     this.saveCart(cart);
@@ -751,7 +811,7 @@ export const cartService = {
     this.saveCart([]);
   },
 
-  calculateTotals(cart, couponCode = null) {
+  calculateTotals(cart, couponCode = null, deliveryType = 'despacho') {
     const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
     
     let descuento = 0;
@@ -763,8 +823,8 @@ export const cartService = {
 
     const baseImponible = Math.max(0, subtotal - descuento);
     const iva = Math.round(baseImponible * 0.19);
-    // Despacho gratis si subtotal > $30.000, si no tarifa plana $3.990 (si hay items)
-    const envio = cart.length === 0 ? 0 : (subtotal >= 30000 ? 0 : 3990);
+    // Retiro en tienda = envio $0; despacho gratis si subtotal > $30.000, o $3.990
+    const envio = (cart.length === 0 || deliveryType === 'retiro') ? 0 : (subtotal >= 30000 ? 0 : 3990);
     const total = baseImponible + envio;
 
     return {

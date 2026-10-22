@@ -93,9 +93,15 @@ export default function AdminOrders() {
                       </td>
                       <td>
                         <div className="text-truncate" style={{ maxWidth: '180px' }}>
-                          {ord.cliente?.direccion} {ord.cliente?.departamento || ''}
+                          {ord.agendamiento?.modalidad === 'retiro' ? (
+                            <span className="badge me-1" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF', fontSize: '0.68rem' }}>Retiro en Taller</span>
+                          ) : (
+                            `${ord.cliente?.direccion || ''} ${ord.cliente?.departamento || ''}`
+                          )}
                         </div>
-                        <span className="text-muted" style={{ fontSize: '0.72rem' }}>{ord.cliente?.comuna}</span>
+                        <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>
+                          {ord.agendamiento?.fecha ? `Prog: ${ord.agendamiento.fecha} (${ord.agendamiento.franjaHoraria})` : ord.cliente?.comuna}
+                        </span>
                       </td>
                       <td className="fw-bold" style={{ color: 'var(--color-caramelo)' }}>
                         {formatPrice(ord.total)}

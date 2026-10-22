@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 /**
  * Componente Tarjeta de Producto (ProductCard)
@@ -7,10 +8,19 @@ import { Link } from 'react-router-dom';
  * - Fotografía 1:1 sobre fondo neutro cálido
  * - Tipografía limpia, alineada estrictamente a la izquierda
  * - Selector interactivo de porciones (1P, 8P, 20P) con actualización dinámica de precio
+ * - Control y reflejo de stock en tiempo real
  * - Precio prominente y botón "+ Agregar" de alta usabilidad
  */
 export default function ProductCard({ product, onAddToCart }) {
   if (!product) return null;
+
+  const { cart } = useCart();
+  const itemInCart = (cart || []).find((item) => item.id === product.id);
+  const inCartQty = itemInCart ? itemInCart.cantidad : 0;
+  const productStock = typeof product.stock === 'number' ? product.stock : 99;
+  const isOutOfStock = productStock <= 0;
+  const isMaxInCart = inCartQty >= productStock && productStock > 0;
+  const remainingStock = Math.max(0, productStock - inCartQty);
 
   // Configuración de porciones según el tipo de producto
   const portionConfig = useMemo(() => {
@@ -61,6 +71,8 @@ export default function ProductCard({ product, onAddToCart }) {
   }).format(currentPrice);
 
   const handleAdd = () => {
+    if (isOutOfStock || isMaxInCart) return;
+
     if (onAddToCart) {
       // Si la porción es la por defecto, pasamos el objeto original (invariante para tests)
       // Si el usuario seleccionó otra porción, enviamos el producto con su precio y formato calculados
@@ -79,14 +91,26 @@ export default function ProductCard({ product, onAddToCart }) {
     }
   };
 
+  const buttonLabel = isOutOfStock
+    ? 'Agotado'
+    : isMaxInCart
+      ? 'Stock Máximo en Carro'
+      : agregadoAnim
+        ? '¡Agregado al Carro!'
+        : '+ AGREGAR AL CARRO';
+
   return (
     <article className="tarjeta-producto-baker" data-id={product.id}>
       {/* 1. Fotografía Cuadrada Estilo Factory Nine */}
       <div className="tarjeta-baker-img-wrap">
-        {product.enOferta ? (
+        {isOutOfStock ? (
+          <span className="badge-oferta-baker" style={{ backgroundColor: '#4A3B32' }}>AGOTADO</span>
+        ) : product.enOferta ? (
           <span className="badge-oferta-baker">OFERTA</span>
         ) : product.destacado ? (
           <span className="badge-marca-mas-vendido">MÁS VENDIDO</span>
+        ) : productStock <= 5 && productStock > 0 ? (
+          <span className="badge-oferta-baker" style={{ backgroundColor: '#8B4513' }}>ÚLTIMAS {productStock} UNID.</span>
         ) : product.categoria && product.categoria.toLowerCase().includes('gluten') ? (
           <span className="badge-marca-sin-gluten">SIN GLUTEN</span>
         ) : product.categoria && product.categoria.toLowerCase().includes('vegano') ? (
@@ -114,14 +138,10 @@ export default function ProductCard({ product, onAddToCart }) {
           type="button"
           className={`btn-fn-agregar-overlay ${agregadoAnim ? 'agregado' : ''}`}
           onClick={handleAdd}
-          disabled={product.stock <= 0}
-          title={`Agregar ${product.nombre} (${porcion}) al carro`}
+          disabled={isOutOfStock || isMaxInCart}
+          title={isOutOfStock ? 'Producto agotado' : isMaxInCart ? 'Has alcanzado el stock disponible' : `Agregar ${product.nombre} (${porcion}) al carro`}
         >
-          {product.stock <= 0
-            ? 'Agotado'
-            : agregadoAnim
-              ? '¡Agregado al Carro!'
-              : '+ AGREGAR AL CARRO'}
+          {buttonLabel}
         </button>
       </div>
 
@@ -138,8 +158,34 @@ export default function ProductCard({ product, onAddToCart }) {
         </h3>
 
         {/* Precio Prominente Dinámico directamente bajo el título */}
-        <div className="tarjeta-baker-precio-wrap">
+        <div className="tarjeta-baker-precio-wrap d-flex justify-content-between align-items-baseline">
           <span className="tarjeta-baker-precio">{formattedPrice}</span>
+          {inCartQty > 0 && (
+            <span className="small text-muted" style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-caramelo)' }}>
+              {inCartQty} en bolsa
+            </span>
+          )}
+        </div>
+
+        {/* Estado de stock en tiempo real */}
+        <div className="tarjeta-baker-stock-info my-1">
+          {isOutOfStock ? (
+            <span className="small text-danger fw-semibold" style={{ fontSize: '0.75rem' }}>
+              Sin stock disponible
+            </span>
+          ) : isMaxInCart ? (
+            <span className="small text-muted fw-semibold" style={{ fontSize: '0.75rem', color: '#B54234' }}>
+              Stock máximo alcanzado ({inCartQty}/{productStock})
+            </span>
+          ) : productStock <= 5 ? (
+            <span className="small text-warning-emphasis fw-semibold" style={{ fontSize: '0.75rem', color: '#B54234' }}>
+              Solo {productStock} disponibles
+            </span>
+          ) : inCartQty > 0 ? (
+            <span className="small text-muted" style={{ fontSize: '0.75rem' }}>
+              Disponibles: {remainingStock}
+            </span>
+          ) : null}
         </div>
 
         {/* Breve descripción en tono sutil */}
