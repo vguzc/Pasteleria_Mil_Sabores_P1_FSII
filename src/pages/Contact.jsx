@@ -63,59 +63,22 @@ export default function Contact() {
         <div className="contenedor">
           <div className="contacto-hero-contenido">
             <span className="contacto-hero-eyebrow">
-              Estamos Para Atenderte
+              ESTAMOS PARA TI
             </span>
             <h1 className="contacto-hero-titulo">
-              Contáctanos
+              Conversemos con un Café
             </h1>
             <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
             <p className="contacto-hero-desc">
-              ¿Tienes dudas sobre pedidos especiales, tortas de celebración o el estado de tu despacho? Escríbenos o visítanos en nuestro taller y nuestro equipo te responderá con prontitud.
+              ¿Tienes alguna pregunta, pedido especial o simplemente quieres saludarnos? Nos encantará saber de ti. Escríbenos a través del formulario o visítanos en nuestro taller y cafetería.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 2. Sección de Contacto: Franja Entera Borde a Borde ("Conversemos con un café") */}
+      {/* 2. Sección de Contacto: Franja Entera Borde a Borde */}
       <section className="seccion-contacto-franja-entera">
         <div className="contenedor">
-          {/* Encabezado Centrado Estilo Baker */}
-          <div className="text-center mb-5">
-            <span
-              className="d-block mb-2 text-uppercase fw-bold"
-              style={{
-                fontFamily: 'var(--fuente-texto)',
-                fontSize: '0.8rem',
-                letterSpacing: '0.16em',
-                color: 'var(--color-caramelo)'
-              }}
-            >
-              ESTAMOS PARA TI
-            </span>
-            <h2
-              style={{
-                fontFamily: 'var(--fuente-titulos)',
-                color: 'var(--color-espresso)',
-                fontSize: 'clamp(2.1rem, 3.8vw, 3rem)',
-                fontWeight: 700,
-                margin: '0 0 0.85rem 0'
-              }}
-            >
-              Conversemos con un café
-            </h2>
-            <p
-              className="mx-auto"
-              style={{
-                maxWidth: '680px',
-                fontSize: '1.02rem',
-                lineHeight: 1.6,
-                color: 'var(--color-texto-secundario)'
-              }}
-            >
-              ¿Tienes alguna pregunta, pedido especial o simplemente quieres saludarnos? Nos encantará saber de ti.
-            </p>
-          </div>
-
           {/* Dos Tarjetas Blancas Principales */}
           <div className="row g-4 justify-content-center">
             {/* Tarjeta 1: Escríbenos */}
