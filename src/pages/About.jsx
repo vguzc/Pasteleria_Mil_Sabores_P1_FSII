@@ -3,28 +3,75 @@ import { Link } from 'react-router-dom';
 
 export default function About() {
   return (
-    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '3.5rem 0 6rem 0' }}>
-      <div className="contenedor">
-        <nav aria-label="breadcrumb" className="mb-4">
-          <ol className="breadcrumb small">
-            <li className="breadcrumb-item"><Link to="/" style={{ color: 'var(--color-espresso)' }}>Inicio</Link></li>
-            <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>Nuestra Historia</li>
-          </ol>
-        </nav>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+      {/* 1. Hero Editorial de Nuestra Historia con Fotografías y Branding */}
+      <section className="catalogo-hero-banner" style={{ marginBottom: '3.5rem' }}>
+        <div className="contenedor">
+          <div className="catalogo-hero-grid">
+            {/* Columna Izquierda: Información Editorial */}
+            <div className="catalogo-hero-info">
+              <span className="seccion-baker-eyebrow">
+                Medio Siglo de Oficio (1976 - 2026)
+              </span>
+              <h1 className="catalogo-hero-titulo">
+                La Pasión por la Repostería Artesanal
+              </h1>
+              <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
+              <p className="catalogo-hero-desc">
+                Desde nuestro primer horno en Providencia hasta convertirnos en un referente de la dulzura familiar chilena, conservando intactas las recetas nobles, el amasado paciente y el cariño por la mesa compartida.
+              </p>
 
-        {/* Hero Nosotros */}
-        <div className="text-center mb-5">
-          <span className="seccion-baker-eyebrow">
-            Medio Siglo de Oficio (1976 - 2026)
-          </span>
-          <h1 className="seccion-baker-titulo" style={{ fontSize: 'clamp(2.3rem, 4vw, 3.2rem)' }}>
-            La Pasión por la Repostería Artesanal
-          </h1>
-          <div className="adorno-baker" />
-          <p className="seccion-baker-desc" style={{ maxWidth: '720px', margin: '0 auto' }}>
-            Desde nuestro primer horno en Providencia hasta convertirnos en un referente de la dulzura familiar chilena, conservando intactas las recetas nobles y el cariño por la mesa compartida.
-          </p>
+              {/* Sellos de Confianza y Calidad */}
+              <div className="catalogo-hero-features">
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Recetas Familiares desde 1976</span>
+                </div>
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Amasado a Mano & Paciencia</span>
+                </div>
+                <div className="catalogo-hero-feature-item">
+                  <span className="catalogo-hero-check">✓</span>
+                  <span>Ingredientes Nobles Sin Sucedáneos</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Composición de Fotos Escalonadas y Branding */}
+            <div className="catalogo-hero-fotos">
+              {/* Foto Principal: Amasado artesanal tradicional a mano con harina */}
+              <div className="catalogo-hero-foto-principal">
+                <img
+                  src="/img/galeria/amasado-manos-harina.png"
+                  alt="Amasado artesanal a mano tradicional desde 1976"
+                  loading="eager"
+                />
+              </div>
+
+              {/* Foto Secundaria: Vitrina de croissants y hojaldres dorados */}
+              <div className="catalogo-hero-foto-secundaria">
+                <img
+                  src="/img/galeria/vitrina-croissants-dorados.png"
+                  alt="Vitrina de bollería y hojaldres recién horneados"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Sello Circular Flotante Oficial de Tradición */}
+              <div className="catalogo-hero-sello">
+                <img
+                  src="/img/branding/sello-circular-transparent.png"
+                  alt="Sello Mil Sabores Calidad Artesanal"
+                  className="catalogo-hero-sello-img"
+                />
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <div className="contenedor">
 
         <div className="row g-5 align-items-center mb-5">
           <div className="col-lg-6">
