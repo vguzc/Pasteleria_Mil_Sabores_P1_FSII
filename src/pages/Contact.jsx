@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AlertMessage from '../components/common/AlertMessage';
+import { validarTelefonoChileno } from '../services/chileData';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [telefonoTocado, setTelefonoTocado] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,13 +22,38 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.nombre.trim() || !formData.correo.trim() || !formData.mensaje.trim()) {
-      setError('Por favor completa todos los campos requeridos.');
+    setError('');
+
+    if (!formData.nombre.trim()) {
+      setError('Por favor ingresa tu nombre completo.');
       return;
     }
-    setError('');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.correo.trim() || !emailRegex.test(formData.correo.trim())) {
+      setError('Por favor ingresa un correo electrónico válido (ej: usuario@ejemplo.cl).');
+      return;
+    }
+
+    setTelefonoTocado(true);
+    if (!formData.telefono.trim()) {
+      setError('Por favor ingresa un número de teléfono o WhatsApp de contacto.');
+      return;
+    }
+
+    if (!validarTelefonoChileno(formData.telefono)) {
+      setError('Por favor ingresa un número de teléfono válido (ej: +56 9 8765 4321 o 987654321, 9 dígitos locales).');
+      return;
+    }
+
+    if (!formData.mensaje.trim()) {
+      setError('Por favor ingresa el mensaje o detalle de tu consulta.');
+      return;
+    }
+
     setSubmitted(true);
     setFormData({ nombre: '', correo: '', telefono: '', asunto: 'consulta-general', mensaje: '' });
+    setTelefonoTocado(false);
   };
 
   return (
@@ -102,16 +129,25 @@ export default function Contact() {
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Teléfono / WhatsApp</label>
+                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                      Teléfono / WhatsApp *
+                    </label>
                     <input
                       type="tel"
                       name="telefono"
-                      className="form-control"
+                      className={`form-control ${telefonoTocado ? (validarTelefonoChileno(formData.telefono) ? 'is-valid' : 'is-invalid') : ''}`}
                       placeholder="+56 9 8765 4321"
                       value={formData.telefono}
                       onChange={handleChange}
+                      onBlur={() => setTelefonoTocado(true)}
+                      required
                       style={{ borderColor: 'var(--color-borde)' }}
                     />
+                    {telefonoTocado && formData.telefono && !validarTelefonoChileno(formData.telefono) && (
+                      <small className="text-danger d-block mt-1" style={{ fontSize: '0.74rem' }}>
+                        Número no válido. Debe tener 9 dígitos locales (ej: +56 9 8765 4321 o 987654321).
+                      </small>
+                    )}
                   </div>
 
                   <div className="col-md-6">
