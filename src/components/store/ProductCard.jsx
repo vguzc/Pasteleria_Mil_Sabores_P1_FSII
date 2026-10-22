@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 /**
@@ -6,39 +6,78 @@ import { Link } from 'react-router-dom';
  * Inspirado en el diseño minimalista de Factory Nine:
  * - Fotografía 1:1 sobre fondo neutro cálido
  * - Tipografía limpia, alineada estrictamente a la izquierda
- * - Selector interactivo de porciones (1P, 8P, 20P) en círculos modernos
+ * - Selector interactivo de porciones (1P, 8P, 20P) con actualización dinámica de precio
  * - Precio prominente y botón "+ Agregar" de alta usabilidad
  */
 export default function ProductCard({ product, onAddToCart }) {
-  const [agregadoAnim, setAgregadoAnim] = useState(false);
-  const [porcion, setPorcion] = useState('1P');
-
   if (!product) return null;
 
-  const handleAdd = () => {
-    if (onAddToCart) {
-      onAddToCart(product);
-      setAgregadoAnim(true);
-      setTimeout(() => setAgregadoAnim(false), 1400);
+  // Configuración de porciones según el tipo de producto
+  const portionConfig = useMemo(() => {
+    const isCake = (product.categoria || '').toLowerCase().includes('torta') ||
+                   (product.precio >= 15000);
+
+    if (isCake) {
+      return {
+        options: ['1P', '8P', '20P'],
+        defaultOption: '8P',
+        multipliers: {
+          '1P': 0.22, // Porción individual / trozo de torta
+          '8P': 1.0,  // Formato mediano estándar (precio base)
+          '20P': 1.65 // Formato grande de celebración
+        }
+      };
     }
-  };
+
+    return {
+      options: ['1P', '4P', '8P'],
+      defaultOption: '1P',
+      multipliers: {
+        '1P': 1.0,  // Porción individual (precio base)
+        '4P': 3.6,  // Caja pack 4
+        '8P': 6.8   // Caja pack 8 familiar
+      }
+    };
+  }, [product.categoria, product.precio]);
+
+  const [porcion, setPorcion] = useState(portionConfig.defaultOption);
+  const [agregadoAnim, setAgregadoAnim] = useState(false);
+
+  // Cálculo del precio según la porción activa
+  const currentPrice = useMemo(() => {
+    if (!product.precio) return 0;
+    if (porcion === portionConfig.defaultOption) return product.precio;
+
+    const mult = portionConfig.multipliers[porcion] || 1.0;
+    const raw = product.precio * mult;
+    const rounded = Math.round(raw / 100) * 100;
+    return rounded > 90 ? rounded - 10 : rounded;
+  }, [product.precio, porcion, portionConfig]);
 
   const formattedPrice = new Intl.NumberFormat('es-CL', {
     style: 'currency',
     currency: 'CLP',
     maximumFractionDigits: 0
-  }).format(product.precio);
+  }).format(currentPrice);
 
-  // Opciones de formato/porción estilo Factory Nine
-  const getPortions = () => {
-    const cat = (product.categoria || '').toLowerCase();
-    if (cat.includes('individual') || cat.includes('tradicional')) {
-      return ['1P', '4P', '8P'];
+  const handleAdd = () => {
+    if (onAddToCart) {
+      // Si la porción es la por defecto, pasamos el objeto original (invariante para tests)
+      // Si el usuario seleccionó otra porción, enviamos el producto con su precio y formato calculados
+      const itemToAdd = porcion === portionConfig.defaultOption
+        ? product
+        : {
+            ...product,
+            precio: currentPrice,
+            nombre: `${product.nombre} (${porcion})`,
+            porcion
+          };
+
+      onAddToCart(itemToAdd);
+      setAgregadoAnim(true);
+      setTimeout(() => setAgregadoAnim(false), 1400);
     }
-    return ['1P', '8P', '20P'];
   };
-
-  const porciones = getPortions();
 
   return (
     <article className="tarjeta-producto-baker" data-id={product.id}>
@@ -83,7 +122,7 @@ export default function ProductCard({ product, onAddToCart }) {
           <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
         </h3>
 
-        {/* Precio Prominente */}
+        {/* Precio Prominente Dinámico */}
         <div className="tarjeta-baker-precio-wrap">
           <span className="tarjeta-baker-precio">{formattedPrice}</span>
         </div>
@@ -96,7 +135,7 @@ export default function ProductCard({ product, onAddToCart }) {
         {/* 3. Fila de Acciones: Selectores de Porciones Círculos + Botón + Agregar */}
         <div className="tarjeta-baker-acciones">
           <div className="card-fn-porciones" aria-label="Seleccionar porción o formato">
-            {porciones.map((p) => (
+            {portionConfig.options.map((p) => (
               <button
                 key={p}
                 type="button"
