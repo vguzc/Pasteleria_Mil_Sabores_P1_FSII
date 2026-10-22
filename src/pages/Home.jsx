@@ -133,7 +133,7 @@ export default function Home() {
               <div className="recuerdos-foto-secundaria">
                 <img
                   src="/img/branding/mockup-vaso.jpg"
-                  alt="Buen Café Mil Sabores para llevar"
+                  alt="Café de especialidad y bollería"
                   loading="lazy"
                 />
               </div>

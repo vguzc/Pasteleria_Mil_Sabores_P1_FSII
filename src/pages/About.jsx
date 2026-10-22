@@ -87,9 +87,9 @@ export default function About() {
         {/* Identidad de Marca & Atmósfera */}
         <div className="mb-5">
           <div className="text-center mb-4">
-            <span className="seccion-baker-eyebrow">Identidad & Atmósfera</span>
+            <span className="seccion-baker-eyebrow">Espacios & Tradición</span>
             <h3 style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.85rem' }}>
-              Buen Café, Mil Momentos
+              Nuestra Identidad & Cafetería
             </h3>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>

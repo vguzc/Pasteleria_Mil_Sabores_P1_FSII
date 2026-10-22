@@ -5,9 +5,9 @@ const SLIDES_DATA = [
   {
     id: 1,
     image: '/img/slider/slide-1-cafe.png',
-    eyebrow: 'Cafetería Mil Sabores • Buen Café, Mil Momentos',
-    title: 'El Auténtico Placer de un Buen Café',
-    subtitle: 'Granos de especialidad tostados con maestría y repostería artesanal chilena, pensados para acompañar cada rebanada y crear momentos únicos.',
+    eyebrow: 'Café de Especialidad & Barismo',
+    title: 'El Auténtico Placer de un Café de Mañana',
+    subtitle: 'Granos 100% arábica seleccionados y tostados con maestría, diseñados para acompañar cada rebanada de torta y hojaldre recién horneado.',
     primaryBtn: { text: 'Ver Catálogo Completo', link: '/productos' },
     secondaryBtn: { text: 'Ofertas Especiales', link: '/ofertas' }
   },
