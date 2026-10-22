@@ -159,26 +159,23 @@ export default function AdminSidebar() {
 
       <hr style={{ borderColor: 'rgba(255, 255, 255, 0.12)', margin: '1rem 0' }} />
 
-      {/* 4. Acciones Inferiores */}
-      <div className="d-flex flex-column gap-2">
+      {/* 4. Acciones Inferiores con estética Baker Mil Sabores */}
+      <div className="d-flex flex-column gap-2 mt-2">
         <Link
           to="/"
-          className="btn btn-sm text-start d-flex align-items-center gap-2"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.08)',
-            color: '#EADFD2',
-            border: '1px solid rgba(255, 255, 255, 0.15)'
-          }}
+          className="btn-admin-sidebar-tienda"
+          title="Ir a la tienda online de Mil Sabores"
         >
-          <i className="bi bi-shop"></i>
+          <i className="bi bi-shop fs-6"></i>
           <span>Ver Tienda Online</span>
         </Link>
         <button
           onClick={handleLogout}
           type="button"
-          className="btn btn-sm btn-outline-danger text-start d-flex align-items-center gap-2"
+          className="btn-admin-sidebar-logout"
+          title="Cerrar sesión de forma segura"
         >
-          <i className="bi bi-box-arrow-left"></i>
+          <i className="bi bi-box-arrow-left fs-6"></i>
           <span>Cerrar Sesión</span>
         </button>
       </div>

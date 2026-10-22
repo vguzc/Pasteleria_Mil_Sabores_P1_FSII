@@ -3262,3 +3262,53 @@ h3 { font-size: 1.35rem; }
 .card-identidad-wrap:hover img {
   transform: scale(1.06);
 }
+
+/* ==========================================================================
+   ESTILOS BAKER: BOTONES INFERIORES DEL SIDEBAR ADMINISTRATIVO
+   ========================================================================== */
+.btn-admin-sidebar-tienda {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #C4884B 0%, #A76B35 100%);
+  color: #FFFFFF !important;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(196, 136, 75, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-admin-sidebar-tienda:hover {
+  background: linear-gradient(135deg, #B5793C 0%, #945B26 100%);
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(196, 136, 75, 0.35);
+}
+
+.btn-admin-sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #D2C4B5;
+  font-weight: 500;
+  font-size: 0.88rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.btn-admin-sidebar-logout:hover {
+  background: rgba(181, 66, 52, 0.18);
+  color: #FFB3AA;
+  border-color: rgba(181, 66, 52, 0.4);
+  transform: translateY(-1px);
+}
