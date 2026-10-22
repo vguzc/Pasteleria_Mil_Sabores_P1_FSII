@@ -64,28 +64,27 @@ export const BLOG_POSTS = [
 
 export default function Blogs() {
   return (
-    <div className="py-5" style={{ backgroundColor: 'var(--color-fondo)' }}>
-      <div className="contenedor">
-        <nav aria-label="breadcrumb" className="mb-4">
-          <ol className="breadcrumb small">
-            <li className="breadcrumb-item"><Link to="/" style={{ color: 'var(--color-espresso)' }}>Inicio</Link></li>
-            <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>Blog & Recetas</li>
-          </ol>
-        </nav>
-
-        <div className="text-center mb-5">
-          <span className="seccion-baker-eyebrow">
-            Secretos de Nuestros Maestros
-          </span>
-          <h1 className="seccion-baker-titulo" style={{ fontSize: '2.6rem' }}>
-            Blog & Recetas de Pastelería
-          </h1>
-          <div className="adorno-baker" />
-          <p className="seccion-baker-desc">
-            Técnicas del maestro pastelero, recetas tradicionales paso a paso y la historia viva de Mil Sabores desde 1976.
-          </p>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+      {/* 1. Hero Banner de Blog & Recetas Full Width a lo largo de la página */}
+      <section className="blogs-hero-banner">
+        <div className="contenedor">
+          <div className="blogs-hero-contenido">
+            <span className="blogs-hero-eyebrow">
+              Secretos de Nuestros Maestros
+            </span>
+            <h1 className="blogs-hero-titulo">
+              Blog & Recetas de Pastelería
+            </h1>
+            <div className="adorno-baker" style={{ margin: '0.6rem 0 1.2rem 0' }} />
+            <p className="blogs-hero-desc">
+              Técnicas del maestro pastelero, recetas tradicionales paso a paso y la historia viva de Mil Sabores desde 1976.
+            </p>
+          </div>
         </div>
+      </section>
 
+      {/* 2. Listado de Artículos y Recetas */}
+      <div className="contenedor" style={{ paddingTop: '3.5rem' }}>
         <div className="row g-4 justify-content-center">
           {BLOG_POSTS.map((post) => (
             <div key={post.id} className="col-12 col-md-6 col-lg-4">
