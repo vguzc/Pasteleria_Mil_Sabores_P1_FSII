@@ -58,7 +58,7 @@ El sistema incluye credenciales precargadas para facilitar la revision y evaluac
 
 ---
 
-## Cupones de Descuento y Reglas de Negocio
+## Cupones de Descuento y Reglas Comerciales
 
 - **`FELICES50`**: **50% de descuento** en el total de productos. Beneficio oficial de los 50 anos de la pasteleria para clientes mayores de 50 anos.
 - **`DUOC10`**: **10% de descuento** exclusivo para la comunidad institucional Duoc UC. Requiere ingresar o contar con una cuenta con dominio institucional oficial (`@duocuc.cl`, `@profesor.duoc.cl` o `@duoc.cl`).
@@ -67,6 +67,24 @@ El sistema incluye credenciales precargadas para facilitar la revision y evaluac
   - Compras entre **$20.000 y $29.999**: Tarifa preferencial con ahorro de $2.000 ($1.990).
   - Compras inferiores a **$20.000**: Tarifa estandar de $3.990.
   - **Retiro en Pasteleria**: Gratuito en sucursales Chicureo, Providencia y Las Condes ($0).
+
+---
+
+## Matriz Consolidada de Pruebas Unitarias (11/11 Aprobadas)
+
+| N | Criterio Evaluado de la Pauta | Archivo de Especificacion | Componente / Modulo | Tecnica Empleada | Estado |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **01** | Renderizado de Listas | `test/1_render_list.spec.jsx` | `ProductList` | Recorrido `.map()` en JSX | Aprobado |
+| **02** | Renderizado Condicional | `test/2_render_conditional.spec.jsx` | `AlertMessage` | Condicion booleana en DOM | Aprobado |
+| **03** | Props en Componentes | `test/3_button_props.spec.jsx` | `Button` | Callback `onClick` con Spy | Aprobado |
+| **04** | Props Complejas (Modelos) | `test/4_product_card_props.spec.jsx` | `ProductCard` | Desestructuracion de objeto y moneda CLP | Aprobado |
+| **05** | Gestion de Estado (Inputs) | `test/5_form_state.spec.jsx` | `SearchForm` | Hook `useState` en campo controlado | Aprobado |
+| **06** | Gestion de Estado (Contador) | `test/6_quantity_selector_state.spec.jsx` | `QuantitySelector` | Mutacion reactiva de cantidad | Aprobado |
+| **07** | Simulacion de Eventos (Click) | `test/7_event_add_cart.spec.jsx` | `ProductCard` | `fireEvent.click` al anadir a bolsa | Aprobado |
+| **08** | Simulacion de Eventos (Submit)| `test/8_event_form_submit.spec.jsx` | `SimpleContactForm` | `fireEvent.submit` y `preventDefault` | Aprobado |
+| **09** | Aislamiento con Spies / Mocks | `test/9_mock_crud_service.spec.jsx` | `productService` | `jasmine.spyOn` sobre capas de servicio | Aprobado |
+| **10** | Calculo Matematico de Totales | `test/10_mock_checkout_totals.spec.jsx`| `cartService` | Subtotal, Descuento 50%, IVA 19%, Despacho | Aprobado |
+| **11** | Validacion de Convenio Duoc UC | `test/10_mock_checkout_totals.spec.jsx`| `cartService` / `isDuocEmail` | Restriccion de dominio institucional | Aprobado |
 
 ---
 
@@ -145,28 +163,10 @@ Parcial_1/
 │   ├── 8_event_form_submit.spec.jsx (Prueba 8: Simulacion de submit con preventDefault)
 │   ├── 9_mock_crud_service.spec.jsx (Prueba 9: Mocks y espias con jasmine.spyOn)
 │   └── 10_mock_checkout_totals.spec.jsx (Prueba 10 y 11: Calculo de totales y validacion Duoc)
-├── DOCUMENTO_ERS_V2.md              (Especificacion de Requisitos de Software V2)
-├── DOCUMENTO_ERS_V2.pdf             (Version imprimible oficial de la ERS V2)
-├── DOCUMENTO_COBERTURA_TESTING.md   (Informe tecnico de cobertura de pruebas Karma)
-├── DOCUMENTO_COBERTURA_TESTING.pdf  (Version imprimible del informe de testing)
 ├── karma.conf.cjs                   (Configuracion de Karma runner con ChromeHeadless)
 ├── vite.config.js                   (Configuracion de Vite para empaquetado)
 └── package.json                     (Dependencias y scripts del proyecto)
 ```
-
----
-
-## Documentacion Oficial de la Entrega
-
-1. **Especificacion de Requisitos de Software (ERS v2.0):**
-   - Archivo Markdown: [`DOCUMENTO_ERS_V2.md`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_ERS_V2.md)
-   - Archivo PDF Oficial: [`DOCUMENTO_ERS_V2.pdf`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_ERS_V2.pdf)
-   - Archivo HTML: [`DOCUMENTO_ERS_V2.html`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_ERS_V2.html)
-
-2. **Informe Tecnico de Cobertura y Testing Automatizado:**
-   - Archivo Markdown: [`DOCUMENTO_COBERTURA_TESTING.md`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_COBERTURA_TESTING.md)
-   - Archivo PDF Oficial: [`DOCUMENTO_COBERTURA_TESTING.pdf`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_COBERTURA_TESTING.pdf)
-   - Archivo HTML: [`DOCUMENTO_COBERTURA_TESTING.html`](file:///c:/Users/Asus/Proyectos/Parcial_1/DOCUMENTO_COBERTURA_TESTING.html)
 
 ---
 
