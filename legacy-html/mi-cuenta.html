@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Cuenta | Pastelería Mil Sabores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tienda.css">
+  <link rel="stylesheet" href="css/formularios.css">
+</head>
+<body data-requiere-rol="cliente,administrador,vendedor">
+
+  <!-- Encabezado / Navegación Principal -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a href="index.html" class="logo">
+        <img src="img/logo-icono.png" alt="Mil Sabores" class="logo-icono">
+        <span class="logo-texto">
+          Mil Sabores
+          <span class="logo-subtexto">Café & Pastelería</span>
+        </span>
+      </a>
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="blogs.html">Blog & Recetas</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="nav-acciones">
+        <a href="login.html" class="nav-icono-link" aria-label="Iniciar sesión" title="Iniciar sesión">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+        <a href="carrito.html" class="nav-icono-link nav-carrito" aria-label="Ver carrito" title="Ver carrito">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="badge-carrito" style="display:none;">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Mi Cuenta -->
+  <main class="contenedor" style="padding: 3rem 1rem; max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Encabezado de Perfil -->
+    <div class="tarjeta-cuenta" style="background: linear-gradient(135deg, #FFF9F3 0%, #FDF0E2 100%); border: 1px solid var(--color-chocolate-claro);">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--color-chocolate); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+            <span id="avatarInicial">U</span>
+          </div>
+          <div>
+            <h1 id="lblNombreUsuario" style="font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--color-chocolate); margin: 0; line-height: 1.2;">Mi Cuenta</h1>
+            <p id="lblCorreoUsuario" style="margin: 0.25rem 0 0 0; color: var(--color-texto); opacity: 0.9; font-weight: 500;">correo@ejemplo.com</p>
+          </div>
+        </div>
+        <div>
+          <span id="lblBadgeRol" class="badge-beneficio info" style="font-size: 0.95rem; padding: 0.5rem 1rem;">Cliente Registrado</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layout Grilla de Paneles -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1.75rem;">
+
+      <!-- Panel 1: Datos Personales -->
+      <div class="tarjeta-cuenta">
+        <div class="tarjeta-cuenta-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-chocolate)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <h2 style="font-size: 1.5rem;">Datos Personales</h2>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.95rem;">
+          <li><strong>Nombre Completo:</strong> <span id="valNombre">-</span></li>
+          <li><strong>RUN:</strong> <span id="valRun">-</span></li>
+          <li><strong>Correo:</strong> <span id="valCorreo">-</span></li>
+          <li><strong>Fecha de Nacimiento:</strong> <span id="valFechaNac">-</span></li>
+          <li><strong>Edad:</strong> <span id="valEdad">-</span></li>
+          <li><strong>Dirección:</strong> <span id="valDireccion">-</span></li>
+          <li><strong>Comuna / Región:</strong> <span id="valComunaRegion">-</span></li>
+        </ul>
+      </div>
+
+      <!-- Panel 2: Promociones por Edad y Aniversario -->
+      <div class="tarjeta-cuenta">
+        <div class="tarjeta-cuenta-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-chocolate)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+          <h2 style="font-size: 1.5rem;">Beneficios por Edad</h2>
+        </div>
+        <div id="contenedorBeneficioEdad">
+          <!-- Cargado por JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Panel 3: Beneficio Torta Gratis de Cumpleaños (Semana de Cumpleaños) -->
+    <div class="tarjeta-cuenta" style="background: linear-gradient(135deg, #FFF5F7 0%, #FFEBF0 100%); border: 1.5px solid #F8BBD0;">
+      <div class="tarjeta-cuenta-header">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem; vertical-align: middle;">
+          <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path>
+          <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path>
+          <path d="M2 21h20"></path>
+          <line x1="7" y1="8" x2="7" y2="5"></line>
+          <line x1="12" y1="8" x2="12" y2="3"></line>
+          <line x1="17" y1="8" x2="17" y2="5"></line>
+        </svg>
+        <h2 style="font-size: 1.6rem; color: #C2185B;">Torta Gratis de Cumpleaños</h2>
+      </div>
+      <div id="contenedorBeneficioCumple">
+        <!-- Cargado por JS -->
+      </div>
+    </div>
+
+    <!-- Panel 4: Cupones de Descuento Disponibles -->
+    <div class="tarjeta-cuenta">
+      <div class="tarjeta-cuenta-header">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-chocolate)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <h2 style="font-size: 1.6rem;">Cupones Disponibles</h2>
+      </div>
+      <p style="font-size: 0.95rem; color: var(--color-texto); margin-top: -0.5rem;">
+        Aprovecha tus cupones exclusivos. Copia el código o aplícalo directamente a tu carrito de compras:
+      </p>
+      <div class="grid-cupones-cuenta" id="gridCuponesCuenta">
+        <!-- Cargado por JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="pie-pagina" style="background-color: var(--color-chocolate); color: var(--color-fondo); padding: 3.5rem 0 2rem 0; margin-top: 3rem;">
+    <div class="contenedor" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; text-align: center; justify-items: center; align-items: start;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <a href="index.html" class="logo-footer">
+          <span class="logo-texto-footer">
+            Mil Sabores
+            <span class="logo-subtexto-footer">Café & Pastelería</span>
+          </span>
+        </a>
+        <p style="font-size: 0.9rem; opacity: 0.9; max-width: 300px; margin: 0 auto; text-align: center;">Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Navegación</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem; text-align: center;">
+          <li><a href="productos.html" style="color: var(--color-fondo);">Catálogo de Productos</a></li>
+          <li><a href="nosotros.html" style="color: var(--color-fondo);">Nuestra Historia</a></li>
+          <li><a href="contacto.html" style="color: var(--color-fondo);">Contacto & Sedes</a></li>
+        </ul>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">Horario & Ubicación</h4>
+        <p style="font-size: 0.9rem; margin: 0 0 0.5rem 0; text-align: center; font-weight: 700;">Antonio Varas 666, Providencia</p>
+        <p style="font-size: 0.88rem; margin: 0; text-align: center; line-height: 1.7; opacity: 0.9;">Lunes a Sábado: 09:00 - 20:00 hrs.<br>Domingos y Festivos: 10:00 - 18:00 hrs.</p>
+      </div>
+    </div>
+    <div class="contenedor" style="text-align: center; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.85rem; opacity: 0.85;">
+      © 2026 Pastelería Mil Sabores — Evaluación Formativa 1 (Fullstack II - Duoc UC)
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/cuenta.js"></script>
+</body>
+</html>
