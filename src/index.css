@@ -1601,7 +1601,7 @@ h3 { font-size: 1.35rem; }
   color: var(--color-texto-secundario);
 }
 
-/* ---------- Galería del Obrador Estilo Baker ---------- */
+/* ---------- Galería Pastelera Estilo Baker ---------- */
 .seccion-galeria-obrador {
   padding: 5rem 1.5rem 5.5rem 1.5rem;
   background-color: #FFFFFF;
@@ -2141,7 +2141,7 @@ h3 { font-size: 1.35rem; }
   gap: 0.45rem;
 }
 
-/* ---------- Sección 6: Blog & Recetas ("Desde Nuestro Obrador") ---------- */
+/* ---------- Sección 6: Blog & Recetas ("Del Maestro Pastelero") ---------- */
 .seccion-blog-baker {
   padding: 5.5rem 1.5rem 6rem 1.5rem;
   background-color: var(--color-fondo);

@@ -66,7 +66,7 @@ export default function AdminUsers() {
           <h1 className="seccion-baker-titulo" style={{ fontSize: '2rem', textAlign: 'left', margin: 0 }}>
             Mantenedor de Usuarios
           </h1>
-          <p className="text-muted small mb-0 mt-1">Gestión de cuentas de clientes, vendedores y administradores del obrador</p>
+          <p className="text-muted small mb-0 mt-1">Gestión de cuentas de clientes, vendedores y administradores del equipo pastelero</p>
         </div>
         <button
           className="boton boton-primario btn-baker"

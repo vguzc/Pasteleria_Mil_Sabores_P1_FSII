@@ -92,7 +92,7 @@ export default function Home() {
                 Nuestra vocación por la pastelería artesanal comenzó hace cinco décadas en un pequeño horno de Providencia. Hoy conservamos intacta la liturgia del amasado a mano, la cocción pausada y la selección rigurosa de cada ingrediente: mantequilla pura de campo, huevos de gallinas libres y manjar blanco cocido a fuego lento.
               </p>
               <p className="recuerdos-parrafo" style={{ color: 'var(--color-texto-secundario)' }}>
-                Desde nuestras clásicas tortas de hojarasca y tres leches hasta nuestra cuidada línea inclusiva sin gluten y sin azúcar añadida, cada pieza que sale de nuestro obrador es una invitación a celebrar la dulzura de la vida.
+                Desde nuestras clásicas tortas de hojarasca y tres leches hasta nuestra cuidada línea inclusiva sin gluten y sin azúcar añadida, cada pieza que sale de las manos de nuestro maestro pastelero es una invitación a celebrar la dulzura de la vida.
               </p>
 
               <ul className="recuerdos-pilares-lista">
@@ -125,7 +125,7 @@ export default function Home() {
               <div className="recuerdos-foto-principal">
                 <img
                   src="/img/slider/slide-2-masa.jpg"
-                  alt="Amasado artesanal en el obrador"
+                  alt="Amasado artesanal del maestro pastelero"
                   loading="lazy"
                 />
               </div>
@@ -148,7 +148,7 @@ export default function Home() {
       <section style={{ padding: '5.5rem 1.5rem 4.5rem 1.5rem', backgroundColor: 'var(--color-fondo)' }}>
         <div className="contenedor">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className="seccion-baker-eyebrow">Explora Nuestro Obrador</span>
+            <span className="seccion-baker-eyebrow">Selección del Maestro Pastelero</span>
             <h2 className="seccion-baker-titulo">Nuestras Categorías</h2>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc">
@@ -176,7 +176,7 @@ export default function Home() {
       <section className="seccion-club-baker">
         <div className="club-baker-contenedor">
           <span className="club-baker-eyebrow">Club Mil Sabores • 50° Aniversario</span>
-          <h2 className="club-baker-titulo">Mantente al Día con Nuestro Obrador</h2>
+          <h2 className="club-baker-titulo">Mantente al Día con Nuestro Club Pastelero</h2>
           <p className="club-baker-desc">
             Únete a nuestro club de amantes de la buena pastelería para recibir recetas de temporada, invitaciones a catas privadas y un 50% de descuento en tu primera compra con el cupón de aniversario:
           </p>
@@ -237,12 +237,12 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          SECCIÓN 6: [NO FOTO] Desde Nuestro Obrador (Blog & Recetas de la Casa)
+          SECCIÓN 6: [NO FOTO] Del Maestro Pastelero (Blog & Recetas de la Casa)
           ========================================================================= */}
       <section className="seccion-blog-baker">
         <div className="contenedor">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className="seccion-baker-eyebrow">Desde Nuestro Obrador</span>
+            <span className="seccion-baker-eyebrow">Del Maestro Pastelero</span>
             <h2 className="seccion-baker-titulo">Blog & Recetas de la Casa</h2>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc">

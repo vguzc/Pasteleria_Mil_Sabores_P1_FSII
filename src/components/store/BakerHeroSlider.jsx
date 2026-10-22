@@ -18,14 +18,14 @@ const SLIDES_DATA = [
     title: 'Masas Madre & Recetas Hechas a Mano',
     subtitle: 'Desde 1976 preparamos cada receta desde cero en nuestro taller familiar, con mantequilla de campo, fermentación lenta y amor por el detalle.',
     primaryBtn: { text: 'Nuestra Historia', link: '/nosotros' },
-    secondaryBtn: { text: 'Explorar Obrador', link: '/productos' }
+    secondaryBtn: { text: 'Catálogo Pastelero', link: '/productos' }
   },
   {
     id: 3,
     image: '/img/slider/slide-3-croissant.jpg',
     eyebrow: 'Bollería & Hojaldres del Día',
     title: 'Croissants Crujientes & Panes Frescos',
-    subtitle: 'Capas doradas, textura aireada y el aroma inconfundible que inunda nuestro obrador de Providencia cada amanecer.',
+    subtitle: 'Capas doradas, textura aireada y el aroma inconfundible que inunda nuestro taller pastelero de Providencia cada amanecer.',
     primaryBtn: { text: 'Ver Bollería & Tortas', link: '/productos' },
     secondaryBtn: { text: 'Nuestras Categorías', link: '/categorias' }
   },

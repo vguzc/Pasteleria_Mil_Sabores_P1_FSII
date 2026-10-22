@@ -66,7 +66,7 @@ export default function Contact() {
 
               {submitted && (
                 <AlertMessage
-                  message="¡Tu mensaje ha sido enviado con éxito! Nuestro equipo del obrador te contactará a la brevedad."
+                  message="¡Tu mensaje ha sido enviado con éxito! Nuestro equipo pastelero te contactará a la brevedad."
                   type="success"
                   onClose={() => setSubmitted(false)}
                 />

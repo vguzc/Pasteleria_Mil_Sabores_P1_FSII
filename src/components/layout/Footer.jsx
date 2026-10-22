@@ -25,14 +25,14 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Columna 2: Explorar Obrador */}
+          {/* Columna 2: Explorar Catálogo Pastelero */}
           <div className="footer-col">
             <h4 className="footer-col-titulo">Explorar</h4>
             <ul className="footer-links">
               <li><Link to="/productos">Catálogo Completo</Link></li>
               <li><Link to="/categorias">Nuestras Categorías</Link></li>
               <li><Link to="/ofertas">Ofertas & Promociones</Link></li>
-              <li><Link to="/categoria/Especial%2018">Especial Fiestas Patrias</Link></li>
+              <li><Link to="/categoria/Pastelería%20Tradicional">Pastelería Tradicional</Link></li>
               <li><Link to="/categoria/Sin%20Gluten">Línea Sin Gluten</Link></li>
             </ul>
           </div>

@@ -77,7 +77,7 @@ export default function AdminProducts() {
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>
           <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
-            Inventario & Obrador
+            Inventario Pastelero
           </span>
           <h1 className="seccion-baker-titulo" style={{ fontSize: '2rem', textAlign: 'left', margin: 0 }}>
             Mantenedor de Productos

@@ -37,7 +37,7 @@ export default function Offers() {
               Edición Limitada • Promociones del Mes
             </span>
             <h1 className="seccion-baker-titulo text-white mb-3" style={{ fontSize: 'clamp(2.2rem, 3.8vw, 3rem)' }}>
-              Ofertas Especiales del Obrador
+              Ofertas Especiales del Maestro Pastelero
             </h1>
             <p className="lead mb-4" style={{ color: '#E2D7CC', fontSize: '1rem', lineHeight: 1.7 }}>
               Disfruta de tus tortas y dulces favoritos con precios rebajados por tiempo limitado. Recuerda que mayores de 50 años acceden a un <strong>50% de descuento</strong> con el cupón <code>FELICES50</code>.

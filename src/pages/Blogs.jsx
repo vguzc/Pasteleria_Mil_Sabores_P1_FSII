@@ -44,7 +44,7 @@ export const BLOG_POSTS = [
     id: '3',
     slug: 'secreto-milhojas-crujiente',
     titulo: 'El Secreto del Milhojas Perfecto: Capas Crujientes y Manjar Artesanal',
-    categoria: 'Técnicas de Obrador',
+    categoria: 'Técnicas del Maestro Pastelero',
     fecha: '28 de Septiembre, 2026',
     autor: 'Maestro Pastelero Don Carlos',
     resumen: 'Descubre los tiempos de reposo y la técnica de horneado para lograr hojaldres dorados que conservan su crocancia junto al manjar de campo.',
@@ -82,7 +82,7 @@ export default function Blogs() {
           </h1>
           <div className="adorno-baker" />
           <p className="seccion-baker-desc">
-            Técnicas de obrador, recetas tradicionales paso a paso y la historia viva de Mil Sabores desde 1976.
+            Técnicas del maestro pastelero, recetas tradicionales paso a paso y la historia viva de Mil Sabores desde 1976.
           </p>
         </div>
 

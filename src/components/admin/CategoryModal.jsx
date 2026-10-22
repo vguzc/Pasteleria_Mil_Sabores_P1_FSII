@@ -34,7 +34,7 @@ export default function CategoryModal({ category, onSave, onClose }) {
           <form onSubmit={handleSubmit}>
             <div className="modal-header text-white" style={{ backgroundColor: '#201610', borderBottom: '1px solid var(--color-borde)' }}>
               <h5 className="modal-title" style={{ fontFamily: 'var(--fuente-titulos)' }}>
-                {category ? 'Editar Categoría' : 'Nueva Categoría de Obrador'}
+                {category ? 'Editar Categoría' : 'Nueva Categoría Pastelera'}
               </h5>
               <button type="button" className="btn-close btn-close-white" onClick={onClose} aria-label="Cerrar"></button>
             </div>

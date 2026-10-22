@@ -125,7 +125,7 @@ export default function ProductDetail() {
 
             <div className="p-3 rounded-3 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)' }}>
               <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="small text-muted">Disponibilidad en Obrador:</span>
+                <span className="small text-muted">Disponibilidad Pastelera:</span>
                 <strong style={{ color: product.stock <= 5 ? '#B54234' : '#2D6A4F' }}>
                   {product.stock > 0 ? `${product.stock} unidades frescas listas para retiro o despacho` : 'Agotado'}
                 </strong>

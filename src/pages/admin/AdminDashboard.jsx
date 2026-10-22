@@ -44,7 +44,7 @@ export default function AdminDashboard() {
             Panel de Control General
           </span>
           <h1 className="seccion-baker-titulo" style={{ fontSize: '2.2rem', textAlign: 'left', margin: 0 }}>
-            Dashboard del Obrador
+            Dashboard del Maestro Pastelero
           </h1>
           <p className="text-muted small mb-0 mt-1">Resumen en vivo de inventario, ventas y actividad del sistema.</p>
         </div>
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
         <h3 style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.4rem' }}>
           Módulos Administrativos
         </h3>
-        <p className="text-muted small">Accede a las herramientas de gestión del obrador:</p>
+        <p className="text-muted small">Accede a las herramientas de gestión pastelera:</p>
       </div>
 
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
