@@ -118,12 +118,13 @@ export default function Products() {
                 />
               </div>
 
-              {/* Foto Secundaria: Vaso de café de especialidad Mil Sabores */}
+              {/* Foto Secundaria: Maestro pastelero decorando bollería artesanal con azúcar flor */}
               <div className="catalogo-hero-foto-secundaria">
                 <img
-                  src="/img/branding/mockup-vaso.jpg"
-                  alt="Cafetería de especialidad Mil Sabores"
+                  src="/img/galeria/pastelero-azucar-flor.png"
+                  alt="Maestro pastelero decorando repostería artesanal"
                   loading="lazy"
+                  style={{ objectPosition: 'center 20%' }}
                 />
               </div>
 
