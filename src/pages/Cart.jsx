@@ -431,13 +431,6 @@ export default function Cart() {
                       >
                         DUOC10 (-10%)
                       </button>
-                      <button
-                        type="button"
-                        className="cupon-chip"
-                        onClick={(e) => handleApplyCoupon(e, 'ESPECIAL18')}
-                      >
-                        ESPECIAL18 (-15%)
-                      </button>
                     </div>
                   </div>
                 )}

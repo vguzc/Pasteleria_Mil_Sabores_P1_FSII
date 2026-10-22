@@ -432,8 +432,7 @@ export const INITIAL_ORDERS = [
 
 export const VALID_COUPONS = {
   'FELICES50': { codigo: 'FELICES50', porcentaje: 50, nombre: 'Especial 50 Años (50% OFF)' },
-  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' },
-  'ESPECIAL18': { codigo: 'ESPECIAL18', porcentaje: 15, nombre: 'Especial Fiestas Patrias (15% OFF)' }
+  'DUOC10': { codigo: 'DUOC10', porcentaje: 10, nombre: 'Convenio Duoc UC (10% OFF)' }
 };
 
 // -------------------------------------------------------------

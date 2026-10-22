@@ -246,39 +246,43 @@ export default function Checkout() {
   }
 
   return (
-    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '2.5rem 0 6rem 0' }}>
-      <div className="contenedor">
-        {/* Encabezado limpio y directo de Carrito / Checkout (sin breadcrumbs) */}
-        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3 pt-2">
-          <div>
-            <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
-              Finalizar Compra
-            </span>
-            <h1 className="seccion-baker-titulo" style={{ fontSize: '2.3rem', textAlign: 'left', margin: 0 }}>
-              Confirmación & Despacho
-            </h1>
-            <p className="text-muted small mb-0 mt-1">
-              Completa tus datos de entrega y procesa tu pago de forma segura con Webpay Plus.
-            </p>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <span className="badge fs-6 px-3 py-2 shadow-sm" style={{ backgroundColor: 'var(--color-espresso)', color: '#FFFFFF' }}>
-              Total: {formatPrice(totals.total)}
-            </span>
+    <div style={{ backgroundColor: '#FAF7F2', minHeight: '100vh' }}>
+      {/* Encabezado limpio de Checkout */}
+      <div className="checkout-top-strip">
+        <div className="contenedor">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+              <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+                Finalizar Compra
+              </span>
+              <h1 className="seccion-baker-titulo" style={{ fontSize: '2.3rem', textAlign: 'left', margin: 0 }}>
+                Confirmación & Despacho
+              </h1>
+              <p className="text-muted small mb-0 mt-1">
+                Completa tus datos de entrega y procesa tu pago de forma segura con Webpay Plus.
+              </p>
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <span className="badge fs-6 px-3 py-2 shadow-sm" style={{ backgroundColor: 'var(--color-espresso)', color: '#FFFFFF' }}>
+                Total a pagar: {formatPrice(totals.total)}
+              </span>
+            </div>
           </div>
         </div>
+      </div>
 
-        {error && (
-          <div className="mb-4">
-            <AlertMessage message={error} type="danger" onClose={() => setError('')} />
-          </div>
-        )}
+      {error && (
+        <div className="contenedor pt-3">
+          <AlertMessage message={error} type="danger" onClose={() => setError('')} />
+        </div>
+      )}
 
-        <form onSubmit={handleSubmit}>
-          {/* ========================================================================= */}
-          {/* FRANJA 1: INFORMACIÓN PERSONAL & MODALIDAD DE ENTREGA                     */}
-          {/* ========================================================================= */}
-          <section className="franja-checkout-panel">
+      <form onSubmit={handleSubmit}>
+        {/* ========================================================================= */}
+        {/* FRANJA 1: INFORMACIÓN PERSONAL & MODALIDAD DE ENTREGA (FRANJA BLANCA)     */}
+        {/* ========================================================================= */}
+        <section className="seccion-franja-checkout seccion-checkout-franja-1">
+          <div className="contenedor">
             <div className="franja-checkout-header">
               <div className="franja-checkout-numero">1</div>
               <div>
@@ -308,361 +312,367 @@ export default function Checkout() {
               </div>
             )}
 
-            <div className="row g-4">
+            <div className="row g-4 g-lg-5">
               {/* Columna Izquierda: Información del Cliente */}
               <div className="col-lg-6">
-                <h3 className="franja-checkout-subtitulo">
-                  <i className="bi bi-person-lines-fill"></i>
-                  Datos de Contacto del Cliente
-                </h3>
+                <div className="p-4 rounded-3 border h-100" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }}>
+                  <h3 className="franja-checkout-subtitulo">
+                    <i className="bi bi-person-lines-fill"></i>
+                    Datos de Contacto del Cliente
+                  </h3>
 
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                      Nombre *
-                    </label>
-                    <input
-                      type="text"
-                      name="nombre"
-                      className="form-control form-control-sm"
-                      placeholder="Ej: Sofía"
-                      value={formData.nombre}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                        Nombre *
+                      </label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        className="form-control form-control-sm"
+                        placeholder="Ej: Sofía"
+                        value={formData.nombre}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                      Apellidos *
-                    </label>
-                    <input
-                      type="text"
-                      name="apellidos"
-                      className="form-control form-control-sm"
-                      placeholder="Ej: Silva Valenzuela"
-                      value={formData.apellidos}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                    <div className="col-md-6">
+                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                        Apellidos *
+                      </label>
+                      <input
+                        type="text"
+                        name="apellidos"
+                        className="form-control form-control-sm"
+                        placeholder="Ej: Silva Valenzuela"
+                        value={formData.apellidos}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
 
-                  <div className="col-12">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                      Correo Electrónico *
-                    </label>
-                    <input
-                      type="email"
-                      name="correo"
-                      className="form-control form-control-sm"
-                      placeholder="sofia.silva@example.com"
-                      value={formData.correo}
-                      onChange={handleChange}
-                      required
-                    />
-                    <small className="text-muted" style={{ fontSize: '0.74rem' }}>
-                      Enviaremos tu boleta electrónica y estado de preparación a este correo.
-                    </small>
-                  </div>
+                    <div className="col-12">
+                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                        Correo Electrónico *
+                      </label>
+                      <input
+                        type="email"
+                        name="correo"
+                        className="form-control form-control-sm"
+                        placeholder="sofia.silva@example.com"
+                        value={formData.correo}
+                        onChange={handleChange}
+                        required
+                      />
+                      <small className="text-muted" style={{ fontSize: '0.74rem' }}>
+                        Enviaremos tu boleta electrónica y estado de preparación a este correo.
+                      </small>
+                    </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                      Teléfono Móvil (opcional)
-                    </label>
-                    <input
-                      type="tel"
-                      name="telefono"
-                      className="form-control form-control-sm"
-                      placeholder="+56 9 8765 4321"
-                      value={formData.telefono}
-                      onChange={handleChange}
-                    />
-                  </div>
+                    <div className="col-md-6">
+                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                        Teléfono Móvil (opcional)
+                      </label>
+                      <input
+                        type="tel"
+                        name="telefono"
+                        className="form-control form-control-sm"
+                        placeholder="+56 9 8765 4321"
+                        value={formData.telefono}
+                        onChange={handleChange}
+                      />
+                    </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                      RUT (opcional para boleta)
-                    </label>
-                    <input
-                      type="text"
-                      name="rut"
-                      className="form-control form-control-sm"
-                      placeholder="12.345.678-9"
-                      value={formData.rut}
-                      onChange={handleChange}
-                    />
+                    <div className="col-md-6">
+                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                        RUT (opcional para boleta)
+                      </label>
+                      <input
+                        type="text"
+                        name="rut"
+                        className="form-control form-control-sm"
+                        placeholder="12.345.678-9"
+                        value={formData.rut}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Columna Derecha: Modalidad de Entrega & Dirección */}
               <div className="col-lg-6">
-                <h3 className="franja-checkout-subtitulo">
-                  <i className="bi bi-geo-alt-fill"></i>
-                  Modalidad y Destino de Entrega
-                </h3>
+                <div className="p-4 rounded-3 border h-100" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }}>
+                  <h3 className="franja-checkout-subtitulo">
+                    <i className="bi bi-geo-alt-fill"></i>
+                    Modalidad y Destino de Entrega
+                  </h3>
 
-                {/* Toggle Modalidad: Despacho vs Retiro */}
-                <div className="row g-2 mb-3">
-                  <div className="col-6">
-                    <div
-                      className={`checkout-mode-card ${!isRetiro ? 'is-active' : ''}`}
-                      onClick={() => updateScheduling({ modalidad: 'despacho' })}
-                    >
-                      <div className="form-check p-0 m-0 d-flex align-items-center gap-2">
-                        <input
-                          className="form-check-input mt-0"
-                          type="radio"
-                          name="checkoutModalidad"
-                          id="checkoutModoDespacho"
-                          checked={!isRetiro}
-                          onChange={() => updateScheduling({ modalidad: 'despacho' })}
-                        />
-                        <label className="form-check-label fw-bold small cursor-pointer" htmlFor="checkoutModoDespacho" style={{ color: 'var(--color-espresso)' }}>
-                          Despacho a Domicilio
-                        </label>
-                      </div>
-                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.74rem' }}>
-                        Cadena de frío {totals.subtotal >= 30000 ? '(Envío Gratis)' : totals.subtotal >= 20000 ? '($1.990)' : '($3.990)'}
-                      </small>
-                    </div>
-                  </div>
-
-                  <div className="col-6">
-                    <div
-                      className={`checkout-mode-card ${isRetiro ? 'is-active' : ''}`}
-                      onClick={() => updateScheduling({ modalidad: 'retiro' })}
-                    >
-                      <div className="form-check p-0 m-0 d-flex align-items-center justify-content-between">
-                        <div className="d-flex align-items-center gap-2">
+                  {/* Toggle Modalidad: Despacho vs Retiro */}
+                  <div className="row g-2 mb-3">
+                    <div className="col-6">
+                      <div
+                        className={`checkout-mode-card ${!isRetiro ? 'is-active' : ''}`}
+                        onClick={() => updateScheduling({ modalidad: 'despacho' })}
+                      >
+                        <div className="form-check p-0 m-0 d-flex align-items-center gap-2">
                           <input
                             className="form-check-input mt-0"
                             type="radio"
                             name="checkoutModalidad"
-                            id="checkoutModoRetiro"
-                            checked={isRetiro}
-                            onChange={() => updateScheduling({ modalidad: 'retiro' })}
+                            id="checkoutModoDespacho"
+                            checked={!isRetiro}
+                            onChange={() => updateScheduling({ modalidad: 'despacho' })}
                           />
-                          <label className="form-check-label fw-bold small cursor-pointer" htmlFor="checkoutModoRetiro" style={{ color: 'var(--color-espresso)' }}>
-                            Retiro en Sucursal
+                          <label className="form-check-label fw-bold small cursor-pointer" htmlFor="checkoutModoDespacho" style={{ color: 'var(--color-espresso)' }}>
+                            Despacho a Domicilio
                           </label>
                         </div>
-                        <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF', fontSize: '0.68rem' }}>
-                          Gratis ($0)
-                        </span>
+                        <small className="text-muted d-block mt-1" style={{ fontSize: '0.74rem' }}>
+                          Cadena de frío {totals.subtotal >= 30000 ? '(Envío Gratis)' : totals.subtotal >= 20000 ? '($1.990)' : '($3.990)'}
+                        </small>
                       </div>
-                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.74rem' }}>
-                        En Chicureo, Providencia o Las Condes
-                      </small>
                     </div>
-                  </div>
-                </div>
 
-                {/* Formulario condicional según modalidad */}
-                {isRetiro ? (
-                  <div className="p-3 rounded-3 mb-3 border" style={{ backgroundColor: '#FAF7F2', borderColor: 'var(--color-borde)' }}>
-                    <label className="form-label small fw-bold d-block mb-2" style={{ color: 'var(--color-espresso)' }}>
-                      Elige la sucursal donde retirarás tu pedido:
-                    </label>
-
-                    {SUCURSALES_RETIRO.map((branch) => {
-                      const isSelected = selectedBranchName === branch.nombre;
-                      return (
-                        <div
-                          key={branch.id}
-                          className={`checkout-branch-item ${isSelected ? 'is-selected' : ''}`}
-                          onClick={() => updateScheduling({ sucursalRetiro: branch.nombre })}
-                        >
-                          <div className="d-flex justify-content-between align-items-start">
-                            <div>
-                              <strong className="small d-block" style={{ color: 'var(--color-espresso)' }}>
-                                {branch.nombre}
-                              </strong>
-                              <span className="text-muted small d-block" style={{ fontSize: '0.76rem' }}>
-                                <i className="bi bi-geo-alt me-1"></i>{branch.direccion}
-                              </span>
-                              <span className="text-muted small d-block" style={{ fontSize: '0.72rem' }}>
-                                <i className="bi bi-clock me-1"></i>{branch.horario}
-                              </span>
-                            </div>
+                    <div className="col-6">
+                      <div
+                        className={`checkout-mode-card ${isRetiro ? 'is-active' : ''}`}
+                        onClick={() => updateScheduling({ modalidad: 'retiro' })}
+                      >
+                        <div className="form-check p-0 m-0 d-flex align-items-center justify-content-between">
+                          <div className="d-flex align-items-center gap-2">
                             <input
+                              className="form-check-input mt-0"
                               type="radio"
-                              name="sucursalRadio"
-                              className="form-check-input mt-1"
-                              checked={isSelected}
-                              onChange={() => updateScheduling({ sucursalRetiro: branch.nombre })}
+                              name="checkoutModalidad"
+                              id="checkoutModoRetiro"
+                              checked={isRetiro}
+                              onChange={() => updateScheduling({ modalidad: 'retiro' })}
                             />
+                            <label className="form-check-label fw-bold small cursor-pointer" htmlFor="checkoutModoRetiro" style={{ color: 'var(--color-espresso)' }}>
+                              Retiro en Sucursal
+                            </label>
                           </div>
+                          <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF', fontSize: '0.68rem' }}>
+                            Gratis ($0)
+                          </span>
                         </div>
-                      );
-                    })}
-
-                    <div className="mt-2">
-                      <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
-                        ¿Quién retirará el pedido en la tienda? (opcional):
-                      </label>
-                      <input
-                        type="text"
-                        name="notasRetiro"
-                        className="form-control form-control-sm"
-                        placeholder="Ej: Retirará Juan Pérez con número de orden y carnet"
-                        value={formData.notasRetiro}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="row g-2 mb-3">
-                    <div className="col-md-8">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                        Calle y Número *
-                      </label>
-                      <input
-                        type="text"
-                        name="calle"
-                        className="form-control form-control-sm"
-                        placeholder="Ej: Av. Providencia 1200, Edificio Los Robles"
-                        value={formData.calle}
-                        onChange={handleChange}
-                        required={!isRetiro}
-                      />
-                    </div>
-
-                    <div className="col-md-4">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                        Depto / Casa (opc.)
-                      </label>
-                      <input
-                        type="text"
-                        name="departamento"
-                        className="form-control form-control-sm"
-                        placeholder="Ej: Depto 502"
-                        value={formData.departamento}
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                        Región *
-                      </label>
-                      <select
-                        name="region"
-                        className="form-select form-select-sm"
-                        value={formData.region}
-                        onChange={handleRegionChange}
-                        required={!isRetiro}
-                      >
-                        {REGIONES_Y_COMUNAS.map((r, i) => (
-                          <option key={i} value={r.region}>{r.region}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                        Comuna *
-                      </label>
-                      <select
-                        name="comuna"
-                        className="form-select form-select-sm"
-                        value={formData.comuna}
-                        onChange={handleChange}
-                        required={!isRetiro}
-                      >
-                        {comunasDisponibles.map((c, i) => (
-                          <option key={i} value={c}>{c}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col-12">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
-                        Indicaciones para el repartidor (opcional)
-                      </label>
-                      <input
-                        type="text"
-                        name="indicaciones"
-                        className="form-control form-control-sm"
-                        placeholder="Ej: Dejar en conserjería si no responde el timbre"
-                        value={formData.indicaciones}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Sub-bloque de Agendamiento de Fecha & Dedicatoria */}
-                <div className="p-3 rounded-3 border" style={{ backgroundColor: '#FAF4EC', borderColor: 'var(--color-borde)' }}>
-                  <div className="row g-2">
-                    <div className="col-sm-6">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
-                        <i className="bi bi-calendar-event me-1"></i>Fecha de {isRetiro ? 'Retiro' : 'Entrega'}:
-                      </label>
-                      <input
-                        type="date"
-                        className="form-control form-control-sm"
-                        value={scheduling?.fecha || todayStr}
-                        min={todayStr}
-                        onChange={(e) => updateScheduling({ fecha: e.target.value })}
-                      />
-                      <div className="d-flex gap-1 mt-1">
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary btn-sm py-0 px-2"
-                          style={{ fontSize: '0.7rem' }}
-                          onClick={() => updateScheduling({ fecha: todayStr })}
-                        >
-                          Hoy
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary btn-sm py-0 px-2"
-                          style={{ fontSize: '0.7rem' }}
-                          onClick={() => updateScheduling({ fecha: tomorrowStr })}
-                        >
-                          Mañana
-                        </button>
+                        <small className="text-muted d-block mt-1" style={{ fontSize: '0.74rem' }}>
+                          En Chicureo, Providencia o Las Condes
+                        </small>
                       </div>
                     </div>
+                  </div>
 
-                    <div className="col-sm-6">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
-                        <i className="bi bi-clock me-1"></i>Franja Horaria:
+                  {/* Formulario condicional según modalidad */}
+                  {isRetiro ? (
+                    <div className="p-3 rounded-3 mb-3 border bg-white" style={{ borderColor: 'var(--color-borde)' }}>
+                      <label className="form-label small fw-bold d-block mb-2" style={{ color: 'var(--color-espresso)' }}>
+                        Elige la sucursal donde retirarás tu pedido:
                       </label>
-                      <select
-                        className="form-select form-select-sm"
-                        value={scheduling?.franjaHoraria || 'tarde'}
-                        onChange={(e) => updateScheduling({ franjaHoraria: e.target.value })}
-                      >
-                        <option value="manana">Mañana (10:00 - 13:00 hrs)</option>
-                        <option value="tarde">Tarde (14:00 - 18:00 hrs)</option>
-                        <option value="atardecer">Atardecer (18:00 - 20:30 hrs)</option>
-                      </select>
+
+                      {SUCURSALES_RETIRO.map((branch) => {
+                        const isSelected = selectedBranchName === branch.nombre;
+                        return (
+                          <div
+                            key={branch.id}
+                            className={`checkout-branch-item ${isSelected ? 'is-selected' : ''}`}
+                            onClick={() => updateScheduling({ sucursalRetiro: branch.nombre })}
+                          >
+                            <div className="d-flex justify-content-between align-items-start">
+                              <div>
+                                <strong className="small d-block" style={{ color: 'var(--color-espresso)' }}>
+                                  {branch.nombre}
+                                </strong>
+                                <span className="text-muted small d-block" style={{ fontSize: '0.76rem' }}>
+                                  <i className="bi bi-geo-alt me-1"></i>{branch.direccion}
+                                </span>
+                                <span className="text-muted small d-block" style={{ fontSize: '0.72rem' }}>
+                                  <i className="bi bi-clock me-1"></i>{branch.horario}
+                                </span>
+                              </div>
+                              <input
+                                type="radio"
+                                name="sucursalRadio"
+                                className="form-check-input mt-1"
+                                checked={isSelected}
+                                onChange={() => updateScheduling({ sucursalRetiro: branch.nombre })}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      <div className="mt-2">
+                        <label className="form-label small fw-semibold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
+                          ¿Quién retirará el pedido en la tienda? (opcional):
+                        </label>
+                        <input
+                          type="text"
+                          name="notasRetiro"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: Retirará Juan Pérez con número de orden y carnet"
+                          value={formData.notasRetiro}
+                          onChange={handleChange}
+                        />
+                      </div>
                     </div>
+                  ) : (
+                    <div className="row g-2 mb-3">
+                      <div className="col-md-8">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                          Calle y Número *
+                        </label>
+                        <input
+                          type="text"
+                          name="calle"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: Av. Providencia 1200, Edificio Los Robles"
+                          value={formData.calle}
+                          onChange={handleChange}
+                          required={!isRetiro}
+                        />
+                      </div>
 
-                    <div className="col-12 mt-2">
-                      <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
-                        Dedicatoria en Chocolate para la torta (opcional):
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        placeholder="Ej: ¡Feliz Aniversario Claudia y Pedro!"
-                        value={scheduling?.dedicatoria || ''}
-                        onChange={(e) => updateScheduling({ dedicatoria: e.target.value })}
-                      />
+                      <div className="col-md-4">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                          Depto / Casa (opc.)
+                        </label>
+                        <input
+                          type="text"
+                          name="departamento"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: Depto 502"
+                          value={formData.departamento}
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div className="col-md-6">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                          Región *
+                        </label>
+                        <select
+                          name="region"
+                          className="form-select form-select-sm"
+                          value={formData.region}
+                          onChange={handleRegionChange}
+                          required={!isRetiro}
+                        >
+                          {REGIONES_Y_COMUNAS.map((r, i) => (
+                            <option key={i} value={r.region}>{r.region}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                          Comuna *
+                        </label>
+                        <select
+                          name="comuna"
+                          className="form-select form-select-sm"
+                          value={formData.comuna}
+                          onChange={handleChange}
+                          required={!isRetiro}
+                        >
+                          {comunasDisponibles.map((c, i) => (
+                            <option key={i} value={c}>{c}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-12">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>
+                          Indicaciones para el repartidor (opcional)
+                        </label>
+                        <input
+                          type="text"
+                          name="indicaciones"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: Dejar en conserjería si no responde el timbre"
+                          value={formData.indicaciones}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sub-bloque de Agendamiento de Fecha & Dedicatoria */}
+                  <div className="p-3 rounded-3 border bg-white" style={{ borderColor: 'var(--color-borde)' }}>
+                    <div className="row g-2">
+                      <div className="col-sm-6">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
+                          <i className="bi bi-calendar-event me-1"></i>Fecha de {isRetiro ? 'Retiro' : 'Entrega'}:
+                        </label>
+                        <input
+                          type="date"
+                          className="form-control form-control-sm"
+                          value={scheduling?.fecha || todayStr}
+                          min={todayStr}
+                          onChange={(e) => updateScheduling({ fecha: e.target.value })}
+                        />
+                        <div className="d-flex gap-1 mt-1">
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary btn-sm py-0 px-2"
+                            style={{ fontSize: '0.7rem' }}
+                            onClick={() => updateScheduling({ fecha: todayStr })}
+                          >
+                            Hoy
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary btn-sm py-0 px-2"
+                            style={{ fontSize: '0.7rem' }}
+                            onClick={() => updateScheduling({ fecha: tomorrowStr })}
+                          >
+                            Mañana
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-6">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
+                          <i className="bi bi-clock me-1"></i>Franja Horaria:
+                        </label>
+                        <select
+                          className="form-select form-select-sm"
+                          value={scheduling?.franjaHoraria || 'tarde'}
+                          onChange={(e) => updateScheduling({ franjaHoraria: e.target.value })}
+                        >
+                          <option value="manana">Mañana (10:00 - 13:00 hrs)</option>
+                          <option value="tarde">Tarde (14:00 - 18:00 hrs)</option>
+                          <option value="atardecer">Atardecer (18:00 - 20:30 hrs)</option>
+                        </select>
+                      </div>
+
+                      <div className="col-12 mt-2">
+                        <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)', fontSize: '0.78rem' }}>
+                          Dedicatoria en Chocolate para la torta (opcional):
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-sm"
+                          placeholder="Ej: ¡Feliz Aniversario Claudia y Pedro!"
+                          value={scheduling?.dedicatoria || ''}
+                          onChange={(e) => updateScheduling({ dedicatoria: e.target.value })}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ========================================================================= */}
-          {/* FRANJA 2: DETALLE DE LA COMPRA, CUPONES & PAGO SEGURO                     */}
-          {/* ========================================================================= */}
-          <section className="franja-checkout-panel">
+        {/* ========================================================================= */}
+        {/* FRANJA 2: DETALLE DE LA COMPRA, CUPONES & PAGO SEGURO (FRANJA CREMA)      */}
+        {/* ========================================================================= */}
+        <section className="seccion-franja-checkout seccion-checkout-franja-2">
+          <div className="contenedor">
             <div className="franja-checkout-header">
               <div className="franja-checkout-numero">2</div>
               <div>
@@ -675,7 +685,7 @@ export default function Checkout() {
               </div>
             </div>
 
-            <div className="row g-4">
+            <div className="row g-4 g-lg-5">
               {/* Columna Izquierda: Detalle de Productos y Sección de Cupones */}
               <div className="col-lg-7">
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -689,7 +699,7 @@ export default function Checkout() {
                 </div>
 
                 {/* Tabla de Productos del Carrito */}
-                <div className="table-responsive mb-4 rounded-3 border" style={{ borderColor: 'var(--color-borde)' }}>
+                <div className="table-responsive mb-4 rounded-3 border bg-white shadow-sm" style={{ borderColor: 'var(--color-borde)' }}>
                   <table className="table table-sm align-middle mb-0">
                     <thead style={{ backgroundColor: '#F5EFEB', borderBottom: '1px solid var(--color-borde)' }} className="small">
                       <tr>
@@ -738,8 +748,8 @@ export default function Checkout() {
                   </table>
                 </div>
 
-                {/* Sección de Cupones de Descuento */}
-                <div className="caja-cupon-checkout">
+                {/* Sección de Cupones de Descuento (Sin Especial 18) */}
+                <div className="caja-cupon-checkout bg-white shadow-sm" style={{ border: '1px solid var(--color-borde)', borderRadius: '10px' }}>
                   <div className="d-flex align-items-center gap-2 mb-2">
                     <i className="bi bi-tag-fill fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
                     <strong className="small" style={{ color: 'var(--color-espresso)' }}>
@@ -790,9 +800,9 @@ export default function Checkout() {
                         </button>
                       </div>
 
-                      {/* Chips de cupones oficiales para prueba rápida */}
-                      <div className="mt-2 pt-2 border-top d-flex align-items-center gap-2 flex-wrap" style={{ borderColor: 'rgba(213, 185, 154, 0.4)' }}>
-                        <span className="text-muted" style={{ fontSize: '0.72rem' }}>
+                      {/* Chips de cupones oficiales vigentes: FELICES50 y DUOC10 */}
+                      <div className="mt-3 pt-2 border-top d-flex align-items-center gap-2 flex-wrap" style={{ borderColor: 'var(--color-borde)' }}>
+                        <span className="text-muted" style={{ fontSize: '0.74rem' }}>
                           Cupones disponibles:
                         </span>
                         <button
@@ -808,13 +818,6 @@ export default function Checkout() {
                           onClick={() => handleApplyCoupon('DUOC10')}
                         >
                           DUOC10 (-10%)
-                        </button>
-                        <button
-                          type="button"
-                          className="cupon-chip"
-                          onClick={() => handleApplyCoupon('ESPECIAL18')}
-                        >
-                          ESPECIAL18 (-15%)
                         </button>
                       </div>
                     </div>
@@ -836,7 +839,7 @@ export default function Checkout() {
                 </h3>
 
                 {/* Tarjeta de Resumen de Pago */}
-                <div className="caja-resumen-pago mb-3">
+                <div className="caja-resumen-pago mb-3 bg-white shadow-sm" style={{ border: '1px solid var(--color-borde)' }}>
                   <div className="row g-2 small">
                     <div className="col-7 text-muted">Subtotal productos:</div>
                     <div className="col-5 text-end fw-semibold text-dark">{formatPrice(totals.subtotal)}</div>
@@ -898,7 +901,7 @@ export default function Checkout() {
                 </div>
 
                 {/* Pasarela Webpay Plus */}
-                <div className="p-3 rounded-3 mb-3 border" style={{ backgroundColor: '#FFFFFF', borderColor: 'var(--color-borde)' }}>
+                <div className="p-3 rounded-3 mb-3 border bg-white shadow-sm" style={{ borderColor: 'var(--color-borde)' }}>
                   <div className="d-flex align-items-center justify-content-between mb-2">
                     <span className="small fw-bold" style={{ color: 'var(--color-espresso)' }}>
                       <i className="bi bi-shield-lock-fill me-1" style={{ color: '#2D6A4F' }}></i>
@@ -965,9 +968,9 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-          </section>
-        </form>
-      </div>
+          </div>
+        </section>
+      </form>
     </div>
   );
 }
