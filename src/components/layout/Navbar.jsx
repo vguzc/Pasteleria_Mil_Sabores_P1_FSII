@@ -15,11 +15,16 @@ export default function Navbar() {
     openDrawer();
   };
 
+  const handleLogoClick = () => {
+    setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <header className="encabezado">
       <div className="contenedor">
         {/* 1. Logo a la Izquierda: Monograma MS + Nombre de la Pastelería */}
-        <Link to="/" className="logo" aria-label="Mil Sabores - Inicio">
+        <Link to="/" className="logo" aria-label="Mil Sabores - Inicio" onClick={handleLogoClick}>
           <img src="/img/logo-ms.png" alt="Mil Sabores" className="logo-icono-ms" />
           <div className="logo-textos">
             <span className="logo-marca">Mil Sabores</span>

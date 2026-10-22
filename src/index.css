@@ -2621,6 +2621,9 @@ h3 { font-size: 1.35rem; }
   left: 0.25rem;
   z-index: 3;
   filter: drop-shadow(0 8px 18px rgba(44, 30, 22, 0.2));
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
 }
 
 .catalogo-hero-sello-img {

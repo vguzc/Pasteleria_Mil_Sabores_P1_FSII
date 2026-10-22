@@ -37,7 +37,7 @@ export default function AdminSidebar() {
       }}
     >
       {/* 1. Header con Monograma MS Caramelo */}
-      <Link to="/admin" className="d-flex align-items-center gap-2 mb-3 text-decoration-none">
+      <Link to="/" className="d-flex align-items-center gap-2 mb-3 text-decoration-none" title="Volver al inicio de la tienda">
         <img
           src="/img/logo-ms-caramelo.png"
           alt="Mil Sabores"

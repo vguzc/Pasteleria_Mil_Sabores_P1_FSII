@@ -128,13 +128,13 @@ export default function Products() {
               </div>
 
               {/* Sello Circular Flotante Oficial de Tradición */}
-              <div className="catalogo-hero-sello">
+              <Link to="/" className="catalogo-hero-sello" title="Volver al inicio - Mil Sabores" aria-label="Volver al inicio">
                 <img
                   src="/img/branding/sello-circular-transparent.png"
                   alt="Sello Mil Sabores Calidad Artesanal"
                   className="catalogo-hero-sello-img"
                 />
-              </div>
+              </Link>
             </div>
           </div>
         </div>
