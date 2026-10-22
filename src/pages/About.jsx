@@ -107,30 +107,55 @@ export default function About() {
             />
           </div>
         </div>
+      </div>
 
-        {/* Hito Récord Guinness */}
-        <div
-          className="p-4 p-md-5 rounded-4 border mb-5 shadow-sm"
-          style={{ backgroundColor: '#FFFFFF', borderColor: 'var(--color-borde)' }}
-        >
+      {/* 2. Franja Entera: Hito Récord Guinness de Borde a Borde */}
+      <section
+        className="franja-guinness-banner"
+        style={{
+          width: '100%',
+          backgroundColor: '#FFFFFF',
+          borderTop: '1px solid var(--color-borde)',
+          borderBottom: '1px solid var(--color-borde)',
+          padding: '4rem 0',
+          margin: '2rem 0 4.5rem 0'
+        }}
+      >
+        <div className="contenedor">
           <div className="row align-items-center g-4">
-            <div className="col-md-3 text-center">
-              <div style={{ width: '80px', height: '80px', margin: '0 auto', borderRadius: '50%', backgroundColor: '#FAF4EC', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-caramelo)' }}>
+            <div className="col-md-2 text-center text-md-end">
+              <div
+                style={{
+                  width: '84px',
+                  height: '84px',
+                  margin: '0 auto',
+                  borderRadius: '50%',
+                  backgroundColor: '#FAF4EC',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--color-caramelo)',
+                  border: '1px solid rgba(196, 136, 75, 0.25)',
+                  boxShadow: '0 4px 12px rgba(44, 30, 22, 0.05)'
+                }}
+              >
                 <i className="bi bi-trophy-fill fs-1"></i>
               </div>
             </div>
-            <div className="col-md-9">
+            <div className="col-md-10">
               <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Hito Histórico</span>
-              <h3 className="fw-bold mb-2" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.6rem' }}>
+              <h3 className="fw-bold mb-2" style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: 'clamp(1.5rem, 2.4vw, 1.9rem)' }}>
                 El Gran Hito: Récord Guinness 1995
               </h3>
-              <p className="text-muted mb-0" style={{ lineHeight: 1.7 }}>
+              <p className="text-muted mb-0" style={{ lineHeight: 1.75, fontSize: '1rem', maxWidth: '960px' }}>
                 En el año 1995, nuestro equipo de maestros pasteleros elaboró la torta de milhojas más grande de Sudamérica: más de 500 metros lineales rellenos con manjar artesanal de campo, congregando a miles de familias en una jornada solidaria que marcó la historia de la gastronomía nacional.
               </p>
             </div>
           </div>
         </div>
+      </section>
 
+      <div className="contenedor">
         {/* Identidad de Marca & Atmósfera */}
         <div className="mb-5">
           <div className="text-center mb-4">
