@@ -178,7 +178,7 @@ export default function Home() {
           <span className="club-baker-eyebrow">Club Mil Sabores • 50° Aniversario</span>
           <h2 className="club-baker-titulo">Mantente al Día con Nuestro Club Pastelero</h2>
           <p className="club-baker-desc">
-            Únete a nuestro club de amantes de la buena pastelería para recibir recetas de temporada, invitaciones a catas privadas y un 50% de descuento en tu primera compra con el cupón de aniversario:
+            Únete a nuestro club de la buena pastelería para recibir recetas de temporada, invitaciones a catas privadas y un 50% de descuento en tu primera compra con el cupón de aniversario:
           </p>
 
           {/* Caja Interactiva de Cupón */}
