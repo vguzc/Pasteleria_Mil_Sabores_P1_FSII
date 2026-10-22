@@ -18,12 +18,12 @@ export default function Navbar() {
   return (
     <header className="encabezado">
       <div className="contenedor">
-        {/* Logo oficial */}
+        {/* Logo oficial con monograma MS estilo Baker */}
         <Link to="/" className="logo">
-          <img src="/img/logo-icono.png" alt="Mil Sabores" className="logo-icono" />
+          <img src="/img/logo-ms.png" alt="Mil Sabores" className="logo-icono-ms" />
           <span className="logo-texto">
             Mil Sabores
-            <span className="logo-subtexto">Café & Pastelería</span>
+            <span className="logo-subtexto">Pastelería & Café</span>
           </span>
         </Link>
 

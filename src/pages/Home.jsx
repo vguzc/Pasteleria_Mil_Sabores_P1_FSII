@@ -9,6 +9,7 @@ export default function Home() {
   const [especialidades, setEspecialidades] = useState([]);
   const [especial18, setEspecial18] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [couponCopied, setCouponCopied] = useState(false);
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -26,93 +27,79 @@ export default function Home() {
     setCategories(categoryService.getAll().slice(0, 4));
   }, []);
 
+  const handleCopyCoupon = () => {
+    navigator.clipboard.writeText('FELICES50');
+    setCouponCopied(true);
+    setTimeout(() => setCouponCopied(false), 2200);
+  };
+
   return (
     <div className="home-page">
-      {/* 1. Hero Principal Fiel al Original */}
-      <section className="hero hero-tienda">
-        <div className="contenedor" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <span className="eyebrow" style={{ fontSize: '1.05rem', color: 'var(--color-chocolate)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '0.5rem' }}>
-            50 Años de Dulzura Chilena
+      {/* 1. Hero Principal Estilo Baker */}
+      <section className="hero-baker">
+        <div className="contenedor" style={{ maxWidth: '920px', margin: '0 auto' }}>
+          <span className="hero-baker-eyebrow">
+            <span>✦</span> 50 Años de Dulzura Chilena · Desde 1976 <span>✦</span>
           </span>
-          <h1 style={{ fontFamily: 'var(--fuente-titulos)', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', color: 'var(--color-chocolate)', margin: '0.5rem 0 1rem 0', fontWeight: 'normal', lineHeight: 1.2 }}>
-            Pastelería Mil Sabores
+          <h1 className="hero-baker-titulo">
+            Pastelería & Café <em>Artesanal</em>
           </h1>
-          <p style={{ fontSize: '1.15rem', color: 'var(--color-texto)', lineHeight: 1.7, maxWidth: '720px', margin: '0 auto 2rem auto' }}>
-            Bienvenidos a nuestra repostería artesanal. Desde 1976 preparamos tortas y postres tradicionales elaborados con ingredientes seleccionados y el auténtico toque casero que nos caracteriza.
+          <div className="adorno-baker">
+            <span>✻</span>
+          </div>
+          <p className="hero-baker-desc">
+            Bienvenidos a nuestro taller repostero. Desde hace cinco décadas preparamos tortas y postres tradicionales elaborados con ingredientes nobles, paciencia y el auténtico toque casero que distingue nuestras mesas.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/productos" className="boton boton-primario" style={{ padding: '0.9rem 2rem', fontSize: '1rem' }}>
+          <div className="d-flex gap-3 justify-content-center flex-wrap">
+            <Link to="/productos" className="boton boton-primario btn-baker">
               Ver Catálogo Completo
             </Link>
-            <Link to="/registro" className="boton boton-secundario" style={{ padding: '0.9rem 2rem', fontSize: '1rem' }}>
-              Obtener Descuentos Especiales
+            <Link to="/ofertas" className="boton boton-secundario btn-baker">
+              Ofertas Especiales
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 2. Banner Aniversario / Beneficios con Cupón FELICES50 */}
-      <section style={{ padding: '3rem 1rem', backgroundColor: '#FFFFFF' }}>
-        <div className="contenedor" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div
-            style={{
-              background: 'linear-gradient(135deg, var(--color-chocolate) 0%, #5C2C0B 100%)',
-              color: '#FFFFFF',
-              borderRadius: 'var(--radio-borde)',
-              padding: '2.5rem',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '2rem',
-              alignItems: 'center',
-              boxShadow: 'var(--sombra-suave)'
-            }}
-          >
-            <div>
-              <span
-                style={{
-                  backgroundColor: 'var(--color-rosa)',
-                  color: 'var(--color-chocolate)',
-                  fontSize: '0.8rem',
-                  fontWeight: 800,
-                  padding: '0.35rem 0.8rem',
-                  borderRadius: '20px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '1px'
-                }}
-              >
-                Beneficios 50° Aniversario
-              </span>
-              <h2 style={{ fontFamily: 'var(--fuente-titulos)', fontSize: '2.2rem', color: 'var(--color-fondo)', margin: '0.8rem 0 0.5rem 0', fontWeight: 'normal' }}>
-                ¡Descuentos por Inscribirte!
-              </h2>
-              <p style={{ color: '#F8E8D8', fontSize: '1rem', lineHeight: 1.6, margin: '0 0 1rem 0' }}>
-                Regístrate y accede a un <strong>50% OFF</strong> para mayores de 50 años con el cupón <strong>FELICES50</strong>, además de un 10% OFF y torta gratis en tu semana de cumpleaños con <strong>Convenio Duoc UC</strong>.
-              </p>
+      {/* 2. Barra de Pilares de Oficio (Baker Features Bar) */}
+      <section className="barra-pilares-baker">
+        <div className="contenedor">
+          <div className="grilla-pilares">
+            <div className="pilar-item">
+              <div className="pilar-icono">🥖</div>
+              <h4 className="pilar-titulo">Horneado a Diario</h4>
+              <p className="pilar-desc">Todo elaborado fresco cada madrugada en nuestro taller familiar de Providencia.</p>
             </div>
-            <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.08)', padding: '1.5rem', borderRadius: '12px', border: '1px dashed rgba(255,255,255,0.25)' }}>
-              <p style={{ fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', margin: '0 0 0.5rem 0', color: 'var(--color-rosa)' }}>
-                Cupón 50% OFF (50+ Años)
-              </p>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '3px', color: '#FFFFFF', marginBottom: '1rem' }}>
-                FELICES50
-              </div>
-              <Link to="/registro" className="boton boton-rosa" style={{ width: '100%' }}>
-                Registrarme Ahora
-              </Link>
+            <div className="pilar-item">
+              <div className="pilar-icono">🧈</div>
+              <h4 className="pilar-titulo">Ingredientes Nobles</h4>
+              <p className="pilar-desc">Mantequilla de campo, huevos seleccionados, manjar artesanal y chocolate belga.</p>
+            </div>
+            <div className="pilar-item">
+              <div className="pilar-icono">🎂</div>
+              <h4 className="pilar-titulo">50 Años de Tradición</h4>
+              <p className="pilar-desc">Recetas emblemáticas transmitidas de generación en generación desde 1976.</p>
+            </div>
+            <div className="pilar-item">
+              <div className="pilar-icono">🌿</div>
+              <h4 className="pilar-titulo">Línea Inclusiva</h4>
+              <p className="pilar-desc">Deliciosas opciones sin gluten certificadas, veganas y sin azúcar añadida.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Nuestras Especialidades Destacadas (El orden exacto original) */}
-      <section style={{ padding: '3rem 1rem' }}>
+      {/* 3. Nuestras Especialidades Destacadas (Baker Showcase) */}
+      <section style={{ padding: '4.5rem 1rem 3.5rem 1rem' }}>
         <div className="contenedor">
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <h2 style={{ fontFamily: 'var(--fuente-titulos)', fontSize: '2.5rem', color: 'var(--color-chocolate)', marginBottom: '0.5rem', fontWeight: 'normal' }}>
-              Nuestras Especialidades
-            </h2>
-            <p style={{ color: 'var(--color-texto)', fontSize: '1.05rem', margin: '0 auto' }}>
-              Descubre los favoritos de nuestros clientes, preparados día a día en nuestro taller de Providencia.
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="seccion-baker-eyebrow">Selección del Maestro Pastelero</span>
+            <h2 className="seccion-baker-titulo">Nuestras Especialidades</h2>
+            <div className="adorno-baker">
+              <span>✻</span>
+            </div>
+            <p className="seccion-baker-desc">
+              Descubre los favoritos de nuestros clientes, elaborados con paciencia y los más finos ingredientes.
             </p>
           </div>
 
@@ -123,46 +110,96 @@ export default function Home() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <Link to="/productos" className="boton boton-secundario" style={{ padding: '0.8rem 2.2rem' }}>
-              Ver Todos los Productos
+            <Link to="/productos" className="boton boton-secundario btn-baker">
+              Ver Todos los Productos →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 4. Especial 18 de Septiembre (Idéntico a la versión original) */}
+      {/* 4. Banner Aniversario / Ticket Artesanal con Cupón FELICES50 */}
+      <section className="seccion-ticket-aniversario">
+        <div className="contenedor" style={{ maxWidth: '1060px' }}>
+          <div className="ticket-aniversario">
+            <div>
+              <span className="ticket-tag">
+                🎉 Edición Especial 50° Aniversario
+              </span>
+              <h2 className="ticket-titulo">
+                Celebra con Nosotros: Beneficios Exclusivos
+              </h2>
+              <ul className="ticket-cuerpo-lista">
+                <li>
+                  <span>🍰</span>
+                  <span><strong>50% OFF</strong> para mayores de 50 años con el cupón de aniversario.</span>
+                </li>
+                <li>
+                  <span>🎓</span>
+                  <span><strong>10% OFF</strong> permanente para estudiantes y docentes con <strong>Convenio Duoc UC</strong>.</span>
+                </li>
+                <li>
+                  <span>🎂</span>
+                  <span><strong>Torta Gratis</strong> en tu semana de cumpleaños al registrarte.</span>
+                </li>
+              </ul>
+              <Link to="/registro" className="boton boton-rosa btn-baker" style={{ marginTop: '0.5rem' }}>
+                Crear Cuenta y Acceder a Beneficios
+              </Link>
+            </div>
+
+            <div className="ticket-tarjeta-cupon">
+              <p className="ticket-cupon-label">Cupón Mayores de 50 Años</p>
+              <div className="ticket-cupon-codigo">FELICES50</div>
+              <button
+                type="button"
+                className="btn-copiar-cupon"
+                onClick={handleCopyCoupon}
+                title="Copiar cupón al portapapeles"
+              >
+                {couponCopied ? '✓ ¡Cupón Copiado!' : '📋 Copiar Cupón'}
+              </button>
+              <small style={{ display: 'block', marginTop: '0.75rem', color: '#EADFD2', fontSize: '0.78rem' }}>
+                Ingrésalo en tu bolsa de compra o en el checkout
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Especial 18 de Septiembre (Tradición Fiestas Patrias) */}
       {especial18.length > 0 && (
         <section
           style={{
-            padding: '3rem 1rem',
-            backgroundColor: '#FFFBF7',
-            borderTop: '1px solid rgba(107, 68, 35, 0.08)',
-            borderBottom: '1px solid rgba(107, 68, 35, 0.08)'
+            padding: '4.5rem 1rem',
+            backgroundColor: '#F3EDE2',
+            borderTop: '1px solid var(--color-borde)',
+            borderBottom: '1px solid var(--color-borde)'
           }}
         >
           <div className="contenedor">
-            <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <span
                 style={{
-                  backgroundColor: '#D32F2F',
+                  backgroundColor: '#B54234',
                   color: '#FFFFFF',
                   fontWeight: 700,
-                  fontSize: '0.85rem',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '50px',
+                  fontSize: '0.75rem',
+                  padding: '0.4rem 1rem',
+                  borderRadius: '30px',
                   textTransform: 'uppercase',
-                  letterSpacing: '1px',
+                  letterSpacing: '0.15em',
                   display: 'inline-block',
-                  marginBottom: '0.75rem'
+                  marginBottom: '0.85rem'
                 }}
               >
-                🇨🇱 Edición Fiestas Patrias
+                🇨🇱 Sabor Chileno de Fiesta
               </span>
-              <h2 style={{ fontFamily: 'var(--fuente-titulos)', fontSize: '2.5rem', color: 'var(--color-chocolate)', marginBottom: '0.5rem', fontWeight: 'normal' }}>
-                Especial 18 de Septiembre
-              </h2>
-              <p style={{ color: 'var(--color-texto)', fontSize: '1.05rem', margin: '0 auto', maxWidth: '650px' }}>
-                Disfruta de nuestras tradicionales empanadas artesanalmente preparadas para celebrar en familia (¡incluye opción sin gluten!).
+              <h2 className="seccion-baker-titulo">Especial 18 de Septiembre</h2>
+              <div className="adorno-baker">
+                <span>✻</span>
+              </div>
+              <p className="seccion-baker-desc">
+                Nuestras tradicionales empanadas preparadas con receta campestre tradicional, masa crujiente y pino jugoso (¡incluye opción sin gluten certificada!).
               </p>
             </div>
 
@@ -173,35 +210,38 @@ export default function Home() {
             </div>
 
             <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-              <Link to="/categoria/Especial%2018" className="boton boton-primario" style={{ padding: '0.8rem 2.2rem' }}>
-                Ver Categoría Especial 18
+              <Link to="/categoria/Especial%2018" className="boton boton-primario btn-baker">
+                Ver Todo el Especial 18 →
               </Link>
             </div>
           </div>
         </section>
       )}
 
-      {/* 5. Categorías de la Tienda (Requisito de Evaluación 2 integrado armoniosamente) */}
-      <section style={{ padding: '3.5rem 1rem' }}>
+      {/* 6. Nuestras Categorías (Baker Category Showcase) */}
+      <section style={{ padding: '4.5rem 1rem 5rem 1rem' }}>
         <div className="contenedor">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
-            <div>
-              <span style={{ color: 'var(--color-chocolate)', textTransform: 'uppercase', fontWeight: 700, fontSize: '0.85rem' }}>
-                Explora por sección
-              </span>
-              <h2 style={{ fontFamily: 'var(--fuente-titulos)', fontSize: '2.2rem', color: 'var(--color-chocolate)', margin: 0, fontWeight: 'normal' }}>
-                Nuestras Categorías
-              </h2>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="seccion-baker-eyebrow">Explora Nuestro Obrador</span>
+            <h2 className="seccion-baker-titulo">Nuestras Categorías</h2>
+            <div className="adorno-baker">
+              <span>✻</span>
             </div>
-            <Link to="/categorias" className="boton boton-secundario" style={{ padding: '0.4rem 1rem', fontSize: '0.85rem' }}>
-              Ver todas →
-            </Link>
+            <p className="seccion-baker-desc">
+              Cada sección está pensada para acompañar tus celebraciones con la más alta repostería artesanal.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '2rem' }}>
             {categories.map((cat) => (
               <CategoryCard key={cat.id} category={cat} />
             ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+            <Link to="/categorias" className="boton boton-secundario btn-baker">
+              Ver Todas las Categorías ({categories.length}) →
+            </Link>
           </div>
         </div>
       </section>

@@ -6,13 +6,14 @@ export default function Footer() {
     <footer className="pie-pagina" style={{ backgroundColor: 'var(--color-chocolate)', color: 'var(--color-fondo)', padding: '3.5rem 0 2rem 0', marginTop: '3rem' }}>
       <div className="contenedor" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', textAlign: 'center', justifyItems: 'center', alignItems: 'start' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <Link to="/" className="logo-footer">
+          <Link to="/" className="logo-footer" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none' }}>
+            <img src="/img/logo-ms.png" alt="Mil Sabores" style={{ height: '52px', width: 'auto', marginBottom: '0.6rem' }} />
             <span className="logo-texto-footer">
               Mil Sabores
-              <span className="logo-subtexto-footer">Café & Pastelería</span>
+              <span className="logo-subtexto-footer">Pastelería & Café</span>
             </span>
           </Link>
-          <p style={{ fontSize: '0.9rem', opacity: 0.9, maxWidth: '300px', margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.9rem', opacity: 0.85, maxWidth: '300px', margin: '0 auto', textAlign: 'center', lineHeight: 1.6 }}>
             Celebrando 50 años de tradición endulzando los momentos más especiales de Chile.
           </p>
         </div>

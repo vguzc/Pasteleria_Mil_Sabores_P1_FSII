@@ -2,30 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function CategoryCard({ category }) {
+  if (!category) return null;
+
   return (
     <Link
       to={`/categoria/${encodeURIComponent(category.nombre)}`}
-      className="card text-decoration-none text-dark h-100 border-0 shadow-sm category-card transition-all"
+      className="tarjeta-categoria-baker text-decoration-none"
     >
-      <div className="card-body text-center p-3 d-flex flex-column align-items-center justify-content-center">
-        <div
-          className="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3 overflow-hidden shadow-sm"
-          style={{ width: '85px', height: '85px' }}
-        >
-          <img
-            src={category.imagen || '/img/torta-mil-sabores.png'}
-            alt={category.nombre}
-            className="w-100 h-100 object-fit-cover"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = '/img/torta-mil-sabores.png';
-            }}
-          />
-        </div>
-        <h6 className="card-title fw-bold mb-1">{category.nombre}</h6>
-        <p className="card-text text-muted small">{category.descripcion}</p>
-        <span className="btn btn-sm btn-outline-primary mt-auto">Ver productos</span>
+      <div className="cat-baker-circulo">
+        <img
+          src={category.imagen || '/img/torta-mil-sabores.png'}
+          alt={category.nombre}
+          className="cat-baker-img"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/img/torta-mil-sabores.png';
+          }}
+        />
       </div>
+      <h4 className="cat-baker-titulo">{category.nombre}</h4>
+      <p className="cat-baker-desc">{category.descripcion}</p>
+      <span className="cat-baker-link">
+        Explorar →
+      </span>
     </Link>
   );
 }
