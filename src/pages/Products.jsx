@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { productService, categoryService } from '../services/db';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/store/ProductCard';
@@ -11,7 +11,7 @@ export default function Products() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('destacados');
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -27,6 +27,17 @@ export default function Products() {
       setSelectedCategory(urlCat);
     }
   }, [searchParams]);
+
+  // Manejo de cambio de categoría
+  const handleCategoryChange = (catName) => {
+    setSelectedCategory(catName);
+    if (catName === 'Todas') {
+      searchParams.delete('categoria');
+    } else {
+      searchParams.set('categoria', catName);
+    }
+    setSearchParams(searchParams);
+  };
 
   // Filtrado y Ordenamiento
   const filteredProducts = products.filter((prod) => {
@@ -46,141 +57,135 @@ export default function Products() {
   });
 
   return (
-    <div className="container py-4">
-      {/* Encabezado y Breadcrumb */}
-      <nav aria-label="breadcrumb" className="mb-3">
-        <ol className="breadcrumb small">
-          <li className="breadcrumb-item"><a href="/">Inicio</a></li>
-          <li className="breadcrumb-item active" aria-current="page">Catálogo de Productos</li>
-        </ol>
-      </nav>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
+      {/* 1. Encabezado Hero del Catálogo Estilo Baker */}
+      <section className="catalogo-baker-header">
+        <div className="contenedor">
+          <nav aria-label="breadcrumb" className="mb-3">
+            <ol className="breadcrumb small justify-content-center mb-2">
+              <li className="breadcrumb-item">
+                <Link to="/" style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}>Inicio</Link>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
+                Catálogo de Productos
+              </li>
+            </ol>
+          </nav>
 
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-        <div>
-          <h1 className="fw-bold font-serif mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
-            Catálogo de Pastelería y Repostería
+          <span className="seccion-baker-eyebrow">Repostería Artesanal & Cafetería</span>
+          <h1 className="seccion-baker-titulo" style={{ fontSize: 'clamp(2.2rem, 3.8vw, 3.2rem)' }}>
+            Nuestro Catálogo
           </h1>
-          <p className="text-muted small mb-0">
-            Mostrando {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} artesanal{filteredProducts.length !== 1 ? 'es' : ''}
+          <div className="adorno-baker" />
+          <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>
+            Descubre nuestras elaboraciones artesanales preparadas cada día con materias primas nobles y recetas tradicionales desde 1976.
           </p>
-        </div>
 
-        {/* Ordenador */}
-        <div className="d-flex align-items-center gap-2">
-          <label className="text-muted small text-nowrap">Ordenar por:</label>
-          <select
-            className="form-select form-select-sm"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            style={{ minWidth: '180px' }}
-          >
-            <option value="destacados">Destacados primero</option>
-            <option value="precio-asc">Precio: Menor a Mayor</option>
-            <option value="precio-desc">Precio: Mayor a Menor</option>
-            <option value="nombre">Nombre (A - Z)</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="row g-4">
-        {/* Barra lateral de filtros */}
-        <div className="col-lg-3">
-          <div className="card shadow-sm border-0 p-3 sticky-top" style={{ top: '90px' }}>
-            <h5 className="fw-bold mb-3 d-flex align-items-center">
-              <i className="bi bi-funnel me-2 text-primary"></i>Filtros
-            </h5>
-
-            {/* Búsqueda */}
-            <div className="mb-4">
-              <label className="form-label small fw-bold">Buscar por palabra</label>
-              <div className="input-group input-group-sm">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Ej: Lúcuma, Chocolate..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <button className="btn btn-outline-secondary" onClick={() => setSearchTerm('')}>
-                    <i className="bi bi-x"></i>
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Categorías */}
-            <div className="mb-3">
-              <label className="form-label small fw-bold">Categorías</label>
-              <div className="list-group list-group-flush small">
+          {/* 2. Barra de Categorías Horizontal Estilo Baker (media_1792645642426_83a1e297.png) */}
+          <nav className="catalogo-filtros-nav" aria-label="Filtro por categorías">
+            <button
+              type="button"
+              className={`btn-filtro-cat ${selectedCategory === 'Todas' ? 'activo' : ''}`}
+              onClick={() => handleCategoryChange('Todas')}
+            >
+              Todas ({products.length})
+            </button>
+            {categories.map((cat) => {
+              const count = products.filter(p => p.categoria.toLowerCase() === cat.nombre.toLowerCase()).length;
+              return (
                 <button
+                  key={cat.id}
                   type="button"
-                  className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-2 py-1 rounded ${selectedCategory === 'Todas' ? 'active text-white' : ''}`}
-                  onClick={() => setSelectedCategory('Todas')}
+                  className={`btn-filtro-cat ${selectedCategory.toLowerCase() === cat.nombre.toLowerCase() ? 'activo' : ''}`}
+                  onClick={() => handleCategoryChange(cat.nombre)}
                 >
-                  <span>Todas las categorías</span>
-                  <span className="badge bg-secondary rounded-pill">{products.length}</span>
+                  {cat.nombre} ({count})
                 </button>
-                {categories.map((cat) => {
-                  const count = products.filter(p => p.categoria.toLowerCase() === cat.nombre.toLowerCase()).length;
-                  return (
-                    <button
-                      key={cat.id}
-                      type="button"
-                      className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0 px-2 py-1 rounded ${selectedCategory.toLowerCase() === cat.nombre.toLowerCase() ? 'active text-white' : ''}`}
-                      onClick={() => setSelectedCategory(cat.nombre)}
-                    >
-                      <span className="text-truncate">{cat.nombre}</span>
-                      <span className="badge bg-secondary rounded-pill">{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+              );
+            })}
+          </nav>
+        </div>
+      </section>
 
-            {/* Botón reset filtros */}
-            {(selectedCategory !== 'Todas' || searchTerm) && (
+      {/* 3. Barra de Controles: Búsqueda, Contador y Ordenador */}
+      <div className="contenedor" style={{ paddingTop: '2.5rem' }}>
+        <div className="catalogo-toolbar">
+          <div className="d-flex align-items-center gap-2">
+            <input
+              type="text"
+              className="catalogo-search-input"
+              placeholder="Buscar por torta, alfajor, ingrediente..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Buscar producto"
+            />
+            {searchTerm && (
               <button
-                className="btn btn-outline-danger btn-sm w-100 mt-2"
-                onClick={() => {
-                  setSelectedCategory('Todas');
-                  setSearchTerm('');
-                }}
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => setSearchTerm('')}
+                title="Limpiar búsqueda"
               >
-                <i className="bi bi-arrow-counterclockwise me-1"></i>Limpiar Filtros
+                ✕
               </button>
             )}
           </div>
+
+          <div className="d-flex align-items-center gap-3">
+            <span className="small text-muted d-none d-md-inline">
+              Mostrando <strong>{filteredProducts.length}</strong> producto{filteredProducts.length !== 1 ? 's' : ''}
+            </span>
+
+            <select
+              className="catalogo-sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              aria-label="Ordenar productos"
+            >
+              <option value="destacados">Destacados primero</option>
+              <option value="precio-asc">Precio: Menor a Mayor</option>
+              <option value="precio-desc">Precio: Mayor a Menor</option>
+              <option value="nombre">Nombre (A - Z)</option>
+            </select>
+          </div>
         </div>
 
-        {/* Grilla de Productos */}
-        <div className="col-lg-9">
-          {filteredProducts.length === 0 ? (
-            <div className="card text-center p-5 border-0 shadow-sm">
-              <i className="bi bi-search fs-1 text-muted mb-3"></i>
-              <h4>No se encontraron productos</h4>
-              <p className="text-muted small">
-                Intenta ajustar los filtros de búsqueda o seleccionar otra categoría.
-              </p>
-              <div>
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => { setSelectedCategory('Todas'); setSearchTerm(''); }}
-                >
-                  Restablecer catálogo
-                </button>
-              </div>
+        {/* 4. Grilla de Productos */}
+        {filteredProducts.length === 0 ? (
+          <div
+            className="text-center py-5 px-3 rounded-3"
+            style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', maxWidth: '580px', margin: '2rem auto' }}
+          >
+            <div style={{ width: '60px', height: '60px', margin: '0 auto 1rem', borderRadius: '50%', backgroundColor: '#F3ECE3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-caramelo)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
             </div>
-          ) : (
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
-              {filteredProducts.map((prod) => (
-                <div key={prod.id} className="col">
-                  <ProductCard product={prod} onAddToCart={addItem} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+            <h3 style={{ fontFamily: 'var(--fuente-titulos)', color: 'var(--color-espresso)', fontSize: '1.45rem' }}>
+              No encontramos delicias para esa búsqueda
+            </h3>
+            <p className="text-muted small mb-4">
+              Prueba cambiando la palabra clave o seleccionando otra categoría en el menú superior.
+            </p>
+            <button
+              type="button"
+              className="boton boton-primario btn-baker"
+              onClick={() => {
+                setSelectedCategory('Todas');
+                setSearchTerm('');
+              }}
+            >
+              Ver Todas las Delicias
+            </button>
+          </div>
+        ) : (
+          <div className="grilla-productos">
+            {filteredProducts.map((prod) => (
+              <ProductCard key={prod.id} product={prod} onAddToCart={addItem} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export default function AdminUsers() {
   const [orders, setOrders] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-  const [historyUser, setHistoryUser] = useState(null); // Para ver historial de compras
+  const [historyUser, setHistoryUser] = useState(null);
   const [feedback, setFeedback] = useState('');
 
   const loadData = () => {
@@ -54,38 +54,51 @@ export default function AdminUsers() {
     setTimeout(() => setFeedback(''), 3000);
   };
 
-  const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(val);
+  const formatPrice = (val) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(val);
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-          <h2 className="fw-bold mb-1">Mantenedor de Usuarios</h2>
-          <p className="text-muted small mb-0">Gestión de cuentas de clientes, vendedores y administradores</p>
+          <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+            Comunidad & Cuentas
+          </span>
+          <h1 className="seccion-baker-titulo" style={{ fontSize: '2rem', textAlign: 'left', margin: 0 }}>
+            Mantenedor de Usuarios
+          </h1>
+          <p className="text-muted small mb-0 mt-1">Gestión de cuentas de clientes, vendedores y administradores del obrador</p>
         </div>
-        <button className="btn btn-primary" onClick={handleOpenNew}>
+        <button
+          className="boton boton-primario btn-baker"
+          onClick={handleOpenNew}
+          style={{ fontSize: '0.85rem' }}
+        >
           <i className="bi bi-person-plus me-2"></i>Nuevo Usuario
         </button>
       </div>
 
       {feedback && (
-        <div className="alert alert-success py-2 mb-3">
-          <i className="bi bi-check-circle me-2"></i>{feedback}
+        <div
+          className="alert alert-dismissible py-2 mb-3 small d-flex align-items-center"
+          style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-caramelo)', color: 'var(--color-espresso)' }}
+        >
+          <i className="bi bi-check-circle me-2" style={{ color: 'var(--color-caramelo)' }}></i>
+          <span>{feedback}</span>
         </div>
       )}
 
-      <div className="card shadow-sm border-0 mb-4">
+      <div className="card shadow-sm border-0 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '8px' }}>
         <div className="card-body p-0">
           <div className="table-responsive">
             <table className="table table-hover align-middle mb-0 small">
-              <thead className="table-light">
+              <thead style={{ backgroundColor: '#F5EFEB', borderBottom: '1px solid var(--color-borde)' }}>
                 <tr>
-                  <th>Usuario</th>
-                  <th>Correo</th>
-                  <th>RUT</th>
-                  <th>Ubicación</th>
-                  <th className="text-center">Rol</th>
-                  <th className="text-center" style={{ width: '180px' }}>Acciones</th>
+                  <th style={{ color: 'var(--color-espresso)' }}>Usuario</th>
+                  <th style={{ color: 'var(--color-espresso)' }}>Correo</th>
+                  <th style={{ color: 'var(--color-espresso)' }}>RUT</th>
+                  <th style={{ color: 'var(--color-espresso)' }}>Ubicación</th>
+                  <th className="text-center" style={{ color: 'var(--color-espresso)' }}>Rol</th>
+                  <th className="text-center" style={{ width: '180px', color: 'var(--color-espresso)' }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -94,7 +107,7 @@ export default function AdminUsers() {
                   return (
                     <tr key={u.id || u.correo}>
                       <td>
-                        <div className="fw-bold">{u.nombre} {u.apellidos}</div>
+                        <div className="fw-bold" style={{ color: 'var(--color-espresso)' }}>{u.nombre} {u.apellidos}</div>
                         <span className="text-muted" style={{ fontSize: '0.72rem' }}>ID: {u.id}</span>
                       </td>
                       <td>{u.correo}</td>
@@ -104,24 +117,32 @@ export default function AdminUsers() {
                         <small className="text-muted">{u.region || ''}</small>
                       </td>
                       <td className="text-center">
-                        <span className={`badge ${u.rol === 'administrador' ? 'bg-danger' : u.rol === 'vendedor' ? 'bg-warning text-dark' : 'bg-info text-dark'}`}>
+                        <span
+                          className="badge text-uppercase"
+                          style={{
+                            backgroundColor: u.rol === 'administrador' ? '#201610' : u.rol === 'vendedor' ? 'var(--color-caramelo)' : '#FAF4EC',
+                            color: u.rol === 'cliente' ? 'var(--color-espresso)' : '#FFFFFF',
+                            border: u.rol === 'cliente' ? '1px solid var(--color-borde)' : 'none',
+                            fontSize: '0.68rem',
+                            letterSpacing: '0.08em'
+                          }}
+                        >
                           {u.rol}
                         </span>
                       </td>
                       <td className="text-center">
                         <div className="btn-group btn-group-sm">
-                          {/* Botón Historial de Compras (Figura 10 de la pauta) */}
                           <button
                             type="button"
-                            className="btn btn-outline-info"
+                            className="btn btn-sm btn-outline-secondary"
                             title="Historial de Compras"
                             onClick={() => setHistoryUser(u)}
                           >
-                            <i className="bi bi-bag-check me-1"></i>{userOrders.length}
+                            <i className="bi bi-bag-check me-1" style={{ color: 'var(--color-caramelo)' }}></i>{userOrders.length}
                           </button>
                           <button
                             type="button"
-                            className="btn btn-outline-primary"
+                            className="btn btn-sm btn-outline-secondary"
                             title="Editar Usuario"
                             onClick={() => handleOpenEdit(u)}
                           >
@@ -129,7 +150,7 @@ export default function AdminUsers() {
                           </button>
                           <button
                             type="button"
-                            className="btn btn-outline-danger"
+                            className="btn btn-sm btn-outline-danger"
                             title="Eliminar Usuario"
                             onClick={() => handleDelete(u.id, u.nombre)}
                           >
@@ -146,18 +167,19 @@ export default function AdminUsers() {
         </div>
       </div>
 
-      {/* Modal Historial de Compras del Usuario (Figura 10) */}
+      {/* Modal Historial de Compras del Usuario */}
       {historyUser && (
-        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(32, 22, 16, 0.6)', backdropFilter: 'blur(3px)' }}>
           <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content shadow border-0">
-              <div className="modal-header bg-dark text-white">
-                <h5 className="modal-title">
-                  <i className="bi bi-clock-history me-2"></i>Historial de Compras: {historyUser.nombre} {historyUser.apellidos}
+            <div className="modal-content shadow border-0" style={{ borderRadius: '8px', overflow: 'hidden' }}>
+              <div className="modal-header text-white" style={{ backgroundColor: '#201610', borderBottom: '1px solid var(--color-borde)' }}>
+                <h5 className="modal-title" style={{ fontFamily: 'var(--fuente-titulos)' }}>
+                  <i className="bi bi-clock-history me-2" style={{ color: 'var(--color-caramelo)' }}></i>
+                  Historial de Compras: {historyUser.nombre} {historyUser.apellidos}
                 </h5>
                 <button type="button" className="btn-close btn-close-white" onClick={() => setHistoryUser(null)}></button>
               </div>
-              <div className="modal-body p-4">
+              <div className="modal-body p-4" style={{ backgroundColor: '#FAF7F2' }}>
                 {(() => {
                   const userOrders = orders.filter(o => o.cliente?.correo?.toLowerCase() === historyUser.correo.toLowerCase());
                   if (userOrders.length === 0) {
@@ -168,30 +190,32 @@ export default function AdminUsers() {
                     );
                   }
                   return (
-                    <table className="table table-sm align-middle small">
-                      <thead className="table-light">
+                    <table className="table table-sm align-middle small bg-white rounded shadow-sm">
+                      <thead style={{ backgroundColor: '#F5EFEB' }}>
                         <tr>
-                          <th>N° Orden</th>
-                          <th>Fecha</th>
-                          <th>Productos</th>
-                          <th className="text-end">Total</th>
-                          <th className="text-center">Estado</th>
+                          <th style={{ color: 'var(--color-espresso)' }}>N° Orden</th>
+                          <th style={{ color: 'var(--color-espresso)' }}>Fecha</th>
+                          <th style={{ color: 'var(--color-espresso)' }}>Productos</th>
+                          <th className="text-end" style={{ color: 'var(--color-espresso)' }}>Total</th>
+                          <th className="text-center" style={{ color: 'var(--color-espresso)' }}>Estado</th>
                         </tr>
                       </thead>
                       <tbody>
                         {userOrders.map((ord) => (
                           <tr key={ord.id}>
-                            <td><strong>#{ord.numeroOrden}</strong></td>
+                            <td><strong style={{ color: 'var(--color-espresso)' }}>#{ord.numeroOrden}</strong></td>
                             <td>{new Date(ord.fecha).toLocaleDateString('es-CL')}</td>
                             <td>
                               {ord.items?.map((it, idx) => (
-                                <span key={idx} className="badge bg-light text-dark border me-1">
+                                <span key={idx} className="badge me-1" style={{ backgroundColor: '#FAF4EC', color: 'var(--color-espresso)', border: '1px solid var(--color-borde)' }}>
                                   {it.cantidad}x {it.nombre}
                                 </span>
                               ))}
                             </td>
-                            <td className="text-end fw-bold text-primary">{formatPrice(ord.total)}</td>
-                            <td className="text-center"><span className="badge bg-success">{ord.estado}</span></td>
+                            <td className="text-end fw-bold" style={{ color: 'var(--color-caramelo)' }}>{formatPrice(ord.total)}</td>
+                            <td className="text-center">
+                              <span className="badge" style={{ backgroundColor: '#2D6A4F', color: '#FFFFFF' }}>{ord.estado}</span>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -199,8 +223,8 @@ export default function AdminUsers() {
                   );
                 })()}
               </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setHistoryUser(null)}>Cerrar</button>
+              <div className="modal-footer" style={{ backgroundColor: '#FFFFFF', borderTop: '1px solid var(--color-borde)' }}>
+                <button type="button" className="boton boton-secundario btn-baker" onClick={() => setHistoryUser(null)}>Cerrar</button>
               </div>
             </div>
           </div>

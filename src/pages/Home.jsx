@@ -5,26 +5,24 @@ import { useCart } from '../context/CartContext';
 import ProductCard from '../components/store/ProductCard';
 import CategoryCard from '../components/store/CategoryCard';
 import BakerHeroSlider from '../components/store/BakerHeroSlider';
+import { BLOG_POSTS } from './Blogs';
 
 export default function Home() {
   const [especialidades, setEspecialidades] = useState([]);
-  const [especial18, setEspecial18] = useState([]);
   const [categories, setCategories] = useState([]);
   const [couponCopied, setCouponCopied] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const { addItem } = useCart();
 
   useEffect(() => {
     const allProducts = productService.getAll();
-    // 1. Especialidades principales (Tres Leches, Amor Lúcuma, Cheesecake Sin Gluten, Strudel de Manzana)
+    // Especialidades principales (Tres Leches, Amor Lúcuma, Cheesecake Sin Gluten, Strudel de Manzana)
     const espIds = ['TC001', 'TC003', 'SG001', 'PT005'];
     const esp = allProducts.filter(p => espIds.includes(p.id));
     setEspecialidades(esp.length > 0 ? esp : allProducts.slice(0, 4));
 
-    // 2. Especial 18 de Septiembre (Empanadas)
-    const esp18 = allProducts.filter(p => p.categoria.toLowerCase().includes('18'));
-    setEspecial18(esp18);
-
-    // 3. Categorías oficiales
+    // Categorías principales
     setCategories(categoryService.getAll().slice(0, 4));
   }, []);
 
@@ -34,68 +32,32 @@ export default function Home() {
     setTimeout(() => setCouponCopied(false), 2200);
   };
 
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    setNewsletterSuccess(true);
+    setNewsletterEmail('');
+    setTimeout(() => setNewsletterSuccess(false), 3500);
+  };
+
   return (
-    <div className="home-page">
-      {/* 1. Hero Slider Interactivo con Imágenes y Diapositivas Estilo Baker */}
+    <div className="home-page" style={{ backgroundColor: 'var(--color-fondo)' }}>
+      {/* =========================================================================
+          SECCIÓN 1: [FOTO] Hero Slider Interactivo Estilo Baker
+          ========================================================================= */}
       <BakerHeroSlider />
 
-      {/* 2. Barra de Pilares de Oficio (Baker Features Bar) */}
-      <section className="barra-pilares-baker">
-        <div className="contenedor">
-          <div className="grilla-pilares">
-            <div className="pilar-item">
-              <div className="pilar-icono">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-              </div>
-              <h4 className="pilar-titulo">Horneado a Diario</h4>
-              <p className="pilar-desc">Todo elaborado fresco cada madrugada en nuestro taller familiar de Providencia.</p>
-            </div>
-
-            <div className="pilar-item">
-              <div className="pilar-icono">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-              </div>
-              <h4 className="pilar-titulo">Ingredientes Nobles</h4>
-              <p className="pilar-desc">Mantequilla de campo, huevos seleccionados, manjar artesanal y chocolate puro.</p>
-            </div>
-
-            <div className="pilar-item">
-              <div className="pilar-icono">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06z"></path>
-                </svg>
-              </div>
-              <h4 className="pilar-titulo">50 Años de Tradición</h4>
-              <p className="pilar-desc">Recetas emblemáticas transmitidas de generación en generación desde 1976.</p>
-            </div>
-
-            <div className="pilar-item">
-              <div className="pilar-icono">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <h4 className="pilar-titulo">Línea Inclusiva</h4>
-              <p className="pilar-desc">Opciones dedicadas sin gluten certificadas, veganas y sin azúcar añadida.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Nuestras Especialidades Destacadas (Baker Showcase) */}
-      <section style={{ padding: '5rem 1.5rem 4rem 1.5rem' }}>
+      {/* =========================================================================
+          SECCIÓN 2: [NO FOTO] Nuestras Especialidades Destacadas
+          ========================================================================= */}
+      <section style={{ padding: '5.5rem 1.5rem 4.5rem 1.5rem', backgroundColor: 'var(--color-fondo)' }}>
         <div className="contenedor">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <span className="seccion-baker-eyebrow">Selección del Maestro Pastelero</span>
             <h2 className="seccion-baker-titulo">Nuestras Especialidades</h2>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc">
-              Descubre los favoritos de nuestros clientes, elaborados con paciencia y las mejores materias primas.
+              Recetas emblemáticas horneadas cada madrugada con paciencia, materias primas nobles y medio siglo de tradición familiar.
             </p>
           </div>
 
@@ -107,138 +69,94 @@ export default function Home() {
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
             <Link to="/productos" className="boton boton-secundario btn-baker">
-              Ver Todos los Productos
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 4. Cita Editorial / Testimonio Estilo Baker ("They said about us") */}
-      <section className="seccion-cita-baker">
-        <div className="contenedor" style={{ maxWidth: '860px', textAlign: 'center' }}>
-          <span className="cita-baker-simbolo">“</span>
-          <blockquote className="cita-baker-texto">
-            El verdadero secreto de Mil Sabores no radica únicamente en sus recetas de 1976, sino en el cariño y la devoción con que cada madrugada encienden los hornos para endulzar nuestras celebraciones familiares.
-          </blockquote>
-          <div className="cita-baker-autor">
-            <span className="autor-nombre">Crónica Gastronómica de Santiago</span>
-            <span className="autor-cargo">50 Años de Tradición y Repostería Artesanal</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Banner Aniversario / Ticket Artesanal con Cupón FELICES50 */}
-      <section className="seccion-ticket-aniversario">
-        <div className="contenedor" style={{ maxWidth: '1080px' }}>
-          <div className="ticket-aniversario">
-            <div>
-              <span className="ticket-tag">
-                Edición Especial 50° Aniversario
-              </span>
-              <h2 className="ticket-titulo">
-                Celebra con Nosotros: Beneficios Exclusivos
+      {/* =========================================================================
+          SECCIÓN 3: [FOTO SPLIT] Creamos Dulces Recuerdos (Baker Split 2 Columnas)
+          ========================================================================= */}
+      <section className="seccion-recuerdos-baker">
+        <div className="contenedor">
+          <div className="grilla-recuerdos-baker">
+            {/* Columna Izquierda: Historia y Oficio */}
+            <div className="recuerdos-textos">
+              <span className="seccion-baker-eyebrow">Tradición Desde 1976 en Providencia</span>
+              <h2 className="recuerdos-titulo">
+                Creamos Dulces Recuerdos Para Toda la Familia
               </h2>
-              <ul className="ticket-cuerpo-lista">
-                <li>
-                  <span className="ticket-bullet">•</span>
-                  <span><strong>50% OFF</strong> para mayores de 50 años con el cupón de aniversario.</span>
+              <div className="adorno-baker" style={{ margin: '0.8rem 0 1.5rem 0' }} />
+              <p className="recuerdos-parrafo">
+                Nuestra vocación por la pastelería artesanal comenzó hace cinco décadas en un pequeño horno de Providencia. Hoy conservamos intacta la liturgia del amasado a mano, la cocción pausada y la selección rigurosa de cada ingrediente: mantequilla pura de campo, huevos de gallinas libres y manjar blanco cocido a fuego lento.
+              </p>
+              <p className="recuerdos-parrafo" style={{ color: 'var(--color-texto-secundario)' }}>
+                Desde nuestras clásicas tortas de hojarasca y tres leches hasta nuestra cuidada línea inclusiva sin gluten y sin azúcar añadida, cada pieza que sale de nuestro obrador es una invitación a celebrar la dulzura de la vida.
+              </p>
+
+              <ul className="recuerdos-pilares-lista">
+                <li className="recuerdos-pilar-item">
+                  <span className="recuerdos-pilar-check">✓</span>
+                  <span>Horneado fresco a diario en nuestro taller de Manuel Montt</span>
                 </li>
-                <li>
-                  <span className="ticket-bullet">•</span>
-                  <span><strong>10% OFF</strong> permanente para estudiantes y docentes con <strong>Convenio Duoc UC</strong>.</span>
+                <li className="recuerdos-pilar-item">
+                  <span className="recuerdos-pilar-check">✓</span>
+                  <span>Ingredientes nobles sin sucedáneos ni conservantes artificiales</span>
                 </li>
-                <li>
-                  <span className="ticket-bullet">•</span>
-                  <span><strong>Torta Gratis</strong> en tu semana de cumpleaños al registrarte.</span>
+                <li className="recuerdos-pilar-item">
+                  <span className="recuerdos-pilar-check">✓</span>
+                  <span>Línea inclusiva certificada para celíacos y personas diabéticas</span>
                 </li>
               </ul>
-              <Link to="/registro" className="boton boton-rosa btn-baker" style={{ marginTop: '0.5rem' }}>
-                Crear Cuenta y Acceder a Beneficios
+
+              <Link to="/nosotros" className="boton boton-primario btn-baker" style={{ marginTop: '0.5rem' }}>
+                Conoce Nuestra Historia
               </Link>
             </div>
 
-            <div className="ticket-tarjeta-cupon">
-              <p className="ticket-cupon-label">Cupón Mayores de 50 Años</p>
-              <div className="ticket-cupon-codigo">FELICES50</div>
-              <button
-                type="button"
-                className="btn-copiar-cupon"
-                onClick={handleCopyCoupon}
-                title="Copiar cupón al portapapeles"
-              >
-                {couponCopied ? '¡Cupón Copiado!' : 'Copiar Cupón'}
-              </button>
-              <small style={{ display: 'block', marginTop: '0.85rem', color: '#EADFD2', fontSize: '0.78rem' }}>
-                Ingrésalo en tu bolsa de compra o en el checkout
-              </small>
+            {/* Columna Derecha: Fotos Escalonadas */}
+            <div className="recuerdos-fotos-wrap">
+              <div className="recuerdos-sello-experiencia">
+                <span className="sello-numero">50</span>
+                <span className="sello-texto">Años de Oficio</span>
+              </div>
+
+              <div className="recuerdos-foto-principal">
+                <img
+                  src="/img/slider/slide-2-masa.jpg"
+                  alt="Amasado artesanal en el obrador"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="recuerdos-foto-secundaria">
+                <img
+                  src="/img/slider/slide-3-croissant.jpg"
+                  alt="Bollería recién horneada"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Especial 18 de Septiembre (Tradición Fiestas Patrias) */}
-      {especial18.length > 0 && (
-        <section
-          style={{
-            padding: '5rem 1.5rem',
-            backgroundColor: '#F3EDE2',
-            borderTop: '1px solid var(--color-borde)',
-            borderBottom: '1px solid var(--color-borde)'
-          }}
-        >
-          <div className="contenedor">
-            <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-              <span
-                style={{
-                  backgroundColor: '#B54234',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  fontSize: '0.75rem',
-                  padding: '0.4rem 1.1rem',
-                  borderRadius: '30px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
-                  display: 'inline-block',
-                  marginBottom: '0.85rem'
-                }}
-              >
-                Edición Fiestas Patrias
-              </span>
-              <h2 className="seccion-baker-titulo">Especial 18 de Septiembre</h2>
-              <div className="adorno-baker" />
-              <p className="seccion-baker-desc">
-                Nuestras tradicionales empanadas preparadas con receta campestre tradicional, masa crujiente y pino jugoso (incluye opción sin gluten certificada).
-              </p>
-            </div>
-
-            <div className="grilla-productos">
-              {especial18.map((prod) => (
-                <ProductCard key={prod.id} product={prod} onAddToCart={addItem} />
-              ))}
-            </div>
-
-            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-              <Link to="/categoria/Especial%2018" className="boton boton-primario btn-baker">
-                Ver Todo el Especial 18
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 7. Nuestras Categorías (Baker Category Showcase) */}
-      <section style={{ padding: '5rem 1.5rem 4rem 1.5rem' }}>
+      {/* =========================================================================
+          SECCIÓN 4: [NO FOTO] Nuestras Categorías
+          ========================================================================= */}
+      <section style={{ padding: '5.5rem 1.5rem 4.5rem 1.5rem', backgroundColor: 'var(--color-fondo)' }}>
         <div className="contenedor">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <span className="seccion-baker-eyebrow">Explora Nuestro Obrador</span>
             <h2 className="seccion-baker-titulo">Nuestras Categorías</h2>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc">
-              Cada sección está pensada para acompañar tus celebraciones con la más alta repostería artesanal.
+              Cada sección está pensada para acompañar tus celebraciones familiares, aniversarios y momentos de pausa con repostería de excelencia.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '2.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2.25rem' }}>
             {categories.map((cat) => (
               <CategoryCard key={cat.id} category={cat} />
             ))}
@@ -246,49 +164,129 @@ export default function Home() {
 
           <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
             <Link to="/categorias" className="boton boton-secundario btn-baker">
-              Ver Todas las Categorías ({categories.length})
+              Ver Todas las Categorías
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 8. Galería del Obrador / Momentos Artesanales Estilo Baker */}
-      <section className="seccion-galeria-obrador">
+      {/* =========================================================================
+          SECCIÓN 5: [FOTO BANNER] Club Mil Sabores / Newsletter & Aniversario
+          ========================================================================= */}
+      <section className="seccion-club-baker">
+        <div className="club-baker-contenedor">
+          <span className="club-baker-eyebrow">Club Mil Sabores • 50° Aniversario</span>
+          <h2 className="club-baker-titulo">Mantente al Día con Nuestro Obrador</h2>
+          <p className="club-baker-desc">
+            Únete a nuestro club de amantes de la buena pastelería para recibir recetas de temporada, invitaciones a catas privadas y un 50% de descuento en tu primera compra con el cupón de aniversario:
+          </p>
+
+          {/* Caja Interactiva de Cupón */}
+          <div className="club-cupon-box">
+            <div className="cupon-box-texto">
+              <span className="cupon-box-etiqueta">Cupón 50° Aniversario (50% OFF)</span>
+              <span className="cupon-box-codigo">FELICES50</span>
+            </div>
+            <button
+              type="button"
+              className="btn-copiar-club"
+              onClick={handleCopyCoupon}
+              title="Copiar cupón de descuento"
+            >
+              {couponCopied ? '¡Copiado!' : 'Copiar Cupón'}
+            </button>
+          </div>
+
+          {/* Formulario de Suscripción */}
+          <form className="club-form-wrap" onSubmit={handleNewsletterSubmit}>
+            <input
+              type="email"
+              className="club-input-email"
+              placeholder="Ingresa tu correo electrónico..."
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
+              required
+            />
+            <button type="submit" className="btn-club-submit">
+              Unirme al Club
+            </button>
+          </form>
+
+          {newsletterSuccess && (
+            <p className="small mb-4" style={{ color: 'var(--color-caramelo)', fontWeight: 700 }}>
+              ¡Bienvenido al Club! Revisa tu bandeja de entrada con el regalo de bienvenida.
+            </p>
+          )}
+
+          {/* Beneficios Destacados */}
+          <div className="club-beneficios-pills">
+            <div className="club-beneficio-item">
+              <span>•</span>
+              <span>Torta gratis en la semana de tu cumpleaños</span>
+            </div>
+            <div className="club-beneficio-item">
+              <span>•</span>
+              <span>10% OFF permanente con Convenio Duoc UC</span>
+            </div>
+            <div className="club-beneficio-item">
+              <span>•</span>
+              <span>Despacho prioritario en Providencia y Las Condes</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECCIÓN 6: [NO FOTO] Desde Nuestro Obrador (Blog & Recetas de la Casa)
+          ========================================================================= */}
+      <section className="seccion-blog-baker">
         <div className="contenedor">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="seccion-baker-eyebrow">Detrás del Horno</span>
-            <h2 className="seccion-baker-titulo">Desde Nuestro Obrador</h2>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span className="seccion-baker-eyebrow">Desde Nuestro Obrador</span>
+            <h2 className="seccion-baker-titulo">Blog & Recetas de la Casa</h2>
             <div className="adorno-baker" />
             <p className="seccion-baker-desc">
-              Cada preparación cuenta una historia de dedicación, paciencia y amor por la buena mesa.
+              Secretos culinarios, tutoriales paso a paso de nuestros maestros pasteleros y crónicas de nuestra historia viva.
             </p>
           </div>
 
-          <div className="grilla-galeria-baker">
-            <div className="galeria-baker-item">
-              <img src="/img/slider/slide-1-cafe.png" alt="Café de especialidad" loading="lazy" />
-              <div className="galeria-baker-overlay">
-                <span className="galeria-tag">Barismo & Café</span>
-              </div>
-            </div>
-            <div className="galeria-baker-item">
-              <img src="/img/slider/slide-2-masa.jpg" alt="Amasado artesanal" loading="lazy" />
-              <div className="galeria-baker-overlay">
-                <span className="galeria-tag">Masas Madre</span>
-              </div>
-            </div>
-            <div className="galeria-baker-item">
-              <img src="/img/slider/slide-3-croissant.jpg" alt="Hojaldres crujientes" loading="lazy" />
-              <div className="galeria-baker-overlay">
-                <span className="galeria-tag">Bollería del Día</span>
-              </div>
-            </div>
-            <div className="galeria-baker-item">
-              <img src="/img/slider/slide-4-cookies.jpg" alt="Galletas con chocolate belga" loading="lazy" />
-              <div className="galeria-baker-overlay">
-                <span className="galeria-tag">Galletas Caseras</span>
-              </div>
-            </div>
+          <div className="grilla-blog-baker">
+            {BLOG_POSTS.slice(0, 3).map((post) => (
+              <article key={post.id} className="tarjeta-blog-baker">
+                <div className="tarjeta-blog-foto">
+                  <Link to={`/blog/${post.id}`} tabIndex="-1">
+                    <img
+                      src={post.imagen}
+                      alt={post.titulo}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/img/torta-mil-sabores.png';
+                      }}
+                    />
+                  </Link>
+                </div>
+                <div className="tarjeta-blog-cuerpo">
+                  <div className="tarjeta-blog-meta">
+                    <span className="tarjeta-blog-tag">{post.categoria}</span>
+                    <span className="tarjeta-blog-fecha">{post.fecha}</span>
+                  </div>
+                  <h3 className="tarjeta-blog-titulo">
+                    <Link to={`/blog/${post.id}`}>{post.titulo}</Link>
+                  </h3>
+                  <p className="tarjeta-blog-resumen">{post.resumen}</p>
+                  <Link to={`/blog/${post.id}`} className="tarjeta-blog-link">
+                    Leer Receta Completa →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/blogs" className="boton boton-secundario btn-baker">
+              Ver Todas las Recetas y Artículos
+            </Link>
           </div>
         </div>
       </section>

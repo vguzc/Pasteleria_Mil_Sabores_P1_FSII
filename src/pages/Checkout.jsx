@@ -159,89 +159,91 @@ export default function Checkout() {
   }
 
   return (
-    <div className="container py-4">
-      {/* Breadcrumb */}
-      <nav aria-label="breadcrumb" className="mb-4">
-        <ol className="breadcrumb small">
-          <li className="breadcrumb-item"><Link to="/">Inicio</Link></li>
-          <li className="breadcrumb-item"><Link to="/carrito">Carrito</Link></li>
-          <li className="breadcrumb-item active" aria-current="page">Checkout y Pago</li>
-        </ol>
-      </nav>
+    <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', padding: '3.5rem 0 6rem 0' }}>
+      <div className="contenedor">
+        {/* Breadcrumb */}
+        <nav aria-label="breadcrumb" className="mb-4">
+          <ol className="breadcrumb small">
+            <li className="breadcrumb-item"><Link to="/" style={{ color: 'var(--color-espresso)' }}>Inicio</Link></li>
+            <li className="breadcrumb-item"><Link to="/carrito" style={{ color: 'var(--color-espresso)' }}>Bolsa</Link></li>
+            <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>Checkout & Pago Seguro</li>
+          </ol>
+        </nav>
 
-      <div className="row justify-content-center">
-        <div className="col-lg-10">
-          <div className="card shadow-sm p-4 mb-4" style={{ borderColor: 'var(--color-borde)' }}>
-            {/* Header del Checkout (Figura 6) */}
-            <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3" style={{ borderColor: 'var(--color-borde)' }}>
-              <div>
-                <h2 className="font-pacifico mb-1" style={{ color: 'var(--color-chocolate)' }}>
-                  Carrito de compra
-                </h2>
-                <small className="text-muted">Completa la siguiente información para procesar tu pedido</small>
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
+            <div className="card shadow-sm p-4 p-md-5 mb-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '12px' }}>
+              {/* Header del Checkout */}
+              <div className="d-flex justify-content-between align-items-center border-bottom pb-4 mb-4 flex-wrap gap-3" style={{ borderColor: 'var(--color-borde)' }}>
+                <div>
+                  <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>Finalizar Compra</span>
+                  <h1 className="seccion-baker-titulo" style={{ fontSize: '2.2rem', textAlign: 'left', margin: 0 }}>
+                    Confirmación & Despacho
+                  </h1>
+                  <small className="text-muted">Completa tus datos de entrega para preparar tu pedido en nuestro taller</small>
+                </div>
+                <div>
+                  <span className="badge fs-5 px-3 py-2 shadow-sm" style={{ backgroundColor: 'var(--color-espresso)', color: '#FFFFFF' }}>
+                    Total a pagar: {formatPrice(totals.total)}
+                  </span>
+                </div>
               </div>
-              <div>
-                <span className="badge fs-5 px-3 py-2 shadow-sm" style={{ backgroundColor: 'var(--color-chocolate)', color: '#FFFFFF' }}>
-                  Total a pagar: {formatPrice(totals.total)}
-                </span>
-              </div>
-            </div>
 
-            {/* Aviso de auto-completado si hay sesión activa */}
-            {currentUser ? (
-              <div className="alert py-2 small d-flex align-items-center mb-4" style={{ backgroundColor: 'rgba(255, 192, 203, 0.35)', color: 'var(--color-chocolate)', border: '1px solid var(--color-rosa)' }}>
-                <i className="bi bi-info-circle-fill me-2 fs-5"></i>
-                <span>
-                  Has iniciado sesión como <strong>{currentUser.nombre} {currentUser.apellidos}</strong>. Tu información y dirección han sido cargadas automáticamente.
-                </span>
-              </div>
-            ) : (
-              <div className="alert alert-warning py-2 small d-flex align-items-center mb-4">
-                <i className="bi bi-person-fill-exclamation me-2 fs-5"></i>
-                <span>
-                  ¿Ya tienes cuenta? <Link to="/login" className="alert-link fw-bold" style={{ color: 'var(--color-chocolate)' }}>Inicia sesión</Link> para autocompletar tus datos de despacho automáticamente.
-                </span>
-              </div>
-            )}
+              {/* Aviso de auto-completado si hay sesión activa */}
+              {currentUser ? (
+                <div className="alert py-2 small d-flex align-items-center mb-4" style={{ backgroundColor: '#FAF4EC', color: 'var(--color-espresso)', border: '1px solid var(--color-caramelo)' }}>
+                  <i className="bi bi-info-circle-fill me-2 fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+                  <span>
+                    Has iniciado sesión como <strong>{currentUser.nombre} {currentUser.apellidos}</strong>. Tu información y dirección han sido cargadas automáticamente.
+                  </span>
+                </div>
+              ) : (
+                <div className="alert py-2 small d-flex align-items-center mb-4" style={{ backgroundColor: '#FAF4EC', color: 'var(--color-espresso)', border: '1px solid var(--color-borde)' }}>
+                  <i className="bi bi-person-fill-exclamation me-2 fs-5" style={{ color: 'var(--color-caramelo)' }}></i>
+                  <span>
+                    ¿Ya tienes cuenta? <Link to="/login" className="alert-link fw-bold" style={{ color: 'var(--color-caramelo)' }}>Inicia sesión</Link> para autocompletar tus datos de despacho automáticamente.
+                  </span>
+                </div>
+              )}
 
-            {/* Resumen de items del carrito (Figura 6) */}
-            <div className="table-responsive mb-4">
-              <table className="table table-sm align-middle">
-                <thead className="table-light small">
-                  <tr>
-                    <th style={{ width: '70px' }}>Imagen</th>
-                    <th>Nombre</th>
-                    <th className="text-end" style={{ width: '100px' }}>Precio</th>
-                    <th className="text-center" style={{ width: '80px' }}>Cantidad</th>
-                    <th className="text-end" style={{ width: '110px' }}>Subtotal</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cart.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <img
-                          src={item.imagen || '/img/torta-mil-sabores.png'}
-                          alt={item.nombre}
-                          width="45"
-                          height="45"
-                          className="rounded object-fit-contain"
-                          style={{ backgroundColor: '#F7EFE4' }}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = '/img/torta-mil-sabores.png';
-                          }}
-                        />
-                      </td>
-                      <td className="small fw-semibold">{item.nombre}</td>
-                      <td className="text-end small">{formatPrice(item.precio)}</td>
-                      <td className="text-center small">{item.cantidad}</td>
-                      <td className="text-end small fw-bold" style={{ color: 'var(--color-chocolate)' }}>{formatPrice(item.subtotal)}</td>
+              {/* Resumen de items del carrito */}
+              <div className="table-responsive mb-4">
+                <table className="table table-sm align-middle">
+                  <thead style={{ backgroundColor: '#F5EFEB', borderBottom: '1px solid var(--color-borde)' }} className="small">
+                    <tr>
+                      <th style={{ width: '70px', color: 'var(--color-espresso)' }}>Imagen</th>
+                      <th style={{ color: 'var(--color-espresso)' }}>Producto</th>
+                      <th className="text-end" style={{ width: '100px', color: 'var(--color-espresso)' }}>Precio</th>
+                      <th className="text-center" style={{ width: '80px', color: 'var(--color-espresso)' }}>Cantidad</th>
+                      <th className="text-end" style={{ width: '110px', color: 'var(--color-espresso)' }}>Subtotal</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {cart.map((item) => (
+                      <tr key={item.id} style={{ borderBottom: '1px solid var(--color-borde)' }}>
+                        <td>
+                          <img
+                            src={item.imagen || '/img/torta-mil-sabores.png'}
+                            alt={item.nombre}
+                            width="48"
+                            height="48"
+                            className="rounded object-fit-contain"
+                            style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/img/torta-mil-sabores.png';
+                            }}
+                          />
+                        </td>
+                        <td className="small fw-semibold" style={{ color: 'var(--color-espresso)' }}>{item.nombre}</td>
+                        <td className="text-end small">{formatPrice(item.precio)}</td>
+                        <td className="text-center small">{item.cantidad}</td>
+                        <td className="text-end small fw-bold" style={{ color: 'var(--color-caramelo)' }}>{formatPrice(item.subtotal)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
             <form onSubmit={handleSubmit}>
               {error && <AlertMessage message={error} type="danger" onClose={() => setError('')} />}
@@ -373,11 +375,11 @@ export default function Checkout() {
               </div>
 
               {/* Selector para simular compra exitosa o error de pago */}
-              <div className="p-3 rounded-3 mb-4 border d-flex justify-content-between align-items-center" style={{ backgroundColor: '#F8EFE4', borderColor: 'var(--color-borde)' }}>
+              <div className="p-3 rounded-3 mb-4 border d-flex justify-content-between align-items-center" style={{ backgroundColor: '#FAF4EC', borderColor: 'var(--color-borde)' }}>
                 <div>
-                  <strong className="d-block small" style={{ color: 'var(--color-chocolate)' }}>Simulación de Pasarela de Pago:</strong>
+                  <strong className="d-block small" style={{ color: 'var(--color-espresso)' }}>Simulación de Pasarela de Pago:</strong>
                   <span className="text-muted small">
-                    {simulateError ? 'Se simulará un rechazo bancario (Figura 8)' : 'Se simulará un pago aprobado exitosamente (Figura 7)'}
+                    {simulateError ? 'Se simulará un rechazo bancario' : 'Se simulará un pago aprobado exitosamente'}
                   </span>
                 </div>
                 <div className="form-check form-switch">
@@ -394,12 +396,13 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {/* Botón de pago (Figura 6) */}
+              {/* Botón de pago */}
               <div className="text-end">
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg px-5 shadow"
+                  className="boton boton-primario btn-baker px-5 shadow"
                   disabled={isProcessing}
+                  style={{ fontSize: '1rem', padding: '0.9rem 2.2rem' }}
                 >
                   {isProcessing ? (
                     <span><i className="spinner-border spinner-border-sm me-2"></i>Procesando Pago...</span>
@@ -413,5 +416,6 @@ export default function Checkout() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

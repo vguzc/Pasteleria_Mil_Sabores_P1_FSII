@@ -3,7 +3,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function AdminSidebar() {
-  const { currentUser, logout, isAdmin, isVendedor } = useAuth();
+  const { currentUser, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,92 +11,142 @@ export default function AdminSidebar() {
     navigate('/login');
   };
 
+  const navItemClass = ({ isActive }) =>
+    `d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none transition ${
+      isActive
+        ? 'fw-bold'
+        : 'text-white-50'
+    }`;
+
+  const getActiveStyle = (isActive) => ({
+    backgroundColor: isActive ? 'var(--color-caramelo)' : 'transparent',
+    color: isActive ? '#FFFFFF' : '#D2C4B5',
+    fontWeight: isActive ? 700 : 500,
+    fontSize: '0.88rem'
+  });
+
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark shadow" style={{ width: '260px', minHeight: '100vh' }}>
-      <Link to="/admin" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <aside
+      className="d-flex flex-column flex-shrink-0 p-3 shadow"
+      style={{
+        width: '265px',
+        minHeight: '100vh',
+        backgroundColor: '#201610',
+        borderRight: '1px solid rgba(196, 136, 75, 0.25)',
+        color: '#EADFD2'
+      }}
+    >
+      {/* 1. Header con Monograma MS Caramelo */}
+      <Link to="/admin" className="d-flex align-items-center gap-2 mb-3 text-decoration-none">
         <img
-          src="/img/logo-icono.png"
-          alt="Logo"
-          width="36"
-          height="36"
-          className="rounded-circle me-2 bg-light p-1"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = '/img/logo.png';
-          }}
+          src="/img/logo-ms-caramelo.png"
+          alt="Mil Sabores"
+          height="42"
+          className="object-fit-contain"
         />
         <div>
-          <span className="fs-5 fw-bold text-warning d-block lh-1">Mil Sabores</span>
-          <small className="text-secondary" style={{ fontSize: '0.7rem' }}>
-            {isAdmin ? 'Panel de Administración' : 'Panel de Vendedor'}
+          <span
+            className="d-block fw-bold lh-1"
+            style={{ fontFamily: 'var(--fuente-titulos)', color: '#FFFFFF', fontSize: '1.25rem' }}
+          >
+            Mil Sabores
+          </span>
+          <small style={{ color: 'var(--color-caramelo)', fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700 }}>
+            {isAdmin ? 'Panel Administrador' : 'Panel de Vendedor'}
           </small>
         </div>
       </Link>
-      <hr className="border-secondary opacity-50" />
 
-      {/* Info Usuario */}
-      <div className="bg-secondary bg-opacity-25 p-2 rounded mb-3 small">
-        <div className="text-truncate fw-bold">{currentUser?.nombre} {currentUser?.apellidos}</div>
-        <div className="text-muted text-truncate">{currentUser?.correo}</div>
-        <span className="badge bg-warning text-dark mt-1 text-uppercase">{currentUser?.rol}</span>
+      <hr style={{ borderColor: 'rgba(255, 255, 255, 0.12)', margin: '0.5rem 0 1rem 0' }} />
+
+      {/* 2. Tarjeta Resumen Usuario */}
+      <div
+        className="p-3 rounded mb-3 small"
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+      >
+        <div className="text-truncate fw-bold text-white">{currentUser?.nombre} {currentUser?.apellidos}</div>
+        <div className="text-truncate text-white-50" style={{ fontSize: '0.78rem' }}>{currentUser?.correo}</div>
+        <span
+          className="badge mt-2 text-uppercase"
+          style={{ backgroundColor: 'var(--color-caramelo)', color: '#FFFFFF', fontSize: '0.68rem', letterSpacing: '0.08em' }}
+        >
+          {currentUser?.rol}
+        </span>
       </div>
 
-      <ul className="nav nav-pills flex-column mb-auto">
+      {/* 3. Navegación Principal */}
+      <ul className="nav nav-pills flex-column mb-auto gap-1">
         <li className="nav-item">
-          <NavLink to="/admin" end className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-speedometer2 me-2"></i>
-            Dashboard
+          <NavLink to="/admin" end style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/ordenes" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-receipt-cutoff me-2"></i>
-            Órdenes / Boletas
+          <NavLink to="/admin/ordenes" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-receipt-cutoff"></i>
+            <span>Órdenes / Boletas</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/productos" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-box-seam me-2"></i>
-            Productos & Stock
+          <NavLink to="/admin/productos" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-box-seam"></i>
+            <span>Productos & Stock</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/categorias" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-tags me-2"></i>
-            Categorías
+          <NavLink to="/admin/categorias" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-tags"></i>
+            <span>Categorías</span>
           </NavLink>
         </li>
         {isAdmin && (
           <li>
-            <NavLink to="/admin/usuarios" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-              <i className="bi bi-people me-2"></i>
-              Usuarios
+            <NavLink to="/admin/usuarios" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+              <i className="bi bi-people"></i>
+              <span>Usuarios</span>
             </NavLink>
           </li>
         )}
         <li>
-          <NavLink to="/admin/reportes" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-bar-chart-line me-2"></i>
-            Reportes
+          <NavLink to="/admin/reportes" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-bar-chart-line"></i>
+            <span>Reportes & Ventas</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/perfil" className={({ isActive }) => `nav-link text-white ${isActive ? 'active bg-primary' : ''}`}>
-            <i className="bi bi-person-circle me-2"></i>
-            Mi Perfil Admin
+          <NavLink to="/admin/perfil" style={({ isActive }) => getActiveStyle(isActive)} className="px-3 py-2 rounded text-decoration-none d-flex align-items-center gap-2">
+            <i className="bi bi-person-gear"></i>
+            <span>Mi Perfil Admin</span>
           </NavLink>
         </li>
       </ul>
 
-      <hr className="border-secondary opacity-50" />
+      <hr style={{ borderColor: 'rgba(255, 255, 255, 0.12)', margin: '1rem 0' }} />
+
+      {/* 4. Acciones Inferiores */}
       <div className="d-flex flex-column gap-2">
-        <Link to="/" className="btn btn-outline-light btn-sm text-start">
-          <i className="bi bi-shop me-2"></i>Ver Tienda Online
+        <Link
+          to="/"
+          className="btn btn-sm text-start d-flex align-items-center gap-2"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+            color: '#EADFD2',
+            border: '1px solid rgba(255, 255, 255, 0.15)'
+          }}
+        >
+          <i className="bi bi-shop"></i>
+          <span>Ver Tienda Online</span>
         </Link>
-        <button onClick={handleLogout} className="btn btn-outline-danger btn-sm text-start">
-          <i className="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+        <button
+          onClick={handleLogout}
+          type="button"
+          className="btn btn-sm btn-outline-danger text-start d-flex align-items-center gap-2"
+        >
+          <i className="bi bi-box-arrow-left"></i>
+          <span>Cerrar Sesión</span>
         </button>
       </div>
-    </div>
+    </aside>
   );
 }

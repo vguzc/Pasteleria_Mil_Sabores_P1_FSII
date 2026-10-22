@@ -48,20 +48,25 @@ export default function AdminProfile() {
   };
 
   return (
-    <div className="max-w-700">
+    <div style={{ maxWidth: '720px' }}>
       <div className="mb-4">
-        <h2 className="fw-bold mb-1">Mi Perfil Administrativo</h2>
-        <p className="text-muted small mb-0">Gestiona tus credenciales de acceso y datos de contacto</p>
+        <span className="seccion-baker-eyebrow" style={{ textAlign: 'left', marginBottom: '0.2rem' }}>
+          Seguridad & Credenciales
+        </span>
+        <h1 className="seccion-baker-titulo" style={{ fontSize: '2rem', textAlign: 'left', margin: 0 }}>
+          Mi Perfil Administrativo
+        </h1>
+        <p className="text-muted small mb-0 mt-1">Gestiona tus credenciales de acceso y datos de contacto oficiales</p>
       </div>
 
       {feedback && <AlertMessage message={feedback} type="success" onClose={() => setFeedback('')} />}
       {error && <AlertMessage message={error} type="danger" onClose={() => setError('')} />}
 
-      <div className="card shadow-sm border-0 p-4">
+      <div className="card shadow-sm border-0 p-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--color-borde)', borderRadius: '8px' }}>
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
             <div className="col-md-6">
-              <label className="form-label small fw-bold">Nombre</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Nombre</label>
               <input
                 type="text"
                 name="nombre"
@@ -69,11 +74,12 @@ export default function AdminProfile() {
                 value={formData.nombre}
                 onChange={handleChange}
                 required
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-md-6">
-              <label className="form-label small fw-bold">Apellidos</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Apellidos</label>
               <input
                 type="text"
                 name="apellidos"
@@ -81,11 +87,12 @@ export default function AdminProfile() {
                 value={formData.apellidos}
                 onChange={handleChange}
                 required
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-12">
-              <label className="form-label small fw-bold">Correo Electrónico</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Correo Electrónico</label>
               <input
                 type="email"
                 name="correo"
@@ -93,37 +100,42 @@ export default function AdminProfile() {
                 value={formData.correo}
                 onChange={handleChange}
                 required
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-md-8">
-              <label className="form-label small fw-bold">Dirección</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Dirección</label>
               <input
                 type="text"
                 name="direccion"
                 className="form-control"
                 value={formData.direccion}
                 onChange={handleChange}
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-md-4">
-              <label className="form-label small fw-bold">Depto / Oficina</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Depto / Oficina</label>
               <input
                 type="text"
                 name="departamento"
                 className="form-control"
                 value={formData.departamento}
                 onChange={handleChange}
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
-            <hr className="my-3" />
+            <hr className="my-3" style={{ borderColor: 'var(--color-borde)' }} />
 
-            <h6 className="fw-bold text-secondary mb-0">Cambiar Contraseña (opcional)</h6>
+            <h6 className="fw-bold mb-0" style={{ color: 'var(--color-espresso)', fontFamily: 'var(--fuente-titulos)' }}>
+              Cambiar Contraseña (opcional)
+            </h6>
 
             <div className="col-md-6">
-              <label className="form-label small fw-bold">Nueva Contraseña</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Nueva Contraseña</label>
               <input
                 type="password"
                 name="nuevaClave"
@@ -131,11 +143,12 @@ export default function AdminProfile() {
                 placeholder="Dejar en blanco para mantener actual"
                 value={formData.nuevaClave}
                 onChange={handleChange}
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-md-6">
-              <label className="form-label small fw-bold">Confirmar Nueva Contraseña</label>
+              <label className="form-label small fw-bold" style={{ color: 'var(--color-espresso)' }}>Confirmar Nueva Contraseña</label>
               <input
                 type="password"
                 name="confirmClave"
@@ -143,11 +156,12 @@ export default function AdminProfile() {
                 placeholder="Repetir nueva contraseña"
                 value={formData.confirmClave}
                 onChange={handleChange}
+                style={{ borderColor: 'var(--color-borde)' }}
               />
             </div>
 
             <div className="col-12 mt-4 text-end">
-              <button type="submit" className="btn btn-primary px-4 shadow-sm">
+              <button type="submit" className="boton boton-primario btn-baker">
                 <i className="bi bi-save me-2"></i>Actualizar Perfil
               </button>
             </div>

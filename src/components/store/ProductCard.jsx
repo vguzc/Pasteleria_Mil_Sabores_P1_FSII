@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 /**
  * Componente Tarjeta de Producto (ProductCard)
- * Presentación inspirada en Baker con tipografía Fraunces y botones refinados.
+ * Presentación inspirada en Baker (Qode Interactive) con tipografía refinada,
+ * fotografía limpia aislada, categoría eyebrow, estrellas de valoración y botón elegante.
  */
 export default function ProductCard({ product, onAddToCart }) {
   const [agregadoAnim, setAgregadoAnim] = useState(false);
@@ -14,23 +15,24 @@ export default function ProductCard({ product, onAddToCart }) {
     if (onAddToCart) {
       onAddToCart(product);
       setAgregadoAnim(true);
-      setTimeout(() => setAgregadoAnim(false), 1200);
+      setTimeout(() => setAgregadoAnim(false), 1400);
     }
   };
 
   const formattedPrice = new Intl.NumberFormat('es-CL', {
     style: 'currency',
-    currency: 'CLP'
+    currency: 'CLP',
+    maximumFractionDigits: 0
   }).format(product.precio);
 
   return (
-    <article className="tarjeta-producto" data-id={product.id}>
-      <div className="tarjeta-imagen-wrapper">
-        <span className="badge-categoria">{product.categoria}</span>
+    <article className="tarjeta-producto-baker" data-id={product.id}>
+      {/* 1. Contenedor de Imagen Limpio */}
+      <div className="tarjeta-baker-img-wrap">
         {product.enOferta && (
-          <span className="badge-oferta">OFERTA</span>
+          <span className="badge-oferta-baker">OFERTA</span>
         )}
-        <Link to={`/producto/${product.id}`} className="imagen-contenedor-link d-block h-100 w-100">
+        <Link to={`/producto/${product.id}`} className="tarjeta-baker-img-link" title={`Ver detalle de ${product.nombre}`}>
           <img
             src={product.imagen || '/img/torta-mil-sabores.png'}
             alt={product.nombre}
@@ -43,29 +45,49 @@ export default function ProductCard({ product, onAddToCart }) {
         </Link>
       </div>
 
-      <div className="tarjeta-cuerpo">
-        <h3 className="tarjeta-titulo">
+      {/* 2. Cuerpo con Tipografía Baker */}
+      <div className="tarjeta-baker-cuerpo">
+        {/* Categoría Eyebrow */}
+        <span className="tarjeta-baker-categoria">
+          {product.categoria}
+        </span>
+
+        {/* Título en Mayúsculas con Espaciado Fino */}
+        <h3 className="tarjeta-baker-titulo">
           <Link to={`/producto/${product.id}`}>{product.nombre}</Link>
         </h3>
-        <p className="tarjeta-descripcion">{product.descripcion}</p>
-        <div className="tarjeta-footer">
-          <span className="tarjeta-precio">{formattedPrice}</span>
-          <div className="tarjeta-acciones">
-            <Link
-              to={`/producto/${product.id}`}
-              className="boton boton-secundario btn-card-action"
-            >
-              Ver detalle
-            </Link>
-            <button
-              type="button"
-              className="boton boton-primario btn-card-action btn-agregar-rapido"
-              onClick={handleAdd}
-              disabled={product.stock <= 0}
-            >
-              {agregadoAnim ? 'Agregado' : '+ Agregar'}
-            </button>
-          </div>
+
+        {/* Estrellas de Calidad */}
+        <div className="tarjeta-baker-estrellas" aria-label="Calificación 5 de 5 estrellas">
+          <span>★★★★★</span>
+        </div>
+
+        {/* Breve descripción */}
+        {product.descripcion && (
+          <p className="tarjeta-baker-descripcion">{product.descripcion}</p>
+        )}
+
+        {/* Precio Prominente */}
+        <div className="tarjeta-baker-precio-wrap">
+          <span className="tarjeta-baker-precio">{formattedPrice}</span>
+        </div>
+
+        {/* Botón de Acción Principal (+ Agregar) y Enlace de Detalle */}
+        <div className="tarjeta-baker-acciones">
+          <button
+            type="button"
+            className={`btn-baker-agregar ${agregadoAnim ? 'agregado' : ''}`}
+            onClick={handleAdd}
+            disabled={product.stock <= 0}
+          >
+            {agregadoAnim ? '¡Agregado!' : '+ Agregar'}
+          </button>
+          <Link
+            to={`/producto/${product.id}`}
+            className="tarjeta-baker-detalle-link"
+          >
+            Ver detalle
+          </Link>
         </div>
       </div>
     </article>
