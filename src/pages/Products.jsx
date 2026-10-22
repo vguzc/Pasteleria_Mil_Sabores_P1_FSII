@@ -67,10 +67,11 @@ export default function Products() {
 
   const isFiltered = selectedCategory !== 'Todas' || searchTerm.trim() !== '';
   const showSections = viewMode === 'secciones' && !isFiltered;
+  const currentCat = categories.find(c => c.nombre.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
     <div style={{ backgroundColor: 'var(--color-fondo)', minHeight: '100vh', paddingBottom: '6rem' }}>
-      {/* 1. Encabezado Hero del Catálogo Estilo Baker (Limpio, sin botones apilados) */}
+      {/* 1. Encabezado Hero del Catálogo Unificado con Categorías */}
       <section className="catalogo-baker-header">
         <div className="contenedor">
           <nav aria-label="breadcrumb" className="mb-3">
@@ -78,19 +79,41 @@ export default function Products() {
               <li className="breadcrumb-item">
                 <Link to="/" style={{ color: 'var(--color-espresso)', textDecoration: 'none' }}>Inicio</Link>
               </li>
-              <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
-                Catálogo de Productos
-              </li>
+              {selectedCategory !== 'Todas' ? (
+                <>
+                  <li className="breadcrumb-item">
+                    <button
+                      type="button"
+                      className="btn btn-link p-0 small text-decoration-none"
+                      style={{ color: 'var(--color-espresso)' }}
+                      onClick={handleResetFilters}
+                    >
+                      Catálogo
+                    </button>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
+                    {selectedCategory}
+                  </li>
+                </>
+              ) : (
+                <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>
+                  Catálogo de Productos
+                </li>
+              )}
             </ol>
           </nav>
 
-          <span className="seccion-baker-eyebrow">Repostería Artesanal & Cafetería</span>
+          <span className="seccion-baker-eyebrow">
+            {selectedCategory !== 'Todas' ? 'Línea de Pastelería Artesanal' : 'Repostería Artesanal & Cafetería'}
+          </span>
           <h1 className="seccion-baker-titulo" style={{ fontSize: 'clamp(2.2rem, 3.8vw, 3.2rem)' }}>
-            Nuestro Catálogo
+            {selectedCategory !== 'Todas' ? selectedCategory : 'Nuestro Catálogo'}
           </h1>
           <div className="adorno-baker" />
           <p className="seccion-baker-desc" style={{ maxWidth: '640px', margin: '0 auto' }}>
-            Descubre nuestras elaboraciones artesanales preparadas cada día con materias primas nobles y recetas tradicionales desde 1976.
+            {selectedCategory !== 'Todas'
+              ? (currentCat?.descripcion || `Descubre nuestra exclusiva variedad de ${selectedCategory.toLowerCase()}, elaboradas con recetas tradicionales y materias primas nobles.`)
+              : 'Descubre nuestras elaboraciones artesanales preparadas cada día con materias primas nobles y recetas tradicionales desde 1976.'}
           </p>
         </div>
       </section>

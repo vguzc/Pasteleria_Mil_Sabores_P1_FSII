@@ -27,7 +27,7 @@ const SLIDES_DATA = [
     title: 'Croissants Crujientes & Panes Frescos',
     subtitle: 'Capas doradas, textura aireada y el aroma inconfundible que inunda nuestro taller pastelero de Providencia cada amanecer.',
     primaryBtn: { text: 'Ver Bollería & Tortas', link: '/productos' },
-    secondaryBtn: { text: 'Nuestras Categorías', link: '/categorias' }
+    secondaryBtn: { text: 'Explorar Catálogo', link: '/productos' }
   },
   {
     id: 4,

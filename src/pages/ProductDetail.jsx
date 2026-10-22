@@ -49,7 +49,7 @@ export default function ProductDetail() {
           <ol className="breadcrumb small">
             <li className="breadcrumb-item"><Link to="/" style={{ color: 'var(--color-espresso)' }}>Inicio</Link></li>
             <li className="breadcrumb-item"><Link to="/productos" style={{ color: 'var(--color-espresso)' }}>Catálogo</Link></li>
-            <li className="breadcrumb-item"><Link to={`/categoria/${encodeURIComponent(product.categoria)}`} style={{ color: 'var(--color-espresso)' }}>{product.categoria}</Link></li>
+            <li className="breadcrumb-item"><Link to={`/productos?categoria=${encodeURIComponent(product.categoria)}`} style={{ color: 'var(--color-espresso)' }}>{product.categoria}</Link></li>
             <li className="breadcrumb-item active" aria-current="page" style={{ color: 'var(--color-caramelo)' }}>{product.nombre}</li>
           </ol>
         </nav>

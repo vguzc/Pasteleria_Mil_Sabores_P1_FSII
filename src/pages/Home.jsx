@@ -163,8 +163,8 @@ export default function Home() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-            <Link to="/categorias" className="boton boton-secundario btn-baker">
-              Ver Todas las Categorías
+            <Link to="/productos" className="boton boton-secundario btn-baker">
+              Explorar Catálogo Completo
             </Link>
           </div>
         </div>

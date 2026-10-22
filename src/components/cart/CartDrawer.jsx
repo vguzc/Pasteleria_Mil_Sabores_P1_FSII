@@ -98,7 +98,7 @@ export default function CartDrawer() {
               </p>
 
               <Link
-                to="/categoria/Tortas%20Circulares"
+                to="/productos?categoria=Tortas%20Circulares"
                 className="tarjeta-categoria-sugerida"
                 onClick={closeDrawer}
               >
@@ -108,7 +108,7 @@ export default function CartDrawer() {
               </Link>
 
               <Link
-                to="/categoria/Pastelería%20Tradicional"
+                to="/productos?categoria=Pastelería%20Tradicional"
                 className="tarjeta-categoria-sugerida"
                 onClick={closeDrawer}
               >
@@ -118,7 +118,7 @@ export default function CartDrawer() {
               </Link>
 
               <Link
-                to="/categoria/Sin%20Gluten"
+                to="/productos?categoria=Productos%20Sin%20Gluten"
                 className="tarjeta-categoria-sugerida"
                 onClick={closeDrawer}
               >

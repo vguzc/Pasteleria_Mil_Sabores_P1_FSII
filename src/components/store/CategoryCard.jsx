@@ -6,7 +6,7 @@ export default function CategoryCard({ category }) {
 
   return (
     <Link
-      to={`/categoria/${encodeURIComponent(category.nombre)}`}
+      to={`/productos?categoria=${encodeURIComponent(category.nombre)}`}
       className="tarjeta-categoria-baker text-decoration-none"
     >
       <div className="cat-baker-circulo">

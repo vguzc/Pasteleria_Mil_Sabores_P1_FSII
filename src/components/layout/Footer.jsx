@@ -27,13 +27,13 @@ export default function Footer() {
 
           {/* Columna 2: Explorar Catálogo Pastelero */}
           <div className="footer-col">
-            <h4 className="footer-col-titulo">Explorar</h4>
+            <h4 className="footer-col-titulo">Catálogo</h4>
             <ul className="footer-links">
-              <li><Link to="/productos">Catálogo Completo</Link></li>
-              <li><Link to="/categorias">Nuestras Categorías</Link></li>
+              <li><Link to="/productos">Todas las Delicias</Link></li>
+              <li><Link to="/productos?categoria=Pastelería%20Tradicional">Pastelería Tradicional</Link></li>
+              <li><Link to="/productos?categoria=Productos%20Sin%20Gluten">Línea Sin Gluten</Link></li>
+              <li><Link to="/productos?categoria=Tortas%20Cuadradas">Tortas de Celebración</Link></li>
               <li><Link to="/ofertas">Ofertas & Promociones</Link></li>
-              <li><Link to="/categoria/Pastelería%20Tradicional">Pastelería Tradicional</Link></li>
-              <li><Link to="/categoria/Sin%20Gluten">Línea Sin Gluten</Link></li>
             </ul>
           </div>
 

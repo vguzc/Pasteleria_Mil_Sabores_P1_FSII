@@ -45,13 +45,6 @@ export default function Navbar() {
             Catálogo
           </NavLink>
           <NavLink
-            to="/categorias"
-            className={({ isActive }) => (isActive ? 'activo' : '')}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Categorías
-          </NavLink>
-          <NavLink
             to="/ofertas"
             className={({ isActive }) => (isActive ? 'activo' : '')}
             onClick={() => setMobileMenuOpen(false)}
