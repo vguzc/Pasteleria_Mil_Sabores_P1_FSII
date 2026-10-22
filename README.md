@@ -7,6 +7,14 @@ El proyecto corresponde a la migracion y evolucion integral de la tienda de come
 
 ---
 
+## Despliegue en Vivo (GitHub Pages)
+
+Para probar e iniciar la aplicacion web directamente desde el navegador sin necesidad de instalacion local, accede al siguiente enlace oficial:
+
+- **Enlace de la aplicacion en GitHub Pages:** [https://vguzc.github.io/Pasteleria_Mil_Sabores_P1_FSII/](https://vguzc.github.io/Pasteleria_Mil_Sabores_P1_FSII/)
+
+---
+
 ## Inicio Rapido (Instrucciones de Ejecucion)
 
 ### 1. Prerrequisitos
