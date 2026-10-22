@@ -1495,10 +1495,14 @@ h3 { font-size: 1.35rem; }
 }
 
 .logo-ms-footer {
-  height: 48px;
+  height: 52px;
   width: auto;
   object-fit: contain;
-  filter: brightness(1.1);
+  transition: transform var(--transicion);
+}
+
+.logo-footer:hover .logo-ms-footer {
+  transform: scale(1.06);
 }
 
 .logo-textos-footer {
