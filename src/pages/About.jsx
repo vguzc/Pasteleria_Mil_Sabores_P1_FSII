@@ -96,8 +96,8 @@ export default function About() {
           </div>
           <div className="col-lg-6 text-center">
             <img
-              src="/img/torta-aniversario.png"
-              alt="50 Aniversario Mil Sabores"
+              src="/img/noticia-aniversario-1976.jpg"
+              alt="Noticia Histórica 1976 Mil Sabores"
               className="img-fluid rounded-4 shadow-sm"
               style={{ maxHeight: '380px', objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(44, 30, 22, 0.09))' }}
               onError={(e) => {
