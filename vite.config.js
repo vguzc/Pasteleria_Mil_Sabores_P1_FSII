@@ -41,6 +41,7 @@ function legacyHtmlRedirectPlugin() {
 }
 
 export default defineConfig({
+  base: './',
   plugins: [react(), legacyHtmlRedirectPlugin()],
   resolve: {
     alias: {
