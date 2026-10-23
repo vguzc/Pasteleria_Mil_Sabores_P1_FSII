@@ -339,7 +339,7 @@ export default function Checkout() {
                           <tr key={item.id} style={{ borderBottom: '1px solid var(--color-borde)' }}>
                             <td className="ps-3">
                               <img
-                                src={item.imagen || '/img/torta-mil-sabores.png'}
+                                src={item.imagen || 'img/torta-mil-sabores.png'}
                                 alt={item.nombre}
                                 width="52"
                                 height="52"
@@ -347,7 +347,7 @@ export default function Checkout() {
                                 style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
                                 onError={(e) => {
                                   e.target.onerror = null;
-                                  e.target.src = '/img/torta-mil-sabores.png';
+                                  e.target.src = 'img/torta-mil-sabores.png';
                                 }}
                               />
                             </td>

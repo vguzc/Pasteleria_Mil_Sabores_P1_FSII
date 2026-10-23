@@ -14,7 +14,7 @@ export default function CategoryModal({ category, onSave, onClose }) {
     } else {
       setNombre('');
       setDescripcion('');
-      setImagen('/img/torta-mil-sabores.png');
+      setImagen('img/torta-mil-sabores.png');
     }
   }, [category]);
 
@@ -73,7 +73,7 @@ export default function CategoryModal({ category, onSave, onClose }) {
                   className="form-control"
                   value={imagen}
                   onChange={(e) => setImagen(e.target.value)}
-                  placeholder="/img/torta-mil-sabores.png"
+                  placeholder="img/torta-mil-sabores.png"
                   style={{ borderColor: 'var(--color-borde)' }}
                 />
               </div>

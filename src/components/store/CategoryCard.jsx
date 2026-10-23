@@ -11,12 +11,12 @@ export default function CategoryCard({ category }) {
     >
       <div className="cat-baker-circulo">
         <img
-          src={category.imagen || '/img/torta-mil-sabores.png'}
+          src={category.imagen || 'img/torta-mil-sabores.png'}
           alt={category.nombre}
           className="cat-baker-img"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = '/img/torta-mil-sabores.png';
+            e.target.src = 'img/torta-mil-sabores.png';
           }}
         />
       </div>

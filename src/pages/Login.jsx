@@ -53,7 +53,7 @@ export default function Login() {
               <div className="text-center mb-4">
                 <Link to="/" aria-label="Ir al inicio">
                   <img
-                    src="/img/logo-ms.png"
+                    src="img/logo-ms.png"
                     alt="Logo Mil Sabores"
                     width="68"
                     height="68"

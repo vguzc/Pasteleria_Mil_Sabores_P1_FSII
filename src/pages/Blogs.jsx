@@ -10,8 +10,8 @@ export const BLOG_POSTS = [
     fecha: '15 de Octubre, 2026',
     autor: 'Chef Pastelera María Elena',
     resumen: 'Aprende a preparar los icónicos pasteles de nata portugueses con masa hojaldrada crujiente y suave crema de vainilla dorada.',
-    imagen: '/img/pasteles-de-belem.jpg',
-    videoUrl: 'https://www.youtube.com/embed/6iO1Q3c6h3M',
+    imagen: 'img/pasteles-de-belem.jpg',
+    videoUrl: 'https://www.youtube-nocookie.com/embed/bbtK4cpAMcI',
     contenido: [
       'Los Pasteles de Belém son una de las joyas de la repostería mundial nacidos en el Monasterio de los Jerónimos en Lisboa.',
       'En este tutorial paso a paso te enseñamos a laminar la masa de hojaldre casera y preparar el almíbar aromatizado con canela y limón para lograr el característico quemado superior.'
@@ -34,7 +34,7 @@ export const BLOG_POSTS = [
     fecha: '10 de Septiembre, 2026',
     autor: 'Equipo Editorial Mil Sabores',
     resumen: 'Recorremos los momentos más emotivos de nuestras 5 décadas de historia, desde nuestro primer horno en 1976 hasta las nuevas tendencias.',
-    imagen: '/img/noticia-aniversario-1976.jpg',
+    imagen: 'img/noticia-aniversario-1976.jpg',
     contenido: [
       'Cumplir 50 años en la industria pastelera no es solo una celebración de longevidad, es el reconocimiento de miles de familias que han confiado sus momentos más felices en nuestras manos.',
       'Hoy miramos al futuro con entusiasmo, integrando nuevas líneas saludables sin gluten y sin azúcar, y manteniendo intacto nuestro compromiso con los sabores que marcaron a generaciones.'
@@ -48,7 +48,7 @@ export const BLOG_POSTS = [
     fecha: '28 de Septiembre, 2026',
     autor: 'Maestro Pastelero Don Carlos',
     resumen: 'Descubre los tiempos de reposo y la técnica de horneado para lograr hojaldres dorados que conservan su crocancia junto al manjar de campo.',
-    imagen: '/img/slider/slide-2-masa.jpg',
+    imagen: 'img/slider/slide-2-masa.jpg',
     contenido: [
       'La torta milhojas es un emblema de la repostería chilena. El equilibrio entre el dulzor denso del manjar de campo cocido a fuego lento y la delicadeza quebradiza de la masa es un arte que toma años dominar.',
       'En Mil Sabores horneamos cada disco de masa a 200°C con un prensado intermedio para evitar que suba de forma despareja, logrando finísimas láminas crujientes que no se humedecen al rellenar.'
@@ -106,7 +106,7 @@ export default function Blogs() {
                     style={{ transition: 'transform 0.4s ease' }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/img/torta-mil-sabores.png';
+                      e.target.src = 'img/torta-mil-sabores.png';
                     }}
                   />
                 </div>

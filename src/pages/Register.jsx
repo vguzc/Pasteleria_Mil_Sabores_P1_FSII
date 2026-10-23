@@ -122,7 +122,7 @@ export default function Register() {
               <div className="text-center mb-4">
                 <Link to="/" aria-label="Ir al inicio">
                   <img
-                    src="/img/logo-ms.png"
+                    src="img/logo-ms.png"
                     alt="Mil Sabores"
                     width="60"
                     height="60"

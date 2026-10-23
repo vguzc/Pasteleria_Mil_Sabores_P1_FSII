@@ -49,7 +49,7 @@ export default function BlogDetail() {
                 style={{ maxHeight: '380px', objectFit: 'contain' }}
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/img/torta-mil-sabores.png';
+                  e.target.src = 'img/torta-mil-sabores.png';
                 }}
               />
             </div>
@@ -94,7 +94,7 @@ export default function BlogDetail() {
                   <iframe
                     src={post.videoUrl}
                     title={post.titulo}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                   ></iframe>
                 </div>

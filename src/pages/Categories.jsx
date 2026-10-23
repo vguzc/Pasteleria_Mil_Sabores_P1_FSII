@@ -79,12 +79,12 @@ export default function Categories() {
                     style={{ width: '68px', height: '68px', border: '2px solid var(--color-borde)', backgroundColor: '#FAF7F2' }}
                   >
                     <img
-                      src={cat.imagen || '/img/torta-mil-sabores.png'}
+                      src={cat.imagen || 'img/torta-mil-sabores.png'}
                       alt={cat.nombre}
                       className="w-100 h-100 object-fit-contain p-1"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/img/torta-mil-sabores.png';
+                        e.target.src = 'img/torta-mil-sabores.png';
                       }}
                     />
                   </div>

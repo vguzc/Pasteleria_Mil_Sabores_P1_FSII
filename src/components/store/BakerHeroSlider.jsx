@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const SLIDES_DATA = [
   {
     id: 1,
-    image: '/img/slider/slide-1-cafe.png',
+    image: 'img/slider/slide-1-cafe.png',
     eyebrow: 'Café de Especialidad & Barismo',
     title: 'El Auténtico Placer de un Café de Mañana',
     subtitle: 'Granos 100% arábica seleccionados y tostados con maestría, diseñados para acompañar cada rebanada de torta y hojaldre recién horneado.',
@@ -13,7 +13,7 @@ const SLIDES_DATA = [
   },
   {
     id: 2,
-    image: '/img/slider/slide-2-masa.jpg',
+    image: 'img/slider/slide-2-masa.jpg',
     eyebrow: '50 Años de Oficio & Tradición',
     title: 'Masas Madre & Recetas Hechas a Mano',
     subtitle: 'Desde 1976 preparamos cada receta desde cero en nuestro taller familiar, con mantequilla de campo, fermentación lenta y amor por el detalle.',
@@ -22,7 +22,7 @@ const SLIDES_DATA = [
   },
   {
     id: 3,
-    image: '/img/slider/slide-3-croissant.jpg',
+    image: 'img/slider/slide-3-croissant.jpg',
     eyebrow: 'Bollería & Hojaldres del Día',
     title: 'Croissants Crujientes & Panes Frescos',
     subtitle: 'Capas doradas, textura aireada y el aroma inconfundible que inunda nuestro taller pastelero de Providencia cada amanecer.',
@@ -31,7 +31,7 @@ const SLIDES_DATA = [
   },
   {
     id: 4,
-    image: '/img/slider/slide-4-cookies.jpg',
+    image: 'img/slider/slide-4-cookies.jpg',
     eyebrow: 'Galletería & Chocolatería Artesanal',
     title: 'Galletas Caseras & Chocolate Belga',
     subtitle: 'Crujientes en los bordes, suaves en el corazón y repletas de chispas de cacao puro seleccionadas para compartir en familia.',
@@ -40,7 +40,7 @@ const SLIDES_DATA = [
   },
   {
     id: 5,
-    image: '/img/slider/slide-5-cinnamon.jpg',
+    image: 'img/slider/slide-5-cinnamon.jpg',
     eyebrow: 'Horneado Diario con Amor',
     title: 'Rollos de Canela con Glaseado Real',
     subtitle: 'Esponjosos espirales con canela aromática, azúcar morena y suave glaseado de vainilla recién salido del horno.',

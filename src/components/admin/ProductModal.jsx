@@ -39,7 +39,7 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
         precioAnterior: '',
         stock: '10',
         descripcion: '',
-        imagen: '/img/torta-mil-sabores.png',
+        imagen: 'img/torta-mil-sabores.png',
         destacado: false,
         enOferta: false
       });
@@ -187,7 +187,7 @@ export default function ProductModal({ product, categories, onSave, onClose }) {
                     type="text"
                     name="imagen"
                     className="form-control"
-                    placeholder="/img/torta-mil-sabores.png"
+                    placeholder="img/torta-mil-sabores.png"
                     value={formData.imagen}
                     onChange={handleChange}
                     style={{ borderColor: 'var(--color-borde)' }}

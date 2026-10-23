@@ -43,7 +43,7 @@ export default function About() {
               {/* Foto Principal: Vitrina de croissants y hojaldres dorados */}
               <div className="catalogo-hero-foto-principal">
                 <img
-                  src="/img/galeria/vitrina-croissants-dorados.png"
+                  src="img/galeria/vitrina-croissants-dorados.png"
                   alt="Vitrina de bollería y hojaldres recién horneados"
                   loading="eager"
                 />
@@ -52,7 +52,7 @@ export default function About() {
               {/* Foto Secundaria: Amasado artesanal tradicional a mano con harina */}
               <div className="catalogo-hero-foto-secundaria">
                 <img
-                  src="/img/galeria/amasado-manos-harina.png"
+                  src="img/galeria/amasado-manos-harina.png"
                   alt="Amasado artesanal a mano tradicional desde 1976"
                   loading="lazy"
                 />
@@ -61,7 +61,7 @@ export default function About() {
               {/* Sello Circular Flotante Oficial de Tradición */}
               <Link to="/" className="catalogo-hero-sello" title="Volver al inicio - Mil Sabores" aria-label="Volver al inicio">
                 <img
-                  src="/img/branding/sello-circular-transparent.png"
+                  src="img/branding/sello-circular-transparent.png"
                   alt="Sello Mil Sabores Calidad Artesanal"
                   className="catalogo-hero-sello-img"
                 />
@@ -96,13 +96,13 @@ export default function About() {
           </div>
           <div className="col-lg-6 text-center">
             <img
-              src="/img/noticia-aniversario-1976.jpg"
+              src="img/noticia-aniversario-1976.jpg"
               alt="Noticia Histórica 1976 Mil Sabores"
               className="img-fluid rounded-4 shadow-sm"
               style={{ maxHeight: '380px', objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(44, 30, 22, 0.09))' }}
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = '/img/torta-mil-sabores.png';
+                e.target.src = 'img/torta-mil-sabores.png';
               }}
             />
           </div>
@@ -114,7 +114,7 @@ export default function About() {
         className="franja-guinness-banner"
         style={{
           width: '100%',
-          backgroundImage: "url('/img/banner-record-guinness.png')",
+          backgroundImage: "url('img/banner-record-guinness.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
@@ -177,7 +177,7 @@ export default function About() {
             <div className="col">
               <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-letrero.png"
+                  src="img/branding/mockup-letrero.png"
                   alt="Letrero oficial y fachada de cafetería Mil Sabores"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
@@ -192,7 +192,7 @@ export default function About() {
             <div className="col">
               <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-vitrina.png"
+                  src="img/branding/mockup-vitrina.png"
                   alt="Ventanal y vitrina de la cafetería"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
@@ -207,7 +207,7 @@ export default function About() {
             <div className="col">
               <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-bolsa.png"
+                  src="img/branding/mockup-bolsa.png"
                   alt="Empaques de papel Kraft artesanales"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
@@ -222,7 +222,7 @@ export default function About() {
             <div className="col">
               <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-vaso.png"
+                  src="img/branding/mockup-vaso.png"
                   alt="Vaso de café de especialidad para llevar"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"
@@ -237,7 +237,7 @@ export default function About() {
             <div className="col">
               <div className="card-identidad-wrap">
                 <img
-                  src="/img/branding/mockup-papel.png"
+                  src="img/branding/mockup-papel.png"
                   alt="Papelería institucional y sello gofrado Mil Sabores"
                   className="w-100 h-100 object-fit-cover"
                   loading="lazy"

@@ -89,13 +89,13 @@ export default function ProductDetail() {
               style={{ backgroundColor: '#FAF7F2', borderRadius: '12px', border: '1px solid var(--color-borde)' }}
             >
               <img
-                src={product.imagen || '/img/torta-mil-sabores.png'}
+                src={product.imagen || 'img/torta-mil-sabores.png'}
                 alt={product.nombre}
                 className="img-fluid mx-auto"
                 style={{ maxHeight: '420px', objectFit: 'contain', filter: 'drop-shadow(0 8px 16px rgba(44, 30, 22, 0.08))' }}
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/img/torta-mil-sabores.png';
+                  e.target.src = 'img/torta-mil-sabores.png';
                 }}
               />
             </div>

@@ -110,7 +110,7 @@ export default function AdminCategories() {
                     <tr key={cat.id || cat.nombre}>
                       <td>
                         <img
-                          src={cat.imagen || '/img/torta-mil-sabores.png'}
+                          src={cat.imagen || 'img/torta-mil-sabores.png'}
                           alt={cat.nombre}
                           width="44"
                           height="44"
@@ -118,7 +118,7 @@ export default function AdminCategories() {
                           style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = '/img/torta-mil-sabores.png';
+                            e.target.src = 'img/torta-mil-sabores.png';
                           }}
                         />
                       </td>

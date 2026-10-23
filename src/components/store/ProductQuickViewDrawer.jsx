@@ -112,12 +112,12 @@ export default function ProductQuickViewDrawer() {
               </button>
 
               <img
-                src={product.imagen || '/img/torta-mil-sabores.png'}
+                src={product.imagen || 'img/torta-mil-sabores.png'}
                 alt={product.nombre}
                 className="quickview-img"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/img/torta-mil-sabores.png';
+                  e.target.src = 'img/torta-mil-sabores.png';
                 }}
               />
             </div>

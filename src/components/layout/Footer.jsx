@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Columna 1: Marca y Filosofía */}
           <div className="footer-col footer-col-marca">
             <Link to="/" className="logo-footer">
-              <img src="/img/logo-ms-caramelo.png" alt="Mil Sabores" className="logo-ms-footer" />
+              <img src="img/logo-ms-caramelo.png" alt="Mil Sabores" className="logo-ms-footer" />
               <div className="logo-textos-footer">
                 <span className="logo-marca-footer">Mil Sabores</span>
                 <span className="logo-submarca-footer">Pastelería & Café</span>

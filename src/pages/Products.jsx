@@ -112,7 +112,7 @@ export default function Products() {
               {/* Foto Principal: Croissants dorados artesanales */}
               <div className="catalogo-hero-foto-principal">
                 <img
-                  src="/img/slider/slide-3-croissant.jpg"
+                  src="img/slider/slide-3-croissant.jpg"
                   alt="Bollería y pastelería fresca recién horneada"
                   loading="eager"
                 />
@@ -121,7 +121,7 @@ export default function Products() {
               {/* Foto Secundaria: Maestro pastelero decorando bollería artesanal con azúcar flor */}
               <div className="catalogo-hero-foto-secundaria">
                 <img
-                  src="/img/galeria/pastelero-azucar-flor.png"
+                  src="img/galeria/pastelero-azucar-flor.png"
                   alt="Maestro pastelero decorando repostería artesanal"
                   loading="lazy"
                 />
@@ -130,7 +130,7 @@ export default function Products() {
               {/* Sello Circular Flotante Oficial de Tradición */}
               <Link to="/" className="catalogo-hero-sello" title="Volver al inicio - Mil Sabores" aria-label="Volver al inicio">
                 <img
-                  src="/img/branding/sello-circular-transparent.png"
+                  src="img/branding/sello-circular-transparent.png"
                   alt="Sello Mil Sabores Calidad Artesanal"
                   className="catalogo-hero-sello-img"
                 />

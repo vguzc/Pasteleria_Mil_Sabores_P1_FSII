@@ -204,7 +204,7 @@ export default function AdminProducts() {
                       <tr key={p.id}>
                         <td>
                           <img
-                            src={p.imagen || '/img/torta-mil-sabores.png'}
+                            src={p.imagen || 'img/torta-mil-sabores.png'}
                             alt={p.nombre}
                             width="44"
                             height="44"
@@ -212,7 +212,7 @@ export default function AdminProducts() {
                             style={{ backgroundColor: '#FAF4EC', border: '1px solid var(--color-borde)' }}
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = '/img/torta-mil-sabores.png';
+                              e.target.src = 'img/torta-mil-sabores.png';
                             }}
                           />
                         </td>

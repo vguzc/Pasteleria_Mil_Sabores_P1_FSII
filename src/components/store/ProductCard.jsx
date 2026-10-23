@@ -130,12 +130,12 @@ export default function ProductCard({ product, onAddToCart }) {
           }}
         >
           <img
-            src={product.imagen || '/img/torta-mil-sabores.png'}
+            src={product.imagen || 'img/torta-mil-sabores.png'}
             alt={product.nombre}
             loading="lazy"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = '/img/torta-mil-sabores.png';
+              e.target.src = 'img/torta-mil-sabores.png';
             }}
           />
         </Link>

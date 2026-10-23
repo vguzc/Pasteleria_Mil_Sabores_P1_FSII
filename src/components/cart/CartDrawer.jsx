@@ -200,12 +200,12 @@ export default function CartDrawer() {
                   return (
                     <div key={item.id} className="fn-cart-item">
                       <img
-                        src={item.imagen || '/img/torta-mil-sabores.png'}
+                        src={item.imagen || 'img/torta-mil-sabores.png'}
                         alt={item.nombre}
                         className="fn-cart-item-img"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = '/img/torta-mil-sabores.png';
+                          e.target.src = 'img/torta-mil-sabores.png';
                         }}
                       />
 

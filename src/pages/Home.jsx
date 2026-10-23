@@ -124,7 +124,7 @@ export default function Home() {
 
               <div className="recuerdos-foto-hero-wrap">
                 <img
-                  src="/img/branding/dulces-recuerdos-familia.jpg"
+                  src="img/branding/dulces-recuerdos-familia.jpg"
                   alt="Mil Sabores Pastelería y Cafetería - Creamos Dulces Recuerdos Para Toda la Familia"
                   className="recuerdos-foto-hero"
                   loading="lazy"
@@ -254,7 +254,7 @@ export default function Home() {
                       loading="lazy"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/img/torta-mil-sabores.png';
+                        e.target.src = 'img/torta-mil-sabores.png';
                       }}
                     />
                   </Link>

@@ -62,7 +62,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 28990,
     stock: 10,
     descripcion: 'Bizcocho esponjoso remojado en combinación de tres leches, cubierto con fino merengue italiano.',
-    imagen: '/img/torta-tres-leches-cuadrada.png',
+    imagen: 'img/torta-tres-leches-cuadrada.png',
     destacado: true,
     enOferta: true
   },
@@ -74,7 +74,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 10,
     descripcion: 'La especialidad insignia de nuestro taller. Bizcocho esponjoso remojado en almíbar de ron añejo y licor de naranja con manjar casero, nueces y crema pastelera.',
-    imagen: '/img/torta-mil-sabores.png',
+    imagen: 'img/torta-mil-sabores.png',
     destacado: true,
     enOferta: false
   },
@@ -87,7 +87,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 31990,
     stock: 8,
     descripcion: 'Capas de hojarasca crujiente rellenadas con manjar artesanal, crema de lúcuma fresca y suave crema pastelera.',
-    imagen: '/img/torta-amor-lucuma.png',
+    imagen: 'img/torta-amor-lucuma.png',
     destacado: true,
     enOferta: true
   },
@@ -99,7 +99,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 6,
     descripcion: 'Bizcocho húmedo de zanahoria fresca con especia de canela, nueces crocantes y frosting cremoso de queso crema y vainilla.',
-    imagen: '/img/torta-zanahoria.png',
+    imagen: 'img/torta-zanahoria.png',
     destacado: false,
     enOferta: false
   },
@@ -112,7 +112,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 4200,
     stock: 25,
     descripcion: 'Base crocante de galleta mantequilla, crema suave de limón natural y copo de merengue dorado al soplete.',
-    imagen: '/img/pie-de-limon.png',
+    imagen: 'img/pie-de-limon.png',
     destacado: false,
     enOferta: true
   },
@@ -124,7 +124,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 18,
     descripcion: 'Masa suave y esponjosa enrollada con canela de Ceylán, azúcar rubia y abundante glaseado suave de mantequilla.',
-    imagen: '/img/rollito-canela.png',
+    imagen: 'img/rollito-canela.png',
     destacado: false,
     enOferta: false
   },
@@ -137,7 +137,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 32990,
     stock: 4, // Stock crítico <= 6
     descripcion: 'Bizcocho de cacao 70% endulzado con alulosa y stevia, rellenado con ganache de chocolate sin azúcar añadida.',
-    imagen: '/img/torta-chocolate-sin-azucar.png',
+    imagen: 'img/torta-chocolate-sin-azucar.png',
     destacado: true,
     enOferta: true
   },
@@ -149,7 +149,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 8,
     descripcion: 'Base crocante de harina de almendras y avena, crema suave de limón natural endulzada con alulosa.',
-    imagen: '/img/pie-de-limon-sin-azucar.png',
+    imagen: 'img/pie-de-limon-sin-azucar.png',
     destacado: false,
     enOferta: false
   },
@@ -162,7 +162,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 6990,
     stock: 20,
     descripcion: 'Deliciosos alfajores tradicionales de hojarasca fina rellenados generosamente con abundante manjar casero.',
-    imagen: '/img/alfajores-hojarasca.png',
+    imagen: 'img/alfajores-hojarasca.png',
     destacado: false,
     enOferta: true
   },
@@ -174,7 +174,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 15,
     descripcion: 'Esponjosos empolvados chilenos rellenos de manjar casero suave y espolvoreados con azúcar flor finísima.',
-    imagen: '/img/empolvados-caseros.png',
+    imagen: 'img/empolvados-caseros.png',
     destacado: false,
     enOferta: false
   },
@@ -186,7 +186,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 5990,
     stock: 5, // Crítico <= 6
     descripcion: 'Tradicional strudel artesanal hojaldrado relleno de manzanas horneadas, canela de Ceylán, nueces y pasas al ron.',
-    imagen: '/img/strudel-manzana.png',
+    imagen: 'img/strudel-manzana.png',
     destacado: true,
     enOferta: true
   },
@@ -199,7 +199,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 5, // Crítico <= 6
     descripcion: 'Cheesecake horneado con base libre de gluten (harina de almendras) y salsa artesanal de frutos del bosque.',
-    imagen: '/img/cheesecake-frutos-rojos.png',
+    imagen: 'img/cheesecake-frutos-rojos.png',
     destacado: true,
     enOferta: false
   },
@@ -211,7 +211,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 15,
     descripcion: 'Variedad artesanal de galletas horneadas libres de gluten con chispas de chocolate belga y mantequilla.',
-    imagen: '/img/galletas-sin-gluten.png',
+    imagen: 'img/galletas-sin-gluten.png',
     destacado: false,
     enOferta: false
   },
@@ -224,7 +224,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 34990,
     stock: 3, // Crítico <= 6
     descripcion: 'Elaborada sin ingredientes animales. Bizcocho húmedo de cacao con crema de trufa a base de leche de coco.',
-    imagen: '/img/torta-vegana-trufa-cacao.png',
+    imagen: 'img/torta-vegana-trufa-cacao.png',
     destacado: false,
     enOferta: true
   },
@@ -236,7 +236,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 12,
     descripcion: 'Suave mousse 100% vegetal elaborado con leche de almendras, zanahoria y ralladura de naranja orgánica.',
-    imagen: '/img/mousse-zanahoria-vegano.png',
+    imagen: 'img/mousse-zanahoria-vegano.png',
     destacado: false,
     enOferta: false
   },
@@ -249,7 +249,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 6, // Crítico <= 6
     descripcion: 'Bizcocho ligero de vainilla y maracuyá relleno de mousseline de pistacho, frutos del bosque y flores comestibles.',
-    imagen: '/img/torta-primavera.png',
+    imagen: 'img/torta-primavera.png',
     destacado: true,
     enOferta: false
   },
@@ -261,7 +261,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 3, // Crítico <= 6
     descripcion: 'Diseño elegante de dos pisos para celebraciones memorables. Decorada a mano con flores comestibles.',
-    imagen: '/img/torta-bodas-eventos.png',
+    imagen: 'img/torta-bodas-eventos.png',
     destacado: false,
     enOferta: false
   },
@@ -274,7 +274,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 3790,
     stock: 30,
     descripcion: 'Clásica empanada chilena de horno, rellena de jugoso pino de vacuno picado a cuchillo, huevo duro y aceituna.',
-    imagen: '/img/empanada-pino.png',
+    imagen: 'img/empanada-pino.png',
     destacado: true,
     enOferta: true
   },
@@ -286,7 +286,7 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: null,
     stock: 25,
     descripcion: 'Masa casera dorada de mantequilla, rellena con abundante queso mantecoso de fundo derretido.',
-    imagen: '/img/empanada-queso.png',
+    imagen: 'img/empanada-queso.png',
     destacado: false,
     enOferta: false
   },
@@ -298,21 +298,21 @@ export const INITIAL_PRODUCTS = [
     precioAnterior: 4190,
     stock: 20,
     descripcion: 'Edición artesanal libre de gluten con tradicional pino de vacuno y aceituna.',
-    imagen: '/img/empanada-sin-gluten.png',
+    imagen: 'img/empanada-sin-gluten.png',
     destacado: true,
     enOferta: true
   }
 ];
 
 export const INITIAL_CATEGORIES = [
-  { id: 'cat-1', nombre: 'Tortas Cuadradas', descripcion: 'Formatos clásicos familiares para compartir y celebrar', imagen: '/img/torta-tres-leches-cuadrada.png' },
-  { id: 'cat-2', nombre: 'Tortas Circulares', descripcion: 'Redondas tradicionales, decoradas con esmero artesanal', imagen: '/img/torta-amor-lucuma.png' },
-  { id: 'cat-3', nombre: 'Postres Individuales', descripcion: 'Porciones justas para el antojo dulce del día', imagen: '/img/pie-de-limon.png' },
-  { id: 'cat-4', nombre: 'Productos Sin Azúcar', descripcion: 'Endulzados con alulosa natural, ideales para cuidarse', imagen: '/img/torta-chocolate-sin-azucar.png' },
-  { id: 'cat-5', nombre: 'Pastelería Tradicional', descripcion: 'Chilenitos, empolvados, alfajores y strudel de receta centenaria', imagen: '/img/alfajores-hojarasca.png' },
-  { id: 'cat-6', nombre: 'Productos Sin Gluten', descripcion: '100% libres de gluten con certificación y sabor inigualable', imagen: '/img/cheesecake-frutos-rojos.png' },
-  { id: 'cat-7', nombre: 'Productos Veganos', descripcion: 'Sin ingredientes de origen animal, suaves y deliciosos', imagen: '/img/torta-vegana-trufa-cacao.png' },
-  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: '/img/torta-primavera.png' }
+  { id: 'cat-1', nombre: 'Tortas Cuadradas', descripcion: 'Formatos clásicos familiares para compartir y celebrar', imagen: 'img/torta-tres-leches-cuadrada.png' },
+  { id: 'cat-2', nombre: 'Tortas Circulares', descripcion: 'Redondas tradicionales, decoradas con esmero artesanal', imagen: 'img/torta-amor-lucuma.png' },
+  { id: 'cat-3', nombre: 'Postres Individuales', descripcion: 'Porciones justas para el antojo dulce del día', imagen: 'img/pie-de-limon.png' },
+  { id: 'cat-4', nombre: 'Productos Sin Azúcar', descripcion: 'Endulzados con alulosa natural, ideales para cuidarse', imagen: 'img/torta-chocolate-sin-azucar.png' },
+  { id: 'cat-5', nombre: 'Pastelería Tradicional', descripcion: 'Chilenitos, empolvados, alfajores y strudel de receta centenaria', imagen: 'img/alfajores-hojarasca.png' },
+  { id: 'cat-6', nombre: 'Productos Sin Gluten', descripcion: '100% libres de gluten con certificación y sabor inigualable', imagen: 'img/cheesecake-frutos-rojos.png' },
+  { id: 'cat-7', nombre: 'Productos Veganos', descripcion: 'Sin ingredientes de origen animal, suaves y deliciosos', imagen: 'img/torta-vegana-trufa-cacao.png' },
+  { id: 'cat-8', nombre: 'Tortas Especiales', descripcion: 'Creaciones únicas para bodas, aniversarios y grandes eventos', imagen: 'img/torta-primavera.png' }
 ];
 
 export const INITIAL_USERS = [
@@ -392,8 +392,8 @@ export const INITIAL_ORDERS = [
       indicaciones: 'El martes no estaremos en el depto, pero puede dejárselo con el conserje.'
     },
     items: [
-      { id: 'TC001', nombre: 'Torta Tres Leches Cuadrada', precio: 24990, cantidad: 1, subtotal: 24990, imagen: '/img/torta-tres-leches-cuadrada.png' },
-      { id: 'PI001', nombre: 'Pie de Limón Individual', precio: 3490, cantidad: 1, subtotal: 3490, imagen: '/img/pie-de-limon.png' }
+      { id: 'TC001', nombre: 'Torta Tres Leches Cuadrada', precio: 24990, cantidad: 1, subtotal: 24990, imagen: 'img/torta-tres-leches-cuadrada.png' },
+      { id: 'PI001', nombre: 'Pie de Limón Individual', precio: 3490, cantidad: 1, subtotal: 3490, imagen: 'img/pie-de-limon.png' }
     ],
     subtotal: 28480,
     descuento: 0,
@@ -418,7 +418,7 @@ export const INITIAL_ORDERS = [
       indicaciones: 'Timbre 304'
     },
     items: [
-      { id: 'TC003', nombre: 'Torta Amor Manjar Lúcuma Circular', precio: 26990, cantidad: 1, subtotal: 26990, imagen: '/img/torta-amor-lucuma.png' }
+      { id: 'TC003', nombre: 'Torta Amor Manjar Lúcuma Circular', precio: 26990, cantidad: 1, subtotal: 26990, imagen: 'img/torta-amor-lucuma.png' }
     ],
     subtotal: 26990,
     descuento: 2699,
@@ -444,6 +444,24 @@ export function isDuocEmail(email) {
 // -------------------------------------------------------------
 // HELPERS LOCALSTORAGE
 // -------------------------------------------------------------
+function sanitizeDataImages(data) {
+  if (!data) return data;
+  if (Array.isArray(data)) {
+    return data.map(item => sanitizeDataImages(item));
+  }
+  if (typeof data === 'object') {
+    const updated = { ...data };
+    if (typeof updated.imagen === 'string' && updated.imagen.startsWith('/')) {
+      updated.imagen = updated.imagen.replace(/^\/+/, '');
+    }
+    if (Array.isArray(updated.items)) {
+      updated.items = updated.items.map(it => sanitizeDataImages(it));
+    }
+    return updated;
+  }
+  return data;
+}
+
 function readStorage(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -451,7 +469,12 @@ function readStorage(key, fallback) {
       localStorage.setItem(key, JSON.stringify(fallback));
       return fallback;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    const sanitized = sanitizeDataImages(parsed);
+    if (JSON.stringify(parsed) !== JSON.stringify(sanitized)) {
+      localStorage.setItem(key, JSON.stringify(sanitized));
+    }
+    return sanitized;
   } catch (err) {
     console.error(`Error leyendo ${key} de localStorage:`, err);
     return fallback;
@@ -514,7 +537,7 @@ export const productService = {
       stock: Number(productData.stock) || 0,
       destacado: Boolean(productData.destacado),
       enOferta: Boolean(productData.enOferta),
-      imagen: productData.imagen || '/img/torta-mil-sabores.png'
+      imagen: (productData.imagen || 'img/torta-mil-sabores.png').replace(/^\/+/, '')
     };
     list.unshift(newProduct);
     writeStorage(STORAGE_KEYS.PRODUCTS, list);
@@ -564,7 +587,7 @@ export const categoryService = {
       id: `CAT-${Date.now().toString().slice(-4)}`,
       nombre: categoryData.nombre,
       descripcion: categoryData.descripcion || '',
-      imagen: categoryData.imagen || '/img/torta-mil-sabores.png'
+      imagen: (categoryData.imagen || 'img/torta-mil-sabores.png').replace(/^\/+/, '')
     };
     list.push(newCat);
     writeStorage(STORAGE_KEYS.CATEGORIES, list);
