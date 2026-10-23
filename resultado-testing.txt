@@ -1,0 +1,42 @@
+﻿
+> pasteleria-mil-sabores-react@2.0.0 test:coverage
+> karma start karma.conf.cjs --single-run
+
+23 10 2026 09:21:37.812:WARN [filelist]: Pattern "C:/Users/Asus/Proyectos/Parcial_1/test/**/*.spec.js" does not match any file.
+Webpack bundling...
+asset commons.js 2.15 MiB [emitted] (name: commons) (id hint: commons)
+asset runtime.js 9.16 KiB [emitted] (name: runtime)
+asset 6_quantity_selector_state.spec.1839311523.js 1.05 KiB [emitted] (name: 6_quantity_selector_state.spec.1839311523)
+asset 10_mock_checkout_totals.spec.31701100.js 1.04 KiB [emitted] (name: 10_mock_checkout_totals.spec.31701100)
+asset 4_product_card_props.spec.2197955914.js 1.04 KiB [emitted] (name: 4_product_card_props.spec.2197955914)
+asset 2_render_conditional.spec.592418411.js 1.04 KiB [emitted] (name: 2_render_conditional.spec.592418411)
+asset 9_mock_crud_service.spec.2658203379.js 1.03 KiB [emitted] (name: 9_mock_crud_service.spec.2658203379)
+asset 8_event_form_submit.spec.564124260.js 1.03 KiB [emitted] (name: 8_event_form_submit.spec.564124260)
+asset 7_event_add_cart.spec.3760221539.js 1.03 KiB [emitted] (name: 7_event_add_cart.spec.3760221539)
+asset 3_button_props.spec.1072762136.js 1.02 KiB [emitted] (name: 3_button_props.spec.1072762136)
+asset 1_render_list.spec.2015044352.js 1.02 KiB [emitted] (name: 1_render_list.spec.2015044352)
+asset 5_form_state.spec.3929188692.js 1.02 KiB [emitted] (name: 5_form_state.spec.3929188692)
+webpack 5.112.0 compiled successfully in 1317 ms
+23 10 2026 09:21:39.755:WARN [filelist]: Pattern "C:/Users/Asus/Proyectos/Parcial_1/test/**/*.spec.js" does not match any file.
+23 10 2026 09:21:39.783:INFO [karma-server]: Karma v6.4.4 server started at http://localhost:9876/
+23 10 2026 09:21:39.783:INFO [launcher]: Launching browsers ChromeHeadlessNoSandbox with concurrency unlimited
+23 10 2026 09:21:39.803:INFO [launcher]: Starting browser ChromeHeadless
+23 10 2026 09:21:40.310:INFO [Chrome Headless 156.0.0.0 (Windows 10)]: Connected on socket gwuW9pwK1aPnsbFQAAAA with id 25527408
+Chrome Headless 156.0.0.0 (Windows 10): Executed 0 of 11 SUCCESS (0 secs / 0 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 1 of 11 SUCCESS (0 secs / 0.026 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 2 of 11 SUCCESS (0 secs / 0.03 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 3 of 11 SUCCESS (0 secs / 0.033 secs)
+WARN: 'ÔÜá´©Å React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.'
+Chrome Headless 156.0.0.0 (Windows 10): Executed 3 of 11 SUCCESS (0 secs / 0.033 secs)
+WARN: 'ÔÜá´©Å React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.'
+Chrome Headless 156.0.0.0 (Windows 10): Executed 3 of 11 SUCCESS (0 secs / 0.033 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 4 of 11 SUCCESS (0 secs / 0.081 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 5 of 11 SUCCESS (0 secs / 0.089 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 6 of 11 SUCCESS (0 secs / 0.099 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 7 of 11 SUCCESS (0 secs / 0.103 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 8 of 11 SUCCESS (0 secs / 0.108 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 9 of 11 SUCCESS (0 secs / 0.109 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 10 of 11 SUCCESS (0 secs / 0.11 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 11 of 11 SUCCESS (0 secs / 0.113 secs)
+Chrome Headless 156.0.0.0 (Windows 10): Executed 11 of 11 SUCCESS (0.132 secs / 0.113 secs)
+TOTAL: 11 SUCCESS
