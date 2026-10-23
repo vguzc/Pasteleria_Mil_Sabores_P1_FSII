@@ -3266,6 +3266,114 @@ h3 { font-size: 1.35rem; }
 }
 
 /* ==========================================================================
+   ESTILOS BAKER: HERO BANNER DE DETALLE DE ARTICULO (FULL WIDTH)
+   ========================================================================== */
+.articulo-hero-banner {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #1A110C;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(196, 136, 75, 0.3);
+  padding: 4.5rem 1.5rem 5rem 1.5rem;
+  color: #FFFFFF;
+}
+
+.articulo-hero-contenido {
+  max-width: 860px;
+  position: relative;
+  z-index: 2;
+}
+
+.articulo-hero-breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.articulo-hero-breadcrumb .breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.articulo-hero-breadcrumb .breadcrumb-item a {
+  color: #E5DDD3;
+  text-decoration: none;
+  transition: color var(--transicion);
+}
+
+.articulo-hero-breadcrumb .breadcrumb-item a:hover {
+  color: var(--color-mantequilla);
+}
+
+.articulo-hero-breadcrumb .breadcrumb-item.active {
+  color: var(--color-mantequilla);
+}
+
+.articulo-hero-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(229, 221, 211, 0.5);
+  content: "/";
+  padding: 0 0.5rem;
+}
+
+.articulo-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.15rem;
+}
+
+.articulo-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-caramelo);
+  color: #FFFFFF;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.articulo-hero-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.86rem;
+  color: #E5DDD3;
+}
+
+.articulo-hero-titulo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.articulo-hero-bajada {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #E6DBD0;
+  margin-bottom: 0;
+  max-width: 800px;
+}
+
+@media (max-width: 768px) {
+  .articulo-hero-banner {
+    padding: 3rem 1.25rem 3.5rem 1.25rem;
+  }
+}
+
+/* ==========================================================================
    ESTILOS BAKER: HERO BANNER DE CONTACTO (FULL WIDTH / BORDE A BORDE)
    ========================================================================== */
 .contacto-hero-banner {
