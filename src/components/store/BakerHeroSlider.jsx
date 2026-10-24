@@ -42,8 +42,8 @@ const SLIDES_DATA = [
     id: 5,
     image: 'img/slider/slide-5-cinnamon.jpg',
     eyebrow: 'Horneado Diario con Amor',
-    title: 'Rollos de Canela con Glaseado Real',
-    subtitle: 'Esponjosos espirales con canela aromática, azúcar morena y suave glaseado de vainilla recién salido del horno.',
+    title: 'Rollos de Canela Extra Esponjosos',
+    subtitle: 'Espirales dorados de máxima esponjosidad con canela aromática, azúcar morena y el mejor glaseado suave recién salido del horno.',
     primaryBtn: { text: 'Pedir Dulzuras Ahora', link: '/productos' },
     secondaryBtn: { text: 'Ver Promociones', link: '/ofertas' }
   }
