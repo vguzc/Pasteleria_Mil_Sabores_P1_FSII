@@ -248,9 +248,9 @@ Este proyecto aborda los seis requisitos principales de la evaluación:
 
 ## 👥 Integrantes del equipo
 
-- [Nombre del integrante 1]
-- [Nombre del integrante 2]
-- [Nombre del integrante 3]
+- Daniel Parada
+- Vicente Guzman
+- Guillermo Manriquez
 
 **Asignatura:** DSY1104 – Desarrollo Fullstack II  
 **Institución:** Duoc UC
