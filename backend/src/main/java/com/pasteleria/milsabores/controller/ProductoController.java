@@ -57,18 +57,18 @@ public class ProductoController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'VENDEDOR')")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @SecurityRequirement(name = "BearerAuth")
-    @Operation(summary = "Crear nuevo producto (Admin / Vendedor)", description = "Agrega un nuevo producto al catálogo. Requiere token JWT con rol Administrador o Vendedor.")
+    @Operation(summary = "Crear nuevo producto (Admin)", description = "Agrega un nuevo producto al catálogo. Requiere token JWT con rol Administrador.")
     public ResponseEntity<ProductoDTO> crear(@RequestBody ProductoDTO dto) {
         ProductoDTO nuevo = productoService.crear(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'VENDEDOR')")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @SecurityRequirement(name = "BearerAuth")
-    @Operation(summary = "Actualizar producto existente (Admin / Vendedor)", description = "Modifica los atributos de un producto existente. Requiere token JWT con rol Administrador o Vendedor.")
+    @Operation(summary = "Actualizar producto existente (Admin)", description = "Modifica los atributos de un producto existente. Requiere token JWT con rol Administrador.")
     public ResponseEntity<ProductoDTO> actualizar(@PathVariable Long id, @RequestBody ProductoDTO dto) {
         ProductoDTO actualizado = productoService.actualizar(id, dto);
         return ResponseEntity.ok(actualizado);

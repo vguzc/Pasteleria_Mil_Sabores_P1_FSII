@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { productService, categoryService } from '../../services/db';
+import { useAuth } from '../../context/AuthContext';
 import ProductModal from '../../components/admin/ProductModal';
 
 export default function AdminProducts() {
+  const { isAdmin } = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filterView, setFilterView] = useState('todos'); // 'todos' | 'criticos' | 'ofertas'
@@ -31,6 +33,8 @@ export default function AdminProducts() {
   };
 
   const handleDelete = (id, nombre) => {
+    if (!isAdmin) return;
+
     if (window.confirm(`¿Estás seguro de que deseas eliminar "${nombre}"?`)) {
       productService.delete(id);
       loadData();
@@ -39,6 +43,8 @@ export default function AdminProducts() {
   };
 
   const handleSaveProduct = (prodData) => {
+    if (!isAdmin) return;
+
     if (editingProduct) {
       productService.update(editingProduct.id, prodData);
       showFeedback(`Producto "${prodData.nombre}" actualizado.`);
@@ -84,15 +90,17 @@ export default function AdminProducts() {
           </h1>
           <p className="text-muted small mb-0 mt-1">Gestión de recetas, stock crítico y precios con persistencia local</p>
         </div>
-        <div>
-          <button
-            className="boton boton-primario btn-baker"
-            onClick={handleOpenNew}
-            style={{ fontSize: '0.85rem' }}
-          >
-            <i className="bi bi-plus-circle me-2"></i>Nuevo Producto
-          </button>
-        </div>
+        {isAdmin && (
+          <div>
+            <button
+              className="boton boton-primario btn-baker"
+              onClick={handleOpenNew}
+              style={{ fontSize: '0.85rem' }}
+            >
+              <i className="bi bi-plus-circle me-2"></i>Nuevo Producto
+            </button>
+          </div>
+        )}
       </div>
 
       {feedback && (
@@ -187,13 +195,13 @@ export default function AdminProducts() {
                   <th className="text-end" style={{ width: '100px', color: 'var(--color-espresso)' }}>Precio</th>
                   <th className="text-center" style={{ width: '90px', color: 'var(--color-espresso)' }}>Stock</th>
                   <th className="text-center" style={{ width: '90px', color: 'var(--color-espresso)' }}>Estado</th>
-                  <th className="text-center" style={{ width: '130px', color: 'var(--color-espresso)' }}>Acciones</th>
+                  {isAdmin && <th className="text-center" style={{ width: '130px', color: 'var(--color-espresso)' }}>Acciones</th>}
                 </tr>
               </thead>
               <tbody>
                 {displayedProducts.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="text-center py-4 text-muted">
+                    <td colSpan={isAdmin ? 8 : 7} className="text-center py-4 text-muted">
                       No se encontraron productos que coincidan con los criterios.
                     </td>
                   </tr>
@@ -254,26 +262,28 @@ export default function AdminProducts() {
                             <span className="small fw-semibold" style={{ color: '#B54234' }}>Agotado</span>
                           )}
                         </td>
-                        <td className="text-center">
-                          <div className="btn-group btn-group-sm">
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-outline-secondary"
-                              title="Editar Producto"
-                              onClick={() => handleOpenEdit(p)}
-                            >
-                              <i className="bi bi-pencil"></i>
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-outline-danger"
-                              title="Eliminar Producto"
-                              onClick={() => handleDelete(p.id, p.nombre)}
-                            >
-                              <i className="bi bi-trash"></i>
-                            </button>
-                          </div>
-                        </td>
+                        {isAdmin && (
+                          <td className="text-center">
+                            <div className="btn-group btn-group-sm">
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-secondary"
+                                title="Editar Producto"
+                                onClick={() => handleOpenEdit(p)}
+                              >
+                                <i className="bi bi-pencil"></i>
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-danger"
+                                title="Eliminar Producto"
+                                onClick={() => handleDelete(p.id, p.nombre)}
+                              >
+                                <i className="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     );
                   })
@@ -285,7 +295,7 @@ export default function AdminProducts() {
       </div>
 
       {/* Modal CRUD Producto */}
-      {modalOpen && (
+      {isAdmin && modalOpen && (
         <ProductModal
           product={editingProduct}
           categories={categories}

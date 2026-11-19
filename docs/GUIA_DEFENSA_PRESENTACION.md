@@ -74,6 +74,6 @@ Esta guía contiene las respuestas técnicas recomendadas y el discurso estructu
 **¿Qué debes explicar al profesor?**
 * **Protección de rutas**: Implementada en `src/layouts/AdminLayout.jsx`. Si un usuario no autenticado intenta entrar a `/admin`, es redirigido inmediatamente a `/login`. Si un cliente convencional entra a `/admin`, el sistema lo redirige a su panel `/mi-cuenta`.
 * **Granularidad por rol**:
-  * **Vendedor**: Puede gestionar productos y órdenes, pero tiene bloqueada la gestión de usuarios.
+  * **Vendedor**: Puede consultar productos y categorías y gestionar órdenes.
   * **Administrador**: Tiene acceso total, incluyendo el módulo exclusivo `/admin/usuarios` para crear o modificar roles.
 * **Seguridad en dos capas**: Explica enfáticamente que la restricción visual en React mejora la experiencia de usuario, pero la **seguridad real está reforzada en el Backend con Spring Security**, garantizando que aunque un usuario malintencionado intente forzar una llamada HTTP directa, el backend rechazará la operación si el token no tiene el rol correspondiente.

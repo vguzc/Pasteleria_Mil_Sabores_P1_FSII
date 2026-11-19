@@ -16,7 +16,7 @@ Para probar todos los roles y permisos del sistema, se encuentran disponibles la
 | Rol | Correo Electrónico | Contraseña | Vistas y Funcionalidades Disponibles |
 | :--- | :--- | :--- | :--- |
 | **Administrador** | `admin@duoc.cl` | `admin123` | Control total: Catálogo, Categorías, Pedidos, Usuarios y Reportes. |
-| **Vendedor** | `vendedor@milsabores.cl` | `venta123` | Gestión operativa: Catálogo de productos, Categorías y Pedidos. |
+| **Vendedor** | `vendedor@milsabores.cl` | `venta123` | Consulta de productos y categorías, y gestión de pedidos. |
 | **Cliente** | `pedro.hacker20@example.com` | `clave123` | Compra, Carrito, Historial de pedidos y Mi Cuenta. |
 
 ---
@@ -74,15 +74,14 @@ Muestra métricas operativas clave: total de ventas recaudadas, número de pedid
 > *[INSERTAR CAPTURA DE PANTALLA: Dashboard administrativo con tarjetas de métricas]*
 
 ### 5.2 Gestión de Productos (CRUD)
-Permite a Administradores y Vendedores:
-* Listar todos los productos con indicador de stock.
+Administradores y vendedores pueden consultar el catálogo y su stock. Solo el administrador puede:
 * Crear nuevos productos con asignación de categoría, precio, stock y estado de oferta.
 * Editar precios o modificar datos.
-* Eliminar productos (restringido únicamente al Administrador).
+* Eliminar productos.
 > *[INSERTAR CAPTURA DE PANTALLA: Tabla de productos y modal de creación/edición]*
 
 ### 5.3 Gestión de Categorías (CRUD)
-Administración de las familias de productos de la pastelería. Permite agregar nuevas categorías y editar existentes.
+Administración de las familias de productos de la pastelería. Los vendedores pueden consultar las categorías. Solo los administradores pueden crearlas, editarlas y eliminarlas.
 > *[INSERTAR CAPTURA DE PANTALLA: Gestión de categorías]*
 
 ### 5.4 Gestión de Órdenes y Ventas

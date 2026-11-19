@@ -63,8 +63,8 @@ La API REST expone servicios organizados bajo el prefijo `/api` y documentados i
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/productos` | Público | Lista todos los productos. Parámetros opcionales: `categoria`, `destacados`, `ofertas`, `q`. |
 | `GET` | `/api/productos/{id}` | Público | Retorna el detalle de un producto por ID numérico o código (`TC001`, etc.). |
-| `POST` | `/api/productos` | `ADMINISTRADOR`, `VENDEDOR` | Registra un nuevo producto en el catálogo. |
-| `PUT` | `/api/productos/{id}` | `ADMINISTRADOR`, `VENDEDOR` | Modifica atributos, precios o stock de un producto existente. |
+| `POST` | `/api/productos` | `ADMINISTRADOR` | Registra un nuevo producto en el catálogo. |
+| `PUT` | `/api/productos/{id}` | `ADMINISTRADOR` | Modifica atributos, precios o stock de un producto existente. |
 | `DELETE` | `/api/productos/{id}` | `ADMINISTRADOR` | Elimina un producto de la base de datos. |
 
 ### 2.3 Módulo de Categorías (`/api/categorias`)
