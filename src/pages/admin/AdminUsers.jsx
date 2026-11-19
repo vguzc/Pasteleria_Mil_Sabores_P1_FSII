@@ -29,7 +29,24 @@ export default function AdminUsers() {
     setModalOpen(true);
   };
 
-  const handleDelete = (id, nombre) => {
+  const handleDelete = (id, nombre, rol) => {
+    // Prevent deletion of admin users (or the last remaining admin)
+    if (rol === 'administrador') {
+      alert('No puedes eliminar a un usuario con rol administrador.');
+      return;
+    }
+    // If there is only one admin left, prevent its removal (extra safety)
+    const adminCount = users.filter(u => u.rol === 'administrador').length;
+    if (adminCount <= 1 && rol === 'administrador') {
+      alert('Al menos un administrador debe permanecer en el sistema.');
+      return;
+    }
+    if (window.confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
+      userService.delete(id);
+      loadData();
+      showFeedback(`Usuario "${nombre}" eliminado.`);
+    }
+  };
     if (window.confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
       userService.delete(id);
       loadData();
