@@ -47,13 +47,6 @@ export default function AdminUsers() {
       showFeedback(`Usuario "${nombre}" eliminado.`);
     }
   };
-    if (window.confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
-      userService.delete(id);
-      loadData();
-      showFeedback(`Usuario "${nombre}" eliminado.`);
-    }
-  };
-
   const handleSave = (userData) => {
     if (editingUser) {
       userService.update(editingUser.id, userData);
@@ -169,7 +162,7 @@ export default function AdminUsers() {
                             type="button"
                             className="btn btn-sm btn-outline-danger"
                             title="Eliminar Usuario"
-                            onClick={() => handleDelete(u.id, u.nombre)}
+                            onClick={() => handleDelete(u.id, u.nombre, u.rol)}
                           >
                             <i className="bi bi-trash"></i>
                           </button>
