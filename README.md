@@ -1,261 +1,74 @@
+# Pastelería Mil Sabores
 
-# 🍰 Pastelería Mil Sabores
+Tienda web desarrollada para la asignatura **Desarrollo Fullstack II (DSY1104)** de Duoc UC. Incluye catálogo, carrito, compra simulada y un panel de administración para gestionar productos, categorías, usuarios y pedidos.
 
-### Tienda online Fullstack | Evaluación Parcial N.º 3
+[Ver demo en GitHub Pages](https://vguzc.github.io/Pasteleria_Mil_Sabores_P1_FSII/)
 
-**Asignatura:** Desarrollo Fullstack II (DSY1104)  
-**Institución:** Duoc UC
+## Estado de la integración
 
-Aplicación de comercio electrónico para **Pastelería Mil Sabores**, desarrollada con un frontend en **React 18 y Vite** y un backend **Java 21 con Spring Boot 3.3.4**. La aplicación permite explorar productos, gestionar compras y administrar recursos según los permisos de cada usuario.
-
-El frontend se comunica con el backend mediante una **API REST**, utilizando **MySQL** para la persistencia de datos y **JWT** para la autenticación.
-
-## 🌐 Demostración
-
-- [Sitio publicado en GitHub Pages](https://vguzc.github.io/Pasteleria_Mil_Sabores_P1_FSII/)
-
-**Nota:** El despliegue estático del frontend no implica que el backend o la base de datos estén disponibles públicamente. Para probar la integración completa, deben ejecutarse los servicios localmente.
-
-## 🧰 Tecnologías utilizadas
-
-| Capa | Tecnologías |
+| Área | Implementación actual |
 | --- | --- |
-| Frontend | React 18, React Router 6, Vite 5, Bootstrap 5, JavaScript, HTML y CSS |
-| Backend | Java 21, Spring Boot 3.3.4, Spring Web, Spring Data JPA |
-| Base de datos | MySQL, Hibernate/JPA |
-| Seguridad | Spring Security, JWT, BCrypt, roles de usuario |
-| Documentación API | Swagger UI / OpenAPI |
-| Pruebas frontend | Jasmine, Karma, Testing Library |
-| Dependencias | npm y Maven |
+| Frontend | React 18, Vite, React Router y Bootstrap 5. |
+| Inicio de sesión y registro | El frontend intenta usar la API de Spring Boot con JWT y puede operar con datos locales. El registro también guarda una copia en el navegador. |
+| Catálogo, pedidos y mantenedores | Las pantallas actuales usan `localStorage`. Los cambios quedan en el navegador donde se realizan. |
+| API REST | Spring Boot, Spring Security, Spring Data JPA y MySQL. Swagger permite probar los endpoints de autenticación, productos, categorías, usuarios y órdenes. |
+| Demo pública | GitHub Pages publica el frontend. El backend se ejecuta por separado y el cliente HTTP apunta a `localhost:8080`. |
 
-## ✨ Funcionalidades principales
-
-- Catálogo de productos y categorías.
-- Búsqueda y visualización del detalle de productos.
-- Carrito de compras y creación de órdenes.
-- Registro e inicio de sesión de usuarios.
-- Autenticación mediante tokens JWT.
-- Persistencia de sesión al recargar la página.
-- Administración de productos, categorías y usuarios.
-- Restricciones de acceso según roles.
-- Documentación interactiva de endpoints con Swagger UI.
-
-## 🏗️ Arquitectura del sistema
-
-```mermaid
-flowchart LR
-    A[React + Vite] -->|HTTP / JSON + JWT| B[API REST Spring Boot]
-    B --> C[Controladores]
-    C --> D[Servicios]
-    D --> E[Repositorios JPA]
-    E --> F[(MySQL)]
-```
-
-El frontend realiza peticiones desde `src/services/api.js` a `http://localhost:8080/api`.
-
-Cuando existe un token, el cliente HTTP añade la cabecera `Authorization: Bearer <token>`. El backend valida el JWT mediante Spring Security y aplica los permisos configurados antes de ejecutar las operaciones protegidas.
-
-## 🚀 Instalación y ejecución
-
-### Requisitos previos
-
-- Node.js 18 o superior y npm.
-- JDK 21 y Maven.
-- MySQL en funcionamiento.
-- Navegador web.
+## Ejecución local
 
 ### 1. Preparar la base de datos
 
-Iniciar MySQL e importar el script:
+Inicia MySQL o MariaDB. Si usas XAMPP, puedes importar [pasteleria_mil_sabores.sql](database/pasteleria_mil_sabores.sql) desde phpMyAdmin. El script crea la base `pasteleria_mil_sabores_db` y carga datos de ejemplo.
 
-```text
-database/pasteleria_mil_sabores.sql
-```
+**Usa una base de desarrollo.** El script elimina y vuelve a crear las tablas existentes de esa base. Si tu servidor usa otro puerto o credenciales, ajusta la conexión en [application.properties](backend/src/main/resources/application.properties).
 
-Verificar que la base de datos se llame `pasteleria_mil_sabores_db`.
+### 2. Iniciar el backend
 
-Revisar la configuración de conexión en:
-
-```text
-backend/src/main/resources/application.properties
-```
-
-Por defecto, el proyecto configura MySQL en `localhost:3306`, usuario `root` y contraseña vacía. Estos valores deben adaptarse al entorno de ejecución.
-
-### 2. Ejecutar el backend
-
-Desde la raíz del proyecto:
+Con **Java 21** y **Maven** instalados, ejecuta desde la raíz del repositorio:
 
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 
-API REST: http://localhost:8080
+La API escucha en `http://localhost:8080/api`. Puedes explorar los endpoints en [Swagger UI](http://localhost:8080/swagger-ui.html).
 
-Swagger UI: http://localhost:8080/swagger-ui.html
+### 3. Iniciar el frontend
 
-### 3. Ejecutar el frontend
-
-En otra terminal, desde la raíz del proyecto:
+En otra terminal, desde la raíz del repositorio, ejecuta con **Node.js 18 o superior**:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Abrir la dirección local que indique Vite.
+Abre [http://localhost:3000](http://localhost:3000). Si quieres explorar solo la demo local del frontend, puedes comenzar directamente por este paso.
 
-Para probar la integración completa, mantener frontend, backend y MySQL ejecutándose simultáneamente.
+## Cuentas demo del frontend
 
-### 4. Compilar y ejecutar pruebas
-
-```bash
-npm run build
-npm test
-```
-
-Pruebas del backend:
-
-```bash
-cd backend
-mvn test
-```
-
-Los resultados deben comprobarse en el entorno de ejecución.
-
-## 🔌 API REST
-
-**URL base:** `http://localhost:8080/api`
-
-| Método | Endpoint | Descripción |
+| Rol | Correo | Contraseña |
 | --- | --- | --- |
-| POST | /auth/login | Inicio de sesión |
-| POST | /auth/registro | Registro de usuario |
-| GET | /auth/me | Usuario autenticado |
-| GET | /productos | Listar productos |
-| GET | /productos/{id} | Consultar producto |
-| POST | /productos | Crear producto |
-| PUT | /productos/{id} | Actualizar producto |
-| DELETE | /productos/{id} | Eliminar producto |
-| GET | /categorias | Listar categorías |
-| POST | /categorias | Crear categoría |
-| PUT | /categorias/{id} | Actualizar categoría |
-| DELETE | /categorias/{id} | Eliminar categoría |
-| POST | /ordenes | Crear orden |
-| GET | /ordenes | Consultar órdenes |
-| GET | /ordenes/{id} | Consultar detalle de orden |
-| GET | /usuarios | Listar usuarios |
-| GET | /usuarios/{id} | Consultar usuario |
-| PUT | /usuarios/{id} | Actualizar usuario |
-| DELETE | /usuarios/{id} | Eliminar usuario |
+| Administrador | `admin@duoc.cl` | `admin123` |
+| Vendedor | `vendedor@milsabores.cl` | `venta123` |
+| Cliente general | `pedro.hacker20@example.com` | `clave123` |
+| Cliente mayor de 50 años | `prueba1@gmail.com` | `clave123` |
+| Cliente Duoc UC | `alumno.ejemplo@duocuc.cl` | `clave123` |
 
-Los parámetros, cuerpos de solicitud y respuestas se pueden consultar mediante Swagger UI.
+## Pruebas y compilación
 
-## 🔐 Seguridad y autenticación
-
-El backend implementa autenticación basada en tokens JWT utilizando Spring Security.
-
-El proceso de autenticación consiste en:
-
-1. El usuario ingresa sus credenciales.
-2. El backend verifica los datos.
-3. Si son correctos, genera un token JWT.
-4. El frontend almacena el token.
-5. Las solicitudes protegidas envían el token mediante la cabecera Authorization.
-6. El backend valida el token y comprueba los permisos.
-
-Las contraseñas se validan mediante BCrypt.
-
-### Roles y permisos
-
-| Operación | Cliente | Vendedor | Administrador |
-| --- | :---: | :---: | :---: |
-| Consultar catálogo | ✅ | ✅ | ✅ |
-| Crear órdenes | ✅ | ✅ | ✅ |
-| Crear o editar productos | ❌ |  ❌ | ✅ |
-| Eliminar productos | ❌ |  ❌ | ✅ |
-| Gestionar categorías | ❌ |  ❌ | ✅ |
-| Gestionar usuarios | ❌ | ❌ | ✅ |
-
-Los permisos se configuran en el backend mediante `SecurityConfig.java`.
-
-Las restricciones visuales del frontend complementan la seguridad, pero la autorización efectiva se realiza en el servidor.
-
-## 🔑 Gestión de sesiones
-
-El frontend mantiene el estado de autenticación utilizando `localStorage`.
-
-El token JWT se conserva con la clave:
-
-```text
-mil_sabores_jwt_token
+```bash
+npm test
+npm run build
 ```
 
-Esto permite recuperar la sesión cuando el usuario recarga la página.
+La suite del frontend contiene 11 casos con Jasmine y Karma y requiere Google Chrome. Cubre componentes de React, eventos, estado, servicios simulados y cálculos del carrito. El [resultado de pruebas registrado](resultado-testing.txt) corresponde a la ejecución guardada en el repositorio. La compilación de Vite genera el sitio en `dist/`.
 
-Para un entorno productivo deben considerarse medidas adicionales de protección contra ataques XSS y una gestión segura de tokens.
+## Estructura y documentación
 
-## 📁 Estructura del proyecto
-
-```text
-Pasteleria_Mil_Sabores_P1_FSII-main/
-├── backend/
-│   ├── pom.xml
-│   └── src/main/
-│       ├── java/com/pasteleria/milsabores/
-│       │   ├── config/
-│       │   ├── controller/
-│       │   ├── dto/
-│       │   ├── entity/
-│       │   ├── repository/
-│       │   ├── security/
-│       │   └── service/
-│       └── resources/application.properties
-├── database/
-│   └── pasteleria_mil_sabores.sql
-├── docs/
-│   ├── DOCUMENTO_INTEGRACION.md
-│   ├── MANUAL_DE_USUARIO.md
-│   └── GUIA_DEFENSA_PRESENTACION.md
-├── src/
-├── public/
-├── css/
-├── js/
-├── img/
-├── package.json
-└── README.md
-```
-
-## 📚 Documentación adicional
-
-- [Documento de integración técnica](docs/DOCUMENTO_INTEGRACION.md): arquitectura, flujo de datos, endpoints y seguridad.
-- [Manual de usuario](docs/MANUAL_DE_USUARIO.md): instrucciones para utilizar la aplicación.
-- [Guía de defensa y presentación](docs/GUIA_DEFENSA_PRESENTACION.md): apoyo para la presentación individual.
-
-## 🎓 Evaluación Parcial N.º 3
-
-Este proyecto aborda los seis requisitos principales de la evaluación:
-
-1. Backend conectado a una base de datos con modelos y lógica de negocio.
-2. API REST con operaciones CRUD y documentación Swagger.
-3. Integración frontend y backend mediante API REST.
-4. Autenticación JWT y autorización por roles.
-5. Persistencia de sesión en el frontend.
-6. Restricciones de acceso según los permisos de usuario.
-
-**Entregables:** repositorios de frontend y backend, proyectos comprimidos, manual de usuario y documento de integración.
-
-## 👥 Integrantes del equipo
-
-- Daniel Parada
-- Vicente Guzman
-- Guillermo Manriquez
-
-**Asignatura:** DSY1104 – Desarrollo Fullstack II  
-**Institución:** Duoc UC
-
----
-
-**Pastelería Mil Sabores — Proyecto académico de comercio electrónico Fullstack.**
-
+| Ruta | Contenido |
+| --- | --- |
+| [src/](src/) | Pantallas, componentes, estado y servicios del frontend. |
+| [backend/](backend/) | API REST y acceso a la base de datos. |
+| [database/](database/) | Script de creación y carga inicial de MySQL. |
+| [test/](test/) | Pruebas unitarias del frontend. |
+| [docs/](docs/) | [Documento de integración](docs/DOCUMENTO_INTEGRACION.md), [manual de usuario](docs/MANUAL_DE_USUARIO.md) y [guía de presentación](docs/GUIA_DEFENSA_PRESENTACION.md). |

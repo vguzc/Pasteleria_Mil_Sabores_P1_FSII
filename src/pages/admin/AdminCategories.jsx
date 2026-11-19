@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService, productService } from '../../services/db';
+import { useAuth } from '../../context/AuthContext';
 import CategoryModal from '../../components/admin/CategoryModal';
 
 export default function AdminCategories() {
+  const { isAdmin } = useAuth();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,6 +31,8 @@ export default function AdminCategories() {
   };
 
   const handleDelete = (id, nombre) => {
+    if (!isAdmin) return;
+
     const associatedProds = products.filter(p => p.categoria.toLowerCase() === nombre.toLowerCase());
     if (associatedProds.length > 0) {
       alert(`No se puede eliminar la categoría "${nombre}" porque tiene ${associatedProds.length} producto(s) asignado(s).`);
@@ -43,6 +47,8 @@ export default function AdminCategories() {
   };
 
   const handleSave = (catData) => {
+    if (!isAdmin) return;
+
     if (editingCategory) {
       categoryService.update(editingCategory.id, catData);
       showFeedback(`Categoría "${catData.nombre}" actualizada.`);
@@ -71,13 +77,15 @@ export default function AdminCategories() {
           </h1>
           <p className="text-muted small mb-0 mt-1">Gestión de familias y agrupaciones de productos artesanales</p>
         </div>
-        <button
-          className="boton boton-primario btn-baker"
-          onClick={handleOpenNew}
-          style={{ fontSize: '0.85rem' }}
-        >
-          <i className="bi bi-plus-circle me-2"></i>Nueva Categoría
-        </button>
+        {isAdmin && (
+          <button
+            className="boton boton-primario btn-baker"
+            onClick={handleOpenNew}
+            style={{ fontSize: '0.85rem' }}
+          >
+            <i className="bi bi-plus-circle me-2"></i>Nueva Categoría
+          </button>
+        )}
       </div>
 
       {feedback && (
@@ -100,7 +108,7 @@ export default function AdminCategories() {
                   <th style={{ color: 'var(--color-espresso)' }}>Nombre de la Categoría</th>
                   <th style={{ color: 'var(--color-espresso)' }}>Descripción</th>
                   <th className="text-center" style={{ width: '150px', color: 'var(--color-espresso)' }}>Productos Asignados</th>
-                  <th className="text-center" style={{ width: '120px', color: 'var(--color-espresso)' }}>Acciones</th>
+                  {isAdmin && <th className="text-center" style={{ width: '120px', color: 'var(--color-espresso)' }}>Acciones</th>}
                 </tr>
               </thead>
               <tbody>
@@ -136,26 +144,28 @@ export default function AdminCategories() {
                           {count} delicias
                         </span>
                       </td>
-                      <td className="text-center">
-                        <div className="btn-group btn-group-sm">
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-secondary"
-                            title="Editar Categoría"
-                            onClick={() => handleOpenEdit(cat)}
-                          >
-                            <i className="bi bi-pencil"></i>
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-danger"
-                            title="Eliminar Categoría"
-                            onClick={() => handleDelete(cat.id, cat.nombre)}
-                          >
-                            <i className="bi bi-trash"></i>
-                          </button>
-                        </div>
-                      </td>
+                      {isAdmin && (
+                        <td className="text-center">
+                          <div className="btn-group btn-group-sm">
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline-secondary"
+                              title="Editar Categoría"
+                              onClick={() => handleOpenEdit(cat)}
+                            >
+                              <i className="bi bi-pencil"></i>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline-danger"
+                              title="Eliminar Categoría"
+                              onClick={() => handleDelete(cat.id, cat.nombre)}
+                            >
+                              <i className="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
@@ -165,7 +175,7 @@ export default function AdminCategories() {
         </div>
       </div>
 
-      {modalOpen && (
+      {isAdmin && modalOpen && (
         <CategoryModal
           category={editingCategory}
           onSave={handleSave}
