@@ -14,11 +14,11 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || '/';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const res = login(correo, clave);
+    const res = await login(correo, clave);
     if (res.success) {
       if (res.user.rol === 'administrador' || res.user.rol === 'vendedor') {
         navigate('/admin');

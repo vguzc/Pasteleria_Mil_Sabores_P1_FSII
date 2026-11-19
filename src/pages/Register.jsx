@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { userService } from '../services/db';
+import { authApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { REGIONES_Y_COMUNAS, validarRutChileno } from '../services/chileData';
 import AlertMessage from '../components/common/AlertMessage';
@@ -54,7 +55,7 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -78,15 +79,7 @@ export default function Register() {
       return;
     }
 
-    // Verificar si el correo ya existe
-    const existing = userService.getById(formData.correo);
-    if (existing) {
-      setError('Ya existe una cuenta registrada con este correo electrónico.');
-      return;
-    }
-
-    // Crear usuario
-    const newUser = userService.create({
+    const payload = {
       nombre: formData.nombre.trim(),
       apellidos: formData.apellidos.trim(),
       correo: formData.correo.trim().toLowerCase(),
@@ -98,10 +91,20 @@ export default function Register() {
       departamento: formData.departamento.trim(),
       region: formData.region,
       comuna: formData.comuna
-    });
+    };
 
-    // Iniciar sesión automática
-    login(newUser.correo, newUser.clave);
+    // Intentar registrar en el Backend Spring Boot con JWT
+    try {
+      await authApi.registro(payload);
+    } catch (apiErr) {
+      console.warn('Registro en backend no disponible, registrando localmente:', apiErr.message);
+    }
+
+    // Persistencia local
+    const newUser = userService.create(payload);
+
+    // Iniciar sesión automática con JWT / local
+    await login(newUser.correo, payload.clave);
     navigate('/mi-cuenta');
   };
 
