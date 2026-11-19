@@ -174,8 +174,8 @@ Las contraseñas se validan mediante BCrypt.
 | Consultar catálogo | ✅ | ✅ | ✅ |
 | Crear órdenes | ✅ | ✅ | ✅ |
 | Crear o editar productos | ❌ | ✅ | ✅ |
-| Eliminar productos | ❌ | ❌ | ✅ |
-| Gestionar categorías | ❌ | ❌ | ✅ |
+| Eliminar productos | ❌ | ✅ | ✅ |
+| Gestionar categorías | ❌ | ✅ | ✅ |
 | Gestionar usuarios | ❌ | ❌ | ✅ |
 
 Los permisos se configuran en el backend mediante `SecurityConfig.java`.
