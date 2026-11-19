@@ -257,5 +257,5 @@ Este proyecto aborda los seis requisitos principales de la evaluación:
 
 ---
 
-**🍰 Pastelería Mil Sabores — Proyecto académico de comercio electrónico Fullstack.**
+** Pastelería Mil Sabores — Proyecto académico de comercio electrónico Fullstack.**
 
